@@ -1,0 +1,112 @@
+# Brazilian Structured Note — COE (Certificado de Operações Estruturadas)
+
+Documentation of how a **COE** — the *Certificado de Operações Estruturadas*, the Brazilian
+equivalent of an international **structured note** — is designed, assembled, registered and
+paid out. It covers the product's legal and clearing framework, every standard payoff
+structure traded in the Brazilian market with its formula, parameters, worked examples and
+payoff diagrams, and the calculation conventions (CDI accrual, business-day count,
+performance observation) used to settle it.
+
+> **Disclaimer:** this repository is technical documentation, not investment advice or an
+> offer of securities. Always refer to the issuer's DIE (*Documento de Informações
+> Essenciais*) and the official B3 / CVM / CMN sources listed in
+> [docs/references.md](docs/references.md).
+
+## What is a COE?
+
+The COE is a certificate issued by banks that bundles, in a single registered instrument,
+the rights and obligations of a fixed-income funding leg and a package of derivatives on
+one or more underlying assets (equity indices, stocks, FX, interest rates, inflation,
+commodities, or baskets — local or offshore). It was created by
+[Law 12,249/2010](https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12249.htm)
+and regulated by
+[CMN Resolution 4,263/2013](https://www.bcb.gov.br/pre/normativos/busca/downloadNormativo.asp?arquivo=/Lists/Normativos/Attachments/48967/Res_4263_v1_O.pdf),
+with public distribution governed by
+[CVM Resolution 8/2020](https://conteudo.cvm.gov.br/legislacao/resolucoes/resol008.html)
+(which replaced CVM Instruction 569/2015). Certificates are issued exclusively in
+book-entry (escritural) form and registered at **B3**, the Brazilian exchange and clearing
+house, which also publishes the operational manual and the formula handbook the product
+follows.
+
+Key design facts:
+
+- **Issuers:** only multiple, commercial, investment and savings banks (and the Caixa
+  Econômica Federal) may issue COEs.
+- **Two modalities** (CMN Resolution 4,263/2013, art. 5):
+  - **Valor Nominal Protegido (VNP)** — redemption at maturity is floored at the invested
+    nominal value (principal protected, *by the issuer* — see credit risk below);
+  - **Valor Nominal em Risco (VNR)** — the investor can lose up to, but never more than,
+    the invested nominal (no leverage beyond the initial investment, no margin calls).
+- **Single instrument:** one registration, one settlement, one tax event — instead of the
+  investor holding a bond plus a strip of OTC options.
+- **Credit risk, not covered by the FGC:** a COE is an unsecured obligation of the issuing
+  bank and is **not** covered by the FGC (*Fundo Garantidor de Créditos*). "Capital
+  protected" means protected against market risk only, conditional on issuer solvency.
+- **Documentation:** every public distribution requires a **DIE** (*Documento de
+  Informações Essenciais*) describing payoff, scenarios, dates, costs and risks.
+
+### How the product is assembled
+
+A capital-protected COE is economically a **zero-coupon funding leg + an option package**:
+the issue price buys a discount bond that accretes back to 100% of nominal at maturity,
+and the present-value discount (plus the coupons the investor gives up) is the premium
+budget used to buy the derivative package that produces the payoff — net of the issuer's
+margin.
+
+![Decomposition of a capital-protected COE](docs/figures/coe-decomposition.svg)
+
+The two modalities compare as follows (full details in
+[docs/overview.md](docs/overview.md)):
+
+![VNP vs VNR](docs/figures/modalities-vnp-vnr.svg)
+
+## Payoff catalog
+
+All current standard payoff structures ("figuras de payoff"), each documented with
+formula, parameters, worked example, scenario table and drawing:
+
+| Payoff | Modality | View on the underlying | Doc |
+|---|---|---|---|
+| Call with participation | VNP | Bullish, uncapped | [docs/payoffs/call-participation.md](docs/payoffs/call-participation.md) |
+| Call spread (capped call) | VNP | Moderately bullish | [docs/payoffs/call-spread.md](docs/payoffs/call-spread.md) |
+| Put spread | VNP | Moderately bearish | [docs/payoffs/put-spread.md](docs/payoffs/put-spread.md) |
+| Digital / dual indexer (duplo indexador) | VNP | Directional, all-or-nothing coupon | [docs/payoffs/digital-duplo-indexador.md](docs/payoffs/digital-duplo-indexador.md) |
+| Shark fin (up-and-out call + rebate) | VNP | Bullish up to a barrier | [docs/payoffs/shark-fin.md](docs/payoffs/shark-fin.md) |
+| Range accrual | VNP | Sideways / range-bound | [docs/payoffs/range-accrual.md](docs/payoffs/range-accrual.md) |
+| Autocall Athena | VNP or VNR | Mildly bullish, early redemption | [docs/payoffs/autocall-athena.md](docs/payoffs/autocall-athena.md) |
+| Autocall Phoenix (memory coupons) | VNR | Sideways-to-bullish, income | [docs/payoffs/autocall-phoenix.md](docs/payoffs/autocall-phoenix.md) |
+| Booster (leveraged upside) | VNR | Bullish with leverage | [docs/payoffs/booster.md](docs/payoffs/booster.md) |
+| Reverse convertible | VNR | Sideways, income | [docs/payoffs/reverse-convertible.md](docs/payoffs/reverse-convertible.md) |
+| Twin win | VNR | Volatile, direction-agnostic | [docs/payoffs/twin-win.md](docs/payoffs/twin-win.md) |
+
+## Repository map
+
+```
+README.md                     ← you are here: product design overview
+docs/
+  README.md                   ← documentation index
+  overview.md                 ← full product design: legal framework, lifecycle, risks, tax
+  parameters.md               ← every parameter: registration fields + payoff parameters
+  calculations.md             ← calculation conventions: CDI/pre/IPCA accrual, DU/252,
+                                performance observation, FX, valuation
+  glossary.md                 ← PT-BR ↔ EN glossary
+  references.md               ← all normative, clearing and bibliographic references
+  payoffs/                    ← one document per payoff structure (formulas + examples)
+  figures/                    ← payoff drawings (SVG) + generate_figures.py (reproducible)
+  clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
+                                Fórmulas, Manual de Normas) — see its README
+```
+
+## References
+
+The complete list, with links, lives in [docs/references.md](docs/references.md). The
+primary sources are:
+
+- **Law 12,249, of June 11, 2010** — creates the COE.
+- **CMN Resolution 4,263, of September 5, 2013** — conditions of issuance; VNP/VNR
+  modalities; eligible underlyings.
+- **CVM Resolution 8/2020** (replacing CVM Instruction 569/2015) — public offering with
+  automatic registration waiver; the DIE.
+- **B3, [Manual de Operações — COE](https://www.b3.com.br/pt_br/regulacao/estrutura-normativa/estrutura-normativa/manuais-de-operacoes-8ae490ca69088bf00169104ff0ad7417/certificado-de-operacoes-estruturadas-coe/)** — registration fields and lifecycle events.
+- **B3, [Caderno de Fórmulas — COE](https://www.b3.com.br/data/files/E2/D1/DC/38/839009105391B9F8AC094EA8/CADERNO%20DE%20FORMULAS%20-%20COE.pdf)** — calculation methodology for registered parameters.
+- **ANBIMA — [COE regulatory summary](https://www.anbima.com.br/pt_br/informar/regulacao/informe-de-legislacao/certificados-de-operacoes-estruturadas-coe.htm)** and self-regulation code for distribution.
