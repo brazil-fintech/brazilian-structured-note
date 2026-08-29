@@ -34,6 +34,11 @@ values (each page states them); registered terms of an actual certificate govern
 
 - **Modality** — VNP/VNR per CMN Resolution 4,263/2013 (see
   [../overview.md](../overview.md#3-modalities)).
+- **B3 registered figure** — the names above are commercial/distribution names; B3
+  registers each COE under a figure code (`COE001001`–`COE001088`) named after the option
+  package (Call, Call KO, Put KI, Straddle Put KO, Range Accrual, …). Each page states
+  its figure; the mapping table is in
+  [../parameters.md](../parameters.md#4a-registered-payoff-figures-códigos-de-figura).
 - **Parameters** — subset of [../parameters.md](../parameters.md#4-payoff-parameters-per-figure).
 - **Barrier conventions** — European / discrete / continuous observation changes the
   economics; each page states what its figure assumes

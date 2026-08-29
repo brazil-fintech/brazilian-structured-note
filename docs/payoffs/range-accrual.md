@@ -8,6 +8,8 @@ Common on USDBRL and on the IBOVESPA.
 - **Modality:** VNP
 - **Investor view:** range-bound / low volatility
 - **Also known as:** *fairway, corredor, acumulador de cupom*
+- **B3 registered figure:** COE001015 Range Accrual (nested-range variant: COE001041
+  Wedding Cake; one-sided accrual: COE001043 Edge Accrual)
 
 ## Parameters
 

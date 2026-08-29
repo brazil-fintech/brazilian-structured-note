@@ -28,8 +28,8 @@ FatorDI  = ∏_{k=1}^{n} [ 1 + TDI_k × (p/100) ]       (accumulated factor, n b
 ```
 
 **Example** — R$ 1,000 at 90% of CDI for 2 business days with DI at 15.00% p.a.:
-`TDI = 1.15^(1/252) − 1 = 0.00055482`; daily factor `1 + 0.00055482×0.9 = 1.00049934`;
-after 2 days `1.00049934² = 1.00099893` → R$ 1,000.99.
+`TDI = 1.15^(1/252) − 1 = 0.00055476`; daily factor `1 + 0.00055476×0.9 = 1.00049929`;
+after 2 days `1.00049929² = 1.00099883` → R$ 1,000.99.
 
 ### 2.2 Pre-fixed factor
 
@@ -93,6 +93,14 @@ Standard comparisons are `≥` for up-barriers/triggers and `<` for down-barrier
 formula's inequality governs; the payoff documents here state the convention drawn in
 each figure.
 
+In B3's registration screens (*Manual de Operações — COE*), barrier observation is the
+field `Período de Verificação de Barreiras`, with two domains: **Europeia** (a single
+`Data para Fixing`) and **Americana** (verification on every day between a registered
+start and end date, using a registered quote type — Fechamento, Média, Máximo, Mínimo or
+Ajuste). A discrete schedule is achieved with the *Mais Datas* fixing mechanism, and the
+final fixing itself can be a single date, a 1–5-business-day window (max/min/mean), or an
+explicit list of dates (see [parameters.md](parameters.md#2-underlying-ativo-subjacente-fields)).
+
 ### 3.4 FX conversion for offshore underlyings
 
 - **Quanto**: `Perf` computed in the underlying's local currency; payoff applied to VN in
@@ -139,10 +147,10 @@ V_t = VN × DF(t,T) × E_Q[ PayoffFactor ]        (risk-neutral expectation)
 3-year (756 DU) VNP note on IBOVESPA, VN = R$ 1,000, participation 70%, S₀ = 120,000
 (final fixing = average of the last 3 monthly closings).
 
-1. **Issue economics** (illustrative): DI curve ⇒ zero-coupon leg PV = 87.8% of VN;
-   budget = 12.2%; ATM 3y call on IBOV costs 13.1% ⇒ affordable participation before
-   margin = 12.2/13.1 = 93%; issuer keeps 3.0% ⇒ offered participation
-   (12.2 − 3.0)/13.1 ≈ 70%.
+1. **Issue economics** (illustrative): DI curve at ~10% p.a. ⇒ zero-coupon leg
+   PV = 75.1% of VN; budget = 24.9%; ATM 3y call on IBOV costs 30.0% of notional ⇒
+   affordable participation before margin = 24.9/30.0 ≈ 83%; issuer keeps 3.9% ⇒ offered
+   participation (24.9 − 3.9)/30.0 = 70%.
 2. **Scenario up**: S_avg = 150,000 ⇒ `Perf = 25%` ⇒ redemption
    `1,000 × [1 + 0.70×0.25] = R$ 1,175.00` (17.5% over 3 years).
 3. **Scenario down**: S_avg = 96,000 ⇒ `Perf = −20%` ⇒ `max(Perf,0) = 0` ⇒ redemption

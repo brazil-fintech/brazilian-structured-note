@@ -9,6 +9,9 @@ percentage) depending on the scenario.
 - **Modality:** VNP
 - **Investor view:** directional with a target level; wants a known, high coupon
 - **Also known as:** *digital, binária, duplo indexador*
+- **B3 registered figure:** COE001011 Digital Call / COE001012 Digital Put /
+  COE001013 Double Digital; the pure indexer-switch version (e.g. pre vs % of DI, no
+  equity underlying) is COE001045 *Troca de Indexadores*
 
 ## Parameters
 
@@ -35,12 +38,12 @@ Convention drawn: at `S_T = K` exactly, the coupon is paid (`≥`).
 ## Worked example and scenarios
 
 VN = R$ 1,000, C = 15%, adverse leg at 90% of CDI, 18 months (378 DU), CDI flat at 15%
-p.a. → `FatorDI(90) ≈ 1.2110` (see [../calculations.md](../calculations.md#21-di-cdi-factor-at-a-percentage-p)):
+p.a. → `FatorDI(90) ≈ 1.2077` (see [../calculations.md](../calculations.md#21-di-cdi-factor-at-a-percentage-p)):
 
 | Scenario | S_T vs K | Redemption | Period return |
 |---|---|---|---|
 | Rally, +1% or +40% alike | S_T ≥ K | 1,000 × 1.15 = **R$ 1,150.00** | +15.0% flat |
-| Just below strike | S_T = 0.99×K | 1,000 × 1.2110 = **R$ 1,211.00** | +21.1% (90% CDI) |
+| Just below strike | S_T = 0.99×K | 1,000 × 1.2077 = **R$ 1,207.66** | +20.8% (90% CDI) |
 
 Note the inversion typical of high-CDI environments: with CDI at 15% p.a., the "adverse"
 CDI leg can outperform the digital coupon — the digital only makes sense when the coupon

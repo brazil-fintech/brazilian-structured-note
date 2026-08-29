@@ -9,6 +9,8 @@ coupon.
 - **Modality:** VNR
 - **Investor view:** neutral-to-mildly-bullish; sells downside insurance for income
 - **Also known as:** *barrier reverse convertible; "renda extra" structures on single stocks*
+- **B3 registered figure:** COE001022 Put KI (the investor is short the knock-in put);
+  the fixed coupon is registered via Fluxo de Caixa
 
 ## Parameters
 

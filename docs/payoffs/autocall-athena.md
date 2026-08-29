@@ -10,6 +10,10 @@ it never triggers, the maturity payoff depends on the **protection barrier**.
   VNR maturity payoff; the VNP variant replaces the downside leg with 100%.
 - **Investor view:** mildly bullish / flat; happy to be called early
 - **Also known as:** *autocallable, snowball*
+- **B3 registration:** not a single figure — a barrier/digital figure combined with the
+  early-redemption trigger; the trigger event is commanded via the *Indicação de Disparo
+  de Trigger* function, and figures with `Período de Pagamento = Ato` settle on the
+  trigger date
 
 ## Parameters
 

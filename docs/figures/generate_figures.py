@@ -354,9 +354,9 @@ def fig_decomposition():
     ax.set_xticks([])
     ax.grid(axis="y", color=GRID, linewidth=0.75)
     bars = [
-        (1.0, 0, 87.8, "#2a78d6", "Zero-coupon leg\nPV of 100% at maturity\n(e.g. 87.8%)"),
-        (4.0, 0, 9.2, "#1baf7a", "Option package\n(e.g. 9.2%)"),
-        (7.0, 0, 3.0, "#eda100", "Issuer margin\n(e.g. 3.0%)"),
+        (1.0, 0, 75.1, "#2a78d6", "Zero-coupon leg\nPV of 100% at maturity\n(e.g. 75.1%)"),
+        (4.0, 0, 21.0, "#1baf7a", "Option package\n(e.g. 21.0%)"),
+        (7.0, 0, 3.9, "#eda100", "Issuer margin\n(e.g. 3.9%)"),
     ]
     for xpos, y0, h, color, label in bars:
         ax.bar(xpos, h, width=1.6, bottom=y0, color=color, edgecolor=SURFACE,

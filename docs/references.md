@@ -35,6 +35,8 @@ govern; this repository is a technical summary of them.
    <https://www.b3.com.br/pt_br/regulacao/estrutura-normativa/estrutura-normativa/manuais-de-operacoes-8ae490ca69088bf00169104ff0ad7417/certificado-de-operacoes-estruturadas-coe/>
    Direct PDF (version current at the time of writing):
    <https://www.b3.com.br/data/files/AA/66/CD/34/EBC309105FE89209AC094EA8/Manual%20de%20Operacoes%20-%20COE.pdf>
+   Committed copy: [clearing/manual-de-operacoes-coe-202607.pdf](clearing/manual-de-operacoes-coe-202607.pdf)
+   (version dated 20/07/2026 — the version this documentation was checked against).
 10. **B3 — Caderno de Fórmulas — COE** (calculation methodology and precision criteria
     for registered parameters).
     <https://www.b3.com.br/data/files/E2/D1/DC/38/839009105391B9F8AC094EA8/CADERNO%20DE%20FORMULAS%20-%20COE.pdf>

@@ -6,6 +6,7 @@ premium budget, buying a higher participation (often 100%+) on the first leg of 
 - **Modality:** VNP
 - **Investor view:** moderately bullish; accepts a ceiling on gains
 - **Also known as:** *capital protegido com cap / trava de alta*
+- **B3 registered figure:** COE001005 Call Spread
 
 ## Parameters
 
