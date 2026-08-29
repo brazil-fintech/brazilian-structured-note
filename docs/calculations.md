@@ -40,21 +40,47 @@ FatorPre = (1 + i)^(DU/252)          i = annual rate, DU/252 compounding
 **Example** — 12% p.a. for 378 business days (18 months): `1.12^(378/252) = 1.1853` →
 18.53% period return.
 
-### 2.3 Inflation-linked factor (IPCA + i)
+### 2.3 Inflation-linked factor (IPCA)
+
+The Caderno de Fórmulas computes the IPCA leg on the **índice-number ratio** with a
+participation percentage *p*, not by compounding monthly variations:
 
 ```
-FatorIPCA = [ ∏_m (1 + IPCA_m) ] × (1 + i)^(DU/252)
+FatorIPCA = 1 + ( NI_n / NI_0 − 1 ) × p/100
 ```
 
-with monthly IPCA variations pro-rated (by DU) in the first and last months, per the
-Caderno de Fórmulas' precision rules.
+where `NI_n` and `NI_0` are the IPCA index numbers of the month immediately before the
+end and start dates (M−1); if the index has not been published by the day before the
+date, the previous month's number (M−2, the last known) is used. A fixed spread
+("IPCA + i") enters as a separate `FatorSPREAD` on the registered `Spread/Cupom` and
+`Base` (see 2.2 and the 360-day bases below).
 
-### 2.4 Rounding and precision
+### 2.4 Day-count bases and the spread factor
 
-B3's Caderno de Fórmulas fixes the precision of each intermediate step (e.g. daily DI
-factors truncated/rounded to 16 decimal places, accumulated factors to 8, unit prices to
-8, final settlement values to 2). Implementations should follow the handbook exactly —
-differences in rounding are a classic source of 1-cent breaks in settlement.
+The registered `Base` of a Spread/Cupom admits three conventions (Caderno de Fórmulas,
+"Informações Adicionais"):
+
+```
+252 exp:  FatorSPREAD = (1 + TXPRE/100)^(du/252)      du = business days
+360 exp:  FatorSPREAD = (1 + TXPRE/100)^(dc/360)      dc = calendar days
+360 lin:  FatorSPREAD = 1 + TXPRE/100 × dc/360
+```
+
+For a DI remunerator the full factor is `FatorJUROS = FatorDI × FatorSPREAD`.
+
+### 2.5 Rounding and precision
+
+Official criteria (Caderno de Fórmulas — COE, the committed copy in
+[clearing/](clearing/README.md)):
+
+- **Payoff-figure calculations:** intermediate results **rounded to 16 decimal places**;
+  the financial value (Valor Financeiro) **truncated to 2 decimal places**.
+- **Remuneration factors:** daily `TDI_k` calculated with **8 decimals, rounded**;
+  `FatorDI` accumulated with **8 decimals, rounded**; `FatorSPREAD` with **9 decimals,
+  rounded**; `FatorJUROS = FatorDI × FatorSPREAD` with 9 decimals.
+
+Implementations should follow the handbook exactly — differences in rounding are a
+classic source of 1-cent breaks in settlement.
 
 ## 3. Performance of the underlying
 
@@ -111,18 +137,28 @@ explicit list of dates (see [parameters.md](parameters.md#2-underlying-ativo-sub
 
 ## 4. Redemption formulas
 
-Each payoff document under [payoffs/](payoffs/README.md) gives its full formula. The
-common template for a VNP note is:
+Each payoff document under [payoffs/](payoffs/README.md) gives its full formula in the
+simplified form `Redemption = VN × [ FatorBase + VariablePayoff ]`, with
+`FatorBase ≥ 1` for a protected note and `Redemption = VN × PayoffFactor ≥ 0` for a VNR
+note (loss capped at the invested nominal by CMN Resolution 4,263/2013).
+
+The Caderno de Fórmulas writes every registered figure on one master template:
 
 ```
-Redemption = VN × [ FatorBase + VariablePayoff ]
+VResg = Máx[ { PAccruado × BaseOp + Posi × OptionResult × ΔC } ; { P × CG } ]
 ```
 
-where `FatorBase ≥ 1` (at minimum the protected nominal; optionally an accrual such as a
-% of CDI in the adverse scenario) and `VariablePayoff` is the option-package result (e.g.
-`Part × max(Perf, 0)`). For a VNR note the template is `Redemption = VN × PayoffFactor`
-with `0 ≤ PayoffFactor` (loss capped at the invested nominal by CMN Resolution
-4,263/2013).
+- `P` — Valor Financeiro de Emissão (the invested principal);
+- `PAccruado` — `P` accrued by the registered Remunerador, if any;
+- `BaseOp` — the Base Aplicação percentage (the protected-leg base);
+- `Posi` — the issuer's registered position in the derivative (−1 comprado, +1 vendido —
+  the sign that makes the option result flow to the investor);
+- `OptionResult` — the figure's payoff, built from `(S − X_i) × Qtde_i × PercAA/AB`
+  terms with `Qtde_i = P / X_i` (so `(S − X_i) × Qtde_i = P × (S/X_i − 1)`), digital
+  coupons `RemAd × P`, or rebates `KO/KI × P`;
+- `ΔC` — the FX (quanto) variation factor;
+- `CG` — the registered Capital Garantido percentage: the whole expression is floored at
+  `P × CG`, which is how both modalities are enforced in calculation.
 
 ## 5. Valuation and mark-to-market
 
@@ -159,8 +195,9 @@ V_t = VN × DF(t,T) × E_Q[ PayoffFactor ]        (risk-neutral expectation)
 
 ## References
 
-- B3, *Caderno de Fórmulas — COE* — official formulas and precision criteria
-  ([clearing/](clearing/README.md)).
+- B3, *Caderno de Fórmulas — COE* — official formulas and precision criteria (update
+  dated 21/07/2026, committed at
+  [clearing/caderno-de-formulas-coe-202607.pdf](clearing/caderno-de-formulas-coe-202607.pdf)).
 - B3, *Manual de Operações — COE* — observation/settlement mechanics.
 - J. Hull, *Options, Futures, and Other Derivatives*, 11th ed. — ch. 26 (exotic options)
   for barrier/digital/asian pricing.

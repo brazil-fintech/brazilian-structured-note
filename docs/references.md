@@ -40,6 +40,8 @@ govern; this repository is a technical summary of them.
 10. **B3 — Caderno de Fórmulas — COE** (calculation methodology and precision criteria
     for registered parameters).
     <https://www.b3.com.br/data/files/E2/D1/DC/38/839009105391B9F8AC094EA8/CADERNO%20DE%20FORMULAS%20-%20COE.pdf>
+    Committed copy: [clearing/caderno-de-formulas-coe-202607.pdf](clearing/caderno-de-formulas-coe-202607.pdf)
+    (update dated 21/07/2026 — the version the formulas here were checked against).
 11. **B3 — COE: conceito** (product concept note).
     <https://www.b3.com.br/lumis/portal/file/fileDownload.jsp?fileId=8AE490CA6F165E34016F250DCDCF3B40>
 

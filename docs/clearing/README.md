@@ -21,12 +21,17 @@ calculation of the COE. They are the authoritative source for everything summari
 >   field annex starts at p. 120). The registration fields in
 >   [../parameters.md](../parameters.md) and the figure codes cited across
 >   [../payoffs/](../payoffs/README.md) were checked against this version.
+> - [`caderno-de-formulas-coe-202607.pdf`](caderno-de-formulas-coe-202607.pdf) —
+>   **Caderno de Fórmulas — COE**, update dated 21/07/2026 (101 pages) — the redemption
+>   formula of every registered figure and the precision criteria. The formulas and
+>   precision rules in [../calculations.md](../calculations.md) were checked against this
+>   version.
 > - [`manual-transferencia-de-arquivos-enviar-arquivos-202603.pdf`](manual-transferencia-de-arquivos-enviar-arquivos-202603.pdf) —
 >   **Transferência de Arquivos (Enviar Arquivos)** manual, version dated 23/03/2026 —
 >   the file layouts used for batch registration (not COE-specific, kept for the COE
 >   layouts).
 >
-> Still missing: the *Caderno de Fórmulas — COE*, the *Manual de Normas — COE* and the
+> Still missing: the *Manual de Normas — COE* and the
 > *COE — Conceito* note. This environment's network policy blocks `b3.com.br`; download
 > them from the links above (they are public) and commit them with the naming convention
 > in the table, suffixing the version date stamped on the document's cover.
