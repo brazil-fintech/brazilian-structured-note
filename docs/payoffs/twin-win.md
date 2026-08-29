@@ -7,6 +7,8 @@ leg dies and the payoff reverts to the direct loss of the underlying.
 - **Modality:** VNR
 - **Investor view:** expects a large move but is agnostic on direction
 - **Also known as:** *ganho duplo, straddle note*
+- **B3 registered figure:** COE001009 Straddle Put KO (call + put with a knock-out
+  barrier on the put leg, `Rebate no Cenário de Baixa` as % of the VFE)
 
 ## Parameters
 

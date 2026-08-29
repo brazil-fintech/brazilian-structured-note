@@ -7,6 +7,7 @@ IBOVESPA, S&P 500 or offshore thematic indices.
 - **Modality:** VNP (Valor Nominal Protegido)
 - **Investor view:** bullish; wants upside without risking nominal
 - **Also known as:** *capital protegido com participação na alta*
+- **B3 registered figure:** COE001001 Call (also COE001064 *Call com Participação*)
 
 ## Parameters
 

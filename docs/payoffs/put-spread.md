@@ -8,6 +8,7 @@ tactical bearish note.
 - **Modality:** VNP
 - **Investor view:** moderately bearish / hedging a fall
 - **Also known as:** *capital protegido com participação na baixa / trava de baixa*
+- **B3 registered figure:** COE001006 Put Spread
 
 ## Parameters
 

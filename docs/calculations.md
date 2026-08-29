@@ -28,8 +28,8 @@ FatorDI  = ∏_{k=1}^{n} [ 1 + TDI_k × (p/100) ]       (accumulated factor, n b
 ```
 
 **Example** — R$ 1,000 at 90% of CDI for 2 business days with DI at 15.00% p.a.:
-`TDI = 1.15^(1/252) − 1 = 0.00055482`; daily factor `1 + 0.00055482×0.9 = 1.00049934`;
-after 2 days `1.00049934² = 1.00099893` → R$ 1,000.99.
+`TDI = 1.15^(1/252) − 1 = 0.00055476`; daily factor `1 + 0.00055476×0.9 = 1.00049929`;
+after 2 days `1.00049929² = 1.00099883` → R$ 1,000.99.
 
 ### 2.2 Pre-fixed factor
 
@@ -40,21 +40,47 @@ FatorPre = (1 + i)^(DU/252)          i = annual rate, DU/252 compounding
 **Example** — 12% p.a. for 378 business days (18 months): `1.12^(378/252) = 1.1853` →
 18.53% period return.
 
-### 2.3 Inflation-linked factor (IPCA + i)
+### 2.3 Inflation-linked factor (IPCA)
+
+The Caderno de Fórmulas computes the IPCA leg on the **índice-number ratio** with a
+participation percentage *p*, not by compounding monthly variations:
 
 ```
-FatorIPCA = [ ∏_m (1 + IPCA_m) ] × (1 + i)^(DU/252)
+FatorIPCA = 1 + ( NI_n / NI_0 − 1 ) × p/100
 ```
 
-with monthly IPCA variations pro-rated (by DU) in the first and last months, per the
-Caderno de Fórmulas' precision rules.
+where `NI_n` and `NI_0` are the IPCA index numbers of the month immediately before the
+end and start dates (M−1); if the index has not been published by the day before the
+date, the previous month's number (M−2, the last known) is used. A fixed spread
+("IPCA + i") enters as a separate `FatorSPREAD` on the registered `Spread/Cupom` and
+`Base` (see 2.2 and the 360-day bases below).
 
-### 2.4 Rounding and precision
+### 2.4 Day-count bases and the spread factor
 
-B3's Caderno de Fórmulas fixes the precision of each intermediate step (e.g. daily DI
-factors truncated/rounded to 16 decimal places, accumulated factors to 8, unit prices to
-8, final settlement values to 2). Implementations should follow the handbook exactly —
-differences in rounding are a classic source of 1-cent breaks in settlement.
+The registered `Base` of a Spread/Cupom admits three conventions (Caderno de Fórmulas,
+"Informações Adicionais"):
+
+```
+252 exp:  FatorSPREAD = (1 + TXPRE/100)^(du/252)      du = business days
+360 exp:  FatorSPREAD = (1 + TXPRE/100)^(dc/360)      dc = calendar days
+360 lin:  FatorSPREAD = 1 + TXPRE/100 × dc/360
+```
+
+For a DI remunerator the full factor is `FatorJUROS = FatorDI × FatorSPREAD`.
+
+### 2.5 Rounding and precision
+
+Official criteria (Caderno de Fórmulas — COE, the committed copy in
+[clearing/](clearing/README.md)):
+
+- **Payoff-figure calculations:** intermediate results **rounded to 16 decimal places**;
+  the financial value (Valor Financeiro) **truncated to 2 decimal places**.
+- **Remuneration factors:** daily `TDI_k` calculated with **8 decimals, rounded**;
+  `FatorDI` accumulated with **8 decimals, rounded**; `FatorSPREAD` with **9 decimals,
+  rounded**; `FatorJUROS = FatorDI × FatorSPREAD` with 9 decimals.
+
+Implementations should follow the handbook exactly — differences in rounding are a
+classic source of 1-cent breaks in settlement.
 
 ## 3. Performance of the underlying
 
@@ -93,6 +119,14 @@ Standard comparisons are `≥` for up-barriers/triggers and `<` for down-barrier
 formula's inequality governs; the payoff documents here state the convention drawn in
 each figure.
 
+In B3's registration screens (*Manual de Operações — COE*), barrier observation is the
+field `Período de Verificação de Barreiras`, with two domains: **Europeia** (a single
+`Data para Fixing`) and **Americana** (verification on every day between a registered
+start and end date, using a registered quote type — Fechamento, Média, Máximo, Mínimo or
+Ajuste). A discrete schedule is achieved with the *Mais Datas* fixing mechanism, and the
+final fixing itself can be a single date, a 1–5-business-day window (max/min/mean), or an
+explicit list of dates (see [parameters.md](parameters.md#2-underlying-ativo-subjacente-fields)).
+
 ### 3.4 FX conversion for offshore underlyings
 
 - **Quanto**: `Perf` computed in the underlying's local currency; payoff applied to VN in
@@ -103,18 +137,28 @@ each figure.
 
 ## 4. Redemption formulas
 
-Each payoff document under [payoffs/](payoffs/README.md) gives its full formula. The
-common template for a VNP note is:
+Each payoff document under [payoffs/](payoffs/README.md) gives its full formula in the
+simplified form `Redemption = VN × [ FatorBase + VariablePayoff ]`, with
+`FatorBase ≥ 1` for a protected note and `Redemption = VN × PayoffFactor ≥ 0` for a VNR
+note (loss capped at the invested nominal by CMN Resolution 4,263/2013).
+
+The Caderno de Fórmulas writes every registered figure on one master template:
 
 ```
-Redemption = VN × [ FatorBase + VariablePayoff ]
+VResg = Máx[ { PAccruado × BaseOp + Posi × OptionResult × ΔC } ; { P × CG } ]
 ```
 
-where `FatorBase ≥ 1` (at minimum the protected nominal; optionally an accrual such as a
-% of CDI in the adverse scenario) and `VariablePayoff` is the option-package result (e.g.
-`Part × max(Perf, 0)`). For a VNR note the template is `Redemption = VN × PayoffFactor`
-with `0 ≤ PayoffFactor` (loss capped at the invested nominal by CMN Resolution
-4,263/2013).
+- `P` — Valor Financeiro de Emissão (the invested principal);
+- `PAccruado` — `P` accrued by the registered Remunerador, if any;
+- `BaseOp` — the Base Aplicação percentage (the protected-leg base);
+- `Posi` — the issuer's registered position in the derivative (−1 comprado, +1 vendido —
+  the sign that makes the option result flow to the investor);
+- `OptionResult` — the figure's payoff, built from `(S − X_i) × Qtde_i × PercAA/AB`
+  terms with `Qtde_i = P / X_i` (so `(S − X_i) × Qtde_i = P × (S/X_i − 1)`), digital
+  coupons `RemAd × P`, or rebates `KO/KI × P`;
+- `ΔC` — the FX (quanto) variation factor;
+- `CG` — the registered Capital Garantido percentage: the whole expression is floored at
+  `P × CG`, which is how both modalities are enforced in calculation.
 
 ## 5. Valuation and mark-to-market
 
@@ -139,10 +183,10 @@ V_t = VN × DF(t,T) × E_Q[ PayoffFactor ]        (risk-neutral expectation)
 3-year (756 DU) VNP note on IBOVESPA, VN = R$ 1,000, participation 70%, S₀ = 120,000
 (final fixing = average of the last 3 monthly closings).
 
-1. **Issue economics** (illustrative): DI curve ⇒ zero-coupon leg PV = 87.8% of VN;
-   budget = 12.2%; ATM 3y call on IBOV costs 13.1% ⇒ affordable participation before
-   margin = 12.2/13.1 = 93%; issuer keeps 3.0% ⇒ offered participation
-   (12.2 − 3.0)/13.1 ≈ 70%.
+1. **Issue economics** (illustrative): DI curve at ~10% p.a. ⇒ zero-coupon leg
+   PV = 75.1% of VN; budget = 24.9%; ATM 3y call on IBOV costs 30.0% of notional ⇒
+   affordable participation before margin = 24.9/30.0 ≈ 83%; issuer keeps 3.9% ⇒ offered
+   participation (24.9 − 3.9)/30.0 = 70%.
 2. **Scenario up**: S_avg = 150,000 ⇒ `Perf = 25%` ⇒ redemption
    `1,000 × [1 + 0.70×0.25] = R$ 1,175.00` (17.5% over 3 years).
 3. **Scenario down**: S_avg = 96,000 ⇒ `Perf = −20%` ⇒ `max(Perf,0) = 0` ⇒ redemption
@@ -151,8 +195,9 @@ V_t = VN × DF(t,T) × E_Q[ PayoffFactor ]        (risk-neutral expectation)
 
 ## References
 
-- B3, *Caderno de Fórmulas — COE* — official formulas and precision criteria
-  ([clearing/](clearing/README.md)).
+- B3, *Caderno de Fórmulas — COE* — official formulas and precision criteria (update
+  dated 21/07/2026, committed at
+  [clearing/caderno-de-formulas-coe-202607.pdf](clearing/caderno-de-formulas-coe-202607.pdf)).
 - B3, *Manual de Operações — COE* — observation/settlement mechanics.
 - J. Hull, *Options, Futures, and Other Derivatives*, 11th ed. — ch. 26 (exotic options)
   for barrier/digital/asian pricing.

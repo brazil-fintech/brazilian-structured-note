@@ -42,8 +42,8 @@ plus OTC derivatives:
 ![Decomposition](figures/coe-decomposition.svg)
 
 The size of the premium budget explains most design choices: with the DI rate high, the
-zero-coupon leg is cheap (e.g. ~87.8% for 3 years at ~4.4% per year of forward discount),
-leaving a large budget — which is why Brazilian capital-protected notes can offer high
+zero-coupon leg is cheap (e.g. at ~10% per year a 3-year zero costs ~75.1% of nominal,
+leaving a ~25% budget), which is why Brazilian capital-protected notes can offer high
 participations, and why structures with sold optionality (caps, knock-outs, digitals) are
 used to enlarge the budget further.
 
@@ -54,7 +54,8 @@ registration and in the DIE:
 
 | | Valor Nominal Protegido (VNP) | Valor Nominal em Risco (VNR) |
 |---|---|---|
-| Floor at maturity | 100% of the nominal value | 0 — total loss possible |
+| B3 registration label | Capital Investido Garantido, with `Capital Garantido (%)` ≥ 100% | Perda Limitada ao Capital Investido, with `Capital Garantido (%)` from 0 to < 100% (partial protection is registrable) |
+| Floor at maturity | 100% of the nominal value (or more) | The registered guaranteed percentage — down to 0, total loss possible |
 | Loss beyond invested capital | Never | Never (forbidden by the Resolution) |
 | Margin calls / leverage beyond nominal | No | No |
 | Typical structures | Participation calls/puts, digitals, shark fin, range accrual | Boosters, autocalls with barrier, reverse convertibles, twin win |

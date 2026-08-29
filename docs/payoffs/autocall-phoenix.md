@@ -9,6 +9,9 @@ coupons missed on earlier dates are recovered on the next date the condition ver
   downside)
 - **Investor view:** sideways-to-mildly-bullish; wants recurring income
 - **Also known as:** *phoenix autocallable, autocall com cupom e memória*
+- **B3 registration:** not a single figure — the coupon schedule is registered as
+  **Fluxo de Caixa** (with its own `Remunerador no Fluxo`), and early redemption via the
+  *Indicação de Disparo de Trigger* function
 
 ## Parameters
 

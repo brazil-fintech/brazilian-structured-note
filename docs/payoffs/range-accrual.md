@@ -8,6 +8,8 @@ Common on USDBRL and on the IBOVESPA.
 - **Modality:** VNP
 - **Investor view:** range-bound / low volatility
 - **Also known as:** *fairway, corredor, acumulador de cupom*
+- **B3 registered figure:** COE001015 Range Accrual (nested-range variant: COE001041
+  Wedding Cake; one-sided accrual: COE001043 Edge Accrual)
 
 ## Parameters
 
@@ -25,6 +27,12 @@ Common on USDBRL and on the IBOVESPA.
 n_in       = #{ t_i : L·S₀ ≤ S(t_i) ≤ U·S₀ }
 Redemption = VN × [ 1 + C_max × n_in / N ]
 ```
+
+B3's registered formula (Caderno de Fórmulas, figure 15) expresses the coupon as an
+**annual rate** `RemAd` accrued over the business days in range:
+`coupon = (1 + RemAd)^(NDD/252) − 1` (exponential — slightly convex in time-in-range);
+with the PRÉ252-LIN remunerator it is `RemAd × NDD/252`, the linear form drawn here
+(`C_max = RemAd × N/252`).
 
 The natural x-axis of the drawing is the fraction of observations in range, not the final
 performance — the payoff is **path-dependent** and linear in time-in-range:
