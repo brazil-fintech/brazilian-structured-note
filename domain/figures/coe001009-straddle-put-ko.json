@@ -1,0 +1,205 @@
+{
+  "figureCode": "COE001009",
+  "figureName": "Straddle Put KO",
+  "commercialName": "Twin win",
+  "description": {
+    "pt": "Ganho nos dois sentidos enquanto a barreira de baixa não é rompida: resgate = VN × [1 + Part × |Perf|]. Rompida a barreira, a perna de baixa vira exposição direta à queda.",
+    "en": "Gains in both directions while the down barrier holds: redemption = VN × [1 + Part × |Perf|]. Once breached, the downside leg turns into direct exposure to the fall."
+  },
+  "modalities": [
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement",
+    "common/barriers"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "upsideParticipation",
+          "order": 20,
+          "label": {
+            "pt": "Participação na alta (%)",
+            "en": "Upside participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100
+        },
+        {
+          "key": "downsideParticipation",
+          "order": 30,
+          "label": {
+            "pt": "Participação na baixa (%)",
+            "en": "Downside participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part⁻",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Participação aplicada ao módulo da queda enquanto a barreira resiste.",
+            "en": "Participation applied to the absolute fall while the barrier holds."
+          }
+        }
+      ]
+    },
+    {
+      "key": "barriers",
+      "label": {
+        "pt": "Barreira de baixa",
+        "en": "Down barrier"
+      },
+      "fields": [
+        {
+          "key": "barrierDirection",
+          "order": 20,
+          "label": {
+            "pt": "Direção da barreira",
+            "en": "Barrier direction"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "BAIXA",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "BAIXA",
+              "label": {
+                "pt": "Baixa (down)",
+                "en": "Down"
+              }
+            }
+          ]
+        },
+        {
+          "key": "barrierType",
+          "order": 30,
+          "label": {
+            "pt": "Tipo de barreira",
+            "en": "Barrier type"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "KI",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "KI",
+              "label": {
+                "pt": "Knock-in",
+                "en": "Knock-in"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "twinwin.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNR.",
+        "en": "This figure is registered under the VNR modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNR']"
+    },
+    {
+      "id": "twinwin.barrier-below-strike",
+      "targets": [
+        "barriers.barrierLevel"
+      ],
+      "message": {
+        "pt": "A barreira de baixa deve ficar abaixo do strike.",
+        "en": "The down barrier must sit below the strike."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "barrierLevel < strike"
+    },
+    {
+      "id": "twinwin.participations-positive",
+      "targets": [
+        "payoff.upsideParticipation",
+        "payoff.downsideParticipation"
+      ],
+      "message": {
+        "pt": "As participações de alta e de baixa devem ser maiores que zero.",
+        "en": "Both the upside and the downside participation must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "upsideParticipation > 0 and downsideParticipation > 0"
+    },
+    {
+      "id": "twinwin.asymmetric-participation",
+      "targets": [
+        "payoff.downsideParticipation"
+      ],
+      "message": {
+        "pt": "Participações de alta e baixa diferentes — confirme que o DIE descreve o twin win assimétrico.",
+        "en": "Upside and downside participations differ — confirm the DIE describes the asymmetric twin win."
+      },
+      "severity": "info",
+      "execution": "client",
+      "trigger": "change",
+      "assert": "upsideParticipation == downsideParticipation"
+    }
+  ]
+}

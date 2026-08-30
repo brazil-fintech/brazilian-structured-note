@@ -1,0 +1,138 @@
+{
+  "figureCode": "COE001001",
+  "figureName": "Call",
+  "commercialName": "Call com participação",
+  "description": {
+    "pt": "Participação altista sem teto: resgate = VN × [1 + Part × max(Perf, 0)], com o capital protegido pela perna de renda fixa.",
+    "en": "Uncapped bullish participation: redemption = VN × [1 + Part × max(Perf, 0)], with capital protected by the fixed-income leg."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "participation",
+          "order": 20,
+          "label": {
+            "pt": "Participação (%)",
+            "en": "Participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "b3Field": "Participação",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
+            "en": "Multiplier applied to the underlying performance passed on to the investor."
+          }
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "call.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP.",
+        "en": "This figure is registered under the VNP modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP']"
+    },
+    {
+      "id": "call.participation-positive",
+      "targets": [
+        "payoff.participation"
+      ],
+      "message": {
+        "pt": "A participação deve ser maior que zero.",
+        "en": "Participation must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "participation > 0"
+    },
+    {
+      "id": "call.high-participation",
+      "targets": [
+        "payoff.participation"
+      ],
+      "message": {
+        "pt": "Participação acima de 200% é rara sem cap — confirme o orçamento de prêmio.",
+        "en": "Participation above 200% is unusual without a cap — confirm the premium budget."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "participation <= 200"
+    },
+    {
+      "id": "call.strike-away-from-atm",
+      "targets": [
+        "payoff.strike"
+      ],
+      "message": {
+        "pt": "Strike fora de 100% de S₀ — confirme que o DIE descreve a call com esse exercício.",
+        "en": "Strike away from 100% of S₀ — confirm the DIE describes the call at that exercise level."
+      },
+      "severity": "info",
+      "execution": "client",
+      "trigger": "change",
+      "assert": "strike == 100"
+    }
+  ]
+}

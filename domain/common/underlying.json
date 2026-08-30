@@ -1,0 +1,374 @@
+{
+  "sections": [
+    {
+      "key": "underlying",
+      "kind": "tab",
+      "order": 10,
+      "label": { "pt": "Ativo subjacente", "en": "Underlying" },
+      "help": {
+        "pt": "A Resolução CMN 4.263/2013 exige preços ou índices de divulgação pública, regular e verificável.",
+        "en": "CMN Resolution 4,263/2013 requires prices or indices with public, regular and verifiable disclosure."
+      },
+      "fields": [
+        {
+          "key": "assetClass",
+          "order": 10,
+          "label": { "pt": "Classe do Ativo Subjacente", "en": "Underlying asset class" },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente",
+          "required": true,
+          "inGrid": true,
+          "options": [
+            { "code": "CAMBIO", "label": { "pt": "Taxas de Câmbio", "en": "FX rates" } },
+            { "code": "COMMODITIES", "label": { "pt": "Commodities", "en": "Commodities" } },
+            { "code": "ACOES", "label": { "pt": "Ações", "en": "Equities" } },
+            { "code": "INDICES", "label": { "pt": "Índices", "en": "Indices" } },
+            { "code": "ACOES_INT", "label": { "pt": "Ações Internacionais", "en": "International equities" } },
+            { "code": "INDICES_INT", "label": { "pt": "Índices Internacionais", "en": "International indices" } },
+            { "code": "CESTA", "label": { "pt": "Cesta", "en": "Basket" } }
+          ]
+        },
+        {
+          "key": "asset",
+          "order": 20,
+          "label": { "pt": "Ativo Subjacente", "en": "Underlying asset" },
+          "help": {
+            "pt": "Ticker, índice ou par de moedas. Para cestas, os componentes são informados na aba Cesta.",
+            "en": "Ticker, index or currency pair. Basket components are booked on the Basket tab."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente",
+          "optionSource": "underlyings",
+          "maxLength": 30,
+          "inGrid": true,
+          "visibleWhen": "assetClass != 'CESTA'",
+          "requiredWhen": "assetClass != 'CESTA'"
+        },
+        {
+          "key": "initialValue",
+          "order": 30,
+          "label": { "pt": "Valor Inicial do Ativo Subjacente (S₀)", "en": "Initial underlying value (S₀)" },
+          "help": {
+            "pt": "Base de todos os percentuais (strikes, barreiras). Em branco, a B3 usa a cotação do dia útil anterior para ativos capturados. Cestas usam sempre 10.000.",
+            "en": "The base of every percentage field (strikes, barriers). Left blank, B3 defaults to the previous business day's quote for captured assets. Baskets always use 10,000."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial do Ativo Subjacente",
+          "min": 0,
+          "decimals": 8,
+          "visibleWhen": "assetClass != 'CESTA'"
+        },
+        {
+          "key": "basketType",
+          "order": 40,
+          "label": { "pt": "Tipo de Cesta", "en": "Basket type" },
+          "dataType": "enum",
+          "b3Field": "Parametrização de Cestas",
+          "visibleWhen": "assetClass == 'CESTA'",
+          "requiredWhen": "assetClass == 'CESTA'",
+          "default": "PADRAO",
+          "options": [
+            {
+              "code": "PADRAO",
+              "label": { "pt": "Cesta ponderada", "en": "Weighted basket" },
+              "help": { "pt": "Pesos positivos somando 100%.", "en": "Positive weights summing to 100%." }
+            },
+            {
+              "code": "RAINBOW",
+              "label": { "pt": "Rainbow", "en": "Rainbow" },
+              "help": {
+                "pt": "Pesos podem ser positivos, nulos ou negativos.",
+                "en": "Weights may be positive, zero or negative."
+              }
+            }
+          ]
+        },
+        {
+          "key": "fixingWindow",
+          "order": 50,
+          "label": { "pt": "Período de captura para liquidação", "en": "Final fixing capture" },
+          "dataType": "enum",
+          "b3Field": "Período de captura para liquidação",
+          "required": true,
+          "default": "DATA_UNICA",
+          "options": [
+            { "code": "DATA_UNICA", "label": { "pt": "Data Única", "en": "Single date" } },
+            { "code": "JANELA", "label": { "pt": "Janela de Datas", "en": "Date window" } },
+            { "code": "MAIS_DATAS", "label": { "pt": "Mais Datas", "en": "Explicit schedule" } }
+          ]
+        },
+        {
+          "key": "fixingWindowStart",
+          "order": 60,
+          "label": { "pt": "Data Inicial da Janela", "en": "Window start date" },
+          "dataType": "date",
+          "visibleWhen": "fixingWindow == 'JANELA'",
+          "requiredWhen": "fixingWindow == 'JANELA'"
+        },
+        {
+          "key": "fixingWindowEnd",
+          "order": 70,
+          "label": { "pt": "Data Final da Janela", "en": "Window end date" },
+          "dataType": "date",
+          "visibleWhen": "fixingWindow == 'JANELA'",
+          "requiredWhen": "fixingWindow == 'JANELA'"
+        },
+        {
+          "key": "maturityFixingType",
+          "order": 80,
+          "label": { "pt": "Tipo de Fixing para Vencimento", "en": "Maturity fixing type" },
+          "dataType": "enum",
+          "b3Field": "Tipo de Fixing para Vencimento",
+          "visibleWhen": "fixingWindow != 'DATA_UNICA'",
+          "requiredWhen": "fixingWindow != 'DATA_UNICA'",
+          "options": [
+            { "code": "MAXIMO", "label": { "pt": "Máximo", "en": "Maximum" } },
+            { "code": "MINIMO", "label": { "pt": "Mínimo", "en": "Minimum" } },
+            { "code": "MEDIA", "label": { "pt": "Média", "en": "Mean" } }
+          ]
+        },
+        {
+          "key": "quoteType",
+          "order": 90,
+          "label": { "pt": "Tipo de Cotação para Liquidação", "en": "Settlement quote type" },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação",
+          "required": true,
+          "default": "FECHAMENTO",
+          "options": [
+            { "code": "FECHAMENTO", "label": { "pt": "Fechamento", "en": "Close" } },
+            { "code": "MEDIA", "label": { "pt": "Média", "en": "Average" } },
+            { "code": "MAXIMO", "label": { "pt": "Máximo", "en": "High" } },
+            { "code": "MINIMO", "label": { "pt": "Mínimo", "en": "Low" } },
+            { "code": "AJUSTE", "label": { "pt": "Ajuste", "en": "Settlement price" } }
+          ]
+        },
+        {
+          "key": "hasLookback",
+          "order": 100,
+          "label": { "pt": "Lookback no valor inicial", "en": "Lookback on the initial value" },
+          "dataType": "boolean",
+          "b3Field": "Critério de Lookback",
+          "default": false
+        },
+        {
+          "key": "lookbackStart",
+          "order": 110,
+          "label": { "pt": "Data Inicial do Lookback", "en": "Lookback start date" },
+          "dataType": "date",
+          "visibleWhen": "hasLookback == true",
+          "requiredWhen": "hasLookback == true"
+        },
+        {
+          "key": "lookbackEnd",
+          "order": 120,
+          "label": { "pt": "Data Final do Lookback", "en": "Lookback end date" },
+          "dataType": "date",
+          "visibleWhen": "hasLookback == true",
+          "requiredWhen": "hasLookback == true"
+        },
+        {
+          "key": "lookbackCriterion",
+          "order": 130,
+          "label": { "pt": "Critério de Lookback", "en": "Lookback criterion" },
+          "dataType": "enum",
+          "visibleWhen": "hasLookback == true",
+          "requiredWhen": "hasLookback == true",
+          "options": [
+            { "code": "MAXIMO", "label": { "pt": "Máximo", "en": "Maximum" } },
+            { "code": "MEDIA", "label": { "pt": "Média", "en": "Mean" } },
+            { "code": "MINIMO", "label": { "pt": "Mínimo", "en": "Minimum" } }
+          ]
+        },
+        {
+          "key": "quanto",
+          "order": 140,
+          "label": { "pt": "Variação Quanto", "en": "Quanto" },
+          "help": {
+            "pt": "Sim = a variação cambial do ativo não é contada (quanto). Não = variação cambial contada (composite), exigindo a paridade inicial.",
+            "en": "Yes = the asset's own currency move is not counted (quanto). No = it is counted (composite), which requires the initial parity."
+          },
+          "dataType": "boolean",
+          "b3Field": "Variação Quanto",
+          "visibleWhen": "assetClass in ['CAMBIO', 'ACOES_INT', 'INDICES_INT', 'CESTA']",
+          "requiredWhen": "assetClass in ['CAMBIO', 'ACOES_INT', 'INDICES_INT', 'CESTA']"
+        },
+        {
+          "key": "initialParity",
+          "order": 150,
+          "label": { "pt": "Valor Inicial da Paridade", "en": "Initial parity value" },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial da Paridade",
+          "decimals": 8,
+          "min": 0,
+          "visibleWhen": "quanto == false and assetClass in ['CAMBIO', 'ACOES_INT', 'INDICES_INT', 'CESTA']",
+          "requiredWhen": "quanto == false and assetClass in ['CAMBIO', 'ACOES_INT', 'INDICES_INT', 'CESTA']"
+        },
+        {
+          "key": "dividendProtection",
+          "order": 160,
+          "label": { "pt": "Proteção contra Proventos", "en": "Corporate-action protection" },
+          "dataType": "enum",
+          "b3Field": "Proteção contra Proventos",
+          "visibleWhen": "assetClass in ['ACOES', 'ACOES_INT']",
+          "requiredWhen": "assetClass in ['ACOES', 'ACOES_INT']",
+          "options": [
+            { "code": "EMISSOR", "label": { "pt": "Sim — Ajustado pelo Emissor", "en": "Yes — adjusted by the issuer" } },
+            { "code": "CETIP", "label": { "pt": "Sim — Cetip", "en": "Yes — Cetip" } },
+            { "code": "NAO", "label": { "pt": "Não", "en": "No" } }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "basket",
+      "kind": "tab",
+      "order": 15,
+      "label": { "pt": "Cesta", "en": "Basket" },
+      "repeating": true,
+      "minItems": 2,
+      "maxItems": 30,
+      "visibleWhen": "underlying.assetClass == 'CESTA'",
+      "help": {
+        "pt": "Parametrização de Cestas. O valor inicial da cesta é sempre 10.000.",
+        "en": "Basket parameterisation. The initial basket value is always 10,000."
+      },
+      "itemFields": [
+        {
+          "key": "component",
+          "order": 10,
+          "label": { "pt": "Componente", "en": "Component" },
+          "dataType": "string",
+          "optionSource": "underlyings",
+          "required": true,
+          "maxLength": 30
+        },
+        {
+          "key": "weight",
+          "order": 20,
+          "label": { "pt": "Peso (%)", "en": "Weight (%)" },
+          "dataType": "percent",
+          "required": true,
+          "min": -1000,
+          "max": 1000,
+          "decimals": 6
+        },
+        {
+          "key": "componentInitialValue",
+          "order": 30,
+          "label": { "pt": "Valor Inicial do Componente", "en": "Component initial value" },
+          "dataType": "decimal",
+          "min": 0,
+          "decimals": 8
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "underlying.fixing-window-order",
+      "targets": ["underlying.fixingWindowEnd"],
+      "when": "fixingWindow == 'JANELA'",
+      "assert": "fixingWindowEnd >= fixingWindowStart",
+      "message": {
+        "pt": "A data final da janela de captura não pode ser anterior à data inicial.",
+        "en": "The capture window's end date cannot precede its start date."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "underlying.fixing-window-before-maturity",
+      "targets": ["underlying.fixingWindowEnd"],
+      "when": "fixingWindow == 'JANELA'",
+      "serverCheck": "businessDaysBefore",
+      "args": { "path": "underlying.fixingWindowEnd", "referencePath": "common.maturityDate", "minimum": 0, "maximum": 5 },
+      "message": {
+        "pt": "A janela de captura deve encerrar em até 5 dias úteis antes do vencimento.",
+        "en": "The capture window must end no more than 5 business days before maturity."
+      },
+      "severity": "error",
+      "execution": "server",
+      "trigger": "change"
+    },
+    {
+      "id": "underlying.fixing-window-length",
+      "targets": ["underlying.fixingWindowStart"],
+      "when": "fixingWindow == 'JANELA'",
+      "assert": "daysBetween(fixingWindowStart, fixingWindowEnd) <= 7",
+      "message": {
+        "pt": "A janela de captura registra de 1 a 5 dias úteis.",
+        "en": "The capture window registers between 1 and 5 business days."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "underlying.lookback-order",
+      "targets": ["underlying.lookbackEnd"],
+      "when": "hasLookback == true",
+      "assert": "lookbackEnd > lookbackStart",
+      "message": {
+        "pt": "A data final do lookback deve ser posterior à inicial.",
+        "en": "The lookback end date must be later than its start date."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "underlying.initial-value-recommended",
+      "targets": ["underlying.initialValue"],
+      "when": "assetClass != 'CESTA' and hasLookback == false",
+      "assert": "notNull(initialValue)",
+      "message": {
+        "pt": "Sem valor inicial informado, a B3 usa a cotação do dia útil anterior — só é aceito para ativos capturados.",
+        "en": "With no initial value, B3 defaults to the previous business day's quote — accepted only for captured assets."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "basket.weights-sum-to-100",
+      "targets": ["basket"],
+      "when": "underlying.assetClass == 'CESTA' and underlying.basketType == 'PADRAO'",
+      "assert": "sum(basket, @.weight) == 100",
+      "message": {
+        "pt": "Os pesos de uma cesta ponderada devem somar 100%.",
+        "en": "The weights of a weighted basket must sum to 100%."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "basket.weights-non-negative",
+      "targets": ["basket"],
+      "when": "underlying.assetClass == 'CESTA' and underlying.basketType == 'PADRAO'",
+      "assert": "all(basket, @.weight > 0)",
+      "message": {
+        "pt": "Pesos nulos ou negativos só são registráveis em cestas Rainbow.",
+        "en": "Zero and negative weights are only registrable on a Rainbow basket."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "basket.components-distinct",
+      "targets": ["basket"],
+      "when": "underlying.assetClass == 'CESTA'",
+      "assert": "isDistinct(basket, @.component)",
+      "message": {
+        "pt": "Cada componente da cesta deve aparecer uma única vez.",
+        "en": "Each basket component may appear only once."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

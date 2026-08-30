@@ -1,0 +1,249 @@
+{
+  "figureCode": "COE001015",
+  "figureName": "Range Accrual",
+  "commercialName": "Range accrual (corredor)",
+  "description": {
+    "pt": "O cupom acumula observação a observação enquanto o ativo fixa dentro da banda: resgate = VN × [1 + C_max × n_in / N].",
+    "en": "The coupon accrues observation by observation while the underlying fixes inside the range: redemption = VN × [1 + C_max × n_in / N]."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "lowerBound",
+          "order": 10,
+          "label": {
+            "pt": "Limite inferior da banda (% de S₀)",
+            "en": "Lower bound of the range (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "L",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 90
+        },
+        {
+          "key": "upperBound",
+          "order": 20,
+          "label": {
+            "pt": "Limite superior da banda (% de S₀)",
+            "en": "Upper bound of the range (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "U",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 115
+        },
+        {
+          "key": "maxCoupon",
+          "order": 30,
+          "label": {
+            "pt": "Cupom máximo (%)",
+            "en": "Maximum coupon (%)"
+          },
+          "dataType": "percent",
+          "symbol": "C_max",
+          "b3Field": "RemAd",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "help": {
+            "pt": "Cupom pago quando todas as observações ficam dentro da banda.",
+            "en": "The coupon paid when every observation falls inside the range."
+          }
+        },
+        {
+          "key": "observationCount",
+          "order": 40,
+          "label": {
+            "pt": "Número de observações (N)",
+            "en": "Number of observations (N)"
+          },
+          "dataType": "integer",
+          "symbol": "N",
+          "required": true,
+          "min": 1,
+          "max": 2520,
+          "help": {
+            "pt": "Total de fixings do período de acumulação — 252 para observação diária ao longo de um ano.",
+            "en": "Total fixings of the accrual period — 252 for daily observation over one year."
+          }
+        },
+        {
+          "key": "accrualConvention",
+          "order": 50,
+          "label": {
+            "pt": "Convenção de acumulação",
+            "en": "Accrual convention"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "LINEAR",
+          "help": {
+            "pt": "O Caderno de Fórmulas expressa o cupom como taxa anual acumulada sobre os dias úteis em banda: (1 + RemAd)^(NDD/252) − 1 na forma exponencial, RemAd × NDD/252 na linear.",
+            "en": "The Caderno de Fórmulas expresses the coupon as an annual rate accrued over the business days in range: (1 + RemAd)^(NDD/252) − 1 exponentially, RemAd × NDD/252 linearly."
+          },
+          "options": [
+            {
+              "code": "LINEAR",
+              "label": {
+                "pt": "PRÉ252-LIN (linear)",
+                "en": "PRE252-LIN (linear)"
+              }
+            },
+            {
+              "code": "EXPONENCIAL",
+              "label": {
+                "pt": "252 exponencial",
+                "en": "252 exponential"
+              }
+            }
+          ]
+        },
+        {
+          "key": "observationStart",
+          "order": 60,
+          "label": {
+            "pt": "Início do período de observação",
+            "en": "Observation period start"
+          },
+          "dataType": "date",
+          "required": true
+        },
+        {
+          "key": "observationEnd",
+          "order": 70,
+          "label": {
+            "pt": "Fim do período de observação",
+            "en": "Observation period end"
+          },
+          "dataType": "date",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "rangeaccrual.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP.",
+        "en": "This figure is registered under the VNP modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP']"
+    },
+    {
+      "id": "rangeaccrual.band-order",
+      "targets": [
+        "payoff.upperBound"
+      ],
+      "message": {
+        "pt": "O limite superior da banda deve ser maior que o inferior.",
+        "en": "The upper bound of the range must exceed the lower bound."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "upperBound > lowerBound"
+    },
+    {
+      "id": "rangeaccrual.band-contains-spot",
+      "targets": [
+        "payoff.lowerBound"
+      ],
+      "message": {
+        "pt": "A banda não contém 100% de S₀: a acumulação começa fora do corredor.",
+        "en": "The range does not contain 100% of S₀: accrual starts outside the corridor."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "lowerBound <= 100 and upperBound >= 100"
+    },
+    {
+      "id": "rangeaccrual.observation-window",
+      "targets": [
+        "payoff.observationEnd"
+      ],
+      "message": {
+        "pt": "O período de observação deve caber entre a emissão e o vencimento.",
+        "en": "The observation period must sit between the issue date and maturity."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "observationStart >= common.issueDate and observationEnd <= common.maturityDate"
+    },
+    {
+      "id": "rangeaccrual.observation-count-plausible",
+      "targets": [
+        "payoff.observationCount"
+      ],
+      "message": {
+        "pt": "O número de observações não confere com um fixing diário no período informado (≈252 dias úteis por ano).",
+        "en": "The observation count does not match a daily fixing over the period given (≈252 business days per year)."
+      },
+      "severity": "warning",
+      "execution": "server",
+      "trigger": "submit",
+      "serverCheck": "observationCountMatchesCalendar",
+      "args": {
+        "countPath": "payoff.observationCount",
+        "startPath": "payoff.observationStart",
+        "endPath": "payoff.observationEnd",
+        "calendar": "BRASIL"
+      }
+    },
+    {
+      "id": "rangeaccrual.coupon-positive",
+      "targets": [
+        "payoff.maxCoupon"
+      ],
+      "message": {
+        "pt": "O cupom máximo deve ser maior que zero.",
+        "en": "The maximum coupon must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "maxCoupon > 0"
+    }
+  ]
+}

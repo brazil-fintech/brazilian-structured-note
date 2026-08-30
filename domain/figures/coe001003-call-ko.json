@@ -1,0 +1,224 @@
+{
+  "figureCode": "COE001003",
+  "figureName": "Call KO",
+  "commercialName": "Shark fin",
+  "description": {
+    "pt": "Participação total na alta enquanto o ativo não atinge a barreira de knock-out; atingida a barreira, resta apenas o rebate registrado em percentual do VFE.",
+    "en": "Full participation in the rally while the underlying stays below the knock-out barrier; once it is reached, only the rebate registered as a percentage of the VFE remains."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement",
+    "common/barriers"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "participation",
+          "order": 20,
+          "label": {
+            "pt": "Participação (%)",
+            "en": "Participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "b3Field": "Participação",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
+            "en": "Multiplier applied to the underlying performance passed on to the investor."
+          }
+        },
+        {
+          "key": "rebate",
+          "order": 30,
+          "label": {
+            "pt": "Rebate no Cenário de Alta (% do VFE)",
+            "en": "Upside-scenario rebate (% of VFE)"
+          },
+          "dataType": "percent",
+          "symbol": "R",
+          "b3Field": "Rebate no Cenário de Alta",
+          "required": true,
+          "min": 0,
+          "max": 100,
+          "decimals": 6,
+          "help": {
+            "pt": "Pago quando a barreira de alta é atingida e a perna de opção é extinta.",
+            "en": "Paid when the up barrier is reached and the option leg is extinguished."
+          }
+        }
+      ]
+    },
+    {
+      "key": "barriers",
+      "label": {
+        "pt": "Barreira de knock-out",
+        "en": "Knock-out barrier"
+      },
+      "fields": [
+        {
+          "key": "barrierLevel",
+          "order": 10,
+          "label": {
+            "pt": "Barreira no Cenário de Alta (% de S₀)",
+            "en": "Up-scenario barrier (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "H",
+          "b3Field": "Barreira no Cenário de Alta",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6
+        },
+        {
+          "key": "barrierDirection",
+          "order": 20,
+          "label": {
+            "pt": "Direção da barreira",
+            "en": "Barrier direction"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "ALTA",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "ALTA",
+              "label": {
+                "pt": "Alta (up)",
+                "en": "Up"
+              }
+            }
+          ]
+        },
+        {
+          "key": "barrierType",
+          "order": 30,
+          "label": {
+            "pt": "Tipo de barreira",
+            "en": "Barrier type"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "KO",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "KO",
+              "label": {
+                "pt": "Knock-out",
+                "en": "Knock-out"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "sharkfin.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP.",
+        "en": "This figure is registered under the VNP modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP']"
+    },
+    {
+      "id": "sharkfin.barrier-above-strike",
+      "targets": [
+        "barriers.barrierLevel"
+      ],
+      "message": {
+        "pt": "A barreira de knock-out deve ficar acima do strike, senão a perna de alta nunca paga.",
+        "en": "The knock-out barrier must sit above the strike, otherwise the upside leg never pays."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "barrierLevel > strike"
+    },
+    {
+      "id": "sharkfin.rebate-below-max-payoff",
+      "targets": [
+        "payoff.rebate"
+      ],
+      "message": {
+        "pt": "O rebate excede o ganho máximo antes do knock-out — o investidor prefere que a barreira seja atingida.",
+        "en": "The rebate exceeds the maximum gain before knock-out — the investor is better off if the barrier is hit."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "rebate <= participation * (barrierLevel - strike) / 100"
+    },
+    {
+      "id": "sharkfin.tight-barrier",
+      "targets": [
+        "barriers.barrierLevel"
+      ],
+      "message": {
+        "pt": "Barreira a menos de 10% acima do strike: a probabilidade de knock-out é alta.",
+        "en": "Barrier less than 10% above the strike: the knock-out probability is high."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "barrierLevel - strike >= 10"
+    }
+  ]
+}

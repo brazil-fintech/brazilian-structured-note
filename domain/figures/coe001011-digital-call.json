@@ -1,0 +1,224 @@
+{
+  "figureCode": "COE001011",
+  "figureName": "Digital Call",
+  "commercialName": "Digital / duplo indexador",
+  "description": {
+    "pt": "Cupom fixo tudo-ou-nada: se S_T ≥ K paga 100% + C; caso contrário, o certificado remunera pelo indexador alternativo registrado.",
+    "en": "An all-or-nothing fixed coupon: if S_T ≥ K it pays 100% + C; otherwise the certificate accrues at the registered alternative indexer."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "digitalCoupon",
+          "order": 20,
+          "label": {
+            "pt": "Cupom digital (%)",
+            "en": "Digital coupon (%)"
+          },
+          "dataType": "percent",
+          "symbol": "C",
+          "b3Field": "Cupom",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "help": {
+            "pt": "Cupom pago quando a condição digital verifica.",
+            "en": "The coupon paid when the digital condition verifies."
+          }
+        },
+        {
+          "key": "digitalDirection",
+          "order": 30,
+          "label": {
+            "pt": "Sentido da condição",
+            "en": "Condition direction"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "ACIMA",
+          "options": [
+            {
+              "code": "ACIMA",
+              "label": {
+                "pt": "S_T ≥ K (call digital)",
+                "en": "S_T ≥ K (digital call)"
+              }
+            },
+            {
+              "code": "ABAIXO",
+              "label": {
+                "pt": "S_T ≤ K (put digital)",
+                "en": "S_T ≤ K (digital put)"
+              }
+            }
+          ]
+        },
+        {
+          "key": "alternativeIndexer",
+          "order": 40,
+          "label": {
+            "pt": "Indexador alternativo",
+            "en": "Alternative indexer"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "SEM_REMUNERACAO",
+          "help": {
+            "pt": "Remuneração aplicada quando a condição digital não verifica — o segundo indexador do duplo indexador.",
+            "en": "The remuneration applied when the digital condition does not verify — the second indexer of the dual-indexer structure."
+          },
+          "options": [
+            {
+              "code": "SEM_REMUNERACAO",
+              "label": {
+                "pt": "Sem remuneração",
+                "en": "None"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI",
+                "en": "DI (CDI)"
+              }
+            },
+            {
+              "code": "IPCA_VCP",
+              "label": {
+                "pt": "IPCA VCP",
+                "en": "IPCA VCP"
+              }
+            },
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed rate"
+              }
+            }
+          ]
+        },
+        {
+          "key": "alternativeRate",
+          "order": 50,
+          "label": {
+            "pt": "Taxa do indexador alternativo (%)",
+            "en": "Alternative indexer rate (%)"
+          },
+          "dataType": "percent",
+          "min": 0,
+          "max": 300,
+          "decimals": 6,
+          "visibleWhen": "alternativeIndexer != 'SEM_REMUNERACAO'",
+          "requiredWhen": "alternativeIndexer != 'SEM_REMUNERACAO'"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "digital.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP.",
+        "en": "This figure is registered under the VNP modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP']"
+    },
+    {
+      "id": "digital.coupon-positive",
+      "targets": [
+        "payoff.digitalCoupon"
+      ],
+      "message": {
+        "pt": "O cupom digital deve ser maior que zero.",
+        "en": "The digital coupon must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "digitalCoupon > 0"
+    },
+    {
+      "id": "digital.large-coupon",
+      "targets": [
+        "payoff.digitalCoupon"
+      ],
+      "message": {
+        "pt": "Cupom digital acima de 50% — verifique o prazo e a distância do strike.",
+        "en": "Digital coupon above 50% — check the tenor and how far the strike sits."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "digitalCoupon <= 50"
+    },
+    {
+      "id": "digital.dual-indexer-consistency",
+      "targets": [
+        "payoff.alternativeIndexer"
+      ],
+      "message": {
+        "pt": "Duplo indexador: com remuneração no vencimento já registrada, o indexador alternativo duplica a perna de renda fixa.",
+        "en": "Dual indexer: with a maturity remunerator already registered, the alternative indexer duplicates the fixed-income leg."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "when": "alternativeIndexer != 'SEM_REMUNERACAO'",
+      "assert": "remuneration.maturityRemunerator == 'SEM_REMUNERACAO'"
+    }
+  ]
+}

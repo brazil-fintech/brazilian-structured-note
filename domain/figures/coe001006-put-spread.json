@@ -1,0 +1,157 @@
+{
+  "figureCode": "COE001006",
+  "figureName": "Put Spread",
+  "commercialName": "Put spread (trava de baixa)",
+  "description": {
+    "pt": "Participação baixista até um teto: resgate = VN × [1 + Part × min(max(−Perf, 0), Cap)].",
+    "en": "Bearish participation up to a cap: redemption = VN × [1 + Part × min(max(−Perf, 0), Cap)]."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "CAMBIO",
+    "COMMODITIES",
+    "ACOES",
+    "INDICES",
+    "ACOES_INT",
+    "INDICES_INT",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "participation",
+          "order": 20,
+          "label": {
+            "pt": "Participação (%)",
+            "en": "Participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "b3Field": "Participação",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
+            "en": "Multiplier applied to the underlying performance passed on to the investor."
+          }
+        },
+        {
+          "key": "cap",
+          "order": 30,
+          "label": {
+            "pt": "Cap (%)",
+            "en": "Cap (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Cap",
+          "b3Field": "Limitador",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "help": {
+            "pt": "Performance máxima considerada pela fórmula.",
+            "en": "Maximum performance considered by the formula."
+          }
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "putspread.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP.",
+        "en": "This figure is registered under the VNP modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP']"
+    },
+    {
+      "id": "putspread.cap-positive",
+      "targets": [
+        "payoff.cap"
+      ],
+      "message": {
+        "pt": "O cap deve ser maior que zero.",
+        "en": "The cap must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "cap > 0"
+    },
+    {
+      "id": "putspread.cap-below-strike",
+      "targets": [
+        "payoff.cap"
+      ],
+      "message": {
+        "pt": "O cap não pode exceder o strike: a perna inferior ficaria com preço de exercício negativo.",
+        "en": "The cap cannot exceed the strike, or the lower leg would have a negative exercise price."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "cap <= strike"
+    },
+    {
+      "id": "putspread.participation-positive",
+      "targets": [
+        "payoff.participation"
+      ],
+      "message": {
+        "pt": "A participação deve ser maior que zero.",
+        "en": "Participation must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "participation > 0"
+    }
+  ]
+}

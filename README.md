@@ -1,11 +1,19 @@
 # Brazilian Structured Note — COE (Certificado de Operações Estruturadas)
 
-Documentation of how a **COE** — the *Certificado de Operações Estruturadas*, the Brazilian
-equivalent of an international **structured note** — is designed, assembled, registered and
-paid out. It covers the product's legal and clearing framework, every standard payoff
+How a **COE** — the *Certificado de Operações Estruturadas*, the Brazilian equivalent of an
+international **structured note** — is designed, assembled, registered and paid out, and a
+platform for booking one.
+
+The documentation covers the product's legal and clearing framework, every standard payoff
 structure traded in the Brazilian market with its formula, parameters, worked examples and
-payoff diagrams, and the calculation conventions (CDI accrual, business-day count,
-performance observation) used to settle it.
+payoff diagrams, and the calculation conventions (CDI accrual, business-day count, performance
+observation) used to settle it.
+
+The platform — a .NET 10 back end and a React front end — turns that into a booking screen: B3
+payoff figures are described as **domain files**, a worker compiles each one into a versioned
+JSON template stored in MSSQL, and both the API and the dynamic form are generic readers of
+that template. Supporting a new figure is adding a file, not shipping a release. See
+[docs/platform.md](docs/platform.md).
 
 > **Disclaimer:** this repository is technical documentation, not investment advice or an
 > offer of securities. Always refer to the issuer's DIE (*Documento de Informações
@@ -89,13 +97,56 @@ docs/
   parameters.md               ← every parameter: registration fields + payoff parameters
   calculations.md             ← calculation conventions: CDI/pre/IPCA accrual, DU/252,
                                 performance observation, FX, valuation
+  platform.md                 ← the booking platform: architecture, validation, endpoints
   glossary.md                 ← PT-BR ↔ EN glossary
   references.md               ← all normative, clearing and bibliographic references
   payoffs/                    ← one document per payoff structure (formulas + examples)
   figures/                    ← payoff drawings (SVG) + generate_figures.py (reproducible)
   clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
                                 Fórmulas, Manual de Normas) — see its README
+
+domain/                       ← the figure catalog the platform runs on — see its README
+  common/                     ← reusable blocks: identification, underlying, remuneration,
+                                barriers, autocall, settlement
+  figures/                    ← one file per B3 figure code
+src/
+  Coe.Core/                   ← template model, expression AST + evaluator, validation engine
+  Coe.Ingestion/              ← domain-file reader and template compiler
+  Coe.Infrastructure/         ← MSSQL (EF Core), template cache, booking, server-side checks
+  Coe.Api/                    ← minimal API: templates, assets, validation
+  Coe.Worker/                 ← ingestion worker (file watch + interval)
+web/                          ← React + TypeScript: asset list, figure picker, dynamic form
+tests/Coe.Tests/              ← expression, compiler and validation-engine suites
+db/                           ← re-runnable schema and reference-data scripts
 ```
+
+## The platform
+
+**Asset list.** Filtered by a reference date: an asset is listed when it is live on that date,
+i.e. `issueDate ≤ referenceDate ≤ maturityDate`. From there, create a new asset or edit one.
+
+**Booking.** Pick a figure, then fill in a form built entirely from that figure's template — the
+common registration attributes pinned at the top, and the payoff, basket, cash-flow and barrier
+blocks as tabs, each appearing only when the figure and the values so far call for it.
+
+**Validation as you type.** The template carries every rule, including the cross-field ones, in
+a form both sides evaluate: the browser answers instantly, and a debounced call to
+`POST /api/assets/validate` answers the checks that need reference data — business-day
+calendars, code uniqueness. Findings land next to the attribute they are about. Errors block
+the save; warnings do not, and the ones a user accepts are stored on the asset for audit.
+
+**The API is the authority.** Whatever the browser checked, every save re-runs the full
+validation server-side, re-derives computed attributes from their inputs, and only then writes.
+
+```bash
+docker compose up -d mssql                # SQL Server
+dotnet run --project src/Coe.Worker       # compile domain/ into templates, keep watching
+dotnet run --project src/Coe.Api          # http://localhost:5080
+cd web && npm install && npm run dev      # http://localhost:5173
+```
+
+Full architecture in [docs/platform.md](docs/platform.md); how to add or change a figure in
+[domain/README.md](domain/README.md).
 
 ## References
 

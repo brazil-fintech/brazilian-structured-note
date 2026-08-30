@@ -13,6 +13,13 @@ structured note. Start with the [repository README](../README.md) for the short 
 | [glossary.md](glossary.md) | PT-BR ↔ EN glossary of product and market terms |
 | [references.md](references.md) | All references: laws, CMN/CVM rules, B3 manuals, ANBIMA, bibliography |
 
+## Platform
+
+| Document | Contents |
+|---|---|
+| [platform.md](platform.md) | The booking platform: how a figure becomes a form, template compilation and versioning, the three validation scopes, endpoints, data model, running it locally |
+| [../domain/README.md](../domain/README.md) | Authoring guide for the figure catalog: file shape, sections, fields, rules, the expression language, and the checklist for adding a figure |
+
 ## Payoffs
 
 One document per payoff structure, each with: description, modality, parameter table,

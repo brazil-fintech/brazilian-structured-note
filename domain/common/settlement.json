@@ -1,0 +1,164 @@
+{
+  "sections": [
+    {
+      "key": "terms",
+      "kind": "tab",
+      "order": 60,
+      "label": { "pt": "Condições e liquidação", "en": "Terms and settlement" },
+      "fields": [
+        {
+          "key": "baseApplication",
+          "order": 10,
+          "label": { "pt": "Base Aplicação (%)", "en": "Protected-leg base (%)" },
+          "help": {
+            "pt": "Percentual do VFE alocado à perna que protege o capital garantido caso o derivativo não seja exercido.",
+            "en": "Percentage of the VFE allocated to the leg protecting the guaranteed capital if the derivative is not exercised."
+          },
+          "dataType": "percent",
+          "b3Field": "Base Aplicação",
+          "required": true,
+          "min": 0,
+          "max": 100,
+          "decimals": 6,
+          "default": 100
+        },
+        {
+          "key": "issuerPosition",
+          "order": 20,
+          "label": { "pt": "Posição do emissor no derivativo", "en": "Issuer's derivative position" },
+          "dataType": "enum",
+          "b3Field": "Posição do emissor no derivativo",
+          "required": true,
+          "options": [
+            { "code": "COMPRADO", "label": { "pt": "Comprado", "en": "Long" } },
+            { "code": "VENDIDO", "label": { "pt": "Vendido", "en": "Short" } }
+          ]
+        },
+        {
+          "key": "custodyRegime",
+          "order": 30,
+          "label": { "pt": "Tipo de Regime", "en": "Custody regime" },
+          "dataType": "enum",
+          "b3Field": "Tipo de Regime",
+          "required": true,
+          "default": "DEPOSITADO",
+          "options": [
+            { "code": "DEPOSITADO", "label": { "pt": "Depositado", "en": "Deposited" } },
+            { "code": "REGISTRADO", "label": { "pt": "Registrado", "en": "Registered" } }
+          ]
+        },
+        {
+          "key": "cvmResolution8",
+          "order": 40,
+          "label": { "pt": "Resolução CVM 8", "en": "CVM Resolution 8" },
+          "help": {
+            "pt": "Sim quando o COE é objeto de distribuição pública sob a Resolução CVM 8/2020 — exige DIE.",
+            "en": "Yes when the COE is publicly distributed under CVM Resolution 8/2020 — a DIE is required."
+          },
+          "dataType": "boolean",
+          "b3Field": "Resolução CVM 8",
+          "required": true,
+          "default": false
+        },
+        {
+          "key": "dieReference",
+          "order": 50,
+          "label": { "pt": "Referência do DIE", "en": "DIE reference" },
+          "dataType": "string",
+          "maxLength": 60,
+          "visibleWhen": "cvmResolution8 == true",
+          "requiredWhen": "cvmResolution8 == true"
+        },
+        {
+          "key": "physicalDelivery",
+          "order": 60,
+          "label": { "pt": "Entrega Física", "en": "Physical delivery" },
+          "help": {
+            "pt": "Disponível apenas para as classes Ações e Títulos Privados.",
+            "en": "Available only for the equity and private-debt underlying classes."
+          },
+          "dataType": "boolean",
+          "b3Field": "Entrega Física",
+          "default": false,
+          "visibleWhen": "underlying.assetClass in ['ACOES', 'ACOES_INT']"
+        },
+        {
+          "key": "earlyRedemption",
+          "order": 70,
+          "label": { "pt": "Resgate Antecipado", "en": "Early redemption" },
+          "dataType": "enum",
+          "b3Field": "Resgate Antecipado",
+          "required": true,
+          "default": "SEM_LIQUIDEZ",
+          "options": [
+            { "code": "SEM_LIQUIDEZ", "label": { "pt": "Não tem condição de liquidez", "en": "No early redemption" } },
+            { "code": "LIQUIDEZ_DIARIA", "label": { "pt": "Liquidez diária a mercado", "en": "Daily liquidity at market" } },
+            { "code": "CONDICAO_ESPECIFICA", "label": { "pt": "Condição específica", "en": "Specific condition" } }
+          ]
+        },
+        {
+          "key": "earlyRedemptionCondition",
+          "order": 80,
+          "label": { "pt": "Descrição da condição", "en": "Condition description" },
+          "dataType": "text",
+          "maxLength": 500,
+          "visibleWhen": "earlyRedemption == 'CONDICAO_ESPECIFICA'",
+          "requiredWhen": "earlyRedemption == 'CONDICAO_ESPECIFICA'"
+        },
+        {
+          "key": "issuerCallClause",
+          "order": 90,
+          "label": { "pt": "Cláusula de Resgate pelo Emissor", "en": "Issuer call clause" },
+          "help": {
+            "pt": "Sim dispensa o duplo comando na efetivação do resgate antecipado.",
+            "en": "Yes waives the double command otherwise required to effect an early redemption."
+          },
+          "dataType": "boolean",
+          "b3Field": "Cláusula de Resgate pelo Emissor",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "terms.protected-leg-base",
+      "targets": ["terms.baseApplication"],
+      "when": "common.modality == 'VNP'",
+      "assert": "baseApplication > 0",
+      "message": {
+        "pt": "Um COE de capital garantido precisa de Base Aplicação maior que zero.",
+        "en": "A capital-guaranteed COE needs a protected-leg base greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "terms.die-required",
+      "targets": ["terms.cvmResolution8"],
+      "when": "cvmResolution8 == true",
+      "assert": "notNull(dieReference)",
+      "message": {
+        "pt": "Distribuição pública sob a Resolução CVM 8/2020 exige a referência do DIE.",
+        "en": "Public distribution under CVM Resolution 8/2020 requires the DIE reference."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "terms.issuer-call-without-liquidity",
+      "targets": ["terms.issuerCallClause"],
+      "when": "issuerCallClause == true",
+      "assert": "earlyRedemption != 'SEM_LIQUIDEZ'",
+      "message": {
+        "pt": "A cláusula de resgate pelo emissor pressupõe alguma condição de resgate antecipado.",
+        "en": "An issuer call clause presupposes some early-redemption condition."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

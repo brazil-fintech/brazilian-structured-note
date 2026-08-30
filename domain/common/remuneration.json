@@ -1,0 +1,240 @@
+{
+  "sections": [
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 20,
+      "label": { "pt": "Remuneração", "en": "Remuneration" },
+      "help": {
+        "pt": "Perna de renda fixa. O Remunerador no Vencimento remunera o valor unitário apenas no vencimento; cupons intermediários são registrados no Fluxo de Caixa.",
+        "en": "The fixed-income leg. The maturity remunerator accrues the unit price at maturity only; interim coupons are registered as cash flows."
+      },
+      "fields": [
+        {
+          "key": "maturityRemunerator",
+          "order": 10,
+          "label": { "pt": "Remunerador no Vencimento", "en": "Maturity remunerator" },
+          "dataType": "enum",
+          "b3Field": "Remunerador no Vencimento",
+          "required": true,
+          "default": "SEM_REMUNERACAO",
+          "options": [
+            { "code": "SEM_REMUNERACAO", "label": { "pt": "Sem remuneração", "en": "None" } },
+            { "code": "PRE", "label": { "pt": "Pré", "en": "Fixed rate" } },
+            { "code": "DI", "label": { "pt": "DI", "en": "DI (CDI)" } },
+            { "code": "IPCA_VCP", "label": { "pt": "IPCA VCP", "en": "IPCA VCP" } },
+            { "code": "IBOVESPA_VCP", "label": { "pt": "IBOVESPA VCP", "en": "IBOVESPA VCP" } },
+            { "code": "IBOVESPA", "label": { "pt": "IBOVESPA", "en": "IBOVESPA" } },
+            { "code": "USD_VCP", "label": { "pt": "USD VCP", "en": "USD VCP" } },
+            { "code": "USD", "label": { "pt": "USD", "en": "USD" } },
+            { "code": "NO_PERIODO", "label": { "pt": "No período", "en": "Period rate" } },
+            { "code": "PRE_LIN360_VC_USD", "label": { "pt": "PRÉ LIN/360 + VC USD", "en": "PRE LIN/360 + USD variation" } }
+          ]
+        },
+        {
+          "key": "floatingPercentage",
+          "order": 20,
+          "label": { "pt": "Remunerador Flutuante (%)", "en": "Floating remunerator (%)" },
+          "help": {
+            "pt": "Percentual aplicado ao indexador flutuante — 90 para \"90% do CDI\".",
+            "en": "Percentage applied to the floating indexer — 90 for \"90% of CDI\"."
+          },
+          "symbol": "p",
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante",
+          "min": 0,
+          "max": 300,
+          "decimals": 4,
+          "visibleWhen": "maturityRemunerator in ['DI', 'USD', 'USD_VCP', 'IBOVESPA', 'IBOVESPA_VCP']",
+          "requiredWhen": "maturityRemunerator in ['DI', 'USD', 'USD_VCP', 'IBOVESPA', 'IBOVESPA_VCP']"
+        },
+        {
+          "key": "couponRate",
+          "order": 30,
+          "label": { "pt": "Spread / Cupom (%)", "en": "Spread / coupon (%)" },
+          "symbol": "i",
+          "dataType": "percent",
+          "b3Field": "Spread/Cupom",
+          "min": 0,
+          "max": 100,
+          "decimals": 6,
+          "visibleWhen": "maturityRemunerator in ['PRE', 'NO_PERIODO', 'IPCA_VCP', 'PRE_LIN360_VC_USD']",
+          "requiredWhen": "maturityRemunerator in ['PRE', 'NO_PERIODO', 'IPCA_VCP', 'PRE_LIN360_VC_USD']"
+        },
+        {
+          "key": "dayCountBasis",
+          "order": 40,
+          "label": { "pt": "Base", "en": "Day-count basis" },
+          "dataType": "enum",
+          "b3Field": "Base",
+          "default": "252_EXP",
+          "visibleWhen": "maturityRemunerator in ['PRE', 'NO_PERIODO', 'IPCA_VCP', 'PRE_LIN360_VC_USD']",
+          "requiredWhen": "maturityRemunerator in ['PRE', 'NO_PERIODO', 'IPCA_VCP', 'PRE_LIN360_VC_USD']",
+          "options": [
+            {
+              "code": "252_EXP",
+              "label": { "pt": "252 exponencial", "en": "252 exponential" },
+              "help": { "pt": "Convenção brasileira padrão (DU/252).", "en": "The standard Brazilian convention (DU/252)." }
+            },
+            { "code": "360_EXP", "label": { "pt": "360 exponencial", "en": "360 exponential" } },
+            { "code": "360_LIN", "label": { "pt": "360 linear", "en": "360 linear" } }
+          ]
+        },
+        {
+          "key": "hasCashFlow",
+          "order": 50,
+          "label": { "pt": "Fluxo de Caixa", "en": "Cash flow" },
+          "help": {
+            "pt": "Sim quando a nota paga eventos intermediários; o cronograma vai na aba Fluxo de caixa.",
+            "en": "Yes when the note pays interim events; the schedule goes on the cash-flow tab."
+          },
+          "dataType": "boolean",
+          "b3Field": "Fluxo de Caixa",
+          "required": true,
+          "default": false
+        }
+      ]
+    },
+    {
+      "key": "cashflows",
+      "kind": "tab",
+      "order": 25,
+      "label": { "pt": "Fluxo de caixa", "en": "Cash flows" },
+      "repeating": true,
+      "minItems": 1,
+      "maxItems": 120,
+      "visibleWhen": "remuneration.hasCashFlow == true",
+      "itemFields": [
+        {
+          "key": "paymentDate",
+          "order": 10,
+          "label": { "pt": "Data de Pagamento", "en": "Payment date" },
+          "dataType": "date",
+          "b3Field": "Datas de pagamento",
+          "required": true
+        },
+        {
+          "key": "flowRemunerator",
+          "order": 20,
+          "label": { "pt": "Remunerador no Fluxo", "en": "Cash-flow remunerator" },
+          "dataType": "enum",
+          "b3Field": "Remunerador no Fluxo",
+          "required": true,
+          "default": "PRE",
+          "options": [
+            { "code": "PRE", "label": { "pt": "Pré", "en": "Fixed rate" } },
+            { "code": "DI", "label": { "pt": "DI", "en": "DI (CDI)" } },
+            { "code": "IPCA_VCP", "label": { "pt": "IPCA VCP", "en": "IPCA VCP" } },
+            { "code": "SEM_REMUNERACAO", "label": { "pt": "Sem remuneração", "en": "None" } }
+          ]
+        },
+        {
+          "key": "flowRate",
+          "order": 30,
+          "label": { "pt": "Taxa do fluxo (%)", "en": "Cash-flow rate (%)" },
+          "dataType": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 6,
+          "visibleWhen": "flowRemunerator != 'SEM_REMUNERACAO'",
+          "requiredWhen": "flowRemunerator != 'SEM_REMUNERACAO'"
+        },
+        {
+          "key": "amountPercent",
+          "order": 40,
+          "label": { "pt": "Pagamento (% do VFE)", "en": "Payment (% of VFE)" },
+          "help": {
+            "pt": "Percentual do Valor Financeiro de Emissão pago nesta data.",
+            "en": "Percentage of the financial value of issuance paid on this date."
+          },
+          "dataType": "percent",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 8
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "remuneration.floating-over-100",
+      "targets": ["remuneration.floatingPercentage"],
+      "when": "maturityRemunerator == 'DI'",
+      "assert": "floatingPercentage <= 130",
+      "message": {
+        "pt": "Percentual de CDI acima de 130% — confirme o funding com a tesouraria.",
+        "en": "CDI percentage above 130% — confirm the funding with treasury."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.payment-within-tenor",
+      "forEachSection": "cashflows",
+      "targets": ["cashflows[].paymentDate"],
+      "assert": "paymentDate > common.issueDate and paymentDate <= common.maturityDate",
+      "message": {
+        "pt": "Cada data de pagamento deve estar entre a emissão (exclusive) e o vencimento (inclusive).",
+        "en": "Every payment date must fall between the issue date (exclusive) and maturity (inclusive)."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.payment-business-day",
+      "forEachSection": "cashflows",
+      "targets": ["cashflows[].paymentDate"],
+      "serverCheck": "businessDay",
+      "args": { "path": "paymentDate", "calendar": "BRASIL" },
+      "message": {
+        "pt": "As datas de pagamento devem ser dias úteis no calendário nacional.",
+        "en": "Payment dates must be business days on the national calendar."
+      },
+      "severity": "error",
+      "execution": "server",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.dates-distinct",
+      "targets": ["cashflows"],
+      "when": "remuneration.hasCashFlow == true",
+      "assert": "isDistinct(cashflows, @.paymentDate)",
+      "message": {
+        "pt": "Há datas de pagamento repetidas no fluxo de caixa.",
+        "en": "The cash-flow schedule repeats a payment date."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.require-schedule",
+      "targets": ["remuneration.hasCashFlow"],
+      "when": "remuneration.hasCashFlow == true",
+      "assert": "count(cashflows) > 0",
+      "message": {
+        "pt": "Fluxo de Caixa marcado como Sim: informe ao menos um pagamento.",
+        "en": "Cash flow is set to yes: register at least one payment."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "cashflows.no-schedule-without-flag",
+      "targets": ["remuneration.hasCashFlow"],
+      "when": "remuneration.hasCashFlow == false",
+      "assert": "count(cashflows) == 0",
+      "message": {
+        "pt": "Existem pagamentos registrados, mas o Fluxo de Caixa está marcado como Não.",
+        "en": "Payments are registered while the cash-flow flag is set to no."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    }
+  ]
+}

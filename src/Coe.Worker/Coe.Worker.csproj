@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+  <PropertyGroup>
+    <RootNamespace>Coe.Worker</RootNamespace>
+    <UserSecretsId>coe-worker</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coe.Core\Coe.Core.csproj" />
+    <ProjectReference Include="..\Coe.Ingestion\Coe.Ingestion.csproj" />
+    <ProjectReference Include="..\Coe.Infrastructure\Coe.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

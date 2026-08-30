@@ -1,3 +1,16 @@
+# python (docs/figures/generate_figures.py)
 __pycache__/
 *.pyc
 .venv/
+
+# .NET
+bin/
+obj/
+*.user
+
+# node
+node_modules/
+dist/
+
+# local settings
+appsettings.Local.json

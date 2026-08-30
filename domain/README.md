@@ -1,0 +1,216 @@
+# Domain files — adding and changing a figure
+
+A **domain file** is the source of truth for one B3 payoff figure: which attributes it has,
+how they are laid out, when each one appears, and every rule that governs them. The ingestion
+worker compiles these files into templates; the API and the React app do nothing but read the
+result. **Adding a figure means adding a file here — no code, no deploy.**
+
+```
+domain/
+  common/     reusable blocks a figure inherits through "extends"
+  figures/    one file per B3 figure code
+```
+
+## What happens to a file you drop in
+
+1. The worker notices the change (file watch, or the next poll — see
+   `Ingestion` in `appsettings.json`).
+2. `TemplateCompiler` merges the fragments the figure extends, assigns an absolute path to
+   every attribute, parses every condition and rule into a portable AST, resolves bare
+   attribute names, and works out which attributes each rule reads.
+3. If it compiles, a **new template version** is written to `figure.FigureTemplate` and becomes
+   the active one; the figure is marked `Enabled` (unless `AutoEnableNewFigures` is off) and
+   appears in the picker.
+4. If it does **not** compile, nothing is published: the figure is marked `Quarantined` with
+   the errors in `figure.Figure.LastError`, and the previously active template keeps serving.
+
+Versions are immutable. Assets record the template version they were booked against, so an
+edit here never rewrites the meaning of an asset already in the book.
+
+Editing a file in `common/` re-issues a version for **every** figure that extends it — the
+source hash covers the fragments too, so no figure is left running against a stale copy of a
+shared block.
+
+## File shape
+
+```jsonc
+{
+  "figureCode": "COE001005",          // the B3 figure code; unique across the catalog
+  "figureName": "Call Spread",        // the registered figure name
+  "commercialName": "Call spread (trava de alta)",
+  "description": { "pt": "…", "en": "…" },
+  "modalities": ["VNP"],
+  "underlyingClasses": ["ACOES", "INDICES", "…"],
+
+  "extends": ["common/identification", "common/underlying",
+              "common/remuneration", "common/settlement"],
+  "removeSections": [],               // fragment sections this figure does not use
+
+  "sections": [ … ],                  // the figure's own blocks, and overrides of inherited ones
+  "rules":    [ … ]                   // the figure's own rules
+}
+```
+
+### Sections
+
+A section is either the **common block** shown above the tabs, or one **tab**.
+
+```jsonc
+{
+  "key": "payoff",
+  "kind": "tab",                      // "common" | "tab"
+  "order": 30,                        // display order; the common block sits at 0
+  "label": { "pt": "Payoff", "en": "Payoff" },
+  "help":  { "pt": "…" },
+  "visibleWhen": "underlying.assetClass == 'CESTA'",   // optional
+
+  "repeating": false,                 // true for grids: cash flows, basket, observations
+  "minItems": 1, "maxItems": 120,     // repeating sections only
+  "fields":     [ … ],                // non-repeating sections
+  "itemFields": [ … ]                 // repeating sections (the grid columns)
+}
+```
+
+A repeating section's rows are an array in the instance document, and its columns are addressed
+as `cashflows[].amount` in templates and `cashflows[2].amount` in messages.
+
+A section listed by a figure with a key a fragment already provides **merges into** it: the
+figure can retitle it, add columns, and replace individual attributes by key. That is how the
+shark fin narrows the generic barrier block down to an up-and-out.
+
+### Fields
+
+```jsonc
+{
+  "key": "cap",
+  "order": 30,
+  "label":  { "pt": "Cap (%)", "en": "Cap (%)" },
+  "help":   { "pt": "Performance máxima considerada pela fórmula." },
+  "dataType": "percent",
+  "b3Field": "Limitador",             // the registered B3 field, shown under the input
+  "symbol": "Cap",                    // the formula symbol from docs/payoffs/
+  "required": true,
+  "min": 0, "max": 1000, "decimals": 6,
+  "default": 25,
+  "visibleWhen":  "…",                // hidden fields are never required and never validated
+  "requiredWhen": "…",
+  "enabledWhen":  "false",            // read-only
+  "computed": "quantity * unitIssuePrice",   // derived; the API recomputes it before saving
+  "options": [ { "code": "VNP", "label": { "pt": "…" } } ],
+  "optionSource": "underlyings",      // or resolved from /api/reference/{source}
+  "inGrid": true                      // show in the asset list
+}
+```
+
+`dataType` is one of `string`, `text`, `integer`, `decimal`, `percent`, `money`, `date`,
+`boolean`, `enum`, `enumSet`.
+
+**Percentages are stored as the percentage number**: `25` means 25%, matching the B3
+registration screens. Rules must be written in the same units.
+
+### Rules
+
+```jsonc
+{
+  "id": "callspread.cap-positive",     // unique within the figure
+  "targets": ["payoff.cap"],           // where the message lands; a section key for row-count rules
+  "when": "modality == 'VNP'",         // optional guard; the rule is skipped unless truthy
+  "assert": "cap > 0",                 // must hold
+  "message": { "pt": "…", "en": "…" },
+  "severity": "error",                 // error blocks the save | warning does not | info
+  "execution": "both",                 // client | server | both
+  "trigger": "change",                 // change | submit | both
+  "forEachSection": "cashflows"        // evaluate once per row
+}
+```
+
+A rule that cannot be expressed as an expression names a **server check** instead — anything
+needing reference data:
+
+```jsonc
+{
+  "id": "common.issue-date-business-day",
+  "targets": ["common.issueDate"],
+  "serverCheck": "businessDay",
+  "args": { "path": "common.issueDate", "calendar": "BRASIL" },
+  "message": { "pt": "A Data de Emissão deve ser dia útil no calendário nacional." },
+  "severity": "error", "execution": "server", "trigger": "change"
+}
+```
+
+Available checks (`src/Coe.Infrastructure/ServerChecks/`):
+
+| id | arguments | asks |
+|---|---|---|
+| `businessDay` | `path`, `calendar` | is the date a business day? |
+| `businessDaysBefore` | `path`, `referencePath`, `minimum`, `maximum`, `calendar` | does the date sit N business days before another? |
+| `observationCountMatchesCalendar` | `countPath`, `startPath`, `endPath`, `calendar` | does a fixing count match the window? |
+| `uniqueInstrumentCode` | `path` | is the Código IF free? |
+
+**Three severities, one gate.** `error` blocks the save. `warning` never does — the user can
+save through it and the accepted warnings are stored on the asset for audit. `info` is a note.
+
+**Where a rule runs is a performance choice, not a safety one.** `execution` says where a rule
+*can* run: `client` gives instant feedback, `server` is for checks needing reference data,
+`both` runs in the browser and again on the API. Regardless of the setting, **the API re-runs
+every server-side rule on save** — nothing is trusted because the browser already checked it.
+
+## Expression language
+
+Conditions and rules are short infix expressions, parsed once at ingestion into an AST that
+both the API (`ExpressionEvaluator`) and the browser (`web/src/engine/evaluate.ts`) evaluate.
+A typo is a compile error that quarantines the figure, not a surprise at booking time.
+
+**Attribute names.** Write a bare name (`cap`) and the compiler resolves it: a column of the
+current repeating section first, then a field of the current section, then any uniquely-named
+field in the template. Ambiguous or unknown names fail compilation — qualify them
+(`underlying.assetClass`). Inside a repeating section, `@.weight` is explicitly the current
+row's column.
+
+**Operators**, loosest to tightest binding:
+
+| | |
+|---|---|
+| `or` `\|\|` | |
+| `and` `&&` | |
+| `not` `!` | |
+| `==` `!=` `>` `>=` `<` `<=` `in` | `in` takes a list literal: `modality in ['VNP', 'VNR']` |
+| `+` `-` | also date ± days, and date − date giving a day count |
+| `*` `/` `%` | |
+
+**Functions**
+
+| group | functions |
+|---|---|
+| null handling | `isNull(x)` `notNull(x)` `coalesce(a, b, …)` |
+| numbers | `abs` `min` `max` `round(x, d)` `floor` `ceil` `num` |
+| collections | `count(list)` `len(x)` `sum(list, @.f)` `any(list, pred)` `all(list, pred)` `isDistinct(list, @.f)` |
+| dates | `year` `month` `day` `daysBetween(a, b)` `addDays(d, n)` `today()` |
+| text | `contains(s, sub)` `upper` `lower` `str` |
+| ranges | `between(x, low, high)` |
+
+Literals: numbers, `'single-quoted strings'`, `true`, `false`, `null`, and `[…]` list literals
+of constants. `$name` reads a host variable (`$today`).
+
+**Missing values are undecided, not zero.** `cap > 0` with no cap yet evaluates to null, and a
+rule whose assertion is null says nothing. That is what keeps a half-filled form quiet instead
+of wrong. Use `isNull` / `notNull` when you mean to test for absence.
+
+## Checklist for a new figure
+
+1. Copy the closest file in `figures/`; set `figureCode`, `figureName`, `commercialName`,
+   `description`, `modalities`.
+2. Extend the fragments it needs. `common/barriers` for a barrier figure, `common/autocall` for
+   an autocall overlay.
+3. Add the `payoff` section with the figure's own parameters — mirror the names and symbols in
+   the matching page under [`docs/payoffs/`](../docs/payoffs/README.md).
+4. Write the rules that a booking desk would otherwise catch by eye: level ordering, the
+   modality the figure is registered under, and economic sanity checks as warnings.
+5. Run `dotnet test` — the suite compiles every file in this directory and fails on an unknown
+   attribute, an ambiguous name, a rule with no target, or a duplicate figure code.
+
+## Where to read more
+
+- [`../docs/parameters.md`](../docs/parameters.md) — every registration field and payoff parameter, with its B3 name.
+- [`../docs/payoffs/`](../docs/payoffs/README.md) — the formula and worked example behind each figure.
+- [`../docs/platform.md`](../docs/platform.md) — how the worker, API and React app fit together.
