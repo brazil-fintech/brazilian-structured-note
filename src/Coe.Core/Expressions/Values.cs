@@ -18,20 +18,52 @@ public static class Values
         if (node is JsonArray or JsonObject) return node;
         if (node is not JsonValue value) return null;
 
+        // A JsonValue is backed either by a JsonElement — anything parsed from a request
+        // payload or a stored template — or by the CLR value it was constructed from, for a
+        // node assembled in code: a computed attribute, a field default, a caller building an
+        // instance by hand. TryGetValue answers only for the exact backing type and does no
+        // numeric widening, so both shapes have to be unpacked explicitly. Getting this wrong
+        // throws on the very first `values["common"]["quantity"] = 1000`.
+        if (value.TryGetValue<JsonElement>(out var element)) return FromElement(element);
+
         if (value.TryGetValue<bool>(out var b)) return b;
-        if (value.TryGetValue<decimal>(out var d)) return d;
         if (value.TryGetValue<string>(out var s)) return AsDateOrString(s);
 
-        // Numbers that do not fit a decimal (or exotic JsonElement backing) fall back here.
-        var element = value.GetValue<JsonElement>();
-        return element.ValueKind switch
-        {
-            JsonValueKind.True => true,
-            JsonValueKind.False => false,
-            JsonValueKind.Number => element.TryGetDecimal(out var dec) ? dec : (decimal)element.GetDouble(),
-            JsonValueKind.String => AsDateOrString(element.GetString()!),
-            _ => null
-        };
+        if (value.TryGetValue<decimal>(out var dec)) return dec;
+        if (value.TryGetValue<int>(out var i)) return (decimal)i;
+        if (value.TryGetValue<long>(out var l)) return (decimal)l;
+        if (value.TryGetValue<double>(out var dbl)) return FromDouble(dbl);
+        if (value.TryGetValue<float>(out var f)) return FromDouble(f);
+        if (value.TryGetValue<short>(out var sh)) return (decimal)sh;
+        if (value.TryGetValue<byte>(out var by)) return (decimal)by;
+        if (value.TryGetValue<uint>(out var ui)) return (decimal)ui;
+        if (value.TryGetValue<ulong>(out var ul)) return (decimal)ul;
+
+        if (value.TryGetValue<DateOnly>(out var dateOnly)) return dateOnly;
+        if (value.TryGetValue<DateTime>(out var dt)) return DateOnly.FromDateTime(dt);
+        if (value.TryGetValue<DateTimeOffset>(out var dto)) return DateOnly.FromDateTime(dto.UtcDateTime);
+
+        return null;
+    }
+
+    private static object? FromElement(JsonElement element) => element.ValueKind switch
+    {
+        JsonValueKind.True => true,
+        JsonValueKind.False => false,
+        JsonValueKind.Number => element.TryGetDecimal(out var dec) ? dec : FromDouble(element.GetDouble()),
+        JsonValueKind.String => AsDateOrString(element.GetString() ?? string.Empty),
+        _ => null
+    };
+
+    /// <summary>
+    /// A payload can carry a magnitude no decimal can hold. That is a value we cannot reason
+    /// about, which the engine treats as "cannot tell yet" — never as a crash mid-keystroke.
+    /// </summary>
+    private static decimal? FromDouble(double value)
+    {
+        if (double.IsNaN(value) || double.IsInfinity(value)) return null;
+        if (value > (double)decimal.MaxValue || value < (double)decimal.MinValue) return null;
+        return (decimal)value;
     }
 
     private static object AsDateOrString(string s) =>

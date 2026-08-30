@@ -7,14 +7,16 @@ namespace Coe.Tests;
 /// <summary>Loads and compiles the repository's real domain files, once per test run.</summary>
 public static class DomainFiles
 {
+    // Declared first: static initializers run in order, and the loaders below read it.
+    public static string Directory { get; } = Locate();
+
     private static readonly Lazy<DomainFileSet> LoadedSet = new(() => new DomainFileLoader(Directory).Load());
+
     private static readonly Lazy<IReadOnlyDictionary<string, CompilationResult>> CompiledFigures =
         new(() => Set.Figures.ToDictionary(
             f => f.File.FigureCode!,
             f => new TemplateCompiler().Compile(f.File, Set.Fragments, 1),
             StringComparer.Ordinal));
-
-    public static string Directory { get; } = Locate();
 
     public static DomainFileSet Set => LoadedSet.Value;
 
@@ -29,6 +31,11 @@ public static class DomainFiles
 
     private static string Locate()
     {
+        // Lets a build whose output sits outside the repository still find the catalog.
+        var configured = Environment.GetEnvironmentVariable("COE_DOMAIN_DIR");
+        if (!string.IsNullOrWhiteSpace(configured) && System.IO.Directory.Exists(Path.Combine(configured, "figures")))
+            return configured;
+
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
         while (dir is not null)
         {

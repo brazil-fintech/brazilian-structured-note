@@ -164,7 +164,8 @@ cd web && npm test   # the TypeScript mirror of the same cases
 ```
 
 `dotnet test` compiles every checked-in domain file, so a bad edit fails the build rather than
-quarantining a figure in production.
+quarantining a figure in production. Set `COE_DOMAIN_DIR` to point the suite at a catalog
+outside the repository.
 
 ## What is deliberately not here
 

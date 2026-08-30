@@ -187,6 +187,50 @@ public class ValidationEngineTests
         Assert.DoesNotContain("common.issue-date-business-day", ErrorIds(result));
     }
 
+    [Fact]
+    public void Validation_behaves_identically_through_a_stored_template()
+    {
+        // The worker writes the template as JSON into MSSQL and the API reads it back. The
+        // expression AST has to survive that round trip intact — if polymorphic deserialization
+        // dropped a node, every rule would quietly stop firing and nothing else would notice.
+        var direct = DomainFiles.Template("COE001005");
+        var stored = TemplateJson.Deserialize(TemplateJson.Serialize(direct));
+
+        var broken = CallSpread(cap: 0);
+        ComputedFields.Apply(stored, broken);
+        var result = Engine.Validate(stored, broken, ValidationScope.Submit);
+
+        Assert.Contains("callspread.cap-positive", ErrorIds(result));
+        Assert.Equal("payoff.cap", result.Messages.Single(m => m.RuleId == "callspread.cap-positive").Path);
+
+        // Conditional visibility is an expression too, so it has to survive the trip as well.
+        var windowed = CallSpread();
+        windowed["underlying"]!["fixingWindow"] = "JANELA";
+        ComputedFields.Apply(stored, windowed);
+        Assert.Contains(
+            Engine.Validate(stored, windowed, ValidationScope.Submit).Messages,
+            m => m.Path == "underlying.fixingWindowStart");
+
+        var clean = CallSpread();
+        ComputedFields.Apply(stored, clean);
+        var cleanResult = Engine.Validate(stored, clean, ValidationScope.Submit);
+        Assert.True(cleanResult.IsValid, string.Join(" | ", ErrorIds(cleanResult)));
+    }
+
+    [Fact]
+    public void Rule_execution_serializes_as_a_single_token_the_client_understands()
+    {
+        // RuleExecution is a [Flags] enum; if Both serialized as "client, server" the
+        // TypeScript union ('client' | 'server' | 'both') would not match and the browser
+        // would misjudge which rules it may run.
+        var json = TemplateJson.Serialize(DomainFiles.Template("COE001005"));
+
+        Assert.Contains("\"execution\":\"both\"", json);
+        Assert.Contains("\"execution\":\"server\"", json);
+        Assert.DoesNotContain("client, server", json);
+        Assert.DoesNotContain("Client", json);
+    }
+
     // ----- repeating sections -------------------------------------------------------
 
     private static JsonObject WithCashFlows(params string[] dates)

@@ -4,8 +4,8 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!-- Left off for the first build of a fresh checkout; turn on once the solution
-         builds clean in your environment. -->
+    <!-- Warnings are surfaced but not fatal. Turn this on once the solution builds clean
+         on your .NET 10 SDK, so analyzer additions cannot break a fresh checkout. -->
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>5</WarningLevel>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>

@@ -95,5 +95,5 @@ public sealed class DomainFileLoader(string rootDirectory)
     }
 
     private static string Sha256(string content) =>
-        "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(content)));
+        "sha256:" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(content))).ToLowerInvariant();
 }

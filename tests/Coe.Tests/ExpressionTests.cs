@@ -79,6 +79,37 @@ public class ExpressionTests
     }
 
     [Fact]
+    public void Values_built_in_code_read_the_same_as_values_parsed_from_a_payload()
+    {
+        // A JsonValue built from a CLR int is backed by that int, not by a JsonElement, and
+        // answers TryGetValue only for its exact type — no numeric widening. Reading one has
+        // to work anyway: computed attributes are written back this way, and so is any
+        // instance a caller assembles by hand.
+        var built = new JsonObject
+        {
+            ["common"] = new JsonObject
+            {
+                ["quantity"] = 1000,                 // int
+                ["unitIssuePrice"] = 1000.5m,        // decimal
+                ["ratio"] = 2.5,                     // double
+                ["hasCashFlow"] = false,             // bool
+                ["issueDate"] = "2026-09-01"         // string that reads as a date
+            }
+        };
+        var ctx = new EvaluationContext(built);
+
+        object? Read(string source) => ExpressionEvaluator.Evaluate(ExpressionParser.Parse(source), ctx);
+
+        Assert.Equal(1000m, Read("common.quantity"));
+        Assert.Equal(1000.5m, Read("common.unitIssuePrice"));
+        Assert.Equal(2.5m, Read("common.ratio"));
+        Assert.Equal(false, Read("common.hasCashFlow"));
+        Assert.Equal(new DateOnly(2026, 9, 1), Read("common.issueDate"));
+        Assert.Equal(1_000_500m, Read("common.quantity * common.unitIssuePrice"));
+        Assert.Equal(true, Read("common.quantity > 999"));
+    }
+
+    [Fact]
     public void Unknown_function_is_rejected_at_parse_time() =>
         Assert.Throws<ExpressionParseException>(() => ExpressionParser.Parse("nosuchfunction(1)"));
 
