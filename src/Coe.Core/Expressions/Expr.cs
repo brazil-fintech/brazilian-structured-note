@@ -21,26 +21,50 @@ namespace Coe.Core.Expressions;
 [JsonDerivedType(typeof(FnExpr), "fn")]
 public abstract record Expr
 {
-    /// <summary>Field paths this expression reads, used to build rule dependency sets.</summary>
-    public IReadOnlyCollection<string> Dependencies()
+    /// <summary>
+    /// Every attribute this expression reads, as absolute instance paths. This is what lets the
+    /// engine re-run only the rules a keystroke can affect, so it has to be complete: a missed
+    /// dependency is a rule that silently stops firing as the user types.
+    /// </summary>
+    /// <param name="itemScope">
+    /// Section key that <c>@.name</c> resolves against, when the expression is evaluated inside a
+    /// repeating section. Item references are recorded as <c>section[].name</c>.
+    /// </param>
+    public IReadOnlyList<string> Dependencies(string? itemScope = null)
     {
         var acc = new SortedSet<string>(StringComparer.Ordinal);
-        Collect(this, acc);
-        return acc;
+        Collect(this, acc, itemScope);
+        return [.. acc];
     }
 
-    private static void Collect(Expr e, SortedSet<string> acc)
+    private static void Collect(Expr e, SortedSet<string> acc, string? itemScope)
     {
         switch (e)
         {
             case FieldExpr f:
                 acc.Add(f.P);
                 break;
-            case OpExpr o:
-                foreach (var a in o.A) Collect(a, acc);
+
+            case ItemExpr i when itemScope is not null:
+                acc.Add($"{itemScope}[].{i.P}");
                 break;
+
+            case OpExpr o:
+                foreach (var a in o.A) Collect(a, acc, itemScope);
+                break;
+
             case FnExpr fn:
-                foreach (var a in fn.A) Collect(a, acc);
+                // any/all/sum/isDistinct rebind @ to the collection they are given, so the
+                // projection's dependencies belong to that section, not the enclosing one.
+                if (Functions.ItemScoped.Contains(fn.N) && fn.A.Count >= 2 && fn.A[0] is FieldExpr collection)
+                {
+                    Collect(fn.A[0], acc, itemScope);
+                    for (var i = 1; i < fn.A.Count; i++) Collect(fn.A[i], acc, collection.P);
+                }
+                else
+                {
+                    foreach (var a in fn.A) Collect(a, acc, itemScope);
+                }
                 break;
         }
     }

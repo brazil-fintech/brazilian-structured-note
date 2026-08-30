@@ -6,8 +6,11 @@
     <ProjectReference Include="..\Coe.Core\Coe.Core.csproj" />
     <ProjectReference Include="..\Coe.Ingestion\Coe.Ingestion.csproj" />
     <ProjectReference Include="..\Coe.Infrastructure\Coe.Infrastructure.csproj" />
+    <ProjectReference Include="..\Coe.Observability\Coe.Observability.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
   </ItemGroup>
 </Project>

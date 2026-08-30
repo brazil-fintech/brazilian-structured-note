@@ -35,10 +35,18 @@ web/                       ← React: asset list, figure picker, dynamic form
 |---|---|
 | `src/Coe.Core` | The shared contract: the template model, the portable expression AST and its evaluator, the validation engine, and the entities. No I/O, no framework. |
 | `src/Coe.Ingestion` | Reading domain files and compiling them: the infix expression parser, name resolution, fragment merging, and the ingestion pass itself. |
-| `src/Coe.Infrastructure` | MSSQL via EF Core, the figure catalog, the template cache, the booking service, and the server-side checks. |
+| `src/Coe.Infrastructure` | ADO.NET over `Microsoft.Data.SqlClient`, the figure catalog, the template cache, the booking service, and the server-side checks. |
+| `src/Coe.Observability` | Serilog wiring and the OpenTelemetry trace/metric pipeline, shared by both hosts. |
 | `src/Coe.Api` | Minimal-API endpoints and DI wiring. |
 | `src/Coe.Worker` | The hosted service that runs ingestion on a file watch and an interval. |
 | `web/` | React + TypeScript. Contains a mirror of the expression evaluator and validation engine. |
+| `tests/Coe.Benchmarks` | BenchmarkDotNet harness for the validation path. |
+
+**There is no ORM.** Queries are hand-written SQL against `Microsoft.Data.SqlClient`, for two
+reasons that matter here: the shapes the platform needs are unusual for an ORM (a page and its
+unpaged total in one statement, an `OUTPUT` clause returning a rowversion, a single-statement
+upsert), and the instance document is JSON that no entity mapping would model usefully. The cost
+is that the SQL is yours to maintain; the tests in `DatabaseTests` run it against a real server.
 
 ## The template is the contract
 
@@ -124,6 +132,85 @@ in `Pending` for a desk to release it.
 | `GET /api/reference/{source}` | lists a field's `optionSource` (currently `underlyings`) |
 | `POST /api/admin/ingest` | re-read the domain files now, without waiting for the worker |
 
+## Performance
+
+The validate endpoint is called on every keystroke, so its cost is a user-visible number.
+Measured on .NET 10 with `tests/Coe.Benchmarks` (`dotnet run -c Release --project tests/Coe.Benchmarks`),
+against the call spread figure — 51 attributes, 30 rules:
+
+| | mean | allocated |
+|---|---|---|
+| validate, field scope (one changed attribute) | 9.1 µs | 8 KB |
+| validate, submit scope (whole instance) | 17.3 µs | 19 KB |
+| recompute derived attributes | 0.6 µs | 0.8 KB |
+| **deserialize a stored template** | **336 µs** | **212 KB** |
+
+The last row is the one that shaped the design: parsing a template costs roughly **37× a full
+validation**, so a cache miss dominates everything else on the request. Hence:
+
+- **Template versions are cached for the life of the process.** A published version is immutable,
+  so a hit is always correct. Only the *pointer* to the active version is re-read, on a 30-second
+  TTL — which is what lets a newly published template take effect without a restart.
+- **The browser fetches each template once.** A request for an explicit version is answered with
+  a strong ETag and a one-year `Cache-Control`; the 47 KB call-spread template revalidates to a
+  304 with an empty body. The active-version request gets a 30-second window instead, because
+  picking up new templates is the point of it.
+
+Inside a pass, the narrowing is what keeps `field` scope cheap: rules declare the attributes they
+read (`dependsOn`, computed at ingestion), the changed paths are normalised once into a
+`ChangeSet`, and matching is then set lookups rather than a regex per dependency per rule.
+
+On the database side:
+
+- **One round trip per screen.** The asset list carries its unpaged total via `COUNT(*) OVER ()`
+  and joins the figure name, instead of a second `COUNT` and a name lookup. A save returns its new
+  rowversion through an `OUTPUT` clause rather than a follow-up `SELECT`.
+- **The list never reads `ValuesJson`.** The instance document is `nvarchar(max)`; reading fifty
+  of them to render a grid would dominate the query's I/O and none of it would be displayed. The
+  grid columns are a projection maintained by the booking path.
+- **Every string parameter has an explicit size.** Left to infer, SqlClient sizes an `nvarchar`
+  parameter from the value it happens to hold, so the same query issued with a 6- and a
+  12-character name arrives as two statements and fills the plan cache with near-duplicates.
+- **Server-side checks take no I/O.** The holiday calendar is loaded once and cached; whether an
+  instrument code is taken is resolved in one query *before* the pass. Both are handed to the
+  engine as facts, so validation stays synchronous, pure CPU, and free of an N+1 inside the rule
+  loop.
+- **Sequential GUIDs.** `Guid.CreateVersion7()` keeps inserts at the end of the clustered index
+  instead of splitting pages across it.
+
+## Observability
+
+Three signals, joined together.
+
+**Logs** — Serilog, configured from the `Serilog` section of `appsettings.json`. Console with a
+readable template in development, JSON in production. Every line carries `service.name`, machine
+and environment, and — through `TraceContextEnricher` — the `TraceId` and `SpanId` of the activity
+it happened inside. That last part is the join: a slow request is a span, its log lines carry the
+span id, and the metrics say whether it is one request or a trend.
+
+**Traces** — OpenTelemetry. ASP.NET Core and SqlClient instrumentation, plus three domain sources:
+`Coe.Validation` (a span per pass, tagged with figure, template version, scope, rules evaluated
+and findings), `Coe.Ingestion` (a span per pass and per figure compiled) and `Coe.Booking` (a span
+per save, tagged with the outcome). Health probes are filtered out so they cannot dominate.
+
+**Metrics** — the `Coe` meter, plus runtime and ASP.NET Core instrumentation:
+
+| instrument | what it answers |
+|---|---|
+| `coe.validation.duration` | is the per-keystroke call still fast? (explicit ms buckets) |
+| `coe.validation.rules_evaluated` | is field-scope narrowing still working? |
+| `coe.validation.messages` | are errors or warnings spiking, by severity and origin? |
+| `coe.asset.saves` | saved / rejected / conflict |
+| `coe.template.cache_lookups` | hit or miss — a miss is the 336 µs above |
+| `coe.ingestion.runs`, `.templates_published`, `.duration` | is the worker keeping up, and is anything quarantined? |
+| `coe.sql.command.duration`, `coe.sql.retries` | database latency, and transient faults being absorbed |
+
+Point `Observability:OtlpEndpoint` at a collector to export; `docker compose --profile
+observability up -d` starts one locally. `ConsoleExporter: true` dumps to stdout for a quick look.
+Sampling is head-based via `TraceSampleRatio`.
+
+Health: `/health/live` (process is up) and `/health/ready` (database reachable).
+
 ## Data model
 
 `asset.Asset` keeps the whole instance document in `ValuesJson` and duplicates the handful of
@@ -155,13 +242,27 @@ dotnet run --project src/Coe.Api          # http://localhost:5080
 cd web && npm install && npm run dev      # http://localhost:5173
 ```
 
-Connection string: `ConnectionStrings:Coe`, overridable with
-`ConnectionStrings__Coe` in the environment.
+Connection string: `ConnectionStrings:Coe`, overridable with `ConnectionStrings__Coe` in the
+environment. In Development the host creates the database if it is missing
+(`Database:CreateDatabaseIfMissing`); elsewhere that is off, because silently creating an empty
+database on a mistyped connection string hides the mistake.
+
+**`InvariantGlobalization` must stay off.** `Microsoft.Data.SqlClient` throws *"Globalization
+Invariant Mode is not supported"* on its first connection, so any container image running the API
+or worker needs ICU.
 
 ```bash
 dotnet test          # expression, compiler and validation-engine suites
 cd web && npm test   # the TypeScript mirror of the same cases
+
+# The database tests need a server; without one they skip rather than fail.
+COE_TEST_SQL="Server=localhost,1433;User Id=sa;Password=Your_password123;TrustServerCertificate=True" \
+  dotnet test
 ```
+
+Each database test run creates a throwaway database, applies the repository's own scripts in
+`db/` to it, and drops it afterwards — so it exercises the real schema rather than an
+approximation of it.
 
 `dotnet test` compiles every checked-in domain file, so a bad edit fails the build rather than
 quarantining a figure in production. Set `COE_DOMAIN_DIR` to point the suite at a catalog

@@ -9,10 +9,11 @@ structure traded in the Brazilian market with its formula, parameters, worked ex
 payoff diagrams, and the calculation conventions (CDI accrual, business-day count, performance
 observation) used to settle it.
 
-The platform — a .NET 10 back end and a React front end — turns that into a booking screen: B3
-payoff figures are described as **domain files**, a worker compiles each one into a versioned
-JSON template stored in MSSQL, and both the API and the dynamic form are generic readers of
-that template. Supporting a new figure is adding a file, not shipping a release. See
+The platform — a .NET 10 back end (ADO.NET over SQL Server) and a React front end — turns that
+into a booking screen: B3 payoff figures are described as **domain files**, a worker compiles
+each one into a versioned JSON template stored in MSSQL, and both the API and the dynamic form
+are generic readers of that template. Supporting a new figure is adding a file, not shipping a
+release. Structured logs, traces and metrics come out of the box. See
 [docs/platform.md](docs/platform.md).
 
 > **Disclaimer:** this repository is technical documentation, not investment advice or an
@@ -112,12 +113,15 @@ domain/                       ← the figure catalog the platform runs on — se
 src/
   Coe.Core/                   ← template model, expression AST + evaluator, validation engine
   Coe.Ingestion/              ← domain-file reader and template compiler
-  Coe.Infrastructure/         ← MSSQL (EF Core), template cache, booking, server-side checks
+  Coe.Infrastructure/         ← ADO.NET data layer, template cache, booking, server-side checks
+  Coe.Observability/          ← Serilog + OpenTelemetry wiring shared by both hosts
   Coe.Api/                    ← minimal API: templates, assets, validation
   Coe.Worker/                 ← ingestion worker (file watch + interval)
 web/                          ← React + TypeScript: asset list, figure picker, dynamic form
-tests/Coe.Tests/              ← expression, compiler and validation-engine suites
+tests/Coe.Tests/              ← expression, compiler, validation and database suites
+tests/Coe.Benchmarks/         ← BenchmarkDotNet harness for the validation path
 db/                           ← re-runnable schema and reference-data scripts
+deploy/                       ← OpenTelemetry collector config for local work
 ```
 
 ## The platform
@@ -137,6 +141,13 @@ the save; warnings do not, and the ones a user accepts are stored on the asset f
 
 **The API is the authority.** Whatever the browser checked, every save re-runs the full
 validation server-side, re-derives computed attributes from their inputs, and only then writes.
+
+**Built to be watched and to stay quick.** Serilog writes structured logs stamped with the trace
+and span they happened in; OpenTelemetry exports traces and metrics for validation, ingestion,
+saves and every SQL command. A field-scope validation costs ~9 µs and a full one ~17 µs, while
+parsing a template costs 336 µs — which is why template versions are cached for the life of the
+process and the browser fetches each one once behind an ETag. Numbers and the reasoning are in
+[docs/platform.md](docs/platform.md#performance).
 
 ```bash
 docker compose up -d mssql                # SQL Server

@@ -2,7 +2,6 @@ using System.Globalization;
 using Coe.Core.Assets;
 using Coe.Core.Validation;
 using Coe.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace Coe.Api.Endpoints;
 
@@ -24,7 +23,6 @@ public static class AssetEndpoints
             int? page,
             int? pageSize,
             IAssetRepository repository,
-            CoeDbContext db,
             CancellationToken ct) =>
         {
             if (!TryParseDate(referenceDate, out var reference))
@@ -50,13 +48,8 @@ public static class AssetEndpoints
                 PageSize = pageSize ?? 50
             }, ct);
 
-            var codes = result.Items.Select(a => a.FigureCode).Distinct().ToList();
-            var names = await db.Figures.AsNoTracking()
-                .Where(f => codes.Contains(f.Code))
-                .ToDictionaryAsync(f => f.Code, f => f.Name, ct);
-
             return Results.Ok(new AssetListResponse(
-                result.Items.Select(a => ContractMapping.ToListItem(a, names.GetValueOrDefault(a.FigureCode))).ToList(),
+                result.Items.Select(ContractMapping.ToListItem).ToList(),
                 result.Total, result.Page, result.PageSize));
         })
         .WithName("ListAssets")

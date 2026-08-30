@@ -1,6 +1,7 @@
 using System.Text.Json.Nodes;
 using Coe.Core.Assets;
 using Coe.Core.Validation;
+using Coe.Infrastructure;
 
 namespace Coe.Api;
 
@@ -79,8 +80,8 @@ public sealed record ReferenceItem(string Code, string Name, string? Group);
 
 public static class ContractMapping
 {
-    public static AssetListItem ToListItem(Asset a, string? figureName) => new(
-        a.Id, a.FigureCode, figureName, a.CommercialName, a.InstrumentCode, a.IsinCode,
+    public static AssetListItem ToListItem(AssetListRow a) => new(
+        a.Id, a.FigureCode, a.FigureName, a.CommercialName, a.InstrumentCode, a.IsinCode,
         a.IssueDate, a.MaturityDate, a.Modality, a.UnderlyingClass, a.Underlying,
         a.NotionalAmount, a.Status.ToString(), a.UpdatedUtc);
 

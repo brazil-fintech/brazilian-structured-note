@@ -1,10 +1,13 @@
 using Coe.Core.Figures;
 using Coe.Core.Validation;
+using Coe.Infrastructure.Data;
 using Coe.Infrastructure.ServerChecks;
 using Coe.Ingestion;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
 
 namespace Coe.Infrastructure;
 
@@ -19,44 +22,64 @@ public static class ServiceRegistration
         var connectionString = configuration.GetConnectionString("Coe")
             ?? throw new InvalidOperationException("ConnectionStrings:Coe is not configured.");
 
-        services.AddDbContext<CoeDbContext>(options =>
-            options.UseSqlServer(connectionString, sql =>
-            {
-                sql.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null);
-                sql.CommandTimeout(60);
-            }));
+        var databaseOptions = configuration.GetSection(SqlConnectionOptions.SectionName).Get<SqlConnectionOptions>()
+                              ?? new SqlConnectionOptions();
+        databaseOptions.ScriptDirectory = ResolvePath(databaseOptions.ScriptDirectory);
+        services.AddSingleton(databaseOptions);
 
-        services.AddMemoryCache();
+        services.AddSingleton<ISqlConnectionFactory>(sp => new SqlConnectionFactory(
+            connectionString, databaseOptions, sp.GetRequiredService<ILogger<SqlConnectionFactory>>()));
 
-        services.AddScoped<IFigureCatalog, FigureCatalog>();
-        services.AddScoped<IAssetRepository, AssetRepository>();
-        services.AddScoped<ITemplateStore, TemplateStore>();
-        services.AddScoped<AssetBookingService>();
+        // Stateless over a pooled connection, so a singleton avoids per-request allocation.
+        services.AddSingleton<IFigureCatalog, FigureCatalog>();
+        services.AddSingleton<IAssetRepository, AssetRepository>();
+        services.AddSingleton<IReferenceDataRepository, ReferenceDataRepository>();
         services.AddSingleton<IBusinessCalendar, BusinessCalendar>();
+        services.AddSingleton<ITemplateStore, TemplateStore>();
+        services.AddSingleton<AssetBookingService>();
 
-        // One instance per request: the uniqueness check needs to know which asset is being edited.
-        services.AddScoped<ICurrentAssetContext, CurrentAssetContext>();
-
-        services.AddScoped<IServerCheck, BusinessDayCheck>();
-        services.AddScoped<IServerCheck, BusinessDaysBeforeCheck>();
-        services.AddScoped<IServerCheck, ObservationCountCheck>();
-        services.AddScoped<IServerCheck, UniqueInstrumentCodeCheck>();
-        services.AddScoped<IServerCheckRegistry>(sp => new ServerCheckRegistry(sp.GetServices<IServerCheck>()));
-        services.AddScoped(sp => new ValidationEngine(sp.GetRequiredService<IServerCheckRegistry>()));
+        services.AddSingleton<IServerCheck, BusinessDayCheck>();
+        services.AddSingleton<IServerCheck, BusinessDaysBeforeCheck>();
+        services.AddSingleton<IServerCheck, ObservationCountCheck>();
+        services.AddSingleton<IServerCheck, UniqueInstrumentCodeCheck>();
+        services.AddSingleton<IServerCheckRegistry>(sp => new ServerCheckRegistry(sp.GetServices<IServerCheck>()));
+        services.AddSingleton(sp => new ValidationEngine(sp.GetRequiredService<IServerCheckRegistry>()));
 
         var ingestion = new IngestionOptions();
         configuration.GetSection(IngestionOptions.SectionName).Bind(ingestion);
         ingestion.DomainDirectory = ResolvePath(ingestion.DomainDirectory);
         services.AddSingleton(ingestion);
-        services.AddScoped<FigureIngestionService>();
+        services.AddSingleton<FigureIngestionService>();
+
+        services.AddHealthChecks().AddCheck<SqlHealthCheck>("sql", tags: ["ready"]);
 
         return services;
     }
 
     /// <summary>
-    /// Resolves a configured path against the content root when it is relative, so the same
-    /// appsettings works from a container, a published folder and <c>dotnet run</c>.
+    /// Resolves a configured path against the application directory when it is relative, so the
+    /// same appsettings works from a container, a published folder and <c>dotnet run</c>.
     /// </summary>
     public static string ResolvePath(string path) =>
         Path.IsPathRooted(path) ? path : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, path));
+}
+
+/// <summary>Readiness: can the platform actually reach its database right now?</summary>
+public sealed class SqlHealthCheck(ISqlConnectionFactory connections) : IHealthCheck
+{
+    public async Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await using var connection = await connections.OpenAsync(cancellationToken);
+            await using var command = new SqlCommand("SELECT 1", connection) { CommandTimeout = 5 };
+            await command.ExecuteScalarAsync(cancellationToken);
+            return HealthCheckResult.Healthy($"Connected to {connections.DatabaseName}.");
+        }
+        catch (Exception ex)
+        {
+            return HealthCheckResult.Unhealthy($"Cannot reach {connections.DatabaseName}.", ex);
+        }
+    }
 }

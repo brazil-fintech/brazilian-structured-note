@@ -1,14 +1,13 @@
 using Coe.Core.Expressions;
 using Coe.Core.Templates;
 using Coe.Core.Validation;
-using Microsoft.EntityFrameworkCore;
 
 namespace Coe.Infrastructure.ServerChecks;
 
 /// <summary>
 /// <c>businessDay</c> — the date at <c>args.path</c> must be a business day on
-/// <c>args.calendar</c>. The browser has no holiday table, which is exactly why the rules
-/// that use this are marked <c>execution: server</c> and answered by the validate endpoint.
+/// <c>args.calendar</c>. The browser has no holiday table, which is why the rules that use this
+/// are marked <c>execution: server</c> and answered by the validate endpoint.
 /// </summary>
 public sealed class BusinessDayCheck(IBusinessCalendar calendar) : ServerCheckBase
 {
@@ -18,7 +17,7 @@ public sealed class BusinessDayCheck(IBusinessCalendar calendar) : ServerCheckBa
     {
         var date = Values.AsDate(Read(rule, ctx, "path"));
         if (date is null) return null;
-        return calendar.IsBusinessDay(Arg(rule, "calendar") ?? "BRASIL", date.Value);
+        return calendar.IsBusinessDay(Arg(rule, "calendar") ?? BookingFacts.DefaultCalendar, date.Value);
     }
 }
 
@@ -37,7 +36,7 @@ public sealed class BusinessDaysBeforeCheck(IBusinessCalendar calendar) : Server
         var reference = Values.AsDate(Read(rule, ctx, "referencePath"));
         if (date is null || reference is null) return null;
 
-        var distance = calendar.BusinessDaysBetween(Arg(rule, "calendar") ?? "BRASIL", date.Value, reference.Value);
+        var distance = calendar.BusinessDaysBetween(Arg(rule, "calendar") ?? BookingFacts.DefaultCalendar, date.Value, reference.Value);
         var min = (int)(ArgNumber(rule, "minimum") ?? 0m);
         var max = (int)(ArgNumber(rule, "maximum") ?? int.MaxValue);
         return distance >= min && distance <= max;
@@ -45,9 +44,9 @@ public sealed class BusinessDaysBeforeCheck(IBusinessCalendar calendar) : Server
 }
 
 /// <summary>
-/// <c>observationCountMatchesCalendar</c> — the registered number of range-accrual fixings
-/// must match the business days in the observation window, within a 5% tolerance for
-/// schedules that skip a day here or there.
+/// <c>observationCountMatchesCalendar</c> — the registered number of range-accrual fixings must
+/// match the business days in the observation window, within a 5% tolerance for schedules that
+/// skip a day here or there.
 /// </summary>
 public sealed class ObservationCountCheck(IBusinessCalendar calendar) : ServerCheckBase
 {
@@ -60,7 +59,7 @@ public sealed class ObservationCountCheck(IBusinessCalendar calendar) : ServerCh
         var end = Values.AsDate(Read(rule, ctx, "endPath"));
         if (count is null || start is null || end is null) return null;
 
-        var expected = calendar.BusinessDaysBetween(Arg(rule, "calendar") ?? "BRASIL", start.Value, end.Value);
+        var expected = calendar.BusinessDaysBetween(Arg(rule, "calendar") ?? BookingFacts.DefaultCalendar, start.Value, end.Value);
         if (expected == 0) return null;
 
         var tolerance = Math.Max(1m, expected * 0.05m);
@@ -69,11 +68,15 @@ public sealed class ObservationCountCheck(IBusinessCalendar calendar) : ServerCh
 }
 
 /// <summary>
-/// <c>uniqueInstrumentCode</c> — no other asset may carry the same Código IF. The database has
-/// a filtered unique index for the same invariant; this check turns the collision into a
-/// message on the field instead of a failed insert.
+/// <c>uniqueInstrumentCode</c> — no other asset may carry the same Código IF.
+///
+/// The answer is fetched once by the booking service before the pass starts and handed in as a
+/// fact, rather than queried here. Checks run inside the synchronous engine, so a query at this
+/// point would either block a thread or force the whole engine to become async — and it would
+/// run once per evaluation instead of once per request. The database still has a filtered
+/// unique index; this check exists to turn that collision into a message on the field.
 /// </summary>
-public sealed class UniqueInstrumentCodeCheck(CoeDbContext db, ICurrentAssetContext current) : ServerCheckBase
+public sealed class UniqueInstrumentCodeCheck : ServerCheckBase
 {
     public override string Id => "uniqueInstrumentCode";
 
@@ -82,22 +85,23 @@ public sealed class UniqueInstrumentCodeCheck(CoeDbContext db, ICurrentAssetCont
         var code = Values.AsString(Read(rule, ctx, "path"));
         if (string.IsNullOrWhiteSpace(code)) return null;
 
-        var editingId = current.AssetId;
-        return !db.Assets.AsNoTracking()
-            .Any(a => a.InstrumentCode == code && (editingId == null || a.Id != editingId));
+        // Absent when the caller resolved no facts, e.g. a pass that never saw an instrument code.
+        return ctx.ResolveVariable(BookingFacts.InstrumentCodeTaken) switch
+        {
+            bool taken => !taken,
+            _ => null
+        };
     }
 }
 
 /// <summary>
-/// Carries the id of the asset currently being validated, so uniqueness checks do not flag an
-/// asset against its own stored row.
+/// Names of the facts the booking service resolves before validating, so a server-side check can
+/// stay a pure function of the instance plus these values.
 /// </summary>
-public interface ICurrentAssetContext
+public static class BookingFacts
 {
-    Guid? AssetId { get; set; }
-}
+    public const string DefaultCalendar = "BRASIL";
 
-public sealed class CurrentAssetContext : ICurrentAssetContext
-{
-    public Guid? AssetId { get; set; }
+    /// <summary>True when another asset already carries the instrument code on the instance.</summary>
+    public const string InstrumentCodeTaken = "instrumentCodeTaken";
 }

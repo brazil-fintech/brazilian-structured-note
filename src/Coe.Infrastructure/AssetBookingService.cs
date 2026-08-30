@@ -1,11 +1,14 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Coe.Core.Assets;
+using Coe.Core.Diagnostics;
 using Coe.Core.Expressions;
 using Coe.Core.Figures;
 using Coe.Core.Templates;
 using Coe.Core.Validation;
 using Coe.Infrastructure.ServerChecks;
+using Microsoft.Extensions.Logging;
 
 namespace Coe.Infrastructure;
 
@@ -37,8 +40,9 @@ public sealed class AssetBookingService(
     ITemplateStore templates,
     IAssetRepository assets,
     IFigureCatalog figures,
+    IBusinessCalendar calendar,
     ValidationEngine engine,
-    ICurrentAssetContext currentAsset)
+    ILogger<AssetBookingService> logger)
 {
     public async Task<BookingResult> ValidateAsync(
         string figureCode,
@@ -52,15 +56,19 @@ public sealed class AssetBookingService(
         var template = await templates.GetActiveAsync(figureCode, ct)
                        ?? throw new FigureNotAvailableException(figureCode);
 
-        currentAsset.AssetId = assetId;
-        ComputedFields.Apply(template, values, Variables());
+        var facts = await ResolveFactsAsync(values, assetId, ct);
+        ComputedFields.Apply(template, values, facts);
 
-        var result = engine.Validate(template, values, scope, changedPaths, Variables(), culture);
+        var result = engine.Validate(template, values, scope, changedPaths, facts, culture);
         return new BookingResult(false, assetId, result, null);
     }
 
     public async Task<BookingResult> SaveAsync(BookingRequest request, CancellationToken ct = default)
     {
+        using var activity = CoeDiagnostics.Booking.StartActivity("coe.asset.save", ActivityKind.Internal);
+        activity?.SetTag("coe.figure.code", request.FigureCode);
+        activity?.SetTag("coe.asset.id", request.Id);
+
         var figure = await figures.GetAsync(request.FigureCode, ct)
                      ?? throw new FigureNotAvailableException(request.FigureCode);
 
@@ -71,25 +79,32 @@ public sealed class AssetBookingService(
         var template = await templates.GetActiveAsync(request.FigureCode, ct)
                        ?? throw new FigureNotAvailableException(request.FigureCode);
 
-        currentAsset.AssetId = request.Id;
         var values = request.Values;
-        ComputedFields.Apply(template, values, Variables());
+        var facts = await ResolveFactsAsync(values, request.Id, ct);
+        ComputedFields.Apply(template, values, facts);
 
-        var validation = engine.Validate(template, values, ValidationScope.Submit, null, Variables(), request.Culture);
+        var validation = engine.Validate(template, values, ValidationScope.Submit, null, facts, request.Culture);
 
         var blocking = validation.Messages.Where(m => m.Severity == RuleSeverity.Error).ToList();
         var warnings = validation.Messages.Where(m => m.Severity == RuleSeverity.Warning).ToList();
 
         if (blocking.Count > 0 || (warnings.Count > 0 && !request.AcceptWarnings))
+        {
+            RecordSave("rejected", activity);
+            logger.LogInformation(
+                "Rejected save of {FigureCode} asset {AssetId}: {ErrorCount} error(s), {WarningCount} warning(s)",
+                request.FigureCode, request.Id, blocking.Count, warnings.Count);
             return new BookingResult(false, request.Id, validation, request.RowVersion);
+        }
 
         var asset = Project(request, template, values, warnings);
 
         try
         {
+            byte[]? rowVersion;
             if (request.Id is null)
             {
-                await assets.AddAsync(asset, ct);
+                rowVersion = await assets.AddAsync(asset, ct);
             }
             else
             {
@@ -101,18 +116,46 @@ public sealed class AssetBookingService(
                     asset.CreatedBy = existing.CreatedBy;
                 }
 
-                var rowVersion = request.RowVersion is null ? null : Convert.FromBase64String(request.RowVersion);
-                await assets.UpdateAsync(asset, rowVersion, ct);
+                var expected = request.RowVersion is null ? null : Convert.FromBase64String(request.RowVersion);
+                rowVersion = await assets.UpdateAsync(asset, expected, ct);
             }
+
+            RecordSave("saved", activity);
+            logger.LogInformation(
+                "Saved {FigureCode} asset {AssetId} against template v{TemplateVersion} with {WarningCount} accepted warning(s)",
+                request.FigureCode, asset.Id, template.Version, warnings.Count);
+
+            return new BookingResult(true, asset.Id, validation,
+                rowVersion is null ? null : Convert.ToBase64String(rowVersion));
         }
         catch (AssetConcurrencyException ex)
         {
+            RecordSave("conflict", activity);
+            logger.LogWarning("Concurrent edit detected on asset {AssetId}", asset.Id);
             return new BookingResult(false, request.Id, validation, request.RowVersion, ex.Message);
         }
+    }
 
-        var saved = await assets.GetAsync(asset.Id, ct);
-        return new BookingResult(true, asset.Id, validation,
-            saved?.RowVersion is null ? null : Convert.ToBase64String(saved.RowVersion));
+    /// <summary>
+    /// Resolves everything a server-side check needs before the synchronous pass starts: the
+    /// holiday calendar, and whether the instrument code is already taken. Doing it here means
+    /// one query per request instead of one per rule evaluation, and keeps the engine free of I/O.
+    /// </summary>
+    private async Task<Dictionary<string, object?>> ResolveFactsAsync(
+        JsonObject values, Guid? assetId, CancellationToken ct)
+    {
+        await calendar.EnsureLoadedAsync(BookingFacts.DefaultCalendar, ct);
+
+        var facts = new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["today"] = DateOnly.FromDateTime(DateTime.UtcNow)
+        };
+
+        var instrumentCode = Str(values["common"] as JsonObject, "instrumentCode");
+        if (!string.IsNullOrWhiteSpace(instrumentCode))
+            facts[BookingFacts.InstrumentCodeTaken] = await assets.InstrumentCodeTakenAsync(instrumentCode, assetId, ct);
+
+        return facts;
     }
 
     // The grid columns are a projection of the instance document: booking writes them, nothing
@@ -125,6 +168,8 @@ public sealed class AssetBookingService(
 
         return new Asset
         {
+            // A sequential GUID keeps inserts at the end of the clustered index instead of
+            // splitting pages all over it.
             Id = request.Id ?? Guid.CreateVersion7(),
             FigureCode = request.FigureCode,
             TemplateVersion = template.Version,
@@ -150,10 +195,12 @@ public sealed class AssetBookingService(
         };
     }
 
-    private static IReadOnlyDictionary<string, object?> Variables() => new Dictionary<string, object?>(StringComparer.Ordinal)
+    private static void RecordSave(string outcome, Activity? activity)
     {
-        ["today"] = DateOnly.FromDateTime(DateTime.UtcNow)
-    };
+        CoeDiagnostics.AssetSaves.Add(1, new KeyValuePair<string, object?>("coe.save.outcome", outcome));
+        activity?.SetTag("coe.save.outcome", outcome);
+        if (outcome != "saved") activity?.SetStatus(ActivityStatusCode.Error, outcome);
+    }
 
     private static string? Str(JsonObject? o, string key) => Values.AsString(Values.FromJson(o?[key]));
     private static decimal? Num(JsonObject? o, string key) => Values.AsNumber(Values.FromJson(o?[key]));

@@ -14,3 +14,6 @@ dist/
 
 # local settings
 appsettings.Local.json
+
+# benchmark output
+BenchmarkDotNet.Artifacts/

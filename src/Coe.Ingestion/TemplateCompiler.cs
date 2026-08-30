@@ -219,10 +219,13 @@ public sealed class TemplateCompiler
         if ((dataType is FieldDataType.Enum or FieldDataType.EnumSet) && dto.Options.Count == 0 && dto.OptionSource is null)
             warnings.Add($"'{path}' is an enum with neither options nor an optionSource.");
 
+        // Inside a repeating section a condition reads sibling columns through @, so item
+        // references have to be recorded against this section to be matchable later.
+        var itemScope = section.Repeating ? section.Key : null;
         var dependsOn = new SortedSet<string>(StringComparer.Ordinal);
         foreach (var expr in new[] { visibleWhen, requiredWhen, enabledWhen, computed })
             if (expr is not null)
-                foreach (var dep in expr.Dependencies()) dependsOn.Add(dep);
+                foreach (var dep in expr.Dependencies(itemScope)) dependsOn.Add(dep);
 
         return new TemplateField
         {
@@ -291,7 +294,7 @@ public sealed class TemplateCompiler
         var dependsOn = new SortedSet<string>(StringComparer.Ordinal);
         foreach (var expr in new[] { when, assert })
             if (expr is not null)
-                foreach (var dep in expr.Dependencies()) dependsOn.Add(dep);
+                foreach (var dep in expr.Dependencies(dto.ForEachSection)) dependsOn.Add(dep);
         foreach (var target in targets) dependsOn.Add(target);
 
         return new TemplateRule

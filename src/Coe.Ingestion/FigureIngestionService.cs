@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Coe.Core.Diagnostics;
 using Coe.Core.Figures;
 using Coe.Core.Templates;
 using Microsoft.Extensions.Logging;
@@ -47,6 +49,9 @@ public sealed class FigureIngestionService(
 
     public async Task<IngestionReport> RunAsync(CancellationToken ct = default)
     {
+        var started = Stopwatch.GetTimestamp();
+        using var activity = CoeDiagnostics.Ingestion.StartActivity("coe.ingest", ActivityKind.Internal);
+
         var run = new IngestionRun { StartedUtc = DateTimeOffset.UtcNow };
         var messages = new List<string>();
 
@@ -60,6 +65,9 @@ public sealed class FigureIngestionService(
             ct.ThrowIfCancellationRequested();
             try
             {
+                using var fileActivity = CoeDiagnostics.Ingestion.StartActivity("coe.ingest.figure", ActivityKind.Internal);
+                fileActivity?.SetTag("coe.figure.code", loaded.File.FigureCode);
+                fileActivity?.SetTag("coe.source.file", loaded.RelativePath);
                 await IngestOneAsync(loaded, set.Fragments, run, messages, ct);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
@@ -75,6 +83,14 @@ public sealed class FigureIngestionService(
         run.Details = messages.Count == 0 ? null : string.Join(Environment.NewLine, messages);
 
         if (!options.DryRun) await catalog.RecordRunAsync(run, ct);
+
+        CoeDiagnostics.IngestionDuration.Record(Stopwatch.GetElapsedTime(started).TotalMilliseconds);
+        CoeDiagnostics.IngestionRuns.Add(1, new KeyValuePair<string, object?>("coe.ingestion.status", run.Status));
+        CoeDiagnostics.TemplatesPublished.Add(run.TemplatesCreated);
+        activity?.SetTag("coe.ingestion.files_scanned", run.FilesScanned);
+        activity?.SetTag("coe.ingestion.templates_created", run.TemplatesCreated);
+        activity?.SetTag("coe.ingestion.quarantined", run.FiguresQuarantined);
+        if (run.FiguresQuarantined > 0) activity?.SetStatus(ActivityStatusCode.Error, "figures quarantined");
 
         logger.LogInformation(
             "Ingestion finished: {Scanned} file(s), {Created} new figure(s), {Templates} new template version(s), {Quarantined} quarantined",
