@@ -5,7 +5,7 @@ import { readPath, sectionOf, writePath } from '../engine/paths';
 import type {
   FigureTemplate, InstanceValues, Json, TemplateSection, ValidationMessage,
 } from '../engine/types';
-import { validate } from '../engine/validate';
+import { deduplicate, validate } from '../engine/validate';
 
 const SERVER_DEBOUNCE_MS = 400;
 
@@ -44,10 +44,15 @@ export interface AssetFormState {
  * Owns the booking form: the instance document, the client-side checks that run on every
  * keystroke, and the debounced server pass that answers the checks the browser cannot make.
  *
- * The two sets are kept apart on purpose. Client messages are recomputed from scratch on
- * every change, so they never linger. Server messages are keyed by path and replaced only for
- * the paths the API says it evaluated — otherwise a narrow "field" pass would wipe findings
- * about parts of the form it never looked at.
+ * The two sets are kept apart on purpose. Client messages are recomputed from scratch on every
+ * change, so they never linger. Server messages are keyed by path and replaced only for the paths
+ * the API reports it was authoritative about — otherwise a narrow "field" pass would wipe findings
+ * about parts of the form it never looked at. That set covers the targets of every rule the pass
+ * considered, not only the ones that complained, which is what lets an edit replace the previous
+ * answer about a field rather than stack another copy of it.
+ *
+ * The merged view is deduplicated, because a rule marked `execution: "both"` is answered by the
+ * browser and by the API and would otherwise say the same thing twice.
  */
 export function useAssetForm(options: UseAssetFormOptions): AssetFormState {
   const { template, assetId, culture = 'pt-BR' } = options;
@@ -103,7 +108,10 @@ export function useAssetForm(options: UseAssetFormOptions): AssetFormState {
 
       setServerMessages((previous) => {
         const next = { ...previous };
-        // Clear only what this pass looked at, then add back what it found.
+        // Clear every path this pass is authoritative about — the attributes it checked and the
+        // targets of the rules it looked at — then add back only what it found. A pass answers
+        // about paths other than the one that changed, so clearing just the requested paths let
+        // each edit stack another copy of the same finding.
         for (const path of response.evaluatedPaths) delete next[path];
         for (const path of paths) delete next[path];
         for (const message of response.messages) {
@@ -179,7 +187,9 @@ export function useAssetForm(options: UseAssetFormOptions): AssetFormState {
 
   const allMessages = useMemo(() => {
     const server = Object.values(serverMessages).flat();
-    const merged = [...clientMessages, ...server];
+    // The API's answer first, so that when a rule marked "both" is reported by the browser and
+    // the API alike, the one that survives is the authoritative one.
+    const merged = deduplicate([...server, ...clientMessages]);
     if (showAll) return merged;
     // Before the first save attempt, only speak about attributes the user has visited —
     // a blank form covered in red is noise, not feedback.

@@ -60,8 +60,8 @@ public sealed class ValidationEngine(IServerCheckRegistry? serverChecks = null)
             if (!AppliesToScope(rule, scope)) continue;
 
             if (rule.ForEachSection is { } sectionKey)
-                rulesEvaluated += EvaluateRowRule(template, rule, sectionKey, values, ctx, scope, changed, culture, messages);
-            else if (EvaluateRule(rule, ctx, prefix: null, scope, changed, culture, messages))
+                rulesEvaluated += EvaluateRowRule(template, rule, sectionKey, values, ctx, scope, changed, culture, messages, evaluated);
+            else if (EvaluateRule(rule, ctx, prefix: null, scope, changed, culture, messages, evaluated))
                 rulesEvaluated++;
         }
 
@@ -292,19 +292,20 @@ public sealed class ValidationEngine(IServerCheckRegistry? serverChecks = null)
         ValidationScope scope,
         ChangeSet changed,
         string culture,
-        List<ValidationMessage> messages)
+        List<ValidationMessage> messages,
+        List<string> evaluated)
     {
         var section = template.FindSection(sectionKey);
         if (section is null || !ExpressionEvaluator.EvaluateAsBool(section.VisibleWhen, ctx)) return 0;
         if (EvaluationContext.Navigate(values, sectionKey) is not JsonArray array) return 0;
 
-        var evaluated = 0;
+        var evaluatedRules = 0;
         for (var i = 0; i < array.Count; i++)
         {
             var scoped = ctx.WithItem(array[i] as JsonObject);
-            if (EvaluateRule(rule, scoped, $"{sectionKey}[{i}]", scope, changed, culture, messages)) evaluated++;
+            if (EvaluateRule(rule, scoped, $"{sectionKey}[{i}]", scope, changed, culture, messages, evaluated)) evaluatedRules++;
         }
-        return evaluated;
+        return evaluatedRules;
     }
 
     /// <summary>Returns true when the rule was actually evaluated rather than skipped.</summary>
@@ -315,10 +316,21 @@ public sealed class ValidationEngine(IServerCheckRegistry? serverChecks = null)
         ValidationScope scope,
         ChangeSet changed,
         string culture,
-        List<ValidationMessage> messages)
+        List<ValidationMessage> messages,
+        List<string> evaluated)
     {
         if (scope == ValidationScope.Field && !changed.Intersects(rule.DependsOn) && !TargetsChanged(rule, prefix, changed))
             return false;
+
+        // Everything this rule can say lands on its targets, so having looked at it, this pass
+        // supersedes whatever it said about them last time — including when the guard below now
+        // skips it, or its inputs are not all filled in. A narrow pass reports the paths it is
+        // authoritative about, not only the ones it had a complaint about; recording them here
+        // is what lets a caller replace those messages instead of piling new ones on top.
+        foreach (var target in rule.Targets)
+        {
+            if (target.Length > 0) evaluated.Add(Instance.Resolve(target, prefix));
+        }
 
         if (!ExpressionEvaluator.EvaluateAsBool(rule.When, ctx)) return false;
 

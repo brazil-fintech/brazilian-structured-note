@@ -296,7 +296,14 @@ function fieldMessage(
   return { path, message, severity, origin: 'field', section: section.key };
 }
 
-function deduplicate(messages: ValidationMessage[]): ValidationMessage[] {
+/**
+ * Keeps the first of each distinct finding.
+ *
+ * Also used on the merged client + server view: a rule with `execution: "both"` is evaluated in
+ * the browser for instant feedback and again by the API, and without this the user sees the same
+ * sentence twice as soon as the background pass answers.
+ */
+export function deduplicate(messages: ValidationMessage[]): ValidationMessage[] {
   const seen = new Set<string>();
   return messages.filter((m) => {
     const key = `${m.path}|${m.ruleId ?? ''}|${m.message}`;

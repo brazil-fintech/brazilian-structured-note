@@ -40,7 +40,16 @@ public sealed record ValidationResult
 {
     public IReadOnlyList<ValidationMessage> Messages { get; init; } = [];
 
-    /// <summary>Paths that were evaluated, so the client can clear stale messages for them.</summary>
+    /// <summary>
+    /// Every path this pass is authoritative about: the attributes it checked, and the targets of
+    /// every rule it looked at — whether the rule complained, held, or could not decide yet.
+    ///
+    /// A narrow <see cref="ValidationScope.Field"/> pass triggered by one attribute routinely
+    /// answers about others, because a rule reads one attribute and lands its message on another.
+    /// Listing only the paths that produced a message would leave the caller unable to tell a
+    /// finding that is gone from one this pass never considered, so it would either keep stale
+    /// messages or accumulate duplicates of the live ones.
+    /// </summary>
     public IReadOnlyList<string> EvaluatedPaths { get; init; } = [];
 
     public bool IsValid => Messages.All(m => m.Severity != RuleSeverity.Error);

@@ -181,6 +181,45 @@ public class ValidationEngineTests
     }
 
     [Fact]
+    public void A_pass_reports_the_paths_it_is_authoritative_about_not_just_the_ones_it_complains_about()
+    {
+        // The booking screen keeps server findings per path and clears the ones a pass answered
+        // for. A rule reads the modality and lands on guaranteedCapital, so unless the pass says
+        // it spoke for guaranteedCapital, the screen has no way to replace what it said last time
+        // — and every change to the modality stacks another copy of the same message.
+        var template = DomainFiles.Template("COE001005");
+        var values = CallSpread(modality: "VNP", guaranteedCapital: 90);
+
+        var result = Engine.Validate(template, values, ValidationScope.Field, ["common.modality"]);
+
+        Assert.Contains("common.guaranteedCapital", result.EvaluatedPaths);
+    }
+
+    [Fact]
+    public void A_rule_that_now_holds_still_claims_its_target_so_its_message_can_be_cleared()
+    {
+        // The same pass with a valid capital: no message, but the path must still be reported,
+        // or the finding the previous pass left on the screen would never go away.
+        var template = DomainFiles.Template("COE001005");
+        var values = CallSpread(modality: "VNP", guaranteedCapital: 100);
+
+        var result = Engine.Validate(template, values, ValidationScope.Field, ["common.modality"]);
+
+        Assert.DoesNotContain("common.vnp-guaranteed-capital", ErrorIds(result));
+        Assert.Contains("common.guaranteedCapital", result.EvaluatedPaths);
+    }
+
+    [Fact]
+    public void Repeating_rules_claim_the_row_they_landed_on()
+    {
+        // The second payment falls outside the tenor, so the row rule lands on cashflows[1].
+        var result = Engine.Validate(
+            DomainFiles.Template("COE001005"), WithCashFlows("2027-03-01", "2030-01-01"), ValidationScope.Submit);
+
+        Assert.Contains(result.EvaluatedPaths, p => p.StartsWith("cashflows[1]", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Server_only_rules_are_skipped_when_no_check_is_registered()
     {
         // The engine without a registry must not invent a verdict for a check it cannot run.
