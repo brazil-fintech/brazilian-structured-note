@@ -18,8 +18,10 @@ public sealed record CompilationResult(FigureTemplate? Template, IReadOnlyList<s
 /// A file that does not compile cleanly never becomes an active template — the figure is
 /// quarantined with the errors instead, which is what keeps a bad edit out of the booking screen.
 /// </summary>
-public sealed class TemplateCompiler
+public sealed class TemplateCompiler(B3Reference? reference = null)
 {
+    private readonly B3Reference _reference = reference ?? B3Reference.Empty;
+
     public CompilationResult Compile(DomainFile file, IReadOnlyDictionary<string, DomainFile> fragments, int version)
     {
         var errors = new List<string>();
@@ -28,6 +30,8 @@ public sealed class TemplateCompiler
         if (string.IsNullOrWhiteSpace(file.FigureCode)) errors.Add("figureCode is required.");
         if (string.IsNullOrWhiteSpace(file.FigureName)) errors.Add("figureName is required.");
 
+        CheckAgainstFigureCatalogue(file, errors, warnings);
+
         var sections = MergeSections(file, fragments, errors);
         if (errors.Count > 0) return new CompilationResult(null, errors, warnings);
 
@@ -35,7 +39,7 @@ public sealed class TemplateCompiler
         var compiledSections = new List<TemplateSection>();
 
         foreach (var dto in sections.OrderBy(s => s.Order).ThenBy(s => s.Key, StringComparer.Ordinal))
-            compiledSections.Add(CompileSection(dto, resolver, errors, warnings));
+            compiledSections.Add(CompileSection(dto, resolver, errors, warnings, _reference));
 
         var rules = new List<TemplateRule>();
         var ruleIds = new HashSet<string>(StringComparer.Ordinal);
@@ -180,11 +184,11 @@ public sealed class TemplateCompiler
     }
 
     private static TemplateSection CompileSection(
-        SectionDto dto, PathResolver resolver, List<string> errors, List<string> warnings)
+        SectionDto dto, PathResolver resolver, List<string> errors, List<string> warnings, B3Reference reference)
     {
         var fields = (dto.Repeating ? dto.ItemFields : dto.Fields)
             .OrderBy(f => f.Order)
-            .Select(f => CompileField(dto, f, resolver, errors, warnings))
+            .Select(f => CompileField(dto, f, resolver, errors, warnings, reference))
             .ToList();
 
         return new TemplateSection
@@ -205,7 +209,8 @@ public sealed class TemplateCompiler
     }
 
     private static TemplateField CompileField(
-        SectionDto section, FieldDto dto, PathResolver resolver, List<string> errors, List<string> warnings)
+        SectionDto section, FieldDto dto, PathResolver resolver, List<string> errors, List<string> warnings,
+        B3Reference reference)
     {
         var scope = section.Key;
         var path = section.Repeating ? $"{section.Key}[].{dto.Key}" : $"{section.Key}.{dto.Key}";
@@ -218,6 +223,8 @@ public sealed class TemplateCompiler
 
         if ((dataType is FieldDataType.Enum or FieldDataType.EnumSet) && dto.Options.Count == 0 && dto.OptionSource is null)
             warnings.Add($"'{path}' is an enum with neither options nor an optionSource.");
+
+        CheckAgainstB3Dictionary(dto, path, dataType, reference, errors, warnings);
 
         // Inside a repeating section a condition reads sibling columns through @, so item
         // references have to be recorded against this section to be matchable later.
@@ -235,6 +242,8 @@ public sealed class TemplateCompiler
             Help = Text(dto.Help),
             DataType = dataType,
             B3Field = dto.B3Field,
+            B3FieldCode = dto.B3FieldCode,
+            B3Domain = dto.B3Domain,
             Symbol = dto.Symbol,
             Unit = dto.Unit,
             Decimals = dto.Decimals,
@@ -250,6 +259,7 @@ public sealed class TemplateCompiler
             OptionSource = dto.OptionSource,
             Options = dto.Options.Select(o => new FieldOption(o.Code, Text(o.Label) ?? new LocalizedText(o.Code))
             {
+                B3Code = o.B3Code,
                 Help = Text(o.Help),
                 VisibleWhen = Compile(o.VisibleWhen, scope, resolver, errors, $"'{path}' option '{o.Code}' visibleWhen")
             }).ToList(),
@@ -312,6 +322,93 @@ public sealed class TemplateCompiler
             ForEachSection = dto.ForEachSection,
             DependsOn = [.. dependsOn]
         };
+    }
+
+    /// <summary>
+    /// A figure the platform books must be one B3 actually publishes, under the name B3 gives it.
+    /// A rename in the catalogue then surfaces at ingestion rather than at registration.
+    /// </summary>
+    private void CheckAgainstFigureCatalogue(DomainFile file, List<string> errors, List<string> warnings)
+    {
+        if (_reference.Figures.Count == 0 || string.IsNullOrWhiteSpace(file.FigureCode)) return;
+
+        var published = _reference.Figure(file.FigureCode);
+        if (published is null)
+        {
+            errors.Add($"'{file.FigureCode}' is not in B3's figure catalogue ({B3Reference.FiguresFile}).");
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(file.FigureName) &&
+            !string.Equals(published.Name, file.FigureName, StringComparison.OrdinalIgnoreCase))
+        {
+            warnings.Add(
+                $"figureName '{file.FigureName}' differs from B3's '{published.Name}' for {file.FigureCode}.");
+        }
+    }
+
+    /// <summary>
+    /// Checks a field against B3's published metadata where the domain file claims a mapping:
+    /// the option codes against the named domain, and the declared size and decimals against the
+    /// strategy-field dictionary.
+    /// </summary>
+    private static void CheckAgainstB3Dictionary(
+        FieldDto dto, string path, FieldDataType dataType, B3Reference reference,
+        List<string> errors, List<string> warnings)
+    {
+        if (dto.B3Domain is { } domainType)
+        {
+            var domain = reference.Domain(domainType);
+            if (domain.Count == 0)
+            {
+                warnings.Add($"'{path}' names B3 domain '{domainType}', which the reference export does not contain.");
+            }
+            else
+            {
+                foreach (var option in dto.Options)
+                {
+                    if (string.IsNullOrWhiteSpace(option.B3Code))
+                    {
+                        errors.Add($"'{path}' option '{option.Code}' has no b3Code, but the field maps to domain '{domainType}'.");
+                        continue;
+                    }
+
+                    var match = domain.FirstOrDefault(v => v.Code == option.B3Code);
+                    if (match is null)
+                        errors.Add($"'{path}' option '{option.Code}' has b3Code '{option.B3Code}', which is not a value of '{domainType}'.");
+                    else if (!match.Enabled)
+                        warnings.Add($"'{path}' option '{option.Code}' maps to '{domainType}' code {option.B3Code} ('{match.Name}'), which B3 has disabled.");
+                }
+            }
+        }
+
+        if (dto.B3FieldCode is not { } fieldCode) return;
+
+        var published = reference.StrategyField(fieldCode);
+        if (published is null)
+        {
+            if (reference.StrategyFields.Count > 0)
+                errors.Add($"'{path}' names B3 field code '{fieldCode}', which is not in the strategy-field dictionary.");
+            return;
+        }
+
+        var expected = published.DataType switch
+        {
+            "NUMERICO" => new[] { FieldDataType.Decimal, FieldDataType.Percent, FieldDataType.Money, FieldDataType.Integer },
+            "DATA" => [FieldDataType.Date],
+            "TEXTO" => [FieldDataType.String, FieldDataType.Text],
+            "DOMINIO" => [FieldDataType.Enum, FieldDataType.EnumSet, FieldDataType.Boolean],
+            _ => []
+        };
+
+        if (expected.Length > 0 && !expected.Contains(dataType))
+            errors.Add($"'{path}' is {dataType} but B3 field {fieldCode} ('{published.Name}') is {published.DataType}.");
+
+        if (dto.Decimals is { } decimals && published.Decimals != decimals)
+            warnings.Add($"'{path}' declares {decimals} decimal place(s); B3 field {fieldCode} registers {published.Decimals}.");
+
+        if (dto.MaxLength is { } maxLength && published.Length > 0 && maxLength > published.Length)
+            errors.Add($"'{path}' allows {maxLength} characters; B3 field {fieldCode} registers {published.Length}.");
     }
 
     // ----- helpers -------------------------------------------------------------------

@@ -1,0 +1,90 @@
+20260831
+CODIGO FIGURA;NOME FIGURA;CALCULADA
+01;COE001001 - Call;S
+02;COE001002 - Put;S
+03;COE001003 - Call KO;S
+04;COE001004 - Put KO;S
+05;COE001005 - Call Spread;S
+06;COE001006 - Put Spread;S
+07;COE001007 - Straddle;S
+08;COE001008 - Straddle Call KO;S
+09;COE001009 - Straddle Put KO;S
+10;COE001010 - Straddle KO Call Put;S
+11;COE001011 - Digital Call;S
+12;COE001012 - Digital Put;S
+13;COE001013 - Double Digital;S
+14;COE001014 - Collar;S
+15;COE001015 - Range Accrual;S
+16;COE001016 - Strangle;S
+17;COE001017 - Strangle Call KO;S
+18;COE001018 - Strangle Put KO;S
+19;COE001019 - Strangle KO Call Put;S
+20;COE001020 - Barreiras Moveis;S
+21;COE001021 - Call KI;S
+22;COE001022 - Put KI;S
+23;COE001023 - Call KIKO;S
+24;COE001024 - Put KIKO;S
+25;COE001025 - Double No Touch;S
+26;COE001026 - One Touch;S
+27;COE001027 - Condor;S
+28;COE001028 - Butterfly;S
+29;COE001029 - Straddle Call KO e Put KO com Put Spread KI;S
+30;COE001030 - Put Spread com KI + Call com KO;S
+31;COE001031 - Forward;S
+32;COE001032 - Participation Forward Flex;S
+33;COE001033 - Participation Forward Limitadores;S
+34;COE001034 - Participation Forward Flex II;S
+35;COE001035 - VPutDigital +CCallDigital + CallSpread;S
+36;COE001036 - Fence;N
+37;COE001037 - Fence KI CallSpread;N
+38;COE001038 - Double One Touch;N
+39;COE001039 - CallSpread + PutSpread;N
+40;COE001040 - PutSpread + PutSpread;N
+41;COE001041 - Wedding Cake;N
+42;COE001042 - Call KO 1 + Call KO 2;N
+43;COE001043 - Edge Accrual;N
+44;COE001044 - Podium;N
+45;COE001045 - Troca de indexadores;N
+46;COE001046 - CallSpread + Call KO;N
+47;COE001047 - CCall + CCallKO + VPutKO + CPutKI;N
+48;COE001048 - Digital Put KO Americano;N
+49;COE001049 - Call KO + Put;N
+50;COE001050 - Call Strike Lookback;N
+51;COE001051 - Call Spread KI + Put;N
+52;COE001052 - Straddle C Call + C Put KO + V PS;N
+53;COE001053 - Retorno Condicional;N
+54;COE001054 - Alocação Forwards KI;N
+55;COE001055 - CCallSpread + VPutSpread + VPut;N
+56;COE001056 - Double Call KO + CallSpread;N
+57;COE001057 - Retorno Condicional 2;N
+58;COE001058 - Put KI + Callspread;N
+59;COE001059 - CCall KO Cond + VPut KI Double Bkt;N
+60;COE001060- CCallSpread + VPutSpread;N
+61;COE001061- CCall + VPutSpread;N
+62;COE001062 - Straddle CS + Put KO;N
+63;COE001063 - Straddle PS + Call KO;N
+64;COE001064 - Call com Participação;N
+65;COE001065 - Put com Participação;N
+66;COE001066 - Retorno - Fundos;N
+67;COE001067 - CPut + VPut;N
+68;COE001068 - Double No Touch + Digital Call;N
+69;COE001069 - Digital KO Call Digital KI;N
+70;COE001070 - Call Digital KI;N
+71;COE001071 - Digital KO CallSpread Digital KI;N
+72;COE001072 - Retorno Condicional com Amortização;N
+73;COE001073 - Call Alavancagens com Limitador;N
+74;COE001074 - Cesta de Put KO;N
+75;COE001075 - Dual Digital;N
+76;COE001076 - Retorno Condicional Híbrido;N
+77;COE001077 - Cesta Call KO + Call;N
+78;COE001078 - COE de Crédito - CDS;N
+79;COE001079 - COE de Crédito - CDS + Call;N
+80;COE001080 - COE de Crédito - TRS;N
+81;COE001081 - Call + Foward;N
+82;COE001082 - Retorno Amortização - Fundos;N
+83;COE001083 - COE de Crédito–Troca de Indexadores;N
+84;COE001084 - COE de Crédito - TRS Loan;N
+85;COE de Crédito – CDS com Amortização;N
+86;COE de Crédito – TRS com Amortização;N
+87;COE001087 CallSpread + CallSpread;N
+88;COE001088 - Cesta de Opções;N

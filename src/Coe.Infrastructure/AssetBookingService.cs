@@ -41,6 +41,7 @@ public sealed class AssetBookingService(
     IAssetRepository assets,
     IFigureCatalog figures,
     IBusinessCalendar calendar,
+    IReferenceDataRepository reference,
     ValidationEngine engine,
     ILogger<AssetBookingService> logger)
 {
@@ -154,6 +155,12 @@ public sealed class AssetBookingService(
         var instrumentCode = Str(values["common"] as JsonObject, "instrumentCode");
         if (!string.IsNullOrWhiteSpace(instrumentCode))
             facts[BookingFacts.InstrumentCodeTaken] = await assets.InstrumentCodeTakenAsync(instrumentCode, assetId, ct);
+
+        var underlying = values["underlying"] as JsonObject;
+        var asset = Str(underlying, "asset");
+        if (!string.IsNullOrWhiteSpace(asset))
+            facts[BookingFacts.UnderlyingRegistered] =
+                await reference.UnderlyingExistsAsync(asset, Str(underlying, "assetClass"), ct);
 
         return facts;
     }

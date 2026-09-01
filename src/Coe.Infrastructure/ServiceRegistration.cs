@@ -42,14 +42,21 @@ public static class ServiceRegistration
         services.AddSingleton<IServerCheck, BusinessDaysBeforeCheck>();
         services.AddSingleton<IServerCheck, ObservationCountCheck>();
         services.AddSingleton<IServerCheck, UniqueInstrumentCodeCheck>();
+        services.AddSingleton<IServerCheck, UnderlyingRegisteredCheck>();
         services.AddSingleton<IServerCheckRegistry>(sp => new ServerCheckRegistry(sp.GetServices<IServerCheck>()));
         services.AddSingleton(sp => new ValidationEngine(sp.GetRequiredService<IServerCheckRegistry>()));
 
         var ingestion = new IngestionOptions();
         configuration.GetSection(IngestionOptions.SectionName).Bind(ingestion);
         ingestion.DomainDirectory = ResolvePath(ingestion.DomainDirectory);
+        ingestion.ReferenceDirectory = ResolvePath(ingestion.ReferenceDirectory);
         services.AddSingleton(ingestion);
+
+        // Read once at startup: these are published exports that change when someone drops in a
+        // newer file, and every compile checks against them.
+        services.AddSingleton(B3Reference.Load(ingestion.ReferenceDirectory));
         services.AddSingleton<FigureIngestionService>();
+        services.AddSingleton<B3ReferenceImporter>();
 
         services.AddHealthChecks().AddCheck<SqlHealthCheck>("sql", tags: ["ready"]);
 

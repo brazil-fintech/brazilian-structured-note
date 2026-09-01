@@ -12,14 +12,16 @@ template. Adding `COE001042` means adding `domain/figures/coe001042-….json`.
 ## The pieces
 
 ```
+reference/b3/              ← B3's published exports: figures, domains, fields, underlyings
 domain/                    ← the source of truth for every figure (see domain/README.md)
         │
-        │  file watch / poll
+        │  file watch / poll  ·  domain files are checked against reference/b3/
         ▼
 src/Coe.Worker             ← ingestion: reads domain files, compiles, versions, enables
         │
         ▼
-   MSSQL  figure.Figure · figure.FigureTemplate · asset.Asset · ref.Holiday · ref.Underlying
+   MSSQL  figure.Figure · figure.FigureTemplate · asset.Asset
+          ref.Holiday · ref.Underlying · b3.Figure · b3.Domain · b3.StrategyField
         │
         ▼
 src/Coe.Api                ← template + asset endpoints, and the validation authority
@@ -104,6 +106,45 @@ Checks that need reference data — business-day calendars, code uniqueness — 
 browser. Those rules name a **server check** by id and are answered by the validate endpoint,
 so they still reach the user as they type, just over the wire.
 
+## B3's reference data is the authority
+
+The exports under [`reference/b3/`](../reference/b3/README.md) — the figure catalogue, the
+registration domains, the strategy-field dictionary and the underlying master — say what B3 will
+accept. The platform checks itself against them rather than against hand-written lists, in two
+places.
+
+**At compile time.** A `figureCode` must exist in B3's catalogue under B3's name; a field
+declaring `b3Domain` must give every option a `b3Code` that exists and is still enabled; a field
+declaring `b3FieldCode` must agree with the dictionary on type, size and decimals. A figure that
+fails is quarantined rather than published, so a rename surfaces at ingestion instead of at
+registration.
+
+**At run time.** The worker loads the exports into `b3.*` and `ref.Underlying`, which is what
+backs the underlying picker and the `underlyingRegistered` check.
+
+### Internal codes and B3 codes are kept separate
+
+An option carries both: the mnemonic `code` the instance stores and the rules are written
+against (`STANDARD`), and the `b3Code` a registration file must carry (`3`). Storing B3's numeric
+code directly would make every rule cryptic — `maturityRemunerator in ['2','5','7']` — and would
+turn a B3 code change into a rewrite of every rule that names the option. Keeping them separate
+makes that a reference-data update, and the compiler proves the mapping is still valid.
+
+Asset classes are the exception: they are stored using B3's own spelling
+(`ACOES INTERNACIONAIS`), because that is what the underlying master is keyed on, and a mapping
+table between the two would be a thing to get wrong for no benefit.
+
+### What this caught
+
+Aligning to the real exports corrected invented values that would have been rejected at
+registration: the basket type had two options where B3 publishes eight; the underlying classes
+were missing `JUROS`, `JUROS INTERNACIONAIS`, `TITULOS PUBLICOS` and `TITULOS PRIVADOS` — the
+last of which the physical-delivery rule is supposed to depend on; the maturity remunerator was
+missing `SOFR VCP` and pointed at code 12, which B3 has disabled; the specific redemption
+condition was free text where B3 registers a two-value domain. And of seventeen hand-written
+placeholder underlyings, eleven did not exist in B3's master at all — including `IBOV`, which B3
+lists as `IBOVESPA`.
+
 ## Ingestion, versioning and enabling a figure
 
 The worker hashes each domain file **together with the fragments it extends**, so editing a
@@ -129,7 +170,7 @@ in `Pending` for a desk to release it.
 | `GET /api/assets/{id}` | the full instance document, plus the rowversion for concurrency |
 | `POST /api/assets/validate` | as-you-type validation; messages pinned to instance paths |
 | `POST /api/assets` · `PUT /api/assets/{id}` | full validation, then save |
-| `GET /api/reference/{source}` | lists a field's `optionSource` (currently `underlyings`) |
+| `GET /api/reference/{source}` | lists a field's `optionSource` (`underlyings`, 1,582 codes from B3's master) |
 | `POST /api/admin/ingest` | re-read the domain files now, without waiting for the worker |
 
 ## Performance

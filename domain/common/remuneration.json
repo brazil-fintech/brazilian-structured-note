@@ -4,7 +4,10 @@
       "key": "remuneration",
       "kind": "tab",
       "order": 20,
-      "label": { "pt": "Remuneração", "en": "Remuneration" },
+      "label": {
+        "pt": "Remuneração",
+        "en": "Remuneration"
+      },
       "help": {
         "pt": "Perna de renda fixa. O Remunerador no Vencimento remunera o valor unitário apenas no vencimento; cupons intermediários são registrados no Fluxo de Caixa.",
         "en": "The fixed-income leg. The maturity remunerator accrues the unit price at maturity only; interim coupons are registered as cash flows."
@@ -13,28 +16,117 @@
         {
           "key": "maturityRemunerator",
           "order": 10,
-          "label": { "pt": "Remunerador no Vencimento", "en": "Maturity remunerator" },
+          "label": {
+            "pt": "Remunerador no Vencimento",
+            "en": "Maturity remunerator"
+          },
           "dataType": "enum",
           "b3Field": "Remunerador no Vencimento",
           "required": true,
           "default": "SEM_REMUNERACAO",
           "options": [
-            { "code": "SEM_REMUNERACAO", "label": { "pt": "Sem remuneração", "en": "None" } },
-            { "code": "PRE", "label": { "pt": "Pré", "en": "Fixed rate" } },
-            { "code": "DI", "label": { "pt": "DI", "en": "DI (CDI)" } },
-            { "code": "IPCA_VCP", "label": { "pt": "IPCA VCP", "en": "IPCA VCP" } },
-            { "code": "IBOVESPA_VCP", "label": { "pt": "IBOVESPA VCP", "en": "IBOVESPA VCP" } },
-            { "code": "IBOVESPA", "label": { "pt": "IBOVESPA", "en": "IBOVESPA" } },
-            { "code": "USD_VCP", "label": { "pt": "USD VCP", "en": "USD VCP" } },
-            { "code": "USD", "label": { "pt": "USD", "en": "USD" } },
-            { "code": "NO_PERIODO", "label": { "pt": "No período", "en": "Period rate" } },
-            { "code": "PRE_LIN360_VC_USD", "label": { "pt": "PRÉ LIN/360 + VC USD", "en": "PRE LIN/360 + USD variation" } }
-          ]
+            {
+              "code": "SEM_REMUNERACAO",
+              "b3Code": "0",
+              "label": {
+                "pt": "Sem remuneração",
+                "en": "None"
+              }
+            },
+            {
+              "code": "PRE",
+              "b3Code": "1",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed rate"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "2",
+              "label": {
+                "pt": "DI",
+                "en": "DI (CDI)"
+              }
+            },
+            {
+              "code": "IPCA_VCP",
+              "b3Code": "3",
+              "label": {
+                "pt": "IPCA VCP",
+                "en": "IPCA VCP"
+              }
+            },
+            {
+              "code": "IBOVESPA_VCP",
+              "b3Code": "4",
+              "label": {
+                "pt": "IBOVESPA VCP",
+                "en": "IBOVESPA VCP"
+              }
+            },
+            {
+              "code": "USD_VCP",
+              "b3Code": "5",
+              "label": {
+                "pt": "USD VCP",
+                "en": "USD VCP"
+              }
+            },
+            {
+              "code": "USD",
+              "b3Code": "7",
+              "label": {
+                "pt": "USD",
+                "en": "USD"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "b3Code": "8",
+              "label": {
+                "pt": "No período",
+                "en": "Period rate"
+              }
+            },
+            {
+              "code": "IBOVESPA",
+              "b3Code": "9",
+              "label": {
+                "pt": "IBOVESPA",
+                "en": "IBOVESPA"
+              }
+            },
+            {
+              "code": "PRE_LIN360_VC_USD",
+              "b3Code": "32",
+              "label": {
+                "pt": "PRÉ LIN/360 com VC em USD",
+                "en": "PRE LIN/360 with USD variation"
+              },
+              "help": {
+                "pt": "Fator de correção = USD final / USD inicial; fator de juros = Pré Lin act/360.",
+                "en": "Correction factor = final USD / initial USD; interest factor = fixed Lin act/360."
+              }
+            },
+            {
+              "code": "SOFR_VCP",
+              "b3Code": "53",
+              "label": {
+                "pt": "SOFR VCP",
+                "en": "SOFR VCP"
+              }
+            }
+          ],
+          "b3Domain": "REMUNERADOR NO VENCIMENTO"
         },
         {
           "key": "floatingPercentage",
           "order": 20,
-          "label": { "pt": "Remunerador Flutuante (%)", "en": "Floating remunerator (%)" },
+          "label": {
+            "pt": "Remunerador Flutuante (%)",
+            "en": "Floating remunerator (%)"
+          },
           "help": {
             "pt": "Percentual aplicado ao indexador flutuante — 90 para \"90% do CDI\".",
             "en": "Percentage applied to the floating indexer — 90 for \"90% of CDI\"."
@@ -51,7 +143,10 @@
         {
           "key": "couponRate",
           "order": 30,
-          "label": { "pt": "Spread / Cupom (%)", "en": "Spread / coupon (%)" },
+          "label": {
+            "pt": "Spread / Cupom (%)",
+            "en": "Spread / coupon (%)"
+          },
           "symbol": "i",
           "dataType": "percent",
           "b3Field": "Spread/Cupom",
@@ -64,7 +159,10 @@
         {
           "key": "dayCountBasis",
           "order": 40,
-          "label": { "pt": "Base", "en": "Day-count basis" },
+          "label": {
+            "pt": "Base",
+            "en": "Day-count basis"
+          },
           "dataType": "enum",
           "b3Field": "Base",
           "default": "252_EXP",
@@ -73,17 +171,38 @@
           "options": [
             {
               "code": "252_EXP",
-              "label": { "pt": "252 exponencial", "en": "252 exponential" },
-              "help": { "pt": "Convenção brasileira padrão (DU/252).", "en": "The standard Brazilian convention (DU/252)." }
+              "label": {
+                "pt": "252 exponencial",
+                "en": "252 exponential"
+              },
+              "help": {
+                "pt": "Convenção brasileira padrão (DU/252).",
+                "en": "The standard Brazilian convention (DU/252)."
+              }
             },
-            { "code": "360_EXP", "label": { "pt": "360 exponencial", "en": "360 exponential" } },
-            { "code": "360_LIN", "label": { "pt": "360 linear", "en": "360 linear" } }
+            {
+              "code": "360_EXP",
+              "label": {
+                "pt": "360 exponencial",
+                "en": "360 exponential"
+              }
+            },
+            {
+              "code": "360_LIN",
+              "label": {
+                "pt": "360 linear",
+                "en": "360 linear"
+              }
+            }
           ]
         },
         {
           "key": "hasCashFlow",
           "order": 50,
-          "label": { "pt": "Fluxo de Caixa", "en": "Cash flow" },
+          "label": {
+            "pt": "Fluxo de Caixa",
+            "en": "Cash flow"
+          },
           "help": {
             "pt": "Sim quando a nota paga eventos intermediários; o cronograma vai na aba Fluxo de caixa.",
             "en": "Yes when the note pays interim events; the schedule goes on the cash-flow tab."
@@ -99,7 +218,10 @@
       "key": "cashflows",
       "kind": "tab",
       "order": 25,
-      "label": { "pt": "Fluxo de caixa", "en": "Cash flows" },
+      "label": {
+        "pt": "Fluxo de caixa",
+        "en": "Cash flows"
+      },
       "repeating": true,
       "minItems": 1,
       "maxItems": 120,
@@ -108,7 +230,10 @@
         {
           "key": "paymentDate",
           "order": 10,
-          "label": { "pt": "Data de Pagamento", "en": "Payment date" },
+          "label": {
+            "pt": "Data de Pagamento",
+            "en": "Payment date"
+          },
           "dataType": "date",
           "b3Field": "Datas de pagamento",
           "required": true
@@ -116,22 +241,113 @@
         {
           "key": "flowRemunerator",
           "order": 20,
-          "label": { "pt": "Remunerador no Fluxo", "en": "Cash-flow remunerator" },
+          "label": {
+            "pt": "Remunerador no Fluxo",
+            "en": "Cash-flow remunerator"
+          },
           "dataType": "enum",
           "b3Field": "Remunerador no Fluxo",
           "required": true,
           "default": "PRE",
           "options": [
-            { "code": "PRE", "label": { "pt": "Pré", "en": "Fixed rate" } },
-            { "code": "DI", "label": { "pt": "DI", "en": "DI (CDI)" } },
-            { "code": "IPCA_VCP", "label": { "pt": "IPCA VCP", "en": "IPCA VCP" } },
-            { "code": "SEM_REMUNERACAO", "label": { "pt": "Sem remuneração", "en": "None" } }
-          ]
+            {
+              "code": "SEM_REMUNERACAO",
+              "b3Code": "0",
+              "label": {
+                "pt": "Sem remuneração",
+                "en": "None"
+              }
+            },
+            {
+              "code": "PRE",
+              "b3Code": "1",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed rate"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "2",
+              "label": {
+                "pt": "DI",
+                "en": "DI (CDI)"
+              }
+            },
+            {
+              "code": "IPCA_VCP",
+              "b3Code": "3",
+              "label": {
+                "pt": "IPCA VCP",
+                "en": "IPCA VCP"
+              }
+            },
+            {
+              "code": "USD_VCP",
+              "b3Code": "5",
+              "label": {
+                "pt": "USD VCP",
+                "en": "USD VCP"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "b3Code": "8",
+              "label": {
+                "pt": "No período",
+                "en": "Period rate"
+              }
+            },
+            {
+              "code": "NO_PERIODO_FIGURA",
+              "b3Code": "12",
+              "label": {
+                "pt": "No período + figura (cliquet VCP)",
+                "en": "Period + figure (cliquet VCP)"
+              }
+            },
+            {
+              "code": "FLUXO_AUTOCALL_VCP",
+              "b3Code": "52",
+              "label": {
+                "pt": "Fluxo autocall VCP",
+                "en": "Autocall cash flow VCP"
+              }
+            },
+            {
+              "code": "DI_VCP",
+              "b3Code": "92",
+              "label": {
+                "pt": "DI VCP",
+                "en": "DI VCP"
+              }
+            },
+            {
+              "code": "FLUXO_CONDICIONAL_VCP",
+              "b3Code": "112",
+              "label": {
+                "pt": "Fluxo condicional VCP",
+                "en": "Conditional cash flow VCP"
+              }
+            },
+            {
+              "code": "SOFR_VCP",
+              "b3Code": "233",
+              "label": {
+                "pt": "SOFR VCP",
+                "en": "SOFR VCP"
+              }
+            }
+          ],
+          "b3Domain": "REMUNERADOR NO FLUXO"
         },
         {
           "key": "flowRate",
           "order": 30,
-          "label": { "pt": "Taxa do fluxo (%)", "en": "Cash-flow rate (%)" },
+          "label": {
+            "pt": "Taxa do fluxo (%)",
+            "en": "Cash-flow rate (%)"
+          },
           "dataType": "percent",
           "min": 0,
           "max": 100,
@@ -142,7 +358,10 @@
         {
           "key": "amountPercent",
           "order": 40,
-          "label": { "pt": "Pagamento (% do VFE)", "en": "Payment (% of VFE)" },
+          "label": {
+            "pt": "Pagamento (% do VFE)",
+            "en": "Payment (% of VFE)"
+          },
           "help": {
             "pt": "Percentual do Valor Financeiro de Emissão pago nesta data.",
             "en": "Percentage of the financial value of issuance paid on this date."
@@ -159,7 +378,9 @@
   "rules": [
     {
       "id": "remuneration.floating-over-100",
-      "targets": ["remuneration.floatingPercentage"],
+      "targets": [
+        "remuneration.floatingPercentage"
+      ],
       "when": "maturityRemunerator == 'DI'",
       "assert": "floatingPercentage <= 130",
       "message": {
@@ -173,7 +394,9 @@
     {
       "id": "cashflows.payment-within-tenor",
       "forEachSection": "cashflows",
-      "targets": ["cashflows[].paymentDate"],
+      "targets": [
+        "cashflows[].paymentDate"
+      ],
       "assert": "paymentDate > common.issueDate and paymentDate <= common.maturityDate",
       "message": {
         "pt": "Cada data de pagamento deve estar entre a emissão (exclusive) e o vencimento (inclusive).",
@@ -186,9 +409,14 @@
     {
       "id": "cashflows.payment-business-day",
       "forEachSection": "cashflows",
-      "targets": ["cashflows[].paymentDate"],
+      "targets": [
+        "cashflows[].paymentDate"
+      ],
       "serverCheck": "businessDay",
-      "args": { "path": "paymentDate", "calendar": "BRASIL" },
+      "args": {
+        "path": "paymentDate",
+        "calendar": "BRASIL"
+      },
       "message": {
         "pt": "As datas de pagamento devem ser dias úteis no calendário nacional.",
         "en": "Payment dates must be business days on the national calendar."
@@ -199,7 +427,9 @@
     },
     {
       "id": "cashflows.dates-distinct",
-      "targets": ["cashflows"],
+      "targets": [
+        "cashflows"
+      ],
       "when": "remuneration.hasCashFlow == true",
       "assert": "isDistinct(cashflows, @.paymentDate)",
       "message": {
@@ -212,7 +442,9 @@
     },
     {
       "id": "cashflows.require-schedule",
-      "targets": ["remuneration.hasCashFlow"],
+      "targets": [
+        "remuneration.hasCashFlow"
+      ],
       "when": "remuneration.hasCashFlow == true",
       "assert": "count(cashflows) > 0",
       "message": {
@@ -225,7 +457,9 @@
     },
     {
       "id": "cashflows.no-schedule-without-flag",
-      "targets": ["remuneration.hasCashFlow"],
+      "targets": [
+        "remuneration.hasCashFlow"
+      ],
       "when": "remuneration.hasCashFlow == false",
       "assert": "count(cashflows) == 0",
       "message": {

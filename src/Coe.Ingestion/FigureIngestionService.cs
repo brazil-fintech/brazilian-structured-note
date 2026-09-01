@@ -24,6 +24,12 @@ public sealed class IngestionOptions
     /// </summary>
     public bool AutoEnableNewFigures { get; set; } = true;
 
+    /// <summary>
+    /// Directory holding B3's published exports (figure catalogue, domains, strategy fields,
+    /// underlying master). Domain files are checked against them at compile time.
+    /// </summary>
+    public string ReferenceDirectory { get; set; } = "reference/b3";
+
     /// <summary>Compile and report, but write nothing. Used by the CLI check in CI.</summary>
     public bool DryRun { get; set; }
 }
@@ -43,9 +49,10 @@ public sealed record IngestionReport(
 public sealed class FigureIngestionService(
     IFigureCatalog catalog,
     IngestionOptions options,
+    B3Reference reference,
     ILogger<FigureIngestionService> logger)
 {
-    private readonly TemplateCompiler _compiler = new();
+    private readonly TemplateCompiler _compiler = new(reference);
 
     public async Task<IngestionReport> RunAsync(CancellationToken ct = default)
     {
@@ -54,6 +61,11 @@ public sealed class FigureIngestionService(
 
         var run = new IngestionRun { StartedUtc = DateTimeOffset.UtcNow };
         var messages = new List<string>();
+
+        // A missing or partial reference export is a warning, not a failure: the platform still
+        // compiles and serves, it simply cannot cross-check against B3's catalogue.
+        foreach (var error in reference.Errors)
+            logger.LogWarning("B3 reference: {Message}", error);
 
         var loader = new DomainFileLoader(options.DomainDirectory);
         var set = loader.Load();

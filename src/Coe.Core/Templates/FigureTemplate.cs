@@ -144,6 +144,21 @@ public sealed record TemplateField
     /// <summary>The registered B3 field name this maps to, when there is one.</summary>
     public string? B3Field { get; init; }
 
+    /// <summary>
+    /// Code of this attribute in B3's strategy-field dictionary (<c>C0000368</c>), when it is
+    /// known. Set it and the compiler checks the declared type, size and decimals against the
+    /// published dictionary. Left unset where the mapping has not been established — the
+    /// dictionary carries no figure association and repeats concept names across figures, so
+    /// guessing it from a label would be worse than leaving it blank.
+    /// </summary>
+    public string? B3FieldCode { get; init; }
+
+    /// <summary>
+    /// The B3 domain this field's options come from (<c>TIPO CESTA</c>). When set, every option
+    /// must carry a <see cref="FieldOption.B3Code"/> that exists and is enabled in that domain.
+    /// </summary>
+    public string? B3Domain { get; init; }
+
     /// <summary>The formula symbol used in the payoff documentation (Part, Cap, K, H…).</summary>
     public string? Symbol { get; init; }
 
@@ -192,6 +207,14 @@ public sealed record TemplateField
 public sealed record FieldOption(string Code, LocalizedText Label)
 {
     public LocalizedText? Help { get; init; }
+
+    /// <summary>
+    /// The code B3 registers for this option. The platform stores the mnemonic <see cref="Code"/>
+    /// in the instance — it is stable, readable, and what the rules are written against — while
+    /// this is what a registration file must carry. Keeping the two separate means a B3 code
+    /// change is a reference-data update, not a rewrite of every rule that names the option.
+    /// </summary>
+    public string? B3Code { get; init; }
 
     /// <summary>Option only offered while this evaluates truthy.</summary>
     public Expr? VisibleWhen { get; init; }

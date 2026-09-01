@@ -71,6 +71,13 @@ public sealed class FieldDto
     public LocalizedTextDto? Help { get; set; }
     public string DataType { get; set; } = "string";
     public string? B3Field { get; set; }
+
+    /// <summary>Code in B3's strategy-field dictionary, checked against reference/b3/dados-estrategia.csv.</summary>
+    public string? B3FieldCode { get; set; }
+
+    /// <summary>B3 domain the options come from, checked against reference/b3/dominios-derivativos.csv.</summary>
+    public string? B3Domain { get; set; }
+
     public string? Symbol { get; set; }
     public string? Unit { get; set; }
     public int? Decimals { get; set; }
@@ -92,6 +99,10 @@ public sealed class FieldDto
 public sealed class OptionDto
 {
     public string Code { get; set; } = string.Empty;
+
+    /// <summary>The code B3 registers for this option.</summary>
+    public string? B3Code { get; set; }
+
     public LocalizedTextDto? Label { get; set; }
     public LocalizedTextDto? Help { get; set; }
     public string? VisibleWhen { get; set; }

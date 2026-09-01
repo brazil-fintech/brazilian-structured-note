@@ -11,12 +11,16 @@
     "VNR"
   ],
   "underlyingClasses": [
-    "CAMBIO",
-    "COMMODITIES",
     "ACOES",
+    "ACOES INTERNACIONAIS",
     "INDICES",
-    "ACOES_INT",
-    "INDICES_INT",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
     "CESTA"
   ],
   "extends": [

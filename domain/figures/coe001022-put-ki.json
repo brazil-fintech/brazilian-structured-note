@@ -10,12 +10,16 @@
     "VNR"
   ],
   "underlyingClasses": [
-    "CAMBIO",
-    "COMMODITIES",
     "ACOES",
+    "ACOES INTERNACIONAIS",
     "INDICES",
-    "ACOES_INT",
-    "INDICES_INT",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
     "CESTA"
   ],
   "extends": [
@@ -132,6 +136,61 @@
               "label": {
                 "pt": "Knock-in",
                 "en": "Knock-in"
+              }
+            }
+          ]
+        },
+        {
+          "key": "verificationQuoteType",
+          "order": 80,
+          "label": {
+            "pt": "Tipo de cotação da verificação",
+            "en": "Verification quote type"
+          },
+          "dataType": "enum",
+          "b3Domain": "TIPO DE COTACAO PARA VERIFICACAO DA BARREIRA DE KI",
+          "default": "FECHAMENTO",
+          "visibleWhen": "verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "verificationPeriod == 'AMERICANA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "299",
+              "label": {
+                "pt": "Fechamento",
+                "en": "Close"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "300",
+              "label": {
+                "pt": "Mínimo",
+                "en": "Low"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "301",
+              "label": {
+                "pt": "Máximo",
+                "en": "High"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "302",
+              "label": {
+                "pt": "Média",
+                "en": "Average"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "303",
+              "label": {
+                "pt": "Ajuste",
+                "en": "Settlement price"
               }
             }
           ]

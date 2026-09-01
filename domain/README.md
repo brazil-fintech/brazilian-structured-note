@@ -96,11 +96,29 @@ shark fin narrows the generic barrier block down to an up-and-out.
   "requiredWhen": "…",
   "enabledWhen":  "false",            // read-only
   "computed": "quantity * unitIssuePrice",   // derived; the API recomputes it before saving
-  "options": [ { "code": "VNP", "label": { "pt": "…" } } ],
+  "options": [ { "code": "VNP", "b3Code": "1", "label": { "pt": "…" } } ],
   "optionSource": "underlyings",      // or resolved from /api/reference/{source}
+  "b3Domain": "TIPO CESTA",           // options are checked against this B3 domain
+  "b3FieldCode": "C0000368",          // type/size/decimals checked against B3's dictionary
   "inGrid": true                      // show in the asset list
 }
 ```
+
+### Codes: yours and B3's
+
+An option has two codes. `code` is the mnemonic stored in the instance and referenced by rules —
+readable, stable, and yours. `b3Code` is what a registration file must carry. Declare `b3Domain`
+on the field and the compiler checks every `b3Code` against
+[`reference/b3/`](../reference/b3/README.md): unknown codes fail the build, and codes B3 has
+disabled warn.
+
+`b3FieldCode` ties an attribute to B3's strategy-field dictionary; where it is set, the declared
+`dataType`, `maxLength` and `decimals` are checked against the published metadata. It is left
+unset where the mapping is not established — that dictionary carries no figure association and
+repeats concept names across figures, so guessing from a label would be worse than a blank.
+
+Asset classes are stored using B3's own spelling (`ACOES INTERNACIONAIS`), since the underlying
+master is keyed on it.
 
 `dataType` is one of `string`, `text`, `integer`, `decimal`, `percent`, `money`, `date`,
 `boolean`, `enum`, `enumSet`.
@@ -146,6 +164,7 @@ Available checks (`src/Coe.Infrastructure/ServerChecks/`):
 | `businessDaysBefore` | `path`, `referencePath`, `minimum`, `maximum`, `calendar` | does the date sit N business days before another? |
 | `observationCountMatchesCalendar` | `countPath`, `startPath`, `endPath`, `calendar` | does a fixing count match the window? |
 | `uniqueInstrumentCode` | `path` | is the Código IF free? |
+| `underlyingRegistered` | `path` | does B3's master list this underlying for this class? |
 
 **Three severities, one gate.** `error` blocks the save. `warning` never does — the user can
 save through it and the accepted warnings are stored on the asset for audit. `info` is a note.
@@ -207,10 +226,12 @@ of wrong. Use `isNull` / `notNull` when you mean to test for absence.
 4. Write the rules that a booking desk would otherwise catch by eye: level ordering, the
    modality the figure is registered under, and economic sanity checks as warnings.
 5. Run `dotnet test` — the suite compiles every file in this directory and fails on an unknown
-   attribute, an ambiguous name, a rule with no target, or a duplicate figure code.
+   attribute, an ambiguous name, a rule with no target, a duplicate figure code, a figure code
+   B3 does not publish, or an option code that is not in the B3 domain the field names.
 
 ## Where to read more
 
+- [`../reference/b3/README.md`](../reference/b3/README.md) — B3's published exports and what the compiler checks against them.
 - [`../docs/parameters.md`](../docs/parameters.md) — every registration field and payoff parameter, with its B3 name.
 - [`../docs/payoffs/`](../docs/payoffs/README.md) — the formula and worked example behind each figure.
 - [`../docs/platform.md`](../docs/platform.md) — how the worker, API and React app fit together.

@@ -104,4 +104,31 @@ public static class BookingFacts
 
     /// <summary>True when another asset already carries the instrument code on the instance.</summary>
     public const string InstrumentCodeTaken = "instrumentCodeTaken";
+
+    /// <summary>True when B3's underlying master lists the chosen asset under the chosen class.</summary>
+    public const string UnderlyingRegistered = "underlyingRegistered";
+}
+
+/// <summary>
+/// <c>underlyingRegistered</c> — the chosen underlying must be one B3 lists for the chosen class.
+///
+/// Like the uniqueness check, the answer is prefetched: the master has thousands of rows and
+/// lives in the database, so looking it up inside the synchronous engine would mean I/O per
+/// evaluation. Catching a typo here is the difference between a message on the field and a
+/// registration B3 rejects.
+/// </summary>
+public sealed class UnderlyingRegisteredCheck : ServerCheckBase
+{
+    public override string Id => "underlyingRegistered";
+
+    public override bool? Evaluate(TemplateRule rule, EvaluationContext ctx)
+    {
+        if (Values.IsAbsent(Read(rule, ctx, "path"))) return null;
+
+        return ctx.ResolveVariable(BookingFacts.UnderlyingRegistered) switch
+        {
+            bool registered => registered,
+            _ => null
+        };
+    }
 }

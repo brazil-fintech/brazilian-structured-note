@@ -1,7 +1,10 @@
 /* --------------------------------------------------------------------------
-   Reference data used by the server-side checks that the browser cannot run:
-   the national holiday calendar behind the business-day rules, and the
-   underlying master behind the "underlyings" option source.
+   The national holiday calendar behind the business-day rules.
+
+   The underlying master is not seeded here: it is B3's own export, loaded from
+   reference/b3/ativos-subjacentes.csv by the ingestion worker (003 defines the
+   table). Hand-written stand-ins were wrong — 11 of 17 codes did not exist in
+   B3's catalogue at all.
 
    Re-runnable: every insert is guarded.
    -------------------------------------------------------------------------- */
@@ -39,30 +42,4 @@ USING (VALUES
 WHEN NOT MATCHED THEN
     INSERT (CalendarCode, HolidayDate, Description)
     VALUES (source.CalendarCode, source.HolidayDate, source.Description);
-GO
-
-MERGE ref.Underlying AS target
-USING (VALUES
-    ('IBOV',      'Índice Bovespa',                'INDICES'),
-    ('IBXX',      'Índice Brasil 100',             'INDICES'),
-    ('SMLL',      'Índice Small Cap',              'INDICES'),
-    ('PETR4',     'Petrobras PN',                  'ACOES'),
-    ('VALE3',     'Vale ON',                       'ACOES'),
-    ('ITUB4',     'Itaú Unibanco PN',              'ACOES'),
-    ('BBAS3',     'Banco do Brasil ON',            'ACOES'),
-    ('WEGE3',     'WEG ON',                        'ACOES'),
-    ('USDBRL',    'Dólar dos EUA / Real',          'CAMBIO'),
-    ('EURBRL',    'Euro / Real',                   'CAMBIO'),
-    ('SPX',       'S&P 500',                       'INDICES_INT'),
-    ('NDX',       'Nasdaq 100',                    'INDICES_INT'),
-    ('SX5E',      'Euro Stoxx 50',                 'INDICES_INT'),
-    ('AAPL',      'Apple Inc.',                    'ACOES_INT'),
-    ('MSFT',      'Microsoft Corp.',               'ACOES_INT'),
-    ('BRENT',     'Petróleo Brent',                'COMMODITIES'),
-    ('OURO',      'Ouro spot',                     'COMMODITIES')
-) AS source (Code, Name, AssetClass)
-    ON target.Code = source.Code
-WHEN NOT MATCHED THEN
-    INSERT (Code, Name, AssetClass, IsActive)
-    VALUES (source.Code, source.Name, source.AssetClass, 1);
 GO

@@ -295,7 +295,7 @@ public class ValidationEngineTests
     {
         var values = CallSpread();
         values["underlying"]!["assetClass"] = "CESTA";
-        values["underlying"]!["basketType"] = "PADRAO";
+        values["underlying"]!["basketType"] = "STANDARD";
         values["underlying"]!["quanto"] = true;
         values["underlying"]!.AsObject().Remove("asset");
         values["underlying"]!.AsObject().Remove("initialValue");

@@ -106,6 +106,7 @@ docs/
   clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
                                 Fórmulas, Manual de Normas) — see its README
 
+reference/b3/                 ← B3's published exports: figures, domains, fields, underlyings
 domain/                       ← the figure catalog the platform runs on — see its README
   common/                     ← reusable blocks: identification, underlying, remuneration,
                                 barriers, autocall, settlement
@@ -141,6 +142,11 @@ the save; warnings do not, and the ones a user accepts are stored on the asset f
 
 **The API is the authority.** Whatever the browser checked, every save re-runs the full
 validation server-side, re-derives computed attributes from their inputs, and only then writes.
+
+**Checked against B3's own data.** The figure catalogue, registration domains, strategy-field
+dictionary and underlying master are committed under [reference/b3/](reference/b3/README.md), and
+the compiler validates every domain file against them — a figure code B3 does not publish, or an
+option code it has retired, fails ingestion rather than a registration.
 
 **Built to be watched and to stay quick.** Serilog writes structured logs stamped with the trace
 and span they happened in; OpenTelemetry exports traces and metrics for validation, ingestion,

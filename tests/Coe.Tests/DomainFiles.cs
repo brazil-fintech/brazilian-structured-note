@@ -12,10 +12,13 @@ public static class DomainFiles
 
     private static readonly Lazy<DomainFileSet> LoadedSet = new(() => new DomainFileLoader(Directory).Load());
 
+    /// <summary>B3's published exports, so the suite compiles the way the worker does.</summary>
+    public static B3Reference Reference { get; } = B3Reference.Load(Path.Combine(RepositoryRoot(), "reference", "b3"));
+
     private static readonly Lazy<IReadOnlyDictionary<string, CompilationResult>> CompiledFigures =
         new(() => Set.Figures.ToDictionary(
             f => f.File.FigureCode!,
-            f => new TemplateCompiler().Compile(f.File, Set.Fragments, 1),
+            f => new TemplateCompiler(Reference).Compile(f.File, Set.Fragments, 1),
             StringComparer.Ordinal));
 
     public static DomainFileSet Set => LoadedSet.Value;
@@ -27,6 +30,20 @@ public static class DomainFiles
         var result = Compiled[figureCode];
         Assert.True(result.Succeeded, $"{figureCode} failed to compile: {string.Join("; ", result.Errors)}");
         return result.Template!;
+    }
+
+    /// <summary>Repository root, found by walking up from the test output directory.</summary>
+    public static string RepositoryRoot()
+    {
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir is not null)
+        {
+            if (System.IO.Directory.Exists(Path.Combine(dir.FullName, "db")) &&
+                System.IO.Directory.Exists(Path.Combine(dir.FullName, "domain")))
+                return dir.FullName;
+            dir = dir.Parent;
+        }
+        throw new DirectoryNotFoundException("Could not locate the repository root from the test output path.");
     }
 
     private static string Locate()

@@ -4,12 +4,18 @@
       "key": "terms",
       "kind": "tab",
       "order": 60,
-      "label": { "pt": "Condições e liquidação", "en": "Terms and settlement" },
+      "label": {
+        "pt": "Condições e liquidação",
+        "en": "Terms and settlement"
+      },
       "fields": [
         {
           "key": "baseApplication",
           "order": 10,
-          "label": { "pt": "Base Aplicação (%)", "en": "Protected-leg base (%)" },
+          "label": {
+            "pt": "Base Aplicação (%)",
+            "en": "Protected-leg base (%)"
+          },
           "help": {
             "pt": "Percentual do VFE alocado à perna que protege o capital garantido caso o derivativo não seja exercido.",
             "en": "Percentage of the VFE allocated to the leg protecting the guaranteed capital if the derivative is not exercised."
@@ -25,32 +31,65 @@
         {
           "key": "issuerPosition",
           "order": 20,
-          "label": { "pt": "Posição do emissor no derivativo", "en": "Issuer's derivative position" },
+          "label": {
+            "pt": "Posição do emissor no derivativo",
+            "en": "Issuer's derivative position"
+          },
           "dataType": "enum",
           "b3Field": "Posição do emissor no derivativo",
           "required": true,
           "options": [
-            { "code": "COMPRADO", "label": { "pt": "Comprado", "en": "Long" } },
-            { "code": "VENDIDO", "label": { "pt": "Vendido", "en": "Short" } }
+            {
+              "code": "COMPRADO",
+              "label": {
+                "pt": "Comprado",
+                "en": "Long"
+              }
+            },
+            {
+              "code": "VENDIDO",
+              "label": {
+                "pt": "Vendido",
+                "en": "Short"
+              }
+            }
           ]
         },
         {
           "key": "custodyRegime",
           "order": 30,
-          "label": { "pt": "Tipo de Regime", "en": "Custody regime" },
+          "label": {
+            "pt": "Tipo de Regime",
+            "en": "Custody regime"
+          },
           "dataType": "enum",
           "b3Field": "Tipo de Regime",
           "required": true,
           "default": "DEPOSITADO",
           "options": [
-            { "code": "DEPOSITADO", "label": { "pt": "Depositado", "en": "Deposited" } },
-            { "code": "REGISTRADO", "label": { "pt": "Registrado", "en": "Registered" } }
+            {
+              "code": "DEPOSITADO",
+              "label": {
+                "pt": "Depositado",
+                "en": "Deposited"
+              }
+            },
+            {
+              "code": "REGISTRADO",
+              "label": {
+                "pt": "Registrado",
+                "en": "Registered"
+              }
+            }
           ]
         },
         {
           "key": "cvmResolution8",
           "order": 40,
-          "label": { "pt": "Resolução CVM 8", "en": "CVM Resolution 8" },
+          "label": {
+            "pt": "Resolução CVM 8",
+            "en": "CVM Resolution 8"
+          },
           "help": {
             "pt": "Sim quando o COE é objeto de distribuição pública sob a Resolução CVM 8/2020 — exige DIE.",
             "en": "Yes when the COE is publicly distributed under CVM Resolution 8/2020 — a DIE is required."
@@ -63,7 +102,10 @@
         {
           "key": "dieReference",
           "order": 50,
-          "label": { "pt": "Referência do DIE", "en": "DIE reference" },
+          "label": {
+            "pt": "Referência do DIE",
+            "en": "DIE reference"
+          },
           "dataType": "string",
           "maxLength": 60,
           "visibleWhen": "cvmResolution8 == true",
@@ -72,7 +114,10 @@
         {
           "key": "physicalDelivery",
           "order": 60,
-          "label": { "pt": "Entrega Física", "en": "Physical delivery" },
+          "label": {
+            "pt": "Entrega Física",
+            "en": "Physical delivery"
+          },
           "help": {
             "pt": "Disponível apenas para as classes Ações e Títulos Privados.",
             "en": "Available only for the equity and private-debt underlying classes."
@@ -80,35 +125,80 @@
           "dataType": "boolean",
           "b3Field": "Entrega Física",
           "default": false,
-          "visibleWhen": "underlying.assetClass in ['ACOES', 'ACOES_INT']"
+          "visibleWhen": "underlying.assetClass in ['ACOES', 'ACOES INTERNACIONAIS', 'TITULOS PRIVADOS']"
         },
         {
           "key": "earlyRedemption",
           "order": 70,
-          "label": { "pt": "Resgate Antecipado", "en": "Early redemption" },
+          "label": {
+            "pt": "Resgate Antecipado",
+            "en": "Early redemption"
+          },
           "dataType": "enum",
           "b3Field": "Resgate Antecipado",
           "required": true,
           "default": "SEM_LIQUIDEZ",
           "options": [
-            { "code": "SEM_LIQUIDEZ", "label": { "pt": "Não tem condição de liquidez", "en": "No early redemption" } },
-            { "code": "LIQUIDEZ_DIARIA", "label": { "pt": "Liquidez diária a mercado", "en": "Daily liquidity at market" } },
-            { "code": "CONDICAO_ESPECIFICA", "label": { "pt": "Condição específica", "en": "Specific condition" } }
+            {
+              "code": "SEM_LIQUIDEZ",
+              "label": {
+                "pt": "Não tem condição de liquidez",
+                "en": "No early redemption"
+              }
+            },
+            {
+              "code": "LIQUIDEZ_DIARIA",
+              "label": {
+                "pt": "Liquidez diária a mercado",
+                "en": "Daily liquidity at market"
+              }
+            },
+            {
+              "code": "CONDICAO_ESPECIFICA",
+              "label": {
+                "pt": "Condição específica",
+                "en": "Specific condition"
+              }
+            }
           ]
         },
         {
           "key": "earlyRedemptionCondition",
           "order": 80,
-          "label": { "pt": "Descrição da condição", "en": "Condition description" },
-          "dataType": "text",
-          "maxLength": 500,
+          "label": {
+            "pt": "Condição específica de resgate",
+            "en": "Specific redemption condition"
+          },
+          "dataType": "enum",
           "visibleWhen": "earlyRedemption == 'CONDICAO_ESPECIFICA'",
-          "requiredWhen": "earlyRedemption == 'CONDICAO_ESPECIFICA'"
+          "requiredWhen": "earlyRedemption == 'CONDICAO_ESPECIFICA'",
+          "b3Domain": "CONDIÇÃO ESPECÍFICA DE RESGATE",
+          "options": [
+            {
+              "code": "DOCUMENTACAO_EMISSAO",
+              "b3Code": "14987",
+              "label": {
+                "pt": "Detalhadas nas documentações de emissão",
+                "en": "Detailed in the issuance documents"
+              }
+            },
+            {
+              "code": "VERIFICACAO_NIVEIS_PRECO",
+              "b3Code": "15519",
+              "label": {
+                "pt": "Verificação de níveis de preço",
+                "en": "Verification of price levels"
+              }
+            }
+          ]
         },
         {
           "key": "issuerCallClause",
           "order": 90,
-          "label": { "pt": "Cláusula de Resgate pelo Emissor", "en": "Issuer call clause" },
+          "label": {
+            "pt": "Cláusula de Resgate pelo Emissor",
+            "en": "Issuer call clause"
+          },
           "help": {
             "pt": "Sim dispensa o duplo comando na efetivação do resgate antecipado.",
             "en": "Yes waives the double command otherwise required to effect an early redemption."
@@ -123,7 +213,9 @@
   "rules": [
     {
       "id": "terms.protected-leg-base",
-      "targets": ["terms.baseApplication"],
+      "targets": [
+        "terms.baseApplication"
+      ],
       "when": "common.modality == 'VNP'",
       "assert": "baseApplication > 0",
       "message": {
@@ -136,7 +228,9 @@
     },
     {
       "id": "terms.die-required",
-      "targets": ["terms.cvmResolution8"],
+      "targets": [
+        "terms.cvmResolution8"
+      ],
       "when": "cvmResolution8 == true",
       "assert": "notNull(dieReference)",
       "message": {
@@ -149,7 +243,9 @@
     },
     {
       "id": "terms.issuer-call-without-liquidity",
-      "targets": ["terms.issuerCallClause"],
+      "targets": [
+        "terms.issuerCallClause"
+      ],
       "when": "issuerCallClause == true",
       "assert": "earlyRedemption != 'SEM_LIQUIDEZ'",
       "message": {

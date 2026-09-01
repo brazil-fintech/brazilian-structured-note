@@ -4,7 +4,10 @@
       "key": "barriers",
       "kind": "tab",
       "order": 35,
-      "label": { "pt": "Barreiras", "en": "Barriers" },
+      "label": {
+        "pt": "Barreiras",
+        "en": "Barriers"
+      },
       "help": {
         "pt": "A B3 registra a verificação como Europeia (uma Data para Fixing) ou Americana (verificação diária entre a Data Inicial e a Data Final, com tipo de cotação registrado). A escolha muda materialmente o risco e o preço.",
         "en": "B3 registers verification as European (a single fixing date) or American (daily verification between a start and an end date, with a registered quote type). The choice materially changes both risk and price."
@@ -13,7 +16,10 @@
         {
           "key": "barrierLevel",
           "order": 10,
-          "label": { "pt": "Barreira (% de S₀)", "en": "Barrier (% of S₀)" },
+          "label": {
+            "pt": "Barreira (% de S₀)",
+            "en": "Barrier (% of S₀)"
+          },
           "symbol": "H",
           "dataType": "percent",
           "b3Field": "Barreira",
@@ -25,58 +31,109 @@
         {
           "key": "barrierDirection",
           "order": 20,
-          "label": { "pt": "Direção da barreira", "en": "Barrier direction" },
+          "label": {
+            "pt": "Direção da barreira",
+            "en": "Barrier direction"
+          },
           "dataType": "enum",
           "required": true,
           "options": [
-            { "code": "ALTA", "label": { "pt": "Alta (up)", "en": "Up" } },
-            { "code": "BAIXA", "label": { "pt": "Baixa (down)", "en": "Down" } }
+            {
+              "code": "ALTA",
+              "label": {
+                "pt": "Alta (up)",
+                "en": "Up"
+              }
+            },
+            {
+              "code": "BAIXA",
+              "label": {
+                "pt": "Baixa (down)",
+                "en": "Down"
+              }
+            }
           ]
         },
         {
           "key": "barrierType",
           "order": 30,
-          "label": { "pt": "Tipo de barreira", "en": "Barrier type" },
+          "label": {
+            "pt": "Tipo de barreira",
+            "en": "Barrier type"
+          },
           "dataType": "enum",
           "required": true,
           "options": [
             {
               "code": "KO",
-              "label": { "pt": "Knock-out", "en": "Knock-out" },
-              "help": { "pt": "Extingue a perna de opção.", "en": "Extinguishes the option leg." }
+              "label": {
+                "pt": "Knock-out",
+                "en": "Knock-out"
+              },
+              "help": {
+                "pt": "Extingue a perna de opção.",
+                "en": "Extinguishes the option leg."
+              }
             },
             {
               "code": "KI",
-              "label": { "pt": "Knock-in", "en": "Knock-in" },
-              "help": { "pt": "Ativa a perna de opção.", "en": "Activates the option leg." }
+              "label": {
+                "pt": "Knock-in",
+                "en": "Knock-in"
+              },
+              "help": {
+                "pt": "Ativa a perna de opção.",
+                "en": "Activates the option leg."
+              }
             }
           ]
         },
         {
           "key": "verificationPeriod",
           "order": 40,
-          "label": { "pt": "Período de Verificação de Barreiras", "en": "Barrier verification period" },
+          "label": {
+            "pt": "Período de Verificação de Barreiras",
+            "en": "Barrier verification period"
+          },
           "dataType": "enum",
           "b3Field": "Período de Verificação de Barreiras",
           "required": true,
           "default": "EUROPEIA",
           "options": [
             {
-              "code": "EUROPEIA",
-              "label": { "pt": "Europeia", "en": "European" },
-              "help": { "pt": "Uma única Data para Fixing.", "en": "A single fixing date." }
+              "code": "AMERICANA",
+              "b3Code": "311",
+              "label": {
+                "pt": "Americana",
+                "en": "American"
+              },
+              "help": {
+                "pt": "Verificação diária entre duas datas.",
+                "en": "Daily verification between two dates."
+              }
             },
             {
-              "code": "AMERICANA",
-              "label": { "pt": "Americana", "en": "American" },
-              "help": { "pt": "Verificação diária entre duas datas.", "en": "Daily verification between two dates." }
+              "code": "EUROPEIA",
+              "b3Code": "312",
+              "label": {
+                "pt": "Europeia",
+                "en": "European"
+              },
+              "help": {
+                "pt": "Uma única Data para Fixing.",
+                "en": "A single fixing date."
+              }
             }
-          ]
+          ],
+          "b3Domain": "PERIODO DE VERIFICACAO DAS BARREIRAS"
         },
         {
           "key": "fixingDate",
           "order": 50,
-          "label": { "pt": "Data para Fixing", "en": "Fixing date" },
+          "label": {
+            "pt": "Data para Fixing",
+            "en": "Fixing date"
+          },
           "dataType": "date",
           "b3Field": "Data para Fixing",
           "visibleWhen": "verificationPeriod == 'EUROPEIA'",
@@ -85,7 +142,10 @@
         {
           "key": "verificationStart",
           "order": 60,
-          "label": { "pt": "Data Inicial para Verificação", "en": "Verification start date" },
+          "label": {
+            "pt": "Data Inicial para Verificação",
+            "en": "Verification start date"
+          },
           "dataType": "date",
           "b3Field": "Data Inicial para Verificação",
           "visibleWhen": "verificationPeriod == 'AMERICANA'",
@@ -94,7 +154,10 @@
         {
           "key": "verificationEnd",
           "order": 70,
-          "label": { "pt": "Data Final para Verificação", "en": "Verification end date" },
+          "label": {
+            "pt": "Data Final para Verificação",
+            "en": "Verification end date"
+          },
           "dataType": "date",
           "b3Field": "Data Final para Verificação",
           "visibleWhen": "verificationPeriod == 'AMERICANA'",
@@ -103,16 +166,55 @@
         {
           "key": "verificationQuoteType",
           "order": 80,
-          "label": { "pt": "Tipo de cotação da verificação", "en": "Verification quote type" },
+          "label": {
+            "pt": "Tipo de cotação da verificação",
+            "en": "Verification quote type"
+          },
           "dataType": "enum",
           "default": "FECHAMENTO",
           "visibleWhen": "verificationPeriod == 'AMERICANA'",
           "requiredWhen": "verificationPeriod == 'AMERICANA'",
           "options": [
-            { "code": "FECHAMENTO", "label": { "pt": "Fechamento", "en": "Close" } },
-            { "code": "INTRADAY", "label": { "pt": "Intradiário", "en": "Intraday" } },
-            { "code": "AJUSTE", "label": { "pt": "Ajuste", "en": "Settlement price" } }
-          ]
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento",
+                "en": "Close"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo",
+                "en": "Low"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo",
+                "en": "High"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média",
+                "en": "Average"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste",
+                "en": "Settlement price"
+              }
+            }
+          ],
+          "help": {
+            "pt": "Domínio registrado difere entre barreiras de KI e de KO; a figura define qual se aplica.",
+            "en": "The registered domain differs between KI and KO barriers; the figure fixes which applies."
+          }
         }
       ]
     }
@@ -120,7 +222,9 @@
   "rules": [
     {
       "id": "barriers.verification-order",
-      "targets": ["barriers.verificationEnd"],
+      "targets": [
+        "barriers.verificationEnd"
+      ],
       "when": "verificationPeriod == 'AMERICANA'",
       "assert": "verificationEnd >= verificationStart",
       "message": {
@@ -133,7 +237,9 @@
     },
     {
       "id": "barriers.verification-within-tenor",
-      "targets": ["barriers.verificationStart"],
+      "targets": [
+        "barriers.verificationStart"
+      ],
       "when": "verificationPeriod == 'AMERICANA'",
       "assert": "verificationStart >= common.issueDate and verificationEnd <= common.maturityDate",
       "message": {
@@ -146,7 +252,9 @@
     },
     {
       "id": "barriers.fixing-within-tenor",
-      "targets": ["barriers.fixingDate"],
+      "targets": [
+        "barriers.fixingDate"
+      ],
       "when": "verificationPeriod == 'EUROPEIA'",
       "assert": "fixingDate > common.issueDate and fixingDate <= common.maturityDate",
       "message": {
@@ -159,7 +267,9 @@
     },
     {
       "id": "barriers.american-is-riskier",
-      "targets": ["barriers.verificationPeriod"],
+      "targets": [
+        "barriers.verificationPeriod"
+      ],
       "when": "verificationPeriod == 'AMERICANA' and barrierType == 'KO'",
       "assert": "false",
       "message": {
