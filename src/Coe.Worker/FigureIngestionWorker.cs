@@ -1,5 +1,6 @@
 using Coe.Infrastructure;
 using Coe.Ingestion;
+using Coe.Ingestion.Cetip;
 
 namespace Coe.Worker;
 
@@ -15,6 +16,7 @@ namespace Coe.Worker;
 public sealed class FigureIngestionWorker(
     IServiceProvider services,
     IngestionOptions options,
+    CetipFtpOptions cetip,
     ILogger<FigureIngestionWorker> logger) : BackgroundService
 {
     private static readonly TimeSpan Debounce = TimeSpan.FromSeconds(2);
@@ -24,11 +26,13 @@ public sealed class FigureIngestionWorker(
     {
         using var watcher = options.WatchFileSystem ? CreateWatcher() : null;
 
-        await ImportReferenceDataAsync(stoppingToken);
+        await RefreshReferenceDataAsync(cetip.SyncOnStartup, stoppingToken);
 
         logger.LogInformation(
-            "Figure ingestion started. Directory={Directory} Interval={Interval} Watch={Watch} AutoEnable={AutoEnable}",
-            options.DomainDirectory, options.Interval, options.WatchFileSystem, options.AutoEnableNewFigures);
+            "Figure ingestion started. Directory={Directory} Interval={Interval} Watch={Watch} AutoEnable={AutoEnable} "
+            + "Cetip={CetipEnabled} every {CetipInterval}",
+            options.DomainDirectory, options.Interval, options.WatchFileSystem, options.AutoEnableNewFigures,
+            cetip.Enabled, cetip.MinimumInterval);
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -46,21 +50,26 @@ public sealed class FigureIngestionWorker(
             {
                 return;
             }
+
+            // The loop wakes every few minutes to notice a domain-file edit; the refresher
+            // decides for itself whether enough time has passed to ask B3 again.
+            await RefreshReferenceDataAsync(force: false, stoppingToken);
         }
     }
 
     /// <summary>
-    /// Publishes B3's exports into the reference tables before the first compile. The compiler
-    /// already checks against the files; this is what puts the same data behind the API, so the
-    /// underlying picker and the booking screen agree with what ingestion validated.
+    /// Pulls whatever CETIP has published to <c>ftp://ftp.cetip.com.br/Public</c> and publishes
+    /// it into the reference tables. The compiler checks a figure against the files; this is
+    /// what puts the same rows behind the API, so the underlying picker and the booking screen
+    /// agree with what ingestion validated.
     /// </summary>
-    private async Task ImportReferenceDataAsync(CancellationToken ct)
+    private async Task RefreshReferenceDataAsync(bool force, CancellationToken ct)
     {
         try
         {
             await using var scope = services.CreateAsyncScope();
-            var importer = scope.ServiceProvider.GetRequiredService<B3ReferenceImporter>();
-            await importer.ImportAsync(ct);
+            var refresher = scope.ServiceProvider.GetRequiredService<ReferenceDataRefresher>();
+            await refresher.RefreshAsync(force, ct);
         }
         catch (OperationCanceledException)
         {
@@ -68,8 +77,8 @@ public sealed class FigureIngestionWorker(
         }
         catch (Exception ex)
         {
-            // Stale reference data is better than no worker; the next restart retries.
-            logger.LogError(ex, "Could not load the B3 reference exports; continuing with what is already stored");
+            // Stale reference data is better than no worker; the next cycle retries.
+            logger.LogError(ex, "Could not refresh the B3 reference exports; continuing with what is already stored");
         }
     }
 

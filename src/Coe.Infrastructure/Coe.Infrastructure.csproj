@@ -5,6 +5,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Coe.Core\Coe.Core.csproj" />
     <ProjectReference Include="..\Coe.Ingestion\Coe.Ingestion.csproj" />
+    <ProjectReference Include="..\Coe.Clearing\Coe.Clearing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- ADO.NET only: no ORM sits between the platform and SQL Server. -->

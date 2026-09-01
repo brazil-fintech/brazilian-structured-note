@@ -38,8 +38,15 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         var resolver = BuildResolver(sections, errors);
         var compiledSections = new List<TemplateSection>();
 
+        // The attributes B3 publishes for this figure, keyed on its own name for them. A field
+        // that names the attribute the way B3 prints it adopts the code B3 registers it under,
+        // so the registration file can be written without anyone copying 1,600 codes by hand.
+        var published = _reference.FigureAttributesByName(file.FigureCode ?? string.Empty);
+
         foreach (var dto in sections.OrderBy(s => s.Order).ThenBy(s => s.Key, StringComparer.Ordinal))
-            compiledSections.Add(CompileSection(dto, resolver, errors, warnings, _reference));
+            compiledSections.Add(CompileSection(dto, resolver, errors, warnings, _reference, published));
+
+        CheckFigureAttributeCoverage(file, compiledSections, warnings);
 
         var rules = new List<TemplateRule>();
         var ruleIds = new HashSet<string>(StringComparer.Ordinal);
@@ -184,11 +191,12 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
     }
 
     private static TemplateSection CompileSection(
-        SectionDto dto, PathResolver resolver, List<string> errors, List<string> warnings, B3Reference reference)
+        SectionDto dto, PathResolver resolver, List<string> errors, List<string> warnings, B3Reference reference,
+        IReadOnlyDictionary<string, B3FigureAttribute> published)
     {
         var fields = (dto.Repeating ? dto.ItemFields : dto.Fields)
             .OrderBy(f => f.Order)
-            .Select(f => CompileField(dto, f, resolver, errors, warnings, reference))
+            .Select(f => CompileField(dto, f, resolver, errors, warnings, reference, published))
             .ToList();
 
         return new TemplateSection
@@ -210,7 +218,7 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
 
     private static TemplateField CompileField(
         SectionDto section, FieldDto dto, PathResolver resolver, List<string> errors, List<string> warnings,
-        B3Reference reference)
+        B3Reference reference, IReadOnlyDictionary<string, B3FigureAttribute> published)
     {
         var scope = section.Key;
         var path = section.Repeating ? $"{section.Key}[].{dto.Key}" : $"{section.Key}.{dto.Key}";
@@ -224,7 +232,19 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         if ((dataType is FieldDataType.Enum or FieldDataType.EnumSet) && dto.Options.Count == 0 && dto.OptionSource is null)
             warnings.Add($"'{path}' is an enum with neither options nor an optionSource.");
 
+        // A code the author wrote down is a claim the compiler holds them to; one it inferred
+        // from B3's name for the attribute is a convenience, and a disagreement there says the
+        // guess was wrong, not that the figure is broken.
+        var declaredDataCode = dto.B3DataCode is not null;
+        var dataCode = dto.B3DataCode ?? ResolveDataCode(dto, dataType, published);
+
+        // A code that exists in the dictionary but not in this figure's attribute list is a
+        // field B3 will reject on the registration file as not belonging to the figure.
+        if (declaredDataCode && published.Count > 0 && !published.Values.Any(a => a.FieldCode == dataCode))
+            warnings.Add($"'{path}' names B3 data code '{dataCode}', which B3 does not register for this figure.");
+
         CheckAgainstB3Dictionary(dto, path, dataType, reference, errors, warnings);
+        CheckAgainstDerivativeDictionary(dto, dataCode, declaredDataCode, path, dataType, reference, errors, warnings);
 
         // Inside a repeating section a condition reads sibling columns through @, so item
         // references have to be recorded against this section to be matchable later.
@@ -243,6 +263,7 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
             DataType = dataType,
             B3Field = dto.B3Field,
             B3FieldCode = dto.B3FieldCode,
+            B3DataCode = dataCode,
             B3Domain = dto.B3Domain,
             Symbol = dto.Symbol,
             Unit = dto.Unit,
@@ -365,6 +386,81 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
     }
 
     /// <summary>
+    /// Finds the code B3 registers this attribute under, for a field that does not name one.
+    ///
+    /// The match is on B3's own name for the attribute, normalised: a domain file writes
+    /// <c>b3Field</c> exactly as the registration screen prints it, and the export names it the
+    /// same way. Where a file gives no <c>b3Field</c>, its Portuguese label is tried, because a
+    /// generated file takes that label from the manual's annex, which is the same text again.
+    ///
+    /// A file that states <c>b3DataCode</c> outright always wins: this only fills a blank.
+    /// </summary>
+    private static string? ResolveDataCode(
+        FieldDto dto, FieldDataType dataType, IReadOnlyDictionary<string, B3FigureAttribute> published)
+    {
+        if (published.Count == 0) return null;
+
+        foreach (var candidate in new[] { dto.B3Field, dto.Label?.Pt })
+        {
+            var key = B3DerivativeFields.NormalizeName(candidate);
+            if (key.Length == 0 || !published.TryGetValue(key, out var attribute)) continue;
+
+            // Concept names repeat across the catalogue: a "Strike" that B3 registers as a date
+            // is not this figure's percentage strike, whatever the two are called. A match the
+            // types contradict is a coincidence, and adopting it would write the wrong code into
+            // a registration, so it is dropped rather than reported.
+            return Accepts(attribute.DataType).Contains(dataType) ? attribute.FieldCode : null;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Reports the attributes B3 registers for this figure that the domain file does not carry.
+    ///
+    /// <c>DTpFigurasDadosDerivativo</c> lists them per figure, so "is this figure complete?" is
+    /// a question with a published answer rather than a reading of the manual. A mandatory
+    /// attribute the file omits is one the registration file cannot carry, which is a warning
+    /// and not an error: a figure is still bookable and still validates, it simply cannot be
+    /// uploaded to B3 until the gap is closed.
+    /// </summary>
+    private void CheckFigureAttributeCoverage(
+        DomainFile file, List<TemplateSection> sections, List<string> warnings)
+    {
+        if (string.IsNullOrWhiteSpace(file.FigureCode)) return;
+
+        var expected = _reference.FigureAttributes(file.FigureCode);
+        if (expected.Count == 0) return;
+
+        var mapped = sections
+            .SelectMany(s => s.Fields.Concat(s.ItemFields))
+            .Select(f => f.B3DataCode)
+            .Where(code => !string.IsNullOrWhiteSpace(code))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var missing = expected.Where(a => !mapped.Contains(a.FieldCode)).ToList();
+        if (missing.Count == 0) return;
+
+        var mandatory = missing.Where(a => a.Mandatory).ToList();
+        if (mapped.Count == 0)
+        {
+            // Nothing is mapped at all: the file predates the association B3 publishes. One
+            // line, not a list of forty.
+            warnings.Add(
+                $"{file.FigureCode} carries no b3DataCode; B3 registers {expected.Count} attribute(s) for it "
+                + $"({mandatory.Count} mandatory), none of which this file can write to the registration file.");
+            return;
+        }
+
+        if (mandatory.Count > 0)
+        {
+            var named = string.Join(", ", mandatory.Take(8).Select(a => $"{a.FieldCode} '{a.Name}'"));
+            var rest = mandatory.Count > 8 ? $" and {mandatory.Count - 8} more" : string.Empty;
+            warnings.Add($"{file.FigureCode} does not carry B3's mandatory attribute(s) {named}{rest}.");
+        }
+    }
+
+    /// <summary>
     /// Checks a field against B3's published metadata where the domain file claims a mapping:
     /// the option codes against the named domain, and the declared size and decimals against the
     /// strategy-field dictionary.
@@ -409,15 +505,7 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
             return;
         }
 
-        var expected = published.DataType switch
-        {
-            "NUMERICO" => new[] { FieldDataType.Decimal, FieldDataType.Percent, FieldDataType.Money, FieldDataType.Integer },
-            "DATA" => [FieldDataType.Date],
-            "TEXTO" => [FieldDataType.String, FieldDataType.Text],
-            "DOMINIO" => [FieldDataType.Enum, FieldDataType.EnumSet, FieldDataType.Boolean],
-            _ => []
-        };
-
+        var expected = Accepts(published.DataType);
         if (expected.Length > 0 && !expected.Contains(dataType))
             errors.Add($"'{path}' is {dataType} but B3 field {fieldCode} ('{published.Name}') is {published.DataType}.");
 
@@ -427,6 +515,66 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         if (dto.MaxLength is { } maxLength && published.Length > 0 && maxLength > published.Length)
             errors.Add($"'{path}' allows {maxLength} characters; B3 field {fieldCode} registers {published.Length}.");
     }
+
+    /// <summary>
+    /// Checks a field that declares a <c>b3DataCode</c> against B3's derivative-data dictionary:
+    /// the code must exist, the declared type must be the one B3 registers, and the precision
+    /// must fit. This is the dictionary the Registro COE upload writes against, so a mismatch
+    /// here is a file B3 will reject — caught at ingestion instead.
+    /// </summary>
+    private static void CheckAgainstDerivativeDictionary(
+        FieldDto dto, string? dataCode, bool declared, string path, FieldDataType dataType,
+        B3Reference reference, List<string> errors, List<string> warnings)
+    {
+        if (dataCode is not { } code) return;
+
+        // Only a code the author wrote down can fail the figure. An inferred one that turns out
+        // to disagree is reported and the registration writer is left without it, which is the
+        // safe direction: a field B3 will not accept is better than a field written wrongly.
+        var report = declared ? errors : warnings;
+        var origin = declared ? "names" : "matches B3's name for";
+
+        var published = reference.DerivativeField(code);
+        if (published is null)
+        {
+            if (reference.DerivativeFields.Fields.Count > 0)
+                report.Add($"'{path}' {origin} B3 data code '{code}', which is not in {B3DerivativeFields.FieldsFile}.");
+            return;
+        }
+
+        var expected = Accepts(published.DataType);
+        if (expected.Length > 0 && !expected.Contains(dataType))
+            report.Add($"'{path}' is {dataType} but B3 data field {code} ('{published.Name}') is {published.DataType}.");
+
+        if (dto.Decimals is { } decimals && published.Decimals != decimals)
+            warnings.Add($"'{path}' declares {decimals} decimal place(s); B3 data field {code} registers {published.Decimals}.");
+
+        if (dto.MaxLength is { } maxLength && published.Length > 0 && maxLength > published.Length)
+            report.Add($"'{path}' allows {maxLength} characters; B3 data field {code} registers {published.Length}.");
+
+        // An enum mapped to a dictionary field registers one of that field's values; anything
+        // else is an option the upload cannot carry.
+        if (!published.IsDomain || published.DomainValues.Count == 0) return;
+
+        foreach (var option in dto.Options)
+        {
+            if (string.IsNullOrWhiteSpace(option.B3Code)) continue;
+            if (!published.DomainValues.Any(v => v.Code == option.B3Code))
+                report.Add(
+                    $"'{path}' option '{option.Code}' has b3Code '{option.B3Code}', which B3 data field "
+                    + $"{code} ('{published.Name}') does not accept.");
+        }
+    }
+
+    /// <summary>The template data types one of B3's published data types may be modelled as.</summary>
+    private static FieldDataType[] Accepts(string b3DataType) => b3DataType.ToUpperInvariant() switch
+    {
+        "NUMERICO" => [FieldDataType.Decimal, FieldDataType.Percent, FieldDataType.Money, FieldDataType.Integer],
+        "DATA" => [FieldDataType.Date],
+        "TEXTO" => [FieldDataType.String, FieldDataType.Text],
+        "DOMINIO" => [FieldDataType.Enum, FieldDataType.EnumSet, FieldDataType.Boolean],
+        _ => []
+    };
 
     // ----- helpers -------------------------------------------------------------------
 

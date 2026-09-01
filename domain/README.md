@@ -56,6 +56,22 @@ shared block.
 }
 ```
 
+The common fragments carry the whole *Registro COE* fixed record between them, so a figure that
+extends them is registrable without adding a field of its own:
+
+| Fragment | Section | What it covers |
+|---|---|---|
+| `common/identification` | `common` | Conta Emissora, Nome Fantasia, Código Identificador, ISIN, dates including Emissão a Termo, quantity, price, modality, guaranteed capital |
+| `common/underlying` | `underlying` | Class, asset, initial value, fixing window and dates, lookback, quanto and parity, dividend protection, and the basket's type, parity currency and parity fixing |
+| | `basket` | One row per component: code, quotation type, initial value, fixing date and weight — the *RegistroCestas* (CEST) file |
+| | `fixingDates` | The explicit capture schedule a "Mais Datas" period leaves pending — the *Registro Datas Fixing* (DTFX) file |
+| `common/remuneration` | `remuneration` | Maturity remunerator with its description, floating percentage, spread, basis and initial quote; and the cash-flow schedule's remunerator, basis, barrier conditions and coupon memory |
+| | `cashflows` | One row per event: payment date, floating rate, spread, call and coupon barriers with their second bounds, fixing dates and fixing type — the *Registro Fluxo de Caixa* (FLUX) file |
+| `common/settlement` | `terms` | Base application, issuer position, custody regime, CVM 8, physical delivery and its description, early redemption and its qualification, functionality, extraordinary payment, issuer call clause |
+| | `deposit` | The deposit leg the registration carries: beneficiary account and document, own reference, unit price, settlement modality and bank |
+| `common/barriers` | `barriers` | Barrier level, direction, type, verification period and window |
+| `common/autocall` | `autocall`, `observations` | Autocall trigger, payment timing, coupon memory and the observation schedule |
+
 ### Sections
 
 A section is either the **common block** shown above the tabs, or one **tab**.
@@ -117,10 +133,23 @@ on the field and the compiler checks every `b3Code` against
 [`reference/b3/`](../reference/b3/README.md): unknown codes fail the build, and codes B3 has
 disabled warn.
 
-`b3FieldCode` ties an attribute to B3's strategy-field dictionary; where it is set, the declared
-`dataType`, `maxLength` and `decimals` are checked against the published metadata. It is left
-unset where the mapping is not established — that dictionary carries no figure association and
-repeats concept names across figures, so guessing from a label would be worse than a blank.
+**`b3DataCode` is the one that decides whether an attribute can be registered.** It is the
+attribute's identifier in B3's derivative-data dictionary (`DTpTipoDadosDerivativo`), and it is
+what the "Identificador do Campo" of the *Registro COE* variable-data record carries. An
+attribute without one is bookable and validated but cannot be written to B3.
+
+You rarely write it. B3 publishes, per figure, which of its attributes the figure registers
+(`DTpFigurasDadosDerivativo`), so the compiler matches a field to one **by B3's own name for the
+attribute** — which is what `b3Field` is for. Write `b3Field` exactly as the registration screen
+prints it and the code attaches itself; the compiler then reports how many of the figure's
+published attributes are still unaccounted for. Setting `b3DataCode` outright always wins, and
+the compiler holds you to it: the code must exist, agree on type and precision, offer only the
+values that field accepts, and be an attribute B3 registers for *this* figure.
+
+`b3FieldCode` is a different dictionary — `DTpDadosEstrategia`, where the same `C…` codes mean
+different attributes — and is left unset almost everywhere; see
+[the reference README](../reference/b3/README.md#two-dictionaries-not-one). Where it is set, the
+declared `dataType`, `maxLength` and `decimals` are checked against that dictionary instead.
 
 Asset classes are stored using B3's own spelling (`ACOES INTERNACIONAIS`), since the underlying
 master is keyed on it.

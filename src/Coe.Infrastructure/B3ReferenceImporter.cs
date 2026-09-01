@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace Coe.Infrastructure;
 
 public sealed record ReferenceImportReport(
-    int Figures, int DomainValues, int StrategyFields, int Underlyings, bool Skipped);
+    int Figures, int DomainValues, int StrategyFields, int Underlyings,
+    int DerivativeFields, int FigureAttributes, bool Skipped);
 
 /// <summary>
 /// Loads B3's published exports into the <c>b3.*</c> tables and the underlying master.
@@ -21,7 +22,7 @@ public sealed record ReferenceImportReport(
 /// </summary>
 public sealed class B3ReferenceImporter(
     ISqlConnectionFactory connections,
-    B3Reference reference,
+    B3ReferenceProvider references,
     ILogger<B3ReferenceImporter> logger)
 {
     /// <summary>Rows per network round trip. The largest export here is ~7,800 rows.</summary>
@@ -29,10 +30,14 @@ public sealed class B3ReferenceImporter(
 
     public async Task<ReferenceImportReport> ImportAsync(CancellationToken ct = default)
     {
+        // One snapshot for the whole import: a set swapped in mid-transaction would put half of
+        // one export and half of another into the same replacement.
+        var reference = references.Current;
+
         if (reference.Figures.Count == 0 && reference.Underlyings.Count == 0)
         {
             logger.LogWarning("No B3 reference export was loaded; leaving the reference tables untouched");
-            return new ReferenceImportReport(0, 0, 0, 0, Skipped: true);
+            return new ReferenceImportReport(0, 0, 0, 0, 0, 0, Skipped: true);
         }
 
         var started = Stopwatch.GetTimestamp();
@@ -41,43 +46,54 @@ public sealed class B3ReferenceImporter(
         await using var connection = await connections.OpenAsync(ct);
         await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync(IsolationLevel.ReadCommitted, ct);
 
-        // StrategyFieldValue references StrategyField, so it clears first.
+        // The value tables reference their field tables, so they clear first.
         await ExecuteAsync(connection, transaction, """
             DELETE FROM b3.StrategyFieldValue;
             DELETE FROM b3.StrategyField;
+            DELETE FROM b3.DerivativeFieldValue;
+            DELETE FROM b3.FigureAttribute;
+            DELETE FROM b3.DerivativeField;
             DELETE FROM b3.Domain;
             DELETE FROM b3.Figure;
             DELETE FROM ref.Underlying;
             """, ct);
 
-        var figures = await BulkCopyAsync(connection, transaction, "b3.Figure", FigureTable(), ct);
-        var domains = await BulkCopyAsync(connection, transaction, "b3.Domain", DomainTable(), ct);
-        var fields = await BulkCopyAsync(connection, transaction, "b3.StrategyField", StrategyFieldTable(), ct);
-        await BulkCopyAsync(connection, transaction, "b3.StrategyFieldValue", StrategyFieldValueTable(), ct);
-        var underlyings = await BulkCopyAsync(connection, transaction, "ref.Underlying", UnderlyingTable(), ct);
+        var figures = await BulkCopyAsync(connection, transaction, "b3.Figure", FigureTable(reference), ct);
+        var domains = await BulkCopyAsync(connection, transaction, "b3.Domain", DomainTable(reference), ct);
+        var fields = await BulkCopyAsync(connection, transaction, "b3.StrategyField", StrategyFieldTable(reference), ct);
+        await BulkCopyAsync(connection, transaction, "b3.StrategyFieldValue", StrategyFieldValueTable(reference), ct);
+        var underlyings = await BulkCopyAsync(connection, transaction, "ref.Underlying", UnderlyingTable(reference), ct);
+        var dataFields = await BulkCopyAsync(connection, transaction, "b3.DerivativeField", DerivativeFieldTable(reference), ct);
+        await BulkCopyAsync(connection, transaction, "b3.DerivativeFieldValue", DerivativeFieldValueTable(reference), ct);
+        var attributes = await BulkCopyAsync(connection, transaction, "b3.FigureAttribute", FigureAttributeTable(reference), ct);
 
+        var derivativeAsOf = reference.DerivativeFields.AsOf;
         await RecordLoadAsync(connection, transaction, "figuras", reference.AsOf, figures, ct);
         await RecordLoadAsync(connection, transaction, "dominios", null, domains, ct);
         await RecordLoadAsync(connection, transaction, "dados-estrategia", null, fields, ct);
         await RecordLoadAsync(connection, transaction, "ativos-subjacentes", null, underlyings, ct);
+        await RecordLoadAsync(connection, transaction, "dados-derivativo", derivativeAsOf, dataFields, ct);
+        await RecordLoadAsync(connection, transaction, "figuras-dados-derivativo", derivativeAsOf, attributes, ct);
 
         await transaction.CommitAsync(ct);
 
         var elapsed = Stopwatch.GetElapsedTime(started);
         logger.LogInformation(
             "Loaded B3 reference data in {Elapsed}: {Figures} figure(s), {Domains} domain value(s), " +
-            "{Fields} strategy field(s), {Underlyings} underlying(s)",
-            elapsed, figures, domains, fields, underlyings);
+            "{Fields} strategy field(s), {Underlyings} underlying(s), {DataFields} derivative field(s), " +
+            "{Attributes} figure attribute(s)",
+            elapsed, figures, domains, fields, underlyings, dataFields, attributes);
 
         activity?.SetTag("coe.reference.figures", figures);
         activity?.SetTag("coe.reference.underlyings", underlyings);
+        activity?.SetTag("coe.reference.figure_attributes", attributes);
 
-        return new ReferenceImportReport(figures, domains, fields, underlyings, Skipped: false);
+        return new ReferenceImportReport(figures, domains, fields, underlyings, dataFields, attributes, Skipped: false);
     }
 
     // ----- table projections ----------------------------------------------------------
 
-    private DataTable FigureTable()
+    private static DataTable FigureTable(B3Reference reference)
     {
         var table = NewTable(("Code", typeof(string)), ("Ordinal", typeof(string)),
             ("Name", typeof(string)), ("Calculated", typeof(bool)));
@@ -86,7 +102,7 @@ public sealed class B3ReferenceImporter(
         return table;
     }
 
-    private DataTable DomainTable()
+    private static DataTable DomainTable(B3Reference reference)
     {
         var table = NewTable(("DomainType", typeof(string)), ("Code", typeof(string)),
             ("Name", typeof(string)), ("Description", typeof(string)),
@@ -104,7 +120,7 @@ public sealed class B3ReferenceImporter(
         return table;
     }
 
-    private DataTable StrategyFieldTable()
+    private static DataTable StrategyFieldTable(B3Reference reference)
     {
         var table = NewTable(("Code", typeof(string)), ("Name", typeof(string)),
             ("DataType", typeof(string)), ("Length", typeof(int)),
@@ -114,7 +130,7 @@ public sealed class B3ReferenceImporter(
         return table;
     }
 
-    private DataTable StrategyFieldValueTable()
+    private static DataTable StrategyFieldValueTable(B3Reference reference)
     {
         var table = NewTable(("FieldCode", typeof(string)), ("Value", typeof(string)));
         foreach (var f in reference.StrategyFields.Values)
@@ -123,7 +139,7 @@ public sealed class B3ReferenceImporter(
         return table;
     }
 
-    private DataTable UnderlyingTable()
+    private static DataTable UnderlyingTable(B3Reference reference)
     {
         var table = NewTable(("AssetClass", typeof(string)), ("Code", typeof(string)),
             ("ValuationIndex", typeof(string)), ("Exchange", typeof(string)),
@@ -146,6 +162,44 @@ public sealed class B3ReferenceImporter(
                 (object?)NullIfBlank(u.Ticker) ?? DBNull.Value,
                 u.Calculated, true);
         }
+        return table;
+    }
+
+    private static DataTable DerivativeFieldTable(B3Reference reference)
+    {
+        var table = NewTable(("Code", typeof(string)), ("Name", typeof(string)),
+            ("DataType", typeof(string)), ("Length", typeof(int)),
+            ("Decimals", typeof(int)), ("Mandatory", typeof(bool)));
+        foreach (var f in reference.DerivativeFields.Fields.Values)
+            table.Rows.Add(f.Code, f.Name, f.DataType, f.Length, f.Decimals, f.Mandatory);
+        return table;
+    }
+
+    private static DataTable DerivativeFieldValueTable(B3Reference reference)
+    {
+        var table = NewTable(("FieldCode", typeof(string)), ("Name", typeof(string)), ("ValueCode", typeof(string)));
+
+        foreach (var f in reference.DerivativeFields.Fields.Values)
+        {
+            // B3 repeats a value name within a field where it carries two identifiers; the
+            // table is keyed on (field, name), so the first one wins.
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var value in f.DomainValues)
+                if (seen.Add(value.Name))
+                    table.Rows.Add(f.Code, value.Name, (object?)value.Code ?? DBNull.Value);
+        }
+        return table;
+    }
+
+    private static DataTable FigureAttributeTable(B3Reference reference)
+    {
+        var table = NewTable(("FigureCode", typeof(string)), ("FieldCode", typeof(string)),
+            ("Position", typeof(int)), ("Mandatory", typeof(bool)));
+
+        foreach (var figureCode in reference.DerivativeFields.FigureCodes)
+            foreach (var attribute in reference.DerivativeFields.ForFigure(figureCode))
+                table.Rows.Add(figureCode, attribute.FieldCode, attribute.Position, attribute.Mandatory);
+
         return table;
     }
 

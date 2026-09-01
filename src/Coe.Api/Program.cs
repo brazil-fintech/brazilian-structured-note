@@ -4,6 +4,7 @@ using Coe.Api.Endpoints;
 using Coe.Infrastructure;
 using Coe.Infrastructure.Data;
 using Coe.Ingestion;
+using Coe.Ingestion.Cetip;
 using Coe.Observability;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -100,6 +101,42 @@ try
         Results.Ok(await ingestion.RunAsync(ct)))
         .WithTags("Admin")
         .WithName("RunIngestion");
+
+    // Pulls CETIP's public directory now rather than on the worker's own schedule, re-reads
+    // whatever changed and republishes it to the reference tables.
+    app.MapPost("/api/admin/cetip/sync", async (
+        ReferenceDataRefresher refresher, bool? force, CancellationToken ct) =>
+        Results.Ok(await refresher.RefreshAsync(force ?? true, ct)))
+        .WithTags("Admin")
+        .WithName("SyncCetipReference")
+        .WithSummary("Fetches the dated exports from ftp.cetip.com.br/Public and reloads the reference data.");
+
+    // What the platform is currently checking registrations against, and where it came from.
+    app.MapGet("/api/admin/cetip", (
+        CetipFtpOptions options, CetipReferenceSync sync, B3ReferenceProvider references) =>
+    {
+        var manifest = CetipManifest.Load(sync.ManifestPath);
+        var reference = references.Current;
+        return Results.Ok(new
+        {
+            source = string.IsNullOrWhiteSpace(options.LocalMirrorDirectory)
+                ? $"ftp://{options.Host}{options.Directory}"
+                : options.LocalMirrorDirectory,
+            options.Enabled,
+            options.MinimumInterval,
+            manifest.LastSyncUtc,
+            nextSyncDue = sync.IsDue(DateTimeOffset.UtcNow),
+            references.LoadedUtc,
+            figures = reference.Figures.Count,
+            underlyings = reference.Underlyings.Count,
+            derivativeFields = reference.DerivativeFields.Fields.Count,
+            mappedFigures = reference.DerivativeFields.FigureCodes.Count,
+            exports = manifest.Entries
+        });
+    })
+        .WithTags("Admin")
+        .WithName("GetCetipStatus")
+        .WithSummary("Provenance of the reference data: which dated export each file came from, and when.");
 
     app.Run();
 }

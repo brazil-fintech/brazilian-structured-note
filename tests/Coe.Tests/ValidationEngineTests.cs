@@ -276,14 +276,19 @@ public class ValidationEngineTests
     private static JsonObject WithCashFlows(params string[] dates)
     {
         var values = CallSpread();
+
+        // B3 registers the flow's remunerator once for the whole schedule, not per event, and a
+        // fixed-rate flow carries a spread rather than a percentage of a floating indexer.
         values["remuneration"]!["hasCashFlow"] = true;
+        values["remuneration"]!["flowRemunerator"] = "PRE";
+        values["remuneration"]!["flowBasis"] = "252_EXP";
+
         var rows = new JsonArray();
         foreach (var d in dates)
             rows.Add(new JsonObject
             {
                 ["paymentDate"] = d,
-                ["flowRemunerator"] = "PRE",
-                ["flowRate"] = 5m,
+                ["flowSpread"] = 5m,
                 ["amountPercent"] = 5m
             });
         values["cashflows"] = rows;

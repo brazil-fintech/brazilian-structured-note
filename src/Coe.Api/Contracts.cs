@@ -104,6 +104,23 @@ public sealed record SaveAssetResponse(
 /// <summary>An entry of a reference list named by a field's <c>optionSource</c>.</summary>
 public sealed record ReferenceItem(string Code, string Name, string? Group);
 
+/// <summary>One CETIP upload file, with its content as it would be sent.</summary>
+/// <param name="Layout">The section of the ENVIAR ARQUIVOS manual it follows.</param>
+/// <param name="Operation">The operation code its header carries.</param>
+/// <param name="FileName">A suggested name; the operational one is agreed with B3.</param>
+/// <param name="Records">Record lines, not counting the header.</param>
+/// <param name="Content">The whole file, CRLF-terminated.</param>
+public sealed record ClearingFileResponse(
+    string Layout, string Operation, string FileName, int Records, string Content);
+
+/// <param name="Files">The files this asset's registration is made of.</param>
+/// <param name="Notes">
+/// What went into them, and what could not: an attribute B3 registers for the figure that the
+/// template cannot address is named here rather than silently left out of the upload.
+/// </param>
+public sealed record ClearingResponse(
+    IReadOnlyList<ClearingFileResponse> Files, IReadOnlyList<string> Notes);
+
 public static class ContractMapping
 {
     public static AssetListItem ToListItem(AssetListRow a) => new(

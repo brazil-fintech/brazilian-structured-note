@@ -44,14 +44,16 @@
               "label": {
                 "pt": "Comprado",
                 "en": "Long"
-              }
+              },
+              "b3Code": "C"
             },
             {
               "code": "VENDIDO",
               "label": {
                 "pt": "Vendido",
                 "en": "Short"
-              }
+              },
+              "b3Code": "V"
             }
           ]
         },
@@ -72,14 +74,16 @@
               "label": {
                 "pt": "Depositado",
                 "en": "Deposited"
-              }
+              },
+              "b3Code": "D"
             },
             {
               "code": "REGISTRADO",
               "label": {
                 "pt": "Registrado",
                 "en": "Registered"
-              }
+              },
+              "b3Code": "R"
             }
           ]
         },
@@ -128,6 +132,23 @@
           "visibleWhen": "underlying.assetClass in ['ACOES', 'ACOES INTERNACIONAIS', 'TITULOS PRIVADOS']"
         },
         {
+          "key": "physicalDeliveryDescription",
+          "order": 65,
+          "label": {
+            "pt": "Descrição da Entrega Física",
+            "en": "Physical delivery description"
+          },
+          "help": {
+            "pt": "O que é entregue e como. Só é registrado quando há entrega física; a B3 exige o campo vazio caso contrário.",
+            "en": "What is delivered and how. Registered only when there is physical delivery; B3 requires the field empty otherwise."
+          },
+          "dataType": "text",
+          "b3Field": "Descrição Entrega Física",
+          "maxLength": 300,
+          "visibleWhen": "physicalDelivery == true",
+          "requiredWhen": "physicalDelivery == true"
+        },
+        {
           "key": "earlyRedemption",
           "order": 70,
           "label": {
@@ -144,21 +165,24 @@
               "label": {
                 "pt": "Não tem condição de liquidez",
                 "en": "No early redemption"
-              }
+              },
+              "b3Code": "03"
             },
             {
               "code": "LIQUIDEZ_DIARIA",
               "label": {
                 "pt": "Liquidez diária a mercado",
                 "en": "Daily liquidity at market"
-              }
+              },
+              "b3Code": "01"
             },
             {
               "code": "CONDICAO_ESPECIFICA",
               "label": {
                 "pt": "Condição específica",
                 "en": "Specific condition"
-              }
+              },
+              "b3Code": "04"
             }
           ]
         },
@@ -206,6 +230,238 @@
           "dataType": "boolean",
           "b3Field": "Cláusula de Resgate pelo Emissor",
           "default": false
+        },
+        {
+          "key": "registrarAccount",
+          "order": 95,
+          "label": {
+            "pt": "Conta Escriturador",
+            "en": "Registrar account"
+          },
+          "help": {
+            "pt": "Deixada vazia nos regimes Depositado e Registrado, que são os dois que a B3 aceita hoje.",
+            "en": "Left empty under the Depositado and Registrado regimes, which are the two B3 accepts today."
+          },
+          "dataType": "string",
+          "b3Field": "Conta Escriturador",
+          "maxLength": 8,
+          "visibleWhen": "false"
+        },
+        {
+          "key": "extraordinaryPayment",
+          "order": 100,
+          "label": {
+            "pt": "Pagamento Extraordinário",
+            "en": "Extraordinary payment"
+          },
+          "help": {
+            "pt": "Indica que o certificado admite um pagamento extraordinário, lançado depois pelo arquivo de Indicação de Pagamento Extraordinário.",
+            "en": "Marks the certificate as admitting an extraordinary payment, launched later by the Indicação de Pagamento Extraordinário file."
+          },
+          "dataType": "enum",
+          "b3Field": "Pagamento Extraordinário",
+          "options": [
+            {
+              "code": "FINAL",
+              "b3Code": "1",
+              "label": {
+                "pt": "Sim — no final",
+                "en": "Yes — at the end"
+              }
+            },
+            {
+              "code": "FLUXO",
+              "b3Code": "2",
+              "label": {
+                "pt": "Sim — no fluxo",
+                "en": "Yes — on the schedule"
+              }
+            }
+          ]
+        },
+        {
+          "key": "functionality",
+          "order": 110,
+          "label": {
+            "pt": "Funcionalidade",
+            "en": "Functionality"
+          },
+          "help": {
+            "pt": "Como a performance do ativo é acumulada ao longo da vida do certificado.",
+            "en": "How the underlying's performance accumulates over the certificate's life."
+          },
+          "dataType": "enum",
+          "b3Field": "Funcionalidade",
+          "options": [
+            {
+              "code": "WATERMARK",
+              "b3Code": "1",
+              "label": {
+                "pt": "Watermark performance",
+                "en": "Watermark performance"
+              },
+              "help": {
+                "pt": "A performance registrada é a melhor já atingida, que não retrocede.",
+                "en": "The performance registered is the best reached so far, and never falls back."
+              }
+            },
+            {
+              "code": "ACUMULADA",
+              "b3Code": "2",
+              "label": {
+                "pt": "Performance acumulada",
+                "en": "Accumulated performance"
+              }
+            }
+          ],
+          "b3Domain": "FUNCIONALIDADE"
+        }
+      ]
+    },
+    {
+      "key": "deposit",
+      "kind": "tab",
+      "order": 70,
+      "label": {
+        "pt": "Depósito",
+        "en": "Deposit"
+      },
+      "help": {
+        "pt": "Dados do depósito que o Registro COE carrega junto do registro: a quem o certificado é creditado, por qual banco liquidante e em que modalidade. É a mesma informação que o Lançamento de Depósito sem Financeiro repete.",
+        "en": "The deposit details the Registro COE file carries alongside the registration: who the certificate is credited to, through which settlement bank, and under which modality. The Lançamento de Depósito sem Financeiro repeats the same information."
+      },
+      "fields": [
+        {
+          "key": "beneficiaryAccount",
+          "order": 10,
+          "label": {
+            "pt": "Conta do Favorecido",
+            "en": "Beneficiary account"
+          },
+          "help": {
+            "pt": "Conta própria ou de cliente 1 ou 2 do participante favorecido.",
+            "en": "The beneficiary participant's own or client 1 or 2 account."
+          },
+          "dataType": "string",
+          "b3Field": "Conta do Favorecido",
+          "maxLength": 8
+        },
+        {
+          "key": "beneficiaryDocument",
+          "order": 20,
+          "label": {
+            "pt": "CPF/CNPJ do Favorecido",
+            "en": "Beneficiary tax number"
+          },
+          "dataType": "string",
+          "b3Field": "CPF/CNPJ Cliente",
+          "maxLength": 18
+        },
+        {
+          "key": "beneficiaryNature",
+          "order": 30,
+          "label": {
+            "pt": "Natureza do Favorecido",
+            "en": "Beneficiary nature"
+          },
+          "dataType": "enum",
+          "b3Field": "Natureza Cliente",
+          "requiredWhen": "notNull(beneficiaryDocument)",
+          "options": [
+            {
+              "code": "PF",
+              "b3Code": "PF",
+              "label": {
+                "pt": "Pessoa física",
+                "en": "Individual"
+              }
+            },
+            {
+              "code": "PJ",
+              "b3Code": "PJ",
+              "label": {
+                "pt": "Pessoa jurídica",
+                "en": "Legal entity"
+              }
+            }
+          ]
+        },
+        {
+          "key": "myNumber",
+          "order": 40,
+          "label": {
+            "pt": "Meu Número",
+            "en": "Own reference"
+          },
+          "help": {
+            "pt": "Número de controle do participante para a operação de depósito.",
+            "en": "The participant's own control number for the deposit."
+          },
+          "dataType": "string",
+          "b3Field": "Meu Número",
+          "maxLength": 10
+        },
+        {
+          "key": "depositUnitPrice",
+          "order": 50,
+          "label": {
+            "pt": "P.U. do Depósito",
+            "en": "Deposit unit price"
+          },
+          "dataType": "money",
+          "unit": "BRL",
+          "b3Field": "P.U.",
+          "decimals": 8,
+          "min": 0
+        },
+        {
+          "key": "settlementModality",
+          "order": 60,
+          "label": {
+            "pt": "Modalidade de Liquidação",
+            "en": "Settlement modality"
+          },
+          "dataType": "enum",
+          "b3Field": "Modalidade",
+          "default": "SEM_MODALIDADE",
+          "options": [
+            {
+              "code": "SEM_MODALIDADE",
+              "b3Code": "0",
+              "label": {
+                "pt": "Sem modalidade",
+                "en": "None"
+              }
+            },
+            {
+              "code": "BRUTA",
+              "b3Code": "2",
+              "label": {
+                "pt": "Bruta",
+                "en": "Gross"
+              }
+            },
+            {
+              "code": "BILATERAL",
+              "b3Code": "4",
+              "label": {
+                "pt": "Bilateral",
+                "en": "Bilateral"
+              }
+            }
+          ]
+        },
+        {
+          "key": "settlementBank",
+          "order": 70,
+          "label": {
+            "pt": "Banco Liquidante",
+            "en": "Settlement bank"
+          },
+          "dataType": "string",
+          "b3Field": "Banco Liquidante",
+          "maxLength": 8,
+          "requiredWhen": "settlementModality != 'SEM_MODALIDADE'"
         }
       ]
     }
@@ -255,6 +511,66 @@
       "severity": "warning",
       "execution": "both",
       "trigger": "change"
+    },
+    {
+      "id": "terms.physical-delivery-classes",
+      "targets": [
+        "terms.physicalDelivery"
+      ],
+      "when": "physicalDelivery == true",
+      "assert": "underlying.assetClass in ['ACOES', 'ACOES INTERNACIONAIS', 'TITULOS PRIVADOS']",
+      "message": {
+        "pt": "A entrega física só é registrável nas classes Ações e Títulos Privados.",
+        "en": "Physical delivery is only registrable for the equity and private-debt classes."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "terms.redemption-condition-required",
+      "targets": [
+        "terms.earlyRedemptionCondition"
+      ],
+      "when": "earlyRedemption == 'CONDICAO_ESPECIFICA'",
+      "assert": "notNull(earlyRedemptionCondition)",
+      "message": {
+        "pt": "Um resgate antecipado por condição específica exige a qualificação que o descreve.",
+        "en": "An early redemption under a specific condition needs the qualification that describes it."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "terms.functionality-needs-performance",
+      "targets": [
+        "terms.functionality"
+      ],
+      "when": "notNull(functionality)",
+      "assert": "underlying.assetClass != 'JUROS'",
+      "message": {
+        "pt": "Watermark e performance acumulada leem a performance de um ativo; uma perna puramente de juros não tem o que acumular.",
+        "en": "Watermark and accumulated performance read an asset’s performance; a pure interest leg has nothing to accumulate."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "deposit.price-needs-beneficiary",
+      "targets": [
+        "deposit.beneficiaryAccount"
+      ],
+      "when": "notNull(depositUnitPrice)",
+      "assert": "notNull(beneficiaryAccount)",
+      "message": {
+        "pt": "Um P.U. de depósito sem conta favorecida não tem a quem creditar o certificado.",
+        "en": "A deposit unit price with no beneficiary account has nobody to credit the certificate to."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
     }
   ]
 }

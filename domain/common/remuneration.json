@@ -157,6 +157,23 @@
           "requiredWhen": "maturityRemunerator in ['PRE', 'NO_PERIODO', 'IPCA_VCP', 'PRE_LIN360_VC_USD']"
         },
         {
+          "key": "remuneratorDescription",
+          "order": 35,
+          "label": {
+            "pt": "Descrição do Remunerador",
+            "en": "Remunerator description"
+          },
+          "help": {
+            "pt": "Texto livre que descreve o remunerador. A B3 pede o preenchimento para IPCA VCP, IBOVESPA VCP e USD VCP.",
+            "en": "Free text describing the remunerator. B3 asks for it on IPCA VCP, IBOVESPA VCP and USD VCP."
+          },
+          "dataType": "text",
+          "b3Field": "Descrição remunerador",
+          "maxLength": 300,
+          "visibleWhen": "maturityRemunerator in ['IPCA_VCP', 'IBOVESPA_VCP', 'USD_VCP']",
+          "requiredWhen": "maturityRemunerator in ['IPCA_VCP', 'IBOVESPA_VCP', 'USD_VCP']"
+        },
+        {
           "key": "dayCountBasis",
           "order": 40,
           "label": {
@@ -197,6 +214,39 @@
           ]
         },
         {
+          "key": "initialRemuneratorQuote",
+          "order": 42,
+          "label": {
+            "pt": "Cotação Inicial do Remunerador",
+            "en": "Initial remunerator quote"
+          },
+          "dataType": "decimal",
+          "b3Field": "Cotacao Inicial Remunerador",
+          "decimals": 8,
+          "min": 0,
+          "visibleWhen": "maturityRemunerator in ['IPCA_VCP', 'IBOVESPA_VCP', 'USD_VCP', 'USD', 'IBOVESPA', 'SOFR_VCP', 'PRE_LIN360_VC_USD']"
+        },
+        {
+          "key": "remuneratorStartDate",
+          "order": 44,
+          "label": {
+            "pt": "Data Inicial do Remunerador",
+            "en": "Remunerator start date"
+          },
+          "dataType": "date",
+          "b3Field": "Data Inicial Remunerador"
+        },
+        {
+          "key": "remuneratorFixingDate",
+          "order": 46,
+          "label": {
+            "pt": "Data Fixing do Remunerador",
+            "en": "Remunerator fixing date"
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing Remunerador"
+        },
+        {
           "key": "hasCashFlow",
           "order": 50,
           "label": {
@@ -211,43 +261,16 @@
           "b3Field": "Fluxo de Caixa",
           "required": true,
           "default": false
-        }
-      ]
-    },
-    {
-      "key": "cashflows",
-      "kind": "tab",
-      "order": 25,
-      "label": {
-        "pt": "Fluxo de caixa",
-        "en": "Cash flows"
-      },
-      "repeating": true,
-      "minItems": 1,
-      "maxItems": 120,
-      "visibleWhen": "remuneration.hasCashFlow == true",
-      "itemFields": [
-        {
-          "key": "paymentDate",
-          "order": 10,
-          "label": {
-            "pt": "Data de Pagamento",
-            "en": "Payment date"
-          },
-          "dataType": "date",
-          "b3Field": "Datas de pagamento",
-          "required": true
         },
         {
           "key": "flowRemunerator",
-          "order": 20,
+          "order": 60,
           "label": {
             "pt": "Remunerador no Fluxo",
             "en": "Cash-flow remunerator"
           },
           "dataType": "enum",
           "b3Field": "Remunerador no Fluxo",
-          "required": true,
           "default": "PRE",
           "options": [
             {
@@ -339,21 +362,220 @@
               }
             }
           ],
-          "b3Domain": "REMUNERADOR NO FLUXO"
+          "b3Domain": "REMUNERADOR NO FLUXO",
+          "visibleWhen": "hasCashFlow == true",
+          "requiredWhen": "hasCashFlow == true",
+          "help": {
+            "pt": "Indexador de todos os eventos do fluxo. A B3 o registra uma vez para o fluxo inteiro, não por evento.",
+            "en": "The indexer of every event in the schedule. B3 registers it once for the whole flow, not per event."
+          }
+        },
+        {
+          "key": "flowBasis",
+          "order": 65,
+          "label": {
+            "pt": "Base do Fluxo",
+            "en": "Cash-flow day-count basis"
+          },
+          "dataType": "enum",
+          "b3Field": "Base",
+          "default": "252_EXP",
+          "visibleWhen": "hasCashFlow == true",
+          "requiredWhen": "hasCashFlow == true and flowRemunerator in ['DI', 'PRE']",
+          "options": [
+            {
+              "code": "252_EXP",
+              "b3Code": "01",
+              "label": {
+                "pt": "252 exponencial",
+                "en": "252 exponential"
+              }
+            },
+            {
+              "code": "360_EXP",
+              "b3Code": "02",
+              "label": {
+                "pt": "360 exponencial",
+                "en": "360 exponential"
+              }
+            },
+            {
+              "code": "360_LIN",
+              "b3Code": "03",
+              "label": {
+                "pt": "360 linear",
+                "en": "360 linear"
+              }
+            }
+          ]
+        },
+        {
+          "key": "couponBarrierCondition",
+          "order": 70,
+          "label": {
+            "pt": "Condicionante da Barreira de Cupom",
+            "en": "Coupon barrier condition"
+          },
+          "help": {
+            "pt": "Como a barreira de cupom é lida em cada evento. Deixe em branco quando o fluxo não tem barreira de cupom.",
+            "en": "How the coupon barrier is read on each event. Leave blank when the schedule has no coupon barrier."
+          },
+          "dataType": "enum",
+          "b3Field": "Condicionante Barreira de Cupom",
+          "visibleWhen": "hasCashFlow == true",
+          "options": [
+            {
+              "code": "ACIMA",
+              "b3Code": "01",
+              "label": {
+                "pt": "Acima",
+                "en": "Above"
+              }
+            },
+            {
+              "code": "ABAIXO",
+              "b3Code": "02",
+              "label": {
+                "pt": "Abaixo",
+                "en": "Below"
+              }
+            },
+            {
+              "code": "ENTRE",
+              "b3Code": "03",
+              "label": {
+                "pt": "Entre",
+                "en": "Between"
+              },
+              "help": {
+                "pt": "Duas barreiras: o gatilho é a faixa entre elas.",
+                "en": "Two barriers: the trigger is the band between them."
+              }
+            }
+          ]
+        },
+        {
+          "key": "callBarrierCondition",
+          "order": 75,
+          "label": {
+            "pt": "Condicionante da Barreira de Chamada",
+            "en": "Call barrier condition"
+          },
+          "help": {
+            "pt": "Como a barreira de chamada (autocall) é lida em cada evento.",
+            "en": "How the call (autocall) barrier is read on each event."
+          },
+          "dataType": "enum",
+          "b3Field": "Condicionante Barreira de Chamada",
+          "visibleWhen": "hasCashFlow == true",
+          "options": [
+            {
+              "code": "ACIMA",
+              "b3Code": "01",
+              "label": {
+                "pt": "Acima",
+                "en": "Above"
+              }
+            },
+            {
+              "code": "ABAIXO",
+              "b3Code": "02",
+              "label": {
+                "pt": "Abaixo",
+                "en": "Below"
+              }
+            },
+            {
+              "code": "ENTRE",
+              "b3Code": "03",
+              "label": {
+                "pt": "Entre",
+                "en": "Between"
+              },
+              "help": {
+                "pt": "Duas barreiras: o gatilho é a faixa entre elas.",
+                "en": "Two barriers: the trigger is the band between them."
+              }
+            }
+          ]
+        },
+        {
+          "key": "flowCouponMemory",
+          "order": 80,
+          "label": {
+            "pt": "Memória de Cupom no Fluxo",
+            "en": "Coupon memory on the schedule"
+          },
+          "help": {
+            "pt": "Cupons não pagos por barreira não atingida são acumulados e liberados no primeiro evento em que a barreira é atingida.",
+            "en": "Coupons missed because a barrier was not met accumulate and are released on the first event that meets it."
+          },
+          "dataType": "boolean",
+          "b3Field": "Memória de Cupom",
+          "visibleWhen": "hasCashFlow == true",
+          "default": false
+        }
+      ]
+    },
+    {
+      "key": "cashflows",
+      "kind": "tab",
+      "order": 25,
+      "label": {
+        "pt": "Fluxo de caixa",
+        "en": "Cash flows"
+      },
+      "repeating": true,
+      "minItems": 1,
+      "maxItems": 999,
+      "visibleWhen": "remuneration.hasCashFlow == true",
+      "itemFields": [
+        {
+          "key": "paymentDate",
+          "order": 10,
+          "label": {
+            "pt": "Data de Pagamento",
+            "en": "Payment date"
+          },
+          "dataType": "date",
+          "b3Field": "Datas de pagamento",
+          "required": true
         },
         {
           "key": "flowRate",
           "order": 30,
           "label": {
-            "pt": "Taxa do fluxo (%)",
-            "en": "Cash-flow rate (%)"
+            "pt": "Remunerador (%)",
+            "en": "Floating remunerator (%)"
           },
           "dataType": "percent",
           "min": 0,
-          "max": 100,
-          "decimals": 6,
-          "visibleWhen": "flowRemunerator != 'SEM_REMUNERACAO'",
-          "requiredWhen": "flowRemunerator != 'SEM_REMUNERACAO'"
+          "max": 9999,
+          "decimals": 4,
+          "visibleWhen": "remuneration.flowRemunerator in ['DI', 'IPCA_VCP', 'DI_VCP', 'USD_VCP', 'SOFR_VCP']",
+          "requiredWhen": "remuneration.flowRemunerator in ['DI', 'IPCA_VCP']",
+          "help": {
+            "pt": "Percentual do indexador flutuante para este evento. Obrigatório para DI e IPCA VCP; não é preenchido para Pré e No Período.",
+            "en": "The floating indexer percentage for this event. Mandatory for DI and IPCA VCP; not filled for fixed and period rates."
+          }
+        },
+        {
+          "key": "flowSpread",
+          "order": 35,
+          "label": {
+            "pt": "Spread / Cupom (%)",
+            "en": "Spread / coupon (%)"
+          },
+          "help": {
+            "pt": "Cupom do evento. Obrigatório para Pré e No Período; opcional para DI e IPCA VCP.",
+            "en": "The event's coupon. Mandatory for fixed and period rates; optional for DI and IPCA VCP."
+          },
+          "dataType": "percent",
+          "b3Field": "Spread/Cupom",
+          "decimals": 4,
+          "min": 0,
+          "max": 99999,
+          "requiredWhen": "remuneration.flowRemunerator in ['PRE', 'NO_PERIODO']"
         },
         {
           "key": "amountPercent",
@@ -371,8 +593,169 @@
           "min": 0,
           "max": 1000,
           "decimals": 8
+        },
+        {
+          "key": "callBarrier",
+          "order": 50,
+          "label": {
+            "pt": "Barreira de Chamada (%)",
+            "en": "Call barrier (%)"
+          },
+          "help": {
+            "pt": "Percentual do valor inicial que dispara a chamada antecipada neste evento.",
+            "en": "Percentage of the initial value that triggers early call on this event."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira Chamada",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "visibleWhen": "notNull(remuneration.callBarrierCondition)",
+          "requiredWhen": "notNull(remuneration.callBarrierCondition)"
+        },
+        {
+          "key": "callBarrier2",
+          "order": 55,
+          "label": {
+            "pt": "Barreira de Chamada 2 (%)",
+            "en": "Call barrier 2 (%)"
+          },
+          "help": {
+            "pt": "Limite superior da faixa quando a condicionante é \"Entre\".",
+            "en": "The upper edge of the band when the condition is \"between\"."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira Chamada 2",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "visibleWhen": "remuneration.callBarrierCondition == 'ENTRE'",
+          "requiredWhen": "remuneration.callBarrierCondition == 'ENTRE'"
+        },
+        {
+          "key": "couponBarrier",
+          "order": 60,
+          "label": {
+            "pt": "Barreira de Cupom (%)",
+            "en": "Coupon barrier (%)"
+          },
+          "help": {
+            "pt": "Percentual do valor inicial que libera o cupom deste evento.",
+            "en": "Percentage of the initial value that releases this event's coupon."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira Cupom",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "visibleWhen": "notNull(remuneration.couponBarrierCondition)",
+          "requiredWhen": "notNull(remuneration.couponBarrierCondition)"
+        },
+        {
+          "key": "couponBarrier2",
+          "order": 65,
+          "label": {
+            "pt": "Barreira de Cupom 2 (%)",
+            "en": "Coupon barrier 2 (%)"
+          },
+          "help": {
+            "pt": "Limite superior da faixa quando a condicionante é \"Entre\".",
+            "en": "The upper edge of the band when the condition is \"between\"."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira Cupom 2",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "visibleWhen": "remuneration.couponBarrierCondition == 'ENTRE'",
+          "requiredWhen": "remuneration.couponBarrierCondition == 'ENTRE'"
+        },
+        {
+          "key": "fixingDate",
+          "order": 70,
+          "label": {
+            "pt": "Data de Fixing",
+            "en": "Fixing date"
+          },
+          "help": {
+            "pt": "Data de verificação das barreiras deste evento. Obrigatória quando há barreira de cupom e/ou de chamada, e não deve ser preenchida quando não há.",
+            "en": "The date this event's barriers are checked. Mandatory when there is a coupon and/or call barrier, and not filled when there is none."
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing",
+          "visibleWhen": "notNull(remuneration.couponBarrierCondition) or notNull(remuneration.callBarrierCondition)",
+          "requiredWhen": "notNull(remuneration.couponBarrierCondition) or notNull(remuneration.callBarrierCondition)"
+        },
+        {
+          "key": "fixingType",
+          "order": 75,
+          "label": {
+            "pt": "Tipo de Fixing",
+            "en": "Fixing type"
+          },
+          "help": {
+            "pt": "Como a cotação é apurada para acionar as barreiras de cupom e autocall.",
+            "en": "How the quotation is taken to trigger the coupon and autocall barriers."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Fixing",
+          "visibleWhen": "notNull(remuneration.couponBarrierCondition) or notNull(remuneration.callBarrierCondition)",
+          "options": [
+            {
+              "code": "MEDIA_PERIODO",
+              "b3Code": "01",
+              "label": {
+                "pt": "Média no período",
+                "en": "Average over the period"
+              }
+            },
+            {
+              "code": "DATA_A_DATA",
+              "b3Code": "02",
+              "label": {
+                "pt": "Verificação data a data",
+                "en": "Date-by-date verification"
+              }
+            },
+            {
+              "code": "MAXIMO_PERIODO",
+              "b3Code": "03",
+              "label": {
+                "pt": "Máximo do período",
+                "en": "Maximum over the period"
+              }
+            },
+            {
+              "code": "MINIMO_PERIODO",
+              "b3Code": "04",
+              "label": {
+                "pt": "Mínimo do período",
+                "en": "Minimum over the period"
+              }
+            }
+          ]
+        },
+        {
+          "key": "fixingDate2",
+          "order": 80,
+          "label": {
+            "pt": "Data de Fixing 2",
+            "en": "Fixing date 2"
+          },
+          "help": {
+            "pt": "Fim do período de apuração. Obrigatória sempre que o Tipo de Fixing é informado.",
+            "en": "The end of the observation period. Mandatory whenever a fixing type is given."
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing 2",
+          "visibleWhen": "notNull(fixingType)",
+          "requiredWhen": "notNull(fixingType)"
         }
-      ]
+      ],
+      "help": {
+        "pt": "Eventos do fluxo de caixa, como o arquivo Registro Fluxo de Caixa (FLUX) os registra: uma linha por evento, com o cupom, as barreiras que o condicionam e as datas em que são verificadas.",
+        "en": "The cash-flow events, as the Registro Fluxo de Caixa (FLUX) file registers them: one row per event, with its coupon, the barriers that condition it and the dates they are checked on."
+      }
     }
   ],
   "rules": [
@@ -465,6 +848,148 @@
       "message": {
         "pt": "Existem pagamentos registrados, mas o Fluxo de Caixa está marcado como Não.",
         "en": "Payments are registered while the cash-flow flag is set to no."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "cashflows.rate-not-for-fixed",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].flowRate"
+      ],
+      "when": "remuneration.flowRemunerator in ['PRE', 'NO_PERIODO']",
+      "assert": "isNull(flowRate)",
+      "message": {
+        "pt": "Um fluxo Pré ou No Período não registra percentual de remunerador flutuante.",
+        "en": "A fixed or period-rate schedule registers no floating remunerator percentage."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.fixing-without-barrier",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].fixingDate"
+      ],
+      "when": "isNull(remuneration.couponBarrierCondition) and isNull(remuneration.callBarrierCondition)",
+      "assert": "isNull(fixingDate)",
+      "message": {
+        "pt": "A data de fixing só é registrada quando o evento tem barreira de cupom e/ou de chamada.",
+        "en": "The fixing date is only registered when the event has a coupon and/or call barrier."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.fixing-within-tenor",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].fixingDate"
+      ],
+      "when": "notNull(fixingDate)",
+      "assert": "fixingDate > common.issueDate and fixingDate <= common.maturityDate",
+      "message": {
+        "pt": "A data de fixing do evento deve estar entre a emissão (exclusive) e o vencimento.",
+        "en": "The event's fixing date must fall between the issue date (exclusive) and maturity."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.fixing-order",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].fixingDate2"
+      ],
+      "when": "notNull(fixingDate2) and notNull(fixingDate)",
+      "assert": "fixingDate2 >= fixingDate",
+      "message": {
+        "pt": "A segunda data de fixing encerra o período de apuração e não pode ser anterior à primeira.",
+        "en": "The second fixing date closes the observation period and cannot precede the first."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.fixing-before-payment",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].fixingDate"
+      ],
+      "when": "notNull(fixingDate)",
+      "assert": "fixingDate <= paymentDate",
+      "message": {
+        "pt": "A barreira é verificada antes de o evento pagar: a data de fixing não pode ser posterior à data de pagamento.",
+        "en": "A barrier is checked before its event pays: the fixing date cannot fall after the payment date."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.coupon-barrier-band",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].couponBarrier2"
+      ],
+      "when": "remuneration.couponBarrierCondition == 'ENTRE' and notNull(couponBarrier) and notNull(couponBarrier2)",
+      "assert": "couponBarrier2 > couponBarrier",
+      "message": {
+        "pt": "Na condicionante \"Entre\", a segunda barreira de cupom é o limite superior da faixa.",
+        "en": "Under the \"between\" condition, the second coupon barrier is the upper edge of the band."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "cashflows.call-barrier-band",
+      "forEachSection": "cashflows",
+      "targets": [
+        "cashflows[].callBarrier2"
+      ],
+      "when": "remuneration.callBarrierCondition == 'ENTRE' and notNull(callBarrier) and notNull(callBarrier2)",
+      "assert": "callBarrier2 > callBarrier",
+      "message": {
+        "pt": "Na condicionante \"Entre\", a segunda barreira de chamada é o limite superior da faixa.",
+        "en": "Under the \"between\" condition, the second call barrier is the upper edge of the band."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "remuneration.memory-needs-coupon-barrier",
+      "targets": [
+        "remuneration.flowCouponMemory"
+      ],
+      "when": "flowCouponMemory == true",
+      "assert": "notNull(couponBarrierCondition)",
+      "message": {
+        "pt": "Memória de cupom acumula cupons que uma barreira impediu de pagar; sem barreira de cupom, não há o que acumular.",
+        "en": "Coupon memory accumulates coupons a barrier stopped from paying; with no coupon barrier there is nothing to accumulate."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "remuneration.flow-basis-for-di-or-pre",
+      "targets": [
+        "remuneration.flowBasis"
+      ],
+      "when": "hasCashFlow == true and flowRemunerator in ['DI', 'PRE']",
+      "assert": "notNull(flowBasis)",
+      "message": {
+        "pt": "A base do fluxo é obrigatória quando o remunerador do fluxo é DI ou Pré.",
+        "en": "The cash-flow day-count basis is mandatory when the flow remunerator is DI or fixed."
       },
       "severity": "error",
       "execution": "both",
