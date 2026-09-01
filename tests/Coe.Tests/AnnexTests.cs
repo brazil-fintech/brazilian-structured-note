@@ -130,6 +130,26 @@ public class AnnexTests
     }
 
     [Fact]
+    public void Every_figure_in_B3s_catalogue_has_a_form()
+    {
+        // Including the four the annex does not cover. A figure with no attributes of its own is
+        // not an unbookable figure — the Retorno Condicional family redeems principal plus
+        // interest, so it is booked entirely from the common registration blocks.
+        var modelled = DomainFiles.Set.Figures
+            .Select(f => f.File.FigureCode!)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        var missing = DomainFiles.Reference.Figures
+            .Select(f => f.Code)
+            .Where(code => !modelled.Contains(code))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Empty(missing);
+        Assert.Equal(88, DomainFiles.Reference.Figures.Count);
+    }
+
+    [Fact]
     public void A_generated_figure_is_shadowed_by_a_curated_one()
     {
         // COE001005 has a hand-written file; the loader must not also serve a generated twin.

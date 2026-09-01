@@ -41,10 +41,14 @@ export function AssetForm({ template, assetId, initialValues, initialRowVersion,
     >
       <header className="form__header">
         <div>
-          <h2 className="form__title">{template.commercialName ?? template.figureName}</h2>
+          {/* The registered B3 name is the identity: it is what the registration carries and what
+              a desk reconciles against. A commercial name is a house label and sits underneath. */}
+          <h2 className="form__title">{template.figureName}</h2>
           <p className="form__subtitle">
             <span className="badge">{template.figureCode}</span>
-            <span>{template.figureName}</span>
+            {template.commercialName && template.commercialName !== template.figureName && (
+              <span className="form__alias">{template.commercialName}</span>
+            )}
             <span className="form__version">v{template.version}</span>
           </p>
           {template.description && <p className="form__description">{localized(template.description, culture)}</p>}

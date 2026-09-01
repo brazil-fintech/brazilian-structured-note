@@ -222,7 +222,7 @@ of wrong. Use `isNull` / `notNull` when you mean to test for absence.
 
 ## The generated figures
 
-Ten figures are written by hand. The other 74 come from B3's own documentation:
+Fourteen figures are written by hand. The other 74 come from B3's own documentation:
 `tools/Coe.DomainGen` reads the figure catalogue and the field annex extracted to
 [`reference/b3/campos-figuras.csv`](../reference/b3/README.md#the-figure-attribute-annex), and
 writes one file per figure into `figures/generated/`.
@@ -255,7 +255,17 @@ with its labels, defaults and rules is the one that renders.
 **What generation does not give you.** No formula symbols, no link to a page under
 `docs/payoffs/`, no economic warnings, and no modality restriction — B3 does not publish the
 modality per figure, so a generated file offers both rather than inventing a rule. That is the
-work a curated file adds, and it is why the ten exist.
+work a curated file adds, and it is why the fourteen exist.
+
+**A figure with no attributes of its own is still a figure.** Four codes — `COE001053`,
+`COE001057`, `COE001072` and `COE001076`, the *Retorno Condicional* family — have no entry in the
+annex, and B3 explicitly withdrew the Dados Específicos of two of them in September 2024. That is
+not a gap: the *Caderno de Fórmulas* gives their redemption as
+`máx(principal acrescido de juros; principal × Capital Garantido)`, with early redemption settled
+under the registered specific conditions. There is no option leg and nothing figure-specific to
+register beyond the DI accrual offset, so they are hand-written against the common blocks and are
+bookable like anything else. Generation skips a figure with no annex rows; do not read that as
+"cannot be modelled".
 
 ## Checklist for a new figure
 

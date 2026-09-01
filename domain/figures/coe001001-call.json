@@ -1,7 +1,6 @@
 {
   "figureCode": "COE001001",
   "figureName": "Call",
-  "commercialName": "Call com participação",
   "description": {
     "pt": "Participação altista sem teto: resgate = VN × [1 + Part × max(Perf, 0)], com o capital protegido pela perna de renda fixa.",
     "en": "Uncapped bullish participation: redemption = VN × [1 + Part × max(Perf, 0)], with capital protected by the fixed-income leg."

@@ -147,14 +147,14 @@ the save; warnings do not, and the ones a user accepts are stored on the asset f
 **The API is the authority.** Whatever the browser checked, every save re-runs the full
 validation server-side, re-derives computed attributes from their inputs, and only then writes.
 
-**The whole catalogue is bookable.** B3 publishes 88 payoff figures and describes the attributes
-of 84 of them in the field annex of the *Manual de Operações*. That annex is extracted to
+**The whole catalogue is bookable — all 88 figures.** B3 describes the attributes of 84 of them
+in the field annex of the *Manual de Operações*; that annex is extracted to
 [reference/b3/campos-figuras.csv](reference/b3/README.md) and compiled into a domain file per
-figure, so every figure B3 documents has a real form — with the type, precision, domain and
-conditions taken from B3's own instructions. Ten figures are additionally hand-written, with the
-formula symbols and the economic warnings a desk would otherwise catch by eye; those always win.
-The four figures whose annex B3 has withdrawn appear in the picker marked as having no form,
-rather than silently missing.
+figure, with the type, precision, domain and conditions taken from B3's own instructions. The
+remaining four are the *Retorno Condicional* family, which has no attributes of its own — the
+redemption is principal plus interest — so they are booked from the common registration blocks
+alone. Fourteen figures are hand-written, carrying the formula symbols and the economic warnings
+a desk would otherwise catch by eye; a curated file always wins over its generated twin.
 
 **Checked against B3's own data.** The figure catalogue, registration domains, strategy-field
 dictionary and underlying master are committed under [reference/b3/](reference/b3/README.md), and

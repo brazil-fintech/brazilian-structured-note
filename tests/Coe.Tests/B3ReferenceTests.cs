@@ -31,6 +31,26 @@ public class B3ReferenceTests
     }
 
     [Fact]
+    public void No_figure_advertises_itself_under_another_figures_registered_name()
+    {
+        // A commercial name is a house label, but one that happens to be B3's registered name for
+        // a different figure heads the booking screen with the wrong identity: COE001001 once
+        // called itself "Call com participação", which is what B3 registers COE001064 as.
+        var registered = Reference.Figures.ToDictionary(f => f.Name, f => f.Code, StringComparer.OrdinalIgnoreCase);
+
+        foreach (var loaded in DomainFiles.Set.Figures)
+        {
+            var commercial = loaded.File.CommercialName;
+            if (string.IsNullOrWhiteSpace(commercial)) continue;
+            if (!registered.TryGetValue(commercial, out var owner)) continue;
+
+            Assert.True(
+                string.Equals(owner, loaded.File.FigureCode, StringComparison.OrdinalIgnoreCase),
+                $"{loaded.RelativePath}: commercialName '{commercial}' is B3's name for {owner}.");
+        }
+    }
+
+    [Fact]
     public void Every_booked_figure_exists_in_the_catalogue_under_the_name_B3_gives_it()
     {
         foreach (var loaded in DomainFiles.Set.Figures)

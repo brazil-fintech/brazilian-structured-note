@@ -88,8 +88,11 @@ export function FigurePicker({ figures, coverage, culture, onPick, onCancel }: P
                 <span className="chip chip--muted">{ui.availability(culture, figure.availability)}</span>
               )}
             </div>
-            <div className="figure-card__title">{figure.commercialName ?? figure.name}</div>
-            <div className="figure-card__subtitle">{figure.b3Name ?? figure.name}</div>
+            {/* B3's registered name names the card; a house label is secondary. */}
+            <div className="figure-card__title">{figure.b3Name ?? figure.name}</div>
+            {figure.commercialName && figure.commercialName !== (figure.b3Name ?? figure.name) && (
+              <div className="figure-card__subtitle">{figure.commercialName}</div>
+            )}
             {figure.bookable && figure.description && (
               <p className="figure-card__description">{figure.description}</p>
             )}

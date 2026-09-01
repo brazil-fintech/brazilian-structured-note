@@ -38,10 +38,14 @@ domain and the conditions in a form the generator reads and a person can check:
 > *Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais,
 > maior que 0. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente.*
 
-**84 of the 88 figures are covered.** B3 withdrew the annex for `COE001053`, `COE001057`,
-`COE001072` and `COE001076` (the *Retorno Condicional* family) in September 2024 — the change log
-on page 5 of the manual records it. Those four stay in the catalogue with no attribute list, and
-the picker shows them as having no form rather than dropping them.
+**84 of the 88 figures are covered.** The annex has no entry for `COE001053`, `COE001057`,
+`COE001072` or `COE001076` — the *Retorno Condicional* family — and the change log on page 5 of
+the manual records B3 withdrawing the Dados Específicos of two of them on 05/09/2024. Read
+alongside the *Caderno de Fórmulas*, which gives their redemption as principal plus interest
+against the guaranteed capital and marks them *figura não-calculada*, the absence is the point:
+those figures have no attributes of their own. They are modelled by hand against the common
+blocks in [`../../domain/figures/`](../../domain/README.md#the-generated-figures) and are bookable
+like any other.
 
 **About 5% of rows are imperfect.** The annex is typeset three different ways across its 200
 pages, and on a few of them several field names share one description cell or a note runs the

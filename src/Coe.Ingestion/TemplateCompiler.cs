@@ -345,6 +345,23 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
             warnings.Add(
                 $"figureName '{file.FigureName}' differs from B3's '{published.Name}' for {file.FigureCode}.");
         }
+
+        // A house label that happens to be another figure's registered name is not a naming
+        // quibble: the booking screen would head a COE001001 with the name B3 gives COE001064,
+        // and whoever reads it has no way to tell which figure is being registered.
+        if (!string.IsNullOrWhiteSpace(file.CommercialName))
+        {
+            var clash = _reference.Figures.FirstOrDefault(f =>
+                !string.Equals(f.Code, file.FigureCode, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(f.Name, file.CommercialName, StringComparison.OrdinalIgnoreCase));
+
+            if (clash is not null)
+            {
+                errors.Add(
+                    $"commercialName '{file.CommercialName}' is B3's registered name for {clash.Code}; "
+                    + $"{file.FigureCode} must not advertise itself as another figure.");
+            }
+        }
     }
 
     /// <summary>

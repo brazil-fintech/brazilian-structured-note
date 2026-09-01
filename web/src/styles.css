@@ -170,6 +170,7 @@ body {
 .picker__controls { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 .picker__controls .picker__search { margin-bottom: 0; }
 .picker__toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-soft); }
+.form__alias { color: var(--ink-soft); }
 .picker__coverage { margin-left: auto; font-size: 12px; color: var(--ink-faint); }
 .chip--muted { background: var(--line); color: var(--ink-soft); }
 
