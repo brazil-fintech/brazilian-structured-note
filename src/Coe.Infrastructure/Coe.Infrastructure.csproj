@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Coe.Infrastructure</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coe.Core\Coe.Core.csproj" />
+    <ProjectReference Include="..\Coe.Ingestion\Coe.Ingestion.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ADO.NET only: no ORM sits between the platform and SQL Server. -->
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
+  </ItemGroup>
+</Project>

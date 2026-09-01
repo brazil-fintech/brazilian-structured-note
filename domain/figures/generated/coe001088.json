@@ -1,0 +1,2463 @@
+{
+  "figureCode": "COE001088",
+  "figureName": "Cesta de Opções",
+  "commercialName": "Cesta de Opções",
+  "description": {
+    "pt": "Figura COE001088 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001088. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "initialValue1",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue2",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "opcao1",
+          "label": {
+            "pt": "Opção 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o tipo de payoff da opção. Campo com as opções: Call, Put, Callspread, Putspread, Call KI, Call KO, Put KI, Put KO, Call Digital, Put Digital"
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 1",
+          "required": true,
+          "options": [
+            {
+              "code": "CALL",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "label": {
+                "pt": "Put Digital"
+              }
+            }
+          ],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "ativoSubjacente1",
+          "label": {
+            "pt": "Ativo Subjacente1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções dos Ativos Subjacentes referentes a Classe do Ativo Subjacente selecionada anteriormente. O Ativo Subjacente é o Índice de Valorização do COE."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "participation1",
+          "label": {
+            "pt": "Participação 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Participação 1(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "limitador1",
+          "label": {
+            "pt": "Limitador 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 1(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate1",
+          "label": {
+            "pt": "Data para fixing 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 1",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart1",
+          "label": {
+            "pt": "Data inicial para fixing 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 1",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd1",
+          "label": {
+            "pt": "Data final para fixing 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 1",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType1",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 1",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "opcao2",
+          "label": {
+            "pt": "Opção 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o tipo de payoff da opção. Campo com as opções: Call, Put, Callspread, Putspread, Call KI, Call KO, Put KI, Put KO, Call Digital, Put Digital"
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 2",
+          "required": true,
+          "options": [
+            {
+              "code": "CALL",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "label": {
+                "pt": "Put Digital"
+              }
+            }
+          ],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "ativoSubjacente2",
+          "label": {
+            "pt": "Ativo Subjacente2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções dos Ativos Subjacentes referentes a Classe do Ativo Subjacente selecionada anteriormente. O Ativo Subjacente é o Índice de Valorização do COE."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "participation2",
+          "label": {
+            "pt": "Participação 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Participação 2(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        },
+        {
+          "key": "limitador2",
+          "label": {
+            "pt": "Limitador 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 2(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 200,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate2",
+          "label": {
+            "pt": "Data para fixing 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 2",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 250,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart2",
+          "label": {
+            "pt": "Data inicial para fixing 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 2",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 260,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd2",
+          "label": {
+            "pt": "Data final para fixing 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 2",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 270,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType2",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 2",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 280,
+          "inGrid": false
+        },
+        {
+          "key": "limitador3",
+          "label": {
+            "pt": "Limitador 3(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 3(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 290,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate3",
+          "label": {
+            "pt": "Data para fixing 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 3",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 340,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart3",
+          "label": {
+            "pt": "Data inicial para fixing 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 3",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 350,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd3",
+          "label": {
+            "pt": "Data final para fixing 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 3",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 360,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType3",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 3",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 370,
+          "inGrid": false
+        },
+        {
+          "key": "limitador4",
+          "label": {
+            "pt": "Limitador 4(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 4(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 380,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate4",
+          "label": {
+            "pt": "Data para fixing 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 4",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 430,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart4",
+          "label": {
+            "pt": "Data inicial para fixing 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 4",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 440,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd4",
+          "label": {
+            "pt": "Data final para fixing 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 4",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 450,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType4",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 4",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 460,
+          "inGrid": false
+        },
+        {
+          "key": "limitador5",
+          "label": {
+            "pt": "Limitador 5(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 5(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 470,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate5",
+          "label": {
+            "pt": "Data para fixing 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 5",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 520,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart5",
+          "label": {
+            "pt": "Data inicial para fixing 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 5",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 530,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd5",
+          "label": {
+            "pt": "Data final para fixing 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 5",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 540,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType5",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 5",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 550,
+          "inGrid": false
+        },
+        {
+          "key": "limitador6",
+          "label": {
+            "pt": "Limitador 6(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 6(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 560,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate6",
+          "label": {
+            "pt": "Data para fixing 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 6",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 610,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart6",
+          "label": {
+            "pt": "Data inicial para fixing 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 6",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 620,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd6",
+          "label": {
+            "pt": "Data final para fixing 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 6",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 630,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType6",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 6",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 640,
+          "inGrid": false
+        },
+        {
+          "key": "limitador7",
+          "label": {
+            "pt": "Limitador 7(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 7(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 650,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate7",
+          "label": {
+            "pt": "Data para fixing 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 7",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 700,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart7",
+          "label": {
+            "pt": "Data inicial para fixing 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 7",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 710,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd7",
+          "label": {
+            "pt": "Data final para fixing 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 7",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 720,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType7",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 7",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 730,
+          "inGrid": false
+        },
+        {
+          "key": "limitador8",
+          "label": {
+            "pt": "Limitador 8(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 8(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 740,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate8",
+          "label": {
+            "pt": "Data para fixing 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 8",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 790,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart8",
+          "label": {
+            "pt": "Data inicial para fixing 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 8",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 800,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd8",
+          "label": {
+            "pt": "Data final para fixing 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 8",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 810,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType8",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 8",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 820,
+          "inGrid": false
+        },
+        {
+          "key": "limitador9",
+          "label": {
+            "pt": "Limitador 9(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 9(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 830,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate9",
+          "label": {
+            "pt": "Data para fixing 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 9",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 880,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart9",
+          "label": {
+            "pt": "Data inicial para fixing 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 9",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 890,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd9",
+          "label": {
+            "pt": "Data final para fixing 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 9",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 900,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType9",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 9",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 910,
+          "inGrid": false
+        },
+        {
+          "key": "limitador10",
+          "label": {
+            "pt": "Limitador 10(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando percentual a ser aplicado sobre o valor inicial do ativo subjacente. Formato: Numérico com 4 inteiros e 8 decimais. Preencher quando selecionado Callspread ou Putspread do campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador 10(%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 920,
+          "inGrid": false
+        },
+        {
+          "key": "fixingDate10",
+          "label": {
+            "pt": "Data para fixing 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing 10",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "options": [],
+          "order": 970,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowStart10",
+          "label": {
+            "pt": "Data inicial para fixing 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixing 10",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 980,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindowEnd10",
+          "label": {
+            "pt": "Data final para fixing 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para fixing 10",
+          "required": false,
+          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "options": [],
+          "order": 990,
+          "inGrid": false
+        },
+        {
+          "key": "maturityFixingType10",
+          "label": {
+            "pt": "Tipo de fixing para vencimento 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando no campo “Período de captura do ativo subjacente para liquidação” for selecionado “Janela de Datas” ou “Mais Datas”. Campo com os domínios: Máxima no Período, Mínima no Período e Média no Período. Indica como será formado o fixing para o vencimento do COE. • Máximo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a maior cotação do intervalo como fixing do evento. • Mínimo no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a menor cotação do intervalo como fixing do evento. • Média no período: O sistema irá verificar a cotação de todas as datas do intervalo da “Data fixing” (inclusive) até a “Data Fixing 2” (inclusive) e utilizará a média de todas as cotações do intervalo como fixing do evento."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de fixing para vencimento 10",
+          "required": false,
+          "options": [
+            {
+              "code": "MAXIMA_NO_PERIODO",
+              "label": {
+                "pt": "Máxima no Período"
+              }
+            },
+            {
+              "code": "MINIMA_NO_PERIODO",
+              "label": {
+                "pt": "Mínima no Período"
+              }
+            },
+            {
+              "code": "MEDIA_NO_PERIODO",
+              "label": {
+                "pt": "Média no Período"
+              }
+            }
+          ],
+          "order": 1000,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "barrier1",
+          "label": {
+            "pt": "Barreira 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 1(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "rebate1",
+          "label": {
+            "pt": "Rebate 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 1(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial1",
+          "label": {
+            "pt": "Data inicial para verificação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 1",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal1",
+          "label": {
+            "pt": "Data final para verificação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 1",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "barrier2",
+          "label": {
+            "pt": "Barreira 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 2(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 210,
+          "inGrid": false
+        },
+        {
+          "key": "rebate2",
+          "label": {
+            "pt": "Rebate 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 2(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 220,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial2",
+          "label": {
+            "pt": "Data inicial para verificação 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 2",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 230,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal2",
+          "label": {
+            "pt": "Data final para verificação 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 2",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 240,
+          "inGrid": false
+        },
+        {
+          "key": "barrier3",
+          "label": {
+            "pt": "Barreira 3(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 3(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 300,
+          "inGrid": false
+        },
+        {
+          "key": "rebate3",
+          "label": {
+            "pt": "Rebate 3(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 3(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 310,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial3",
+          "label": {
+            "pt": "Data inicial para verificação 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 3",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 320,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal3",
+          "label": {
+            "pt": "Data final para verificação 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 3",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 330,
+          "inGrid": false
+        },
+        {
+          "key": "barrier4",
+          "label": {
+            "pt": "Barreira 4(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 4(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 390,
+          "inGrid": false
+        },
+        {
+          "key": "rebate4",
+          "label": {
+            "pt": "Rebate 4(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 4(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 400,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial4",
+          "label": {
+            "pt": "Data inicial para verificação 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 4",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 410,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal4",
+          "label": {
+            "pt": "Data final para verificação 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 4",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 420,
+          "inGrid": false
+        },
+        {
+          "key": "barrier5",
+          "label": {
+            "pt": "Barreira 5(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 5(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 480,
+          "inGrid": false
+        },
+        {
+          "key": "rebate5",
+          "label": {
+            "pt": "Rebate 5(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 5(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 490,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial5",
+          "label": {
+            "pt": "Data inicial para verificação 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 5",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 500,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal5",
+          "label": {
+            "pt": "Data final para verificação 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 5",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 510,
+          "inGrid": false
+        },
+        {
+          "key": "barrier6",
+          "label": {
+            "pt": "Barreira 6(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 6(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 570,
+          "inGrid": false
+        },
+        {
+          "key": "rebate6",
+          "label": {
+            "pt": "Rebate 6(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 6(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 580,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial6",
+          "label": {
+            "pt": "Data inicial para verificação 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 6",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 590,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal6",
+          "label": {
+            "pt": "Data final para verificação 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 6",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 600,
+          "inGrid": false
+        },
+        {
+          "key": "barrier7",
+          "label": {
+            "pt": "Barreira 7(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 7(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 660,
+          "inGrid": false
+        },
+        {
+          "key": "rebate7",
+          "label": {
+            "pt": "Rebate 7(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 7(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 670,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial7",
+          "label": {
+            "pt": "Data inicial para verificação 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 7",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 680,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal7",
+          "label": {
+            "pt": "Data final para verificação 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 7",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 690,
+          "inGrid": false
+        },
+        {
+          "key": "barrier8",
+          "label": {
+            "pt": "Barreira 8(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 8(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 750,
+          "inGrid": false
+        },
+        {
+          "key": "rebate8",
+          "label": {
+            "pt": "Rebate 8(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 8(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 760,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial8",
+          "label": {
+            "pt": "Data inicial para verificação 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 8",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 770,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal8",
+          "label": {
+            "pt": "Data final para verificação 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 8",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 780,
+          "inGrid": false
+        },
+        {
+          "key": "barrier9",
+          "label": {
+            "pt": "Barreira 9(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 9(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 840,
+          "inGrid": false
+        },
+        {
+          "key": "rebate9",
+          "label": {
+            "pt": "Rebate 9(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 9(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 850,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial9",
+          "label": {
+            "pt": "Data inicial para verificação 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 9",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 860,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal9",
+          "label": {
+            "pt": "Data final para verificação 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 9",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 870,
+          "inGrid": false
+        },
+        {
+          "key": "barrier10",
+          "label": {
+            "pt": "Barreira 10(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo. Preencher quando selecionado Call KI, Call KO, Put KI, Put KO, Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira 10(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 930,
+          "inGrid": false
+        },
+        {
+          "key": "rebate10",
+          "label": {
+            "pt": "Rebate 10(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Preencher quando selecionado Call Digital ou Put Digital no campo “Opção”."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate 10(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 940,
+          "inGrid": false
+        },
+        {
+          "key": "verificationinicial10",
+          "label": {
+            "pt": "Data inicial para verificação 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. A partir de D+1 da “Data de Emissão” (ou “Emissão a Termo”) e menor que “Data Final para Verificação”. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para verificação 10",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 950,
+          "inGrid": false
+        },
+        {
+          "key": "verificationfinal10",
+          "label": {
+            "pt": "Data final para verificação 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Americana”. Essa data deve ser posterior a indicada no campo “Data Inicial para Verificação”, sendo que o prazo mínimo de dias entre as datas deve ser de 1 dia útil. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data final para verificação 10",
+          "required": false,
+          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "options": [],
+          "order": 960,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001088.barrier1-positive",
+      "targets": [
+        "barriers.barrier1"
+      ],
+      "assert": "barriers.barrier1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 1(%)” deve ser maior que zero.",
+        "en": "“Barreira 1(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal1-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal1"
+      ],
+      "assert": "barriers.verificationfinal1 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 1” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 1” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd1-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd1"
+      ],
+      "assert": "payoff.fixingWindowEnd1 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 1” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 1” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier2-positive",
+      "targets": [
+        "barriers.barrier2"
+      ],
+      "assert": "barriers.barrier2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 2(%)” deve ser maior que zero.",
+        "en": "“Barreira 2(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal2-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal2"
+      ],
+      "assert": "barriers.verificationfinal2 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 2” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 2” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd2-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd2"
+      ],
+      "assert": "payoff.fixingWindowEnd2 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 2” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 2” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier3-positive",
+      "targets": [
+        "barriers.barrier3"
+      ],
+      "assert": "barriers.barrier3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 3(%)” deve ser maior que zero.",
+        "en": "“Barreira 3(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal3-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal3"
+      ],
+      "assert": "barriers.verificationfinal3 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 3” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 3” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd3-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd3"
+      ],
+      "assert": "payoff.fixingWindowEnd3 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 3” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 3” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier4-positive",
+      "targets": [
+        "barriers.barrier4"
+      ],
+      "assert": "barriers.barrier4 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 4(%)” deve ser maior que zero.",
+        "en": "“Barreira 4(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal4-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal4"
+      ],
+      "assert": "barriers.verificationfinal4 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 4” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 4” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd4-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd4"
+      ],
+      "assert": "payoff.fixingWindowEnd4 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 4” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 4” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier5-positive",
+      "targets": [
+        "barriers.barrier5"
+      ],
+      "assert": "barriers.barrier5 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 5(%)” deve ser maior que zero.",
+        "en": "“Barreira 5(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal5-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal5"
+      ],
+      "assert": "barriers.verificationfinal5 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 5” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 5” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd5-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd5"
+      ],
+      "assert": "payoff.fixingWindowEnd5 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 5” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 5” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier6-positive",
+      "targets": [
+        "barriers.barrier6"
+      ],
+      "assert": "barriers.barrier6 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 6(%)” deve ser maior que zero.",
+        "en": "“Barreira 6(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal6-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal6"
+      ],
+      "assert": "barriers.verificationfinal6 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 6” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 6” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd6-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd6"
+      ],
+      "assert": "payoff.fixingWindowEnd6 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 6” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 6” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier7-positive",
+      "targets": [
+        "barriers.barrier7"
+      ],
+      "assert": "barriers.barrier7 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 7(%)” deve ser maior que zero.",
+        "en": "“Barreira 7(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal7-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal7"
+      ],
+      "assert": "barriers.verificationfinal7 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 7” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 7” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd7-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd7"
+      ],
+      "assert": "payoff.fixingWindowEnd7 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 7” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 7” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier8-positive",
+      "targets": [
+        "barriers.barrier8"
+      ],
+      "assert": "barriers.barrier8 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 8(%)” deve ser maior que zero.",
+        "en": "“Barreira 8(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal8-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal8"
+      ],
+      "assert": "barriers.verificationfinal8 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 8” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 8” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd8-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd8"
+      ],
+      "assert": "payoff.fixingWindowEnd8 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 8” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 8” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier9-positive",
+      "targets": [
+        "barriers.barrier9"
+      ],
+      "assert": "barriers.barrier9 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 9(%)” deve ser maior que zero.",
+        "en": "“Barreira 9(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal9-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal9"
+      ],
+      "assert": "barriers.verificationfinal9 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 9” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 9” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd9-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd9"
+      ],
+      "assert": "payoff.fixingWindowEnd9 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 9” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 9” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.barrier10-positive",
+      "targets": [
+        "barriers.barrier10"
+      ],
+      "assert": "barriers.barrier10 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira 10(%)” deve ser maior que zero.",
+        "en": "“Barreira 10(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.verificationfinal10-after-dataInicialParaVerificacao",
+      "targets": [
+        "barriers.verificationfinal10"
+      ],
+      "assert": "barriers.verificationfinal10 > barriers.verificationStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para verificação 10” deve ser posterior a “Data Inicial para Verificação”.",
+        "en": "“Data final para verificação 10” must fall after “Data Inicial para Verificação”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001088.fixingWindowEnd10-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.fixingWindowEnd10"
+      ],
+      "assert": "payoff.fixingWindowEnd10 > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data final para fixing 10” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data final para fixing 10” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

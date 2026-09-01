@@ -1,0 +1,294 @@
+{
+  "figureCode": "COE001053",
+  "figureName": "Retorno Condicional",
+  "description": {
+    "pt": "Resgate = máx(principal corrigido pelo remunerador × Base da Operação; principal × Capital Garantido), salvo resgate antecipado, que liquida pelas condições específicas registradas. Não há perna de opção: a figura não tem atributos de payoff próprios, o que é a razão de a B3 não publicar Dados Específicos para ela.",
+    "en": "Redemption is max(principal accrued at the remunerator × operation base; principal × guaranteed capital), unless redeemed early, which settles under the registered specific conditions. There is no option leg: the figure has no payoff attributes of its own, which is why B3 publishes no Dados Específicos for it."
+  },
+  "modalities": [
+    "VNP"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "sections": [
+    {
+      "key": "remuneration",
+      "fields": [
+        {
+          "key": "diAccrualOffset",
+          "order": 100,
+          "label": {
+            "pt": "Deslocamento do accrual do DI",
+            "en": "DI accrual offset"
+          },
+          "help": {
+            "pt": "Deslocamento no cálculo do accrual do DI em relação à data de fluxo do COE. Opcional nesta figura; quando preenchido, o accrual respeita o deslocamento informado (Caderno de Fórmulas — COE).",
+            "en": "Offset applied to the DI accrual relative to the COE's flow date. Optional on this figure; when set, the accrual honours it (Caderno de Fórmulas — COE)."
+          },
+          "dataType": "enum",
+          "b3Field": "Deslocamento do accrual do DI",
+          "visibleWhen": "maturityRemunerator == 'DI'",
+          "options": [
+            {
+              "code": "D_1",
+              "label": {
+                "pt": "D-1",
+                "en": "D-1"
+              }
+            },
+            {
+              "code": "D_2",
+              "label": {
+                "pt": "D-2",
+                "en": "D-2"
+              }
+            },
+            {
+              "code": "D_3",
+              "label": {
+                "pt": "D-3",
+                "en": "D-3"
+              }
+            },
+            {
+              "code": "D_4",
+              "label": {
+                "pt": "D-4",
+                "en": "D-4"
+              }
+            },
+            {
+              "code": "D_5",
+              "label": {
+                "pt": "D-5",
+                "en": "D-5"
+              }
+            },
+            {
+              "code": "D_6",
+              "label": {
+                "pt": "D-6",
+                "en": "D-6"
+              }
+            },
+            {
+              "code": "D_7",
+              "label": {
+                "pt": "D-7",
+                "en": "D-7"
+              }
+            },
+            {
+              "code": "D_8",
+              "label": {
+                "pt": "D-8",
+                "en": "D-8"
+              }
+            },
+            {
+              "code": "D_9",
+              "label": {
+                "pt": "D-9",
+                "en": "D-9"
+              }
+            },
+            {
+              "code": "D_10",
+              "label": {
+                "pt": "D-10",
+                "en": "D-10"
+              }
+            },
+            {
+              "code": "D_11",
+              "label": {
+                "pt": "D-11",
+                "en": "D-11"
+              }
+            },
+            {
+              "code": "D_12",
+              "label": {
+                "pt": "D-12",
+                "en": "D-12"
+              }
+            },
+            {
+              "code": "D_13",
+              "label": {
+                "pt": "D-13",
+                "en": "D-13"
+              }
+            },
+            {
+              "code": "D_14",
+              "label": {
+                "pt": "D-14",
+                "en": "D-14"
+              }
+            },
+            {
+              "code": "D_15",
+              "label": {
+                "pt": "D-15",
+                "en": "D-15"
+              }
+            },
+            {
+              "code": "D_16",
+              "label": {
+                "pt": "D-16",
+                "en": "D-16"
+              }
+            },
+            {
+              "code": "D_17",
+              "label": {
+                "pt": "D-17",
+                "en": "D-17"
+              }
+            },
+            {
+              "code": "D_18",
+              "label": {
+                "pt": "D-18",
+                "en": "D-18"
+              }
+            },
+            {
+              "code": "D_19",
+              "label": {
+                "pt": "D-19",
+                "en": "D-19"
+              }
+            },
+            {
+              "code": "D_20",
+              "label": {
+                "pt": "D-20",
+                "en": "D-20"
+              }
+            },
+            {
+              "code": "D_21",
+              "label": {
+                "pt": "D-21",
+                "en": "D-21"
+              }
+            },
+            {
+              "code": "D_22",
+              "label": {
+                "pt": "D-22",
+                "en": "D-22"
+              }
+            },
+            {
+              "code": "D_23",
+              "label": {
+                "pt": "D-23",
+                "en": "D-23"
+              }
+            },
+            {
+              "code": "D_24",
+              "label": {
+                "pt": "D-24",
+                "en": "D-24"
+              }
+            },
+            {
+              "code": "D_25",
+              "label": {
+                "pt": "D-25",
+                "en": "D-25"
+              }
+            },
+            {
+              "code": "D_26",
+              "label": {
+                "pt": "D-26",
+                "en": "D-26"
+              }
+            },
+            {
+              "code": "D_27",
+              "label": {
+                "pt": "D-27",
+                "en": "D-27"
+              }
+            },
+            {
+              "code": "D_28",
+              "label": {
+                "pt": "D-28",
+                "en": "D-28"
+              }
+            },
+            {
+              "code": "D_29",
+              "label": {
+                "pt": "D-29",
+                "en": "D-29"
+              }
+            },
+            {
+              "code": "D_30",
+              "label": {
+                "pt": "D-30",
+                "en": "D-30"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001053.remunerator-required",
+      "targets": [
+        "remuneration.maturityRemunerator"
+      ],
+      "assert": "maturityRemunerator != 'SEM_REMUNERACAO'",
+      "message": {
+        "pt": "O resgate desta figura é o principal acrescido de juros — sem remunerador não há retorno a apurar.",
+        "en": "This figure redeems principal plus interest — with no remunerator there is nothing to accrue."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001053.early-redemption-condition",
+      "targets": [
+        "terms.earlyRedemption"
+      ],
+      "assert": "earlyRedemption != 'SEM_LIQUIDEZ'",
+      "message": {
+        "pt": "O Caderno de Fórmulas descreve esta figura por dois cenários: com e sem resgate antecipado. Sem condição de liquidez, o segundo cenário nunca ocorre — confirme com a mesa.",
+        "en": "The formula book describes this figure through two scenarios, with and without early redemption. With no liquidity condition the second never arises — confirm with the desk."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

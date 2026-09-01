@@ -1,0 +1,293 @@
+{
+  "figureCode": "COE001066",
+  "figureName": "Retorno - Fundos",
+  "commercialName": "Retorno - Fundos",
+  "description": {
+    "pt": "Figura COE001066 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001066. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "intermediateFixing",
+          "label": {
+            "pt": "Fixing para pagamentos intermediários"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica como será formado o fixing para o pagamento dos fluxos intermediários Campo com as opções: D-1, D-2, D-3, D-4 e D-5. Dados Fixos da tela de Registro/Emissão do COE"
+          },
+          "dataType": "enum",
+          "b3Field": "Fixing para pagamentos intermediários",
+          "required": true,
+          "options": [
+            {
+              "code": "D_1",
+              "label": {
+                "pt": "D-1"
+              }
+            },
+            {
+              "code": "D_2",
+              "label": {
+                "pt": "D-2"
+              }
+            },
+            {
+              "code": "D_3",
+              "label": {
+                "pt": "D-3"
+              }
+            },
+            {
+              "code": "D_4",
+              "label": {
+                "pt": "D-4"
+              }
+            },
+            {
+              "code": "D_5",
+              "label": {
+                "pt": "D-5"
+              }
+            }
+          ],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "remuneradorNoVencimento",
+          "label": {
+            "pt": "Remunerador no vencimento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se “Remunerador no fluxo” for igual a “Figura 1066” Indica a remuneração adicional no vencimento do COE, se houver. Para consultar os domínios disponíveis, acessar o arquivo público AAAAMMDD_Dominios_DERIVATIVOS_COE Campo no formato numérico, (%) percentual de 4 inteiros e 4 decimais. Aceita valores positivos e superiores a zero."
+          },
+          "dataType": "string",
+          "b3Field": "Remunerador no vencimento",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "descricaoRemunerador",
+          "label": {
+            "pt": "Descrição Remunerador"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se o remunerador indicado for IPCA VCP ou USD VCP. Formato: texto com 300 posições."
+          },
+          "dataType": "string",
+          "b3Field": "Descrição Remunerador",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "remuneradorFlutuante",
+          "label": {
+            "pt": "Remunerador Flutuante (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se o Remunerador for DI. Campo de preenchimento obrigatório, quando houver, se o Remunerador for IPCA VCP ou USD VCP. Indica a porcentagem de remuneração para DI, ou IPCA VCP e USD VCP quando houver. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "spreadCupom",
+          "label": {
+            "pt": "Spread/Cupom (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se o Remunerador indicado for Pré ou No Período."
+          },
+          "dataType": "string",
+          "b3Field": "Spread/Cupom (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "base",
+          "label": {
+            "pt": "Base"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando informado o campo Spread/Cupom (%). Não preencher se remunerador indicado for “No Período”. Campo para informar a base do cupom do Remunerador. Campo com as opções: 252 exp, 360 exp e 360 lin."
+          },
+          "dataType": "enum",
+          "b3Field": "Base",
+          "required": true,
+          "options": [
+            {
+              "code": "V252_EXP",
+              "label": {
+                "pt": "252 exp"
+              }
+            },
+            {
+              "code": "V360_EXP",
+              "label": {
+                "pt": "360 exp"
+              }
+            },
+            {
+              "code": "V360_LIN",
+              "label": {
+                "pt": "360 lin"
+              }
+            }
+          ],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "cotacaoInicialRemunerador",
+          "label": {
+            "pt": "Cotação Inicial Remunerador"
+          },
+          "help": {
+            "pt": "Não pode ser preenchido se remunerador igual a DI, PRE e NO PERÍODO. Informar a cotação inicial do remunerador se este for IPCA VCP ou USD VCP. Formato: Numérico com 5 inteiros e 8 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Cotação Inicial Remunerador",
+          "decimals": 8,
+          "max": 99999,
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "condicaoEspecificaDeResgate",
+          "label": {
+            "pt": "Condição Específica de Resgate"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório Combo com as opções pré-definidas: Domínios* Descrição Detalhadas nas Indica que os eventos de documentações de emissão crédito e/ou demais eventos/cláusulas são definidos nas documentações de suporte da emissão. Verificação de níveis de Indica que os preço eventos/cláusulas de resgate antecipado no valor de mercado do COE, relacionados a verificação de preço do ativo subjacente, são definidos nas documentações de suporte da emissão. * Os domínios são criados sob demanda do Emissor."
+          },
+          "dataType": "string",
+          "b3Field": "Condição Específica de Resgate",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "remuneradorNoFluxo",
+          "label": {
+            "pt": "Remunerador no Fluxo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o indexador para pagamento de juros exclusivamente nas datas de evento informadas. IMPORTANTE: Para essa figura deverá ser utilizado “Figura 1066”. Caso desejem utilizar outro remunerador, acionar o time de Produtos – Derivativos e COE."
+          },
+          "dataType": "string",
+          "b3Field": "Remunerador no Fluxo",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001066.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001066.remuneradorFlutuante-positive",
+      "targets": [
+        "payoff.remuneradorFlutuante"
+      ],
+      "assert": "payoff.remuneradorFlutuante > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador Flutuante (%)” deve ser maior que zero.",
+        "en": "“Remunerador Flutuante (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "figureCode": "COE001065",
+  "figureName": "Put com Participação",
+  "commercialName": "Put com Participação",
+  "description": {
+    "pt": "Figura COE001065 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001065. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0"
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "indexParticipation1",
+          "label": {
+            "pt": "Participação Indexador 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informa a Participação utilizada na 1ª data que será considerada no cálculo do resultado. Campo numérico com 10 inteiros e 8 decimais"
+          },
+          "dataType": "percent",
+          "b3Field": "Participação Indexador 1 (%)",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "assetQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação Ativo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada para os cálculos do resultado Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação Ativo",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 130,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "observations",
+      "label": {
+        "pt": "Observações",
+        "en": "Observations"
+      },
+      "kind": "tab",
+      "order": 45,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "observationDate1",
+          "label": {
+            "pt": "Data de Observação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informa a 1ª data que será considerada para utilização da Participação 1. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 1",
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate2",
+          "label": {
+            "pt": "Data de Observação 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 2ª data que será considerada para utilização da Participação 2. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 2",
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate3",
+          "label": {
+            "pt": "Data de Observação 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data que será considerada para utilização da Participação 3. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 3",
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate4",
+          "label": {
+            "pt": "Data de Observação 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 4ª data que será considerada para utilização da Participação 4. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 4",
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate5",
+          "label": {
+            "pt": "Data de Observação 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 5ª data que será considerada para utilização da Participação 5. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 5",
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate6",
+          "label": {
+            "pt": "Data de Observação 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 6ª data que será considerada para utilização da Participação 6. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 6",
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate7",
+          "label": {
+            "pt": "Data de Observação 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 7ª data que será considerada para utilização da Participação 7. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 7",
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate8",
+          "label": {
+            "pt": "Data de Observação 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 8ª data que será considerada para utilização da Participação 8. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 8",
+          "required": false,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate9",
+          "label": {
+            "pt": "Data de Observação 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 9ª data que será considerada para utilização da Participação 9. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 9",
+          "required": false,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate10",
+          "label": {
+            "pt": "Data de Observação 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 10ª data que será considerada para utilização da Participação 10. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 10",
+          "required": false,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001065.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1(%)” deve ser maior que zero.",
+        "en": "“Strike 1(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

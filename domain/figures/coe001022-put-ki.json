@@ -1,0 +1,289 @@
+{
+  "figureCode": "COE001022",
+  "figureName": "Put KI",
+  "commercialName": "Reverse convertible / Autocall Phoenix",
+  "description": {
+    "pt": "Cupom fixo financiado pela venda de uma put down-and-in: acima da barreira o investidor recebe 100% + C; abaixo, assume a performance do ativo. Com o bloco de autocall e memória de cupom, é a base do Phoenix.",
+    "en": "A fixed coupon funded by selling a down-and-in put: above the barrier the investor receives 100% + C; below it they take the underlying's performance. With the autocall block and coupon memory it is the basis of a Phoenix."
+  },
+  "modalities": [
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement",
+    "common/barriers",
+    "common/autocall"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "fixedCoupon",
+          "order": 10,
+          "label": {
+            "pt": "Cupom fixo (%)",
+            "en": "Fixed coupon (%)"
+          },
+          "dataType": "percent",
+          "symbol": "C",
+          "b3Field": "Cupom",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6
+        },
+        {
+          "key": "putStrike",
+          "order": 20,
+          "label": {
+            "pt": "Strike da put (% de S₀)",
+            "en": "Put strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível a partir do qual a perna vendida de put passa a custar ao investidor.",
+            "en": "The level from which the short put leg starts costing the investor."
+          }
+        },
+        {
+          "key": "downsideParticipation",
+          "order": 30,
+          "label": {
+            "pt": "Participação na baixa (%)",
+            "en": "Downside participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100
+        }
+      ]
+    },
+    {
+      "key": "barriers",
+      "label": {
+        "pt": "Barreira de proteção",
+        "en": "Protection barrier"
+      },
+      "fields": [
+        {
+          "key": "barrierDirection",
+          "order": 20,
+          "label": {
+            "pt": "Direção da barreira",
+            "en": "Barrier direction"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "BAIXA",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "BAIXA",
+              "label": {
+                "pt": "Baixa (down)",
+                "en": "Down"
+              }
+            }
+          ]
+        },
+        {
+          "key": "barrierType",
+          "order": 30,
+          "label": {
+            "pt": "Tipo de barreira",
+            "en": "Barrier type"
+          },
+          "dataType": "enum",
+          "required": true,
+          "default": "KI",
+          "enabledWhen": "false",
+          "options": [
+            {
+              "code": "KI",
+              "label": {
+                "pt": "Knock-in",
+                "en": "Knock-in"
+              }
+            }
+          ]
+        },
+        {
+          "key": "verificationQuoteType",
+          "order": 80,
+          "label": {
+            "pt": "Tipo de cotação da verificação",
+            "en": "Verification quote type"
+          },
+          "dataType": "enum",
+          "b3Domain": "TIPO DE COTACAO PARA VERIFICACAO DA BARREIRA DE KI",
+          "default": "FECHAMENTO",
+          "visibleWhen": "verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "verificationPeriod == 'AMERICANA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "299",
+              "label": {
+                "pt": "Fechamento",
+                "en": "Close"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "300",
+              "label": {
+                "pt": "Mínimo",
+                "en": "Low"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "301",
+              "label": {
+                "pt": "Máximo",
+                "en": "High"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "302",
+              "label": {
+                "pt": "Média",
+                "en": "Average"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "303",
+              "label": {
+                "pt": "Ajuste",
+                "en": "Settlement price"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "reverseconvertible.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNR.",
+        "en": "This figure is registered under the VNR modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNR']"
+    },
+    {
+      "id": "reverseconvertible.barrier-below-strike",
+      "targets": [
+        "barriers.barrierLevel"
+      ],
+      "message": {
+        "pt": "A barreira de knock-in deve ficar abaixo do strike da put.",
+        "en": "The knock-in barrier must sit below the put strike."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "barrierLevel < putStrike"
+    },
+    {
+      "id": "reverseconvertible.coupon-positive",
+      "targets": [
+        "payoff.fixedCoupon"
+      ],
+      "message": {
+        "pt": "O cupom fixo deve ser maior que zero — é ele que remunera a venda da put.",
+        "en": "The fixed coupon must be greater than zero — it is what pays for selling the put."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "fixedCoupon > 0"
+    },
+    {
+      "id": "reverseconvertible.deep-barrier",
+      "targets": [
+        "barriers.barrierLevel"
+      ],
+      "message": {
+        "pt": "Barreira acima de 85% de S₀ com cupom abaixo de 8%: relação risco/retorno pouco usual.",
+        "en": "A barrier above 85% of S₀ with a coupon below 8% is an unusual risk/return trade."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "when": "barrierLevel > 85",
+      "assert": "fixedCoupon >= 8"
+    },
+    {
+      "id": "reverseconvertible.issuer-position",
+      "targets": [
+        "terms.issuerPosition"
+      ],
+      "message": {
+        "pt": "O emissor está comprado na put embutida: numa reverse convertible a posição registrada é vendida.",
+        "en": "The issuer is long the embedded put: on a reverse convertible the registered position is short."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "terms.issuerPosition == 'VENDIDO'"
+    },
+    {
+      "id": "phoenix.memory-needs-observations",
+      "targets": [
+        "autocall.couponMemory"
+      ],
+      "message": {
+        "pt": "Memória de cupom exige o cronograma de observações do Phoenix.",
+        "en": "Coupon memory needs the Phoenix observation schedule."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both",
+      "when": "autocall.couponMemory == true",
+      "assert": "count(observations) > 1"
+    }
+  ]
+}

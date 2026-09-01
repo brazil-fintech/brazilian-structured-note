@@ -1,0 +1,315 @@
+{
+  "figureCode": "COE001048",
+  "figureName": "Digital Put KO Americano",
+  "commercialName": "Digital Put KO Americano",
+  "description": {
+    "pt": "Figura COE001048 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001048. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. O Strike indicado deverá ser maior que zero."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 1 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalRemunerator",
+          "label": {
+            "pt": "Remuneração Adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o tipo de remunerador que será utilizado. Campo com as opções: Pré, DI, PRE252-LIN e NO PERIODO."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração Adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE252_LIN",
+              "label": {
+                "pt": "PRE252-LIN"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "label": {
+                "pt": "NO PERIODO"
+              }
+            }
+          ],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "additionalFloatingPercentage",
+          "label": {
+            "pt": "Remunerador Flutuante Adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “DI”. Para o indicador “Pré”, “PRE252-LIN” e “NO PERÍODO”, este campo não deverá ser preenchido. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante Adicional (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "additionalCouponRate",
+          "label": {
+            "pt": "Cupom Remunerador Adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Pré”, “PRE252-LIN” e “NO PERÍODO”. Formato: Numérico com 9 inteiros e 4 decimais, incluindo o sinal “-“ e “+”. A não indicação do sinal deve ser considerada como “+"
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Remunerador Adicional (%)",
+          "decimals": 4,
+          "max": 999999999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'PRE'",
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "barrier",
+          "label": {
+            "pt": "Barreira (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0. Deverá ser preenchido com valor diferente de zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "verificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Verificação"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Não preencher se a “Classe do Ativo Subjacente” for igual a “CESTA”. Tipo de cotação do ativo subjacente em todas as datas entre a “Data Inicial para verificação” e a “Data Final para verificação”. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação",
+          "required": true,
+          "visibleWhen": "underlying.assetClass != 'CESTA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "koRebate",
+          "label": {
+            "pt": "Rebate KO(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando a cotação do ativo atingir a barreira de knock out durante o período verificação."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KO(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "credit",
+      "label": {
+        "pt": "Evento de crédito",
+        "en": "Credit event"
+      },
+      "kind": "tab",
+      "order": 55,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "paymentPeriod",
+          "label": {
+            "pt": "Período de Pagamento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: Ato e Vencimento. Se indicado “Ato” e houver disparo da barreira, o pagamento do COE será antecipado na data do disparo. Se indicado \"Vencimento\" e houver disparo da barreira, o pagamento do rebate será efetuado apenas no vencimento."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de Pagamento",
+          "required": true,
+          "options": [
+            {
+              "code": "ATO",
+              "label": {
+                "pt": "Ato"
+              }
+            },
+            {
+              "code": "VENCIMENTO",
+              "label": {
+                "pt": "Vencimento"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001048.additionalFloatingPercentage-positive",
+      "targets": [
+        "remuneration.additionalFloatingPercentage"
+      ],
+      "assert": "remuneration.additionalFloatingPercentage > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador Flutuante Adicional (%)” deve ser maior que zero.",
+        "en": "“Remunerador Flutuante Adicional (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001048.barrier-positive",
+      "targets": [
+        "barriers.barrier"
+      ],
+      "assert": "barriers.barrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira (%)” deve ser maior que zero.",
+        "en": "“Barreira (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

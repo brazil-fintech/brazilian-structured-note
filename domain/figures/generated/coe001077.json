@@ -1,0 +1,785 @@
+{
+  "figureCode": "COE001077",
+  "figureName": "Cesta Call KO + Call",
+  "commercialName": "Cesta Call KO + Call",
+  "description": {
+    "pt": "Figura COE001077 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001077. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do ativo subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Número indicando a quantidade de opções que devem ser utilizadas na operação. Formato: Numérico com 8 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 8,
+          "min": 0,
+          "max": 99999999,
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 2(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "strike3",
+          "label": {
+            "pt": "Strike 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 3 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "strike4",
+          "label": {
+            "pt": "Strike 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 4 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "strike5",
+          "label": {
+            "pt": "Strike 5(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 5(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "strike11",
+          "label": {
+            "pt": "Strike 11(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial da Call Vanilla."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 11(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 290,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "upsideBarrier",
+          "label": {
+            "pt": "Barreira cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero. Indica o percentual a ser aplicado sobre o valor inicial do ativo."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira cenário de alta (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate",
+          "label": {
+            "pt": "Rebate no Cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira cenario de alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Tipo de cotação a ser considerada na verificação da barreira de knock out. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira cenario de alta",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier2",
+          "label": {
+            "pt": "Barreira cenário de alta 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Barreira de KO2. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 2 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira cenário de alta 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate2",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO2 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 2 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier3",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Barreira de KO3. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 3 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 3 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate3",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO3 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 3 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier4",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Barreira de KO4. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 4 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate4",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO4 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero"
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 4 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier5",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 5 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Barreira de KO5. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 5 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate5",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 5 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO5 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 5 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier6",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 6 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Barreira de KO6. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 6 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate6",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 6 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO6 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 6 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 200,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier7",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 7 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Barreira de KO7. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 7 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 210,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate7",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 7 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO7 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 7 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 220,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier8",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 8 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Barreira de KO8. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 8 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 230,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate8",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 8 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO8 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 8 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 240,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier9",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 9 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Barreira de KO9. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 9 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 250,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate9",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 9 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO9 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 9 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 260,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier10",
+          "label": {
+            "pt": "Barreira no Cenário de Alta 10 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Barreira de KO10. Indica o percentual sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que o Strike 4 (%) e maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira no Cenário de Alta 10 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 270,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate10",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 10 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de KO10 seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta 10 (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 280,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001077.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier-positive",
+      "targets": [
+        "barriers.upsideBarrier"
+      ],
+      "assert": "barriers.upsideBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira cenário de alta (%)” deve ser maior que zero.",
+        "en": "“Barreira cenário de alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.quantity1-positive",
+      "targets": [
+        "payoff.quantity1"
+      ],
+      "assert": "payoff.quantity1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 1” deve ser maior que zero.",
+        "en": "“Quantidade 1” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier2-positive",
+      "targets": [
+        "barriers.upsideBarrier2"
+      ],
+      "assert": "barriers.upsideBarrier2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira cenário de alta 2 (%)” deve ser maior que zero.",
+        "en": "“Barreira cenário de alta 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier3-positive",
+      "targets": [
+        "barriers.upsideBarrier3"
+      ],
+      "assert": "barriers.upsideBarrier3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 3 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 3 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier4-positive",
+      "targets": [
+        "barriers.upsideBarrier4"
+      ],
+      "assert": "barriers.upsideBarrier4 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 4 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 4 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier5-positive",
+      "targets": [
+        "barriers.upsideBarrier5"
+      ],
+      "assert": "barriers.upsideBarrier5 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 5 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 5 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier6-positive",
+      "targets": [
+        "barriers.upsideBarrier6"
+      ],
+      "assert": "barriers.upsideBarrier6 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 6 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 6 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier7-positive",
+      "targets": [
+        "barriers.upsideBarrier7"
+      ],
+      "assert": "barriers.upsideBarrier7 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 7 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 7 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier8-positive",
+      "targets": [
+        "barriers.upsideBarrier8"
+      ],
+      "assert": "barriers.upsideBarrier8 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 8 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 8 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier9-positive",
+      "targets": [
+        "barriers.upsideBarrier9"
+      ],
+      "assert": "barriers.upsideBarrier9 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 9 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 9 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001077.upsideBarrier10-positive",
+      "targets": [
+        "barriers.upsideBarrier10"
+      ],
+      "assert": "barriers.upsideBarrier10 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira no Cenário de Alta 10 (%)” deve ser maior que zero.",
+        "en": "“Barreira no Cenário de Alta 10 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

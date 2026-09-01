@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Coe.DomainGen</RootNamespace>
+    <AssemblyName>coe-domaingen</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Coe.Ingestion\Coe.Ingestion.csproj" />
+  </ItemGroup>
+</Project>

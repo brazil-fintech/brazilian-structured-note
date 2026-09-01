@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Coe.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Coe.Core\Coe.Core.csproj" />
+    <ProjectReference Include="..\..\src\Coe.Ingestion\Coe.Ingestion.csproj" />
+    <ProjectReference Include="..\..\src\Coe.Infrastructure\Coe.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\tools\Coe.DomainGen\Coe.DomainGen.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+</Project>

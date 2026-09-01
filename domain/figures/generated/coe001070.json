@@ -1,0 +1,293 @@
+{
+  "figureCode": "COE001070",
+  "figureName": "Call Digital KI",
+  "commercialName": "Call Digital KI",
+  "description": {
+    "pt": "Figura COE001070 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001070. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do ativo subjacente. Formato: Numérico percentual com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Valor inicial que serve para indicar a quantidade de Opções do COE, caso o Emissor não concorde com o cálculo do sistema. Formato: Numérico percentual com 10 inteiros e 4 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 1",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "downsideBarrier",
+          "label": {
+            "pt": "Barreira de Baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira de Baixa (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "downsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira cenário de baixa"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira cenário de baixa",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira cenário de alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira cenário de alta",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "credit",
+      "label": {
+        "pt": "Evento de crédito",
+        "en": "Credit event"
+      },
+      "kind": "tab",
+      "order": 55,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "paymentPeriod",
+          "label": {
+            "pt": "Período de pagamento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: Ato e Vencimento"
+          },
+          "dataType": "enum",
+          "b3Field": "Período de pagamento",
+          "required": true,
+          "options": [
+            {
+              "code": "ATO",
+              "label": {
+                "pt": "Ato"
+              }
+            },
+            {
+              "code": "VENCIMENTO",
+              "label": {
+                "pt": "Vencimento"
+              }
+            }
+          ],
+          "order": 50,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001070.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001070.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

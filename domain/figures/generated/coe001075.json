@@ -1,0 +1,338 @@
+{
+  "figureCode": "COE001075",
+  "figureName": "Dual Digital",
+  "commercialName": "Dual Digital",
+  "description": {
+    "pt": "Figura COE001075 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001075. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "initialValue1",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de participação e strikes referentes ao Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue2",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de participação e strikes referentes ao Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "participation1",
+          "label": {
+            "pt": "Participação 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do ativo subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 1(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "trigger1",
+          "label": {
+            "pt": "Trigger 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica a forma de atingimento do verificador definido para o Ativo Subjacente. Campo com as opções: Acima e Abaixo."
+          },
+          "dataType": "enum",
+          "b3Field": "Trigger 1",
+          "required": true,
+          "options": [
+            {
+              "code": "ACIMA",
+              "label": {
+                "pt": "Acima"
+              }
+            },
+            {
+              "code": "ABAIXO",
+              "label": {
+                "pt": "Abaixo"
+              }
+            }
+          ],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "participation2",
+          "label": {
+            "pt": "Participação 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 2(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "trigger2",
+          "label": {
+            "pt": "Trigger 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica a forma de atingimento do verificador definido para o Ativo Subjacente. Campo com as opções: Acima e Abaixo."
+          },
+          "dataType": "enum",
+          "b3Field": "Trigger 2",
+          "required": true,
+          "options": [
+            {
+              "code": "ACIMA",
+              "label": {
+                "pt": "Acima"
+              }
+            },
+            {
+              "code": "ABAIXO",
+              "label": {
+                "pt": "Abaixo"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "indexVerificationType",
+          "label": {
+            "pt": "Tipo verificação dos indexadores"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o tipo de verificação dos ativos no vencimento, podendo ser dependentes ou independentes entre si. Campo com as opções: Dependente, Independente."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo verificação dos indexadores",
+          "required": true,
+          "options": [
+            {
+              "code": "DEPENDENTE",
+              "label": {
+                "pt": "Dependente"
+              }
+            },
+            {
+              "code": "INDEPENDENTE",
+              "label": {
+                "pt": "Independente"
+              }
+            }
+          ],
+          "order": 90,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "koRebate",
+          "label": {
+            "pt": "Rebate KO(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero. Indica o percentual a ser aplicado sobre o VFE quando a cotação do ativo atingir a barreira de knock out durante o período verificação."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KO(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001075.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001075.participation1-positive",
+      "targets": [
+        "payoff.participation1"
+      ],
+      "assert": "payoff.participation1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação 1(%)” deve ser maior que zero.",
+        "en": "“Participação 1(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001075.strike2-positive",
+      "targets": [
+        "payoff.strike2"
+      ],
+      "assert": "payoff.strike2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 2 (%)” deve ser maior que zero.",
+        "en": "“Strike 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001075.participation2-positive",
+      "targets": [
+        "payoff.participation2"
+      ],
+      "assert": "payoff.participation2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação 2(%)” deve ser maior que zero.",
+        "en": "“Participação 2(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

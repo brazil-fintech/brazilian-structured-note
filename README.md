@@ -1,11 +1,20 @@
 # Brazilian Structured Note — COE (Certificado de Operações Estruturadas)
 
-Documentation of how a **COE** — the *Certificado de Operações Estruturadas*, the Brazilian
-equivalent of an international **structured note** — is designed, assembled, registered and
-paid out. It covers the product's legal and clearing framework, every standard payoff
+How a **COE** — the *Certificado de Operações Estruturadas*, the Brazilian equivalent of an
+international **structured note** — is designed, assembled, registered and paid out, and a
+platform for booking one.
+
+The documentation covers the product's legal and clearing framework, every standard payoff
 structure traded in the Brazilian market with its formula, parameters, worked examples and
-payoff diagrams, and the calculation conventions (CDI accrual, business-day count,
-performance observation) used to settle it.
+payoff diagrams, and the calculation conventions (CDI accrual, business-day count, performance
+observation) used to settle it.
+
+The platform — a .NET 10 back end (ADO.NET over SQL Server) and a React front end — turns that
+into a booking screen: B3 payoff figures are described as **domain files**, a worker compiles
+each one into a versioned JSON template stored in MSSQL, and both the API and the dynamic form
+are generic readers of that template. Supporting a new figure is adding a file, not shipping a
+release. Structured logs, traces and metrics come out of the box. See
+[docs/platform.md](docs/platform.md).
 
 > **Disclaimer:** this repository is technical documentation, not investment advice or an
 > offer of securities. Always refer to the issuer's DIE (*Documento de Informações
@@ -89,13 +98,85 @@ docs/
   parameters.md               ← every parameter: registration fields + payoff parameters
   calculations.md             ← calculation conventions: CDI/pre/IPCA accrual, DU/252,
                                 performance observation, FX, valuation
+  platform.md                 ← the booking platform: architecture, validation, endpoints
   glossary.md                 ← PT-BR ↔ EN glossary
   references.md               ← all normative, clearing and bibliographic references
   payoffs/                    ← one document per payoff structure (formulas + examples)
   figures/                    ← payoff drawings (SVG) + generate_figures.py (reproducible)
   clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
                                 Fórmulas, Manual de Normas) — see its README
+
+reference/b3/                 ← B3's published exports: figures, domains, fields, underlyings,
+                                and the per-figure attribute annex of the Manual de Operações
+domain/                       ← the figure catalog the platform runs on — see its README
+  common/                     ← reusable blocks: identification, underlying, remuneration,
+                                barriers, autocall, settlement
+  figures/                    ← one file per B3 figure code, hand-written
+    generated/                ← the rest of the catalogue, written by tools/Coe.DomainGen
+src/
+  Coe.Core/                   ← template model, expression AST + evaluator, validation engine
+  Coe.Ingestion/              ← domain-file reader and template compiler
+  Coe.Infrastructure/         ← ADO.NET data layer, template cache, booking, server-side checks
+  Coe.Observability/          ← Serilog + OpenTelemetry wiring shared by both hosts
+  Coe.Api/                    ← minimal API: templates, assets, validation
+  Coe.Worker/                 ← ingestion worker (file watch + interval)
+web/                          ← React + TypeScript: asset list, figure picker, dynamic form
+tools/b3-annex/               ← extracts the figure-attribute annex out of B3's manual (PDF → CSV)
+tools/Coe.DomainGen/          ← turns that annex into a domain file per catalogue figure
+tests/Coe.Tests/              ← expression, compiler, validation and database suites
+tests/Coe.Benchmarks/         ← BenchmarkDotNet harness for the validation path
+db/                           ← re-runnable schema and reference-data scripts
+deploy/                       ← OpenTelemetry collector config for local work
 ```
+
+## The platform
+
+**Asset list.** Filtered by a reference date: an asset is listed when it is live on that date,
+i.e. `issueDate ≤ referenceDate ≤ maturityDate`. From there, create a new asset or edit one.
+
+**Booking.** Pick a figure, then fill in a form built entirely from that figure's template — the
+common registration attributes pinned at the top, and the payoff, basket, cash-flow and barrier
+blocks as tabs, each appearing only when the figure and the values so far call for it.
+
+**Validation as you type.** The template carries every rule, including the cross-field ones, in
+a form both sides evaluate: the browser answers instantly, and a debounced call to
+`POST /api/assets/validate` answers the checks that need reference data — business-day
+calendars, code uniqueness. Findings land next to the attribute they are about. Errors block
+the save; warnings do not, and the ones a user accepts are stored on the asset for audit.
+
+**The API is the authority.** Whatever the browser checked, every save re-runs the full
+validation server-side, re-derives computed attributes from their inputs, and only then writes.
+
+**The whole catalogue is bookable — all 88 figures.** B3 describes the attributes of 84 of them
+in the field annex of the *Manual de Operações*; that annex is extracted to
+[reference/b3/campos-figuras.csv](reference/b3/README.md) and compiled into a domain file per
+figure, with the type, precision, domain and conditions taken from B3's own instructions. The
+remaining four are the *Retorno Condicional* family, which has no attributes of its own — the
+redemption is principal plus interest — so they are booked from the common registration blocks
+alone. Fourteen figures are hand-written, carrying the formula symbols and the economic warnings
+a desk would otherwise catch by eye; a curated file always wins over its generated twin.
+
+**Checked against B3's own data.** The figure catalogue, registration domains, strategy-field
+dictionary and underlying master are committed under [reference/b3/](reference/b3/README.md), and
+the compiler validates every domain file against them — a figure code B3 does not publish, or an
+option code it has retired, fails ingestion rather than a registration.
+
+**Built to be watched and to stay quick.** Serilog writes structured logs stamped with the trace
+and span they happened in; OpenTelemetry exports traces and metrics for validation, ingestion,
+saves and every SQL command. A field-scope validation costs ~9 µs and a full one ~17 µs, while
+parsing a template costs 336 µs — which is why template versions are cached for the life of the
+process and the browser fetches each one once behind an ETag. Numbers and the reasoning are in
+[docs/platform.md](docs/platform.md#performance).
+
+```bash
+docker compose up -d mssql                # SQL Server
+dotnet run --project src/Coe.Worker       # compile domain/ into templates, keep watching
+dotnet run --project src/Coe.Api          # http://localhost:5080
+cd web && npm install && npm run dev      # http://localhost:5173
+```
+
+Full architecture in [docs/platform.md](docs/platform.md); how to add or change a figure in
+[domain/README.md](domain/README.md).
 
 ## References
 

@@ -1,0 +1,378 @@
+{
+  "figureCode": "COE001040",
+  "figureName": "PutSpread + PutSpread",
+  "commercialName": "PutSpread + PutSpread",
+  "description": {
+    "pt": "Figura COE001040 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001040. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "assetClass1",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 1 (TAXAS DE CAMBIO, INDICES)."
+          },
+          "dataType": "string",
+          "b3Field": "Classe do Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "asset1",
+          "label": {
+            "pt": "Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 1, referente à Classe do Ativo Subjacente 1 (IBOVESPA, DOLAR DOS EUA)."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue1",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass2",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 2 (TAXAS DE CAMBIO, INDICES)."
+          },
+          "dataType": "string",
+          "b3Field": "Classe do Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "asset2",
+          "label": {
+            "pt": "Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 2, referente à Classe do Ativo Subjacente 2 (IBOVESPA, DOLAR DOS EUA)."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue2",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 1(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "downsideCap1",
+          "label": {
+            "pt": "Limitador cenário de baixa 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Limitador cenário de baixa 1 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Participação cenário de baixa (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 2(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "downsideCap2",
+          "label": {
+            "pt": "Limitador cenário de baixa 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Limitador cenário de baixa 2 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation2",
+          "label": {
+            "pt": "Participação cenário de baixa 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a desvalorização do Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Participação cenário de baixa 2 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "quoteType1",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada na liquidação da operação, referente ao Ativo Subjacente 1. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 1",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "quoteType2",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada na liquidação da operação, referente ao Ativo Subjacente 2. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 2",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 160,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": []
+}

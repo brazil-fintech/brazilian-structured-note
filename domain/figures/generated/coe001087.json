@@ -1,0 +1,341 @@
+{
+  "figureCode": "COE001087",
+  "figureName": "CallSpread + CallSpread",
+  "commercialName": "CallSpread + CallSpread",
+  "description": {
+    "pt": "Figura COE001087 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001087. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "asset1",
+          "label": {
+            "pt": "Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 1, referente à Classe do Ativo Subjacente 1 (IBOVESPA, DOLAR DOS EUA)."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue1",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue2",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 2."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "asset2",
+          "label": {
+            "pt": "Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2 Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 2. Campo de preenchimento obrigatório."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 1(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2.Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2"
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "upsideCap",
+          "label": {
+            "pt": "Limitador cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: Data Única, Janela de Datas e Mais Datas. Indica como será formado o fixing no vencimento. Caso o ativo subjacente seja uma Cesta,não é permitido selecionar a opção “Janela de Datas” Se indicado Janela de Datas ou Mais Datas, será obrigatório o preenchimento do campo “Tipo de Fixing para Vencimento”. Caso seja indicado “Mais Datas” as datas serão indicadas na seção “Mais Datas”.Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2."
+          },
+          "dataType": "enum",
+          "b3Field": "Limitador cenário de alta (%)",
+          "required": true,
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "label": {
+                "pt": "Data Única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "label": {
+                "pt": "Janela de Datas"
+              }
+            },
+            {
+              "code": "MAIS_DATAS",
+              "label": {
+                "pt": "Mais Datas"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "participacaoCenarioDeAltaStrike2",
+          "label": {
+            "pt": "Participação cenário de alta (%)Strike 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA.Campo de preenchimento obrigatório. Campo com as opções: Data Única, Janela de Datas e Mais Datas. Indica como será formado o fixing no vencimento. Caso o ativo subjacente seja uma Cesta,não é permitido selecionar a opção “Janela de Datas” Se indicado Janela de Datas ou Mais Datas, será obrigatório o preenchimento do campo “Tipo de Fixing para Vencimento”. Caso seja indicado “Mais Datas” as datas serão indicadas na seção “Mais Datas”..Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 2."
+          },
+          "dataType": "date",
+          "b3Field": "Participação cenário de alta (%)Strike 2(%)",
+          "required": false,
+          "requiredWhen": "payoff.upsideCap == 'DATA_UNICA'",
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "label": {
+                "pt": "Data Única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "label": {
+                "pt": "Janela de Datas"
+              }
+            },
+            {
+              "code": "MAIS_DATAS",
+              "label": {
+                "pt": "Mais Datas"
+              }
+            }
+          ],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "periodoDeCapturaDoAtivoSubjacenteParaLiquidacaoquantidade2",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidaçãoQuantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”.Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA.Campo de preenchimento obrigatório. Campo com as opções: Data Única, Janela de Datas e Mais Datas. Indica como será formado o fixing no vencimento. Caso o ativo subjacente seja uma Cesta,não é permitido selecionar a opção “Janela de Datas” Se indicado Janela de Datas ou Mais Datas, será obrigatório o preenchimento do campo “Tipo de Fixing para Vencimento”. Caso seja indicado “Mais Datas” as datas serão indicadas na seção “Mais Datas”..Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2"
+          },
+          "dataType": "date",
+          "b3Field": "Período de captura do ativo subjacente para liquidaçãoQuantidade 2",
+          "required": false,
+          "requiredWhen": "payoff.upsideCap == 'JANELA_DE_DATAS'",
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "label": {
+                "pt": "Data Única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "label": {
+                "pt": "Janela de Datas"
+              }
+            },
+            {
+              "code": "MAIS_DATAS",
+              "label": {
+                "pt": "Mais Datas"
+              }
+            }
+          ],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "dataParaFixinglimitadorCenarioDeAlta",
+          "label": {
+            "pt": "Data para fixingLimitador cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil.Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”.Campo de preenchimento obrigatório, se indicado \"Data única\". Formato: DD/MM/AAAA.Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixingLimitador cenário de alta (%)",
+          "required": false,
+          "requiredWhen": "payoff.upsideCap == 'JANELA_DE_DATAS'",
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "dataInicialParaFixingparticipacaoCenarioDeAlta",
+          "label": {
+            "pt": "Data inicial para fixingParticipação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. Esta data deve ser posterior à indicada no campo “Data Inicial para Fixing”, sendo que o prazo máximo de dias entre a “Data Final para Fixing” e o vencimento é de 5 dias úteis e o prazo mínimo entre estas datas é 1 dia útil.Campo de preenchimento obrigatório, se indicado \"Janela de datas\". Formato: DD/MM/AAAA. É possível escolher uma data maior ou igual à “Data de Emissão” (ou “Emissão a Termo”), e menor que “Data Final para Fixing”.Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2"
+          },
+          "dataType": "date",
+          "b3Field": "Data inicial para fixingParticipação cenário de alta (%)",
+          "required": false,
+          "requiredWhen": "payoff.upsideCap == 'JANELA_DE_DATAS'",
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001087.dataParaFixinglimitadorCenarioDeAlta-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.dataParaFixinglimitadorCenarioDeAlta"
+      ],
+      "assert": "payoff.dataParaFixinglimitadorCenarioDeAlta > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data para fixingLimitador cenário de alta (%)” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data para fixingLimitador cenário de alta (%)” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001087.dataInicialParaFixingparticipacaoCenarioDeAlta-after-dataInicialParaFixing",
+      "targets": [
+        "payoff.dataInicialParaFixingparticipacaoCenarioDeAlta"
+      ],
+      "assert": "payoff.dataInicialParaFixingparticipacaoCenarioDeAlta > underlying.fixingWindowStart",
+      "args": {},
+      "message": {
+        "pt": "“Data inicial para fixingParticipação cenário de alta (%)” deve ser posterior a “Data Inicial para Fixing”.",
+        "en": "“Data inicial para fixingParticipação cenário de alta (%)” must fall after “Data Inicial para Fixing”."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

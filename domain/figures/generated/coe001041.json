@@ -1,0 +1,520 @@
+{
+  "figureCode": "COE001041",
+  "figureName": "Wedding Cake",
+  "commercialName": "Wedding Cake",
+  "description": {
+    "pt": "Figura COE001041 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001041. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "layerCount",
+          "label": {
+            "pt": "Quantidade de Camadas"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica a quantidade de camadas no contrato. Campo com as opções: 2 ou 3"
+          },
+          "dataType": "enum",
+          "b3Field": "Quantidade de Camadas",
+          "required": true,
+          "options": [
+            {
+              "code": "V2_OU_3",
+              "label": {
+                "pt": "2 ou 3"
+              }
+            }
+          ],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, deve ser maior que strike 1 e maior que zero. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "strike3",
+          "label": {
+            "pt": "Strike 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se indicado “3” no campo “Quantidade de Camadas”; se indicado “2”, este campo não deverá ser preenchido. Formato: Numérico percentual com 4 inteiros e 8 decimais, deve ser maior que strike 2 e maior que zero. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 3 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "strike4",
+          "label": {
+            "pt": "Strike 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se indicado “3” no campo “Quantidade de Camadas”; se indicado “2”, este campo não deverá ser preenchido. Formato: Numérico percentual com 4 inteiros e 8 decimais, deve ser maior que strike 3 e maior que zero. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 4 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "strike5",
+          "label": {
+            "pt": "Strike 5 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, deve ser maior que strike 4 e maior que zero. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 5 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "strike6",
+          "label": {
+            "pt": "Strike 6 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, deve ser maior que strike 5 e maior que zero. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 6 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalRemunerator",
+          "label": {
+            "pt": "Remuneração adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o tipo de remunerador que será utilizado nas camadas. Campo com as opções: Pré, DI, PRE252-LIN e NO PERIODO."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE252_LIN",
+              "label": {
+                "pt": "PRE252-LIN"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "label": {
+                "pt": "NO PERIODO"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "layerFloatingPercentage1",
+          "label": {
+            "pt": "Remunerador flutuante Camada 1 (%)"
+          },
+          "help": {
+            "pt": "Indica o percentual do “Remunerador adicional” válido para a camada 1. Campo de preenchimento obrigatório, se indicado “DI” no campo “Remunerador adicional”. Para o indicador “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador flutuante Camada 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "layerCouponRate1",
+          "label": {
+            "pt": "Cupom Remunerador Camada 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o cupom a ser pago se a cotação estiver entre o Strike 1 e o Strike 2 ou entre o Strike 5 e o Strike 6. Formato: Numérico percentual com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Remunerador Camada 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "layerFloatingPercentage2",
+          "label": {
+            "pt": "Remunerador flutuante Camada 2 (%)"
+          },
+          "help": {
+            "pt": "Indica o percentual do “Remunerador adicional” válido para a camada 2. Campo de preenchimento obrigatório, se indicado “DI” no campo “Remunerador adicional”. Para o indicador “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador flutuante Camada 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "layerCouponRate2",
+          "label": {
+            "pt": "Cupom Remunerador Camada 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o cupom a ser pago se a cotação estiver entre o Strike 2 e o Strike 3 ou entre o Strike 4 e o Strike 5. Formato: Numérico percentual com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Remunerador Camada 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "layerFloatingPercentage3",
+          "label": {
+            "pt": "Remunerador flutuante Camada 3 (%)"
+          },
+          "help": {
+            "pt": "Indica o percentual do “Remunerador adicional” válido para a camada 3. Campo de preenchimento obrigatório se indicado “DI” no campo “Remunerador adicional” e “3” no campo “Quantidade de Camadas”. Para o indicador “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador flutuante Camada 3 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "layerCouponRate3",
+          "label": {
+            "pt": "Cupom Remunerador Camada 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se indicado “3” no campo “Quantidade de Camadas”; se indicado “2”, este campo não deverá ser preenchido. Indica o cupom a ser pago se a cotação estiver entre o Strike 3 e o Strike 4. Formato: Numérico percentual com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Remunerador Camada 3 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001041.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1(%)” deve ser maior que zero.",
+        "en": "“Strike 1(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.strike2-positive",
+      "targets": [
+        "payoff.strike2"
+      ],
+      "assert": "payoff.strike2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 2 (%)” deve ser maior que zero.",
+        "en": "“Strike 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.strike3-positive",
+      "targets": [
+        "payoff.strike3"
+      ],
+      "assert": "payoff.strike3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 3 (%)” deve ser maior que zero.",
+        "en": "“Strike 3 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.strike4-positive",
+      "targets": [
+        "payoff.strike4"
+      ],
+      "assert": "payoff.strike4 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 4 (%)” deve ser maior que zero.",
+        "en": "“Strike 4 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.strike5-positive",
+      "targets": [
+        "payoff.strike5"
+      ],
+      "assert": "payoff.strike5 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 5 (%)” deve ser maior que zero.",
+        "en": "“Strike 5 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.strike6-positive",
+      "targets": [
+        "payoff.strike6"
+      ],
+      "assert": "payoff.strike6 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 6 (%)” deve ser maior que zero.",
+        "en": "“Strike 6 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerFloatingPercentage1-positive",
+      "targets": [
+        "remuneration.layerFloatingPercentage1"
+      ],
+      "assert": "remuneration.layerFloatingPercentage1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador flutuante Camada 1 (%)” deve ser maior que zero.",
+        "en": "“Remunerador flutuante Camada 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerCouponRate1-positive",
+      "targets": [
+        "remuneration.layerCouponRate1"
+      ],
+      "assert": "remuneration.layerCouponRate1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Cupom Remunerador Camada 1 (%)” deve ser maior que zero.",
+        "en": "“Cupom Remunerador Camada 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerFloatingPercentage2-positive",
+      "targets": [
+        "remuneration.layerFloatingPercentage2"
+      ],
+      "assert": "remuneration.layerFloatingPercentage2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador flutuante Camada 2 (%)” deve ser maior que zero.",
+        "en": "“Remunerador flutuante Camada 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerCouponRate2-positive",
+      "targets": [
+        "remuneration.layerCouponRate2"
+      ],
+      "assert": "remuneration.layerCouponRate2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Cupom Remunerador Camada 2 (%)” deve ser maior que zero.",
+        "en": "“Cupom Remunerador Camada 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerFloatingPercentage3-positive",
+      "targets": [
+        "remuneration.layerFloatingPercentage3"
+      ],
+      "assert": "remuneration.layerFloatingPercentage3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador flutuante Camada 3 (%)” deve ser maior que zero.",
+        "en": "“Remunerador flutuante Camada 3 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001041.layerCouponRate3-positive",
+      "targets": [
+        "remuneration.layerCouponRate3"
+      ],
+      "assert": "remuneration.layerCouponRate3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Cupom Remunerador Camada 3 (%)” deve ser maior que zero.",
+        "en": "“Cupom Remunerador Camada 3 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

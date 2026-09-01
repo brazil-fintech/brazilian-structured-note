@@ -1,0 +1,195 @@
+{
+  "figureCode": "COE001064",
+  "figureName": "Call com Participação",
+  "commercialName": "Autocall Athena",
+  "description": {
+    "pt": "Call com participação acrescida de resgate antecipado automático: em cada data de observação o certificado resgata em 100% + i×C se o ativo fixar no trigger. A barreira de proteção só se aplica na modalidade VNR.",
+    "en": "Call with participation plus automatic early redemption: on each observation date the certificate redeems at 100% + i×C when the underlying fixes at the trigger. The protection barrier applies to the VNR modality only."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement",
+    "common/autocall"
+  ],
+  "sections": [
+    {
+      "key": "payoff",
+      "kind": "tab",
+      "order": 30,
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "fields": [
+        {
+          "key": "strike",
+          "order": 10,
+          "label": {
+            "pt": "Strike (% de S₀)",
+            "en": "Strike (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "K",
+          "b3Field": "Strike",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
+            "en": "The performance level from which the option leg starts paying; usually 100% of S₀."
+          }
+        },
+        {
+          "key": "participation",
+          "order": 20,
+          "label": {
+            "pt": "Participação (%)",
+            "en": "Participation (%)"
+          },
+          "dataType": "percent",
+          "symbol": "Part",
+          "b3Field": "Participação",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "default": 100,
+          "help": {
+            "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
+            "en": "Multiplier applied to the underlying performance passed on to the investor."
+          }
+        },
+        {
+          "key": "protectionBarrier",
+          "order": 30,
+          "label": {
+            "pt": "Barreira de proteção no vencimento (% de S₀)",
+            "en": "Maturity protection barrier (% of S₀)"
+          },
+          "dataType": "percent",
+          "symbol": "H",
+          "min": 0,
+          "max": 1000,
+          "decimals": 6,
+          "visibleWhen": "common.modality == 'VNR'",
+          "requiredWhen": "common.modality == 'VNR'",
+          "help": {
+            "pt": "Abaixo desta barreira, na data de vencimento, o investidor assume a queda do ativo.",
+            "en": "Below this barrier at maturity the investor takes the underlying's fall."
+          }
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "athena.modality",
+      "targets": [
+        "common.modality"
+      ],
+      "message": {
+        "pt": "Esta figura é registrada na(s) modalidade(s) VNP, VNR.",
+        "en": "This figure is registered under the VNP, VNR modality/modalities."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "modality in ['VNP', 'VNR']"
+    },
+    {
+      "id": "athena.autocall-expected",
+      "targets": [
+        "autocall.hasAutocall"
+      ],
+      "message": {
+        "pt": "Um Athena pressupõe resgate antecipado automático — marque Possui autocall.",
+        "en": "An Athena presupposes automatic early redemption — set the autocall flag."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "assert": "hasAutocall == true"
+    },
+    {
+      "id": "athena.barrier-below-strike",
+      "targets": [
+        "payoff.protectionBarrier"
+      ],
+      "message": {
+        "pt": "A barreira de proteção deve ficar abaixo do strike.",
+        "en": "The protection barrier must sit below the strike."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "when": "common.modality == 'VNR'",
+      "assert": "protectionBarrier < strike"
+    },
+    {
+      "id": "athena.vnp-has-no-barrier",
+      "targets": [
+        "payoff.protectionBarrier"
+      ],
+      "message": {
+        "pt": "Na modalidade de capital garantido a barreira de proteção não se aplica.",
+        "en": "Under the guaranteed-capital modality the protection barrier does not apply."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change",
+      "when": "common.modality == 'VNP'",
+      "assert": "isNull(protectionBarrier)"
+    },
+    {
+      "id": "athena.step-down-triggers",
+      "targets": [
+        "observations"
+      ],
+      "message": {
+        "pt": "Trigger step-down declarado, mas os níveis registrados não decrescem ao longo das observações.",
+        "en": "A step-down trigger is declared, but the registered levels do not decrease across observations."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "both",
+      "when": "autocall.triggerType == 'STEP_DOWN'",
+      "assert": "count(observations) < 2 or any(observations, @.triggerLevel < 100)"
+    },
+    {
+      "id": "athena.cash-flow-flag",
+      "targets": [
+        "remuneration.hasCashFlow"
+      ],
+      "message": {
+        "pt": "O cronograma de cupons do autocall é registrado como Fluxo de Caixa.",
+        "en": "The autocall's coupon schedule is registered as a cash flow."
+      },
+      "severity": "warning",
+      "execution": "both",
+      "trigger": "both",
+      "when": "autocall.hasAutocall == true and any(observations, @.observationCoupon > 0)",
+      "assert": "remuneration.hasCashFlow == true"
+    }
+  ]
+}
