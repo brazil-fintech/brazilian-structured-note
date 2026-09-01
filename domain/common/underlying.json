@@ -265,6 +265,22 @@
           ]
         },
         {
+          "key": "fixingDate",
+          "order": 55,
+          "label": {
+            "pt": "Data para fixing",
+            "en": "Fixing date"
+          },
+          "help": {
+            "pt": "Data única de captura da cotação para a liquidação. Não preencher quando a Classe do Ativo Subjacente for CESTA.",
+            "en": "The single date on which the settlement quotation is captured. Not filled when the underlying class is a basket."
+          },
+          "dataType": "date",
+          "b3Field": "Data para fixing",
+          "visibleWhen": "fixingWindow == 'DATA_UNICA' and assetClass != 'CESTA'",
+          "requiredWhen": "fixingWindow == 'DATA_UNICA' and assetClass != 'CESTA'"
+        },
+        {
           "key": "fixingWindowStart",
           "order": 60,
           "label": {

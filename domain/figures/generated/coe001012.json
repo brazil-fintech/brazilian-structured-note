@@ -1,0 +1,184 @@
+{
+  "figureCode": "COE001012",
+  "figureName": "Digital Put",
+  "commercialName": "Digital Put",
+  "description": {
+    "pt": "Figura COE001012 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001012. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalRemunerator",
+          "label": {
+            "pt": "Remuneração Adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o tipo de remunerador que será utilizado. Campo com as opções: Pré, DI, PRE252-LIN e NO PERIODO."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração Adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE252_LIN",
+              "label": {
+                "pt": "PRE252-LIN"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "label": {
+                "pt": "NO PERIODO"
+              }
+            }
+          ],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "additionalFloatingPercentage",
+          "label": {
+            "pt": "Remunerador Flutuante Adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “DI”. Para o indicador “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante Adicional (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "additionalCouponRate",
+          "label": {
+            "pt": "Cupom Remunerador Adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Pré”. Formato: Numérico com 5 inteiros e 4 decimais, incluindo o sinal “- “ e “+”. A não indicação do sinal deve ser considerada como “+”"
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Remunerador Adicional (%)",
+          "decimals": 4,
+          "max": 99999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'PRE'",
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001012.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001012.additionalFloatingPercentage-positive",
+      "targets": [
+        "remuneration.additionalFloatingPercentage"
+      ],
+      "assert": "remuneration.additionalFloatingPercentage > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador Flutuante Adicional (%)” deve ser maior que zero.",
+        "en": "“Remunerador Flutuante Adicional (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

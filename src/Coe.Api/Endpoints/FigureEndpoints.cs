@@ -28,6 +28,40 @@ public static class FigureEndpoints
         .WithName("ListFigures")
         .WithSummary("Figures available for booking; pass includeDisabled=true to see pending and quarantined ones too.");
 
+        // The picker asks for this one: every figure B3 publishes, not only the bookable ones.
+        //
+        // Listing only what compiles makes a figure that exists in B3's catalogue look like it does
+        // not exist at all — the user sees ten cards, the database holds eighty-eight, and nothing
+        // on the screen explains the difference. Here the gap is data: the unmodelled figures come
+        // back marked NotConfigured, and the coverage counts say how many of each there are.
+        group.MapGet("/catalogue", async (IFigureCatalog catalog, CancellationToken ct) =>
+        {
+            var figures = await catalog.ListCatalogueAsync(ct);
+
+            var entries = figures.Select(f => new FigureCatalogueEntry(
+                f.Code,
+                f.Name,
+                f.B3Name,
+                f.Figure?.CommercialName,
+                f.Figure?.DescriptionPt,
+                f.Figure?.ModalityList().ToList() ?? [],
+                f.Availability.ToString(),
+                f.Bookable,
+                f.Figure?.ActiveTemplateVersion,
+                f.CalculatedByB3,
+                f.InB3Catalogue,
+                f.LastError)).ToList();
+
+            var coverage = new FigureCoverage(
+                Published: figures.Count(f => f.InB3Catalogue),
+                Configured: figures.Count(f => f.Figure is not null),
+                Bookable: figures.Count(f => f.Bookable));
+
+            return Results.Ok(new FigureCatalogueResponse(entries, coverage));
+        })
+        .WithName("ListFigureCatalogue")
+        .WithSummary("B3's whole figure catalogue with each figure's availability here; unmodelled ones come back NotConfigured.");
+
         // The whole dynamic form comes from here: sections, fields, conditions and rules.
         //
         // A template version is immutable once published, so a request for an explicit version

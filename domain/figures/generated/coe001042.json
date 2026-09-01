@@ -1,0 +1,235 @@
+{
+  "figureCode": "COE001042",
+  "figureName": "Call KO 1 + Call KO 2",
+  "commercialName": "Call KO 1 + Call KO 2",
+  "description": {
+    "pt": "Figura COE001042 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001042. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Observação: Caso as barreiras de alta sejam iguais, os strikes deverão ser diferentes."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 1(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. A quantidade indicada deverá ser maior que zero."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation1",
+          "label": {
+            "pt": "Participação cenário de Alta 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Participação cenário de Alta 1 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Observação: Caso as barreiras de alta sejam iguais, os strikes deverão ser diferentes."
+          },
+          "dataType": "string",
+          "b3Field": "Strike 2(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. A quantidade indicada deverá ser maior que zero."
+          },
+          "dataType": "string",
+          "b3Field": "Quantidade 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation2",
+          "label": {
+            "pt": "Participação cenário de Alta 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente."
+          },
+          "dataType": "string",
+          "b3Field": "Participação cenário de Alta 2 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "upsideBarrier1",
+          "label": {
+            "pt": "Barreira no cenário de Alta 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual sobre o valor inicial do Ativo Subjacente. Observação: Caso os strikes sejam iguais, as barreiras de alta deverão ser diferentes."
+          },
+          "dataType": "string",
+          "b3Field": "Barreira no cenário de Alta 1 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate1",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 1(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de alta seja atingida. Informações referentes a Call KO2"
+          },
+          "dataType": "string",
+          "b3Field": "Rebate no Cenário de Alta 1(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier2",
+          "label": {
+            "pt": "Barreira no cenário de Alta 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual sobre o valor inicial do Ativo Subjacente. Observação: Caso os strikes sejam iguais, as barreiras de alta deverão ser diferentes."
+          },
+          "dataType": "string",
+          "b3Field": "Barreira no cenário de Alta 2 (%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate2",
+          "label": {
+            "pt": "Rebate no Cenário de Alta 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de alta seja atingida."
+          },
+          "dataType": "string",
+          "b3Field": "Rebate no Cenário de Alta 2(%)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para verificação de barreira cenário de alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Tipo de cotação a ser considerada na verificação das barreiras."
+          },
+          "dataType": "string",
+          "b3Field": "Tipo de Cotação para verificação de barreira cenário de alta",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": []
+}

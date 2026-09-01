@@ -1,0 +1,1565 @@
+{
+  "figureCode": "COE001082",
+  "figureName": "Retorno Amortização - Fundos",
+  "commercialName": "Retorno Amortização - Fundos",
+  "description": {
+    "pt": "Figura COE001082 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001082. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "dataDeVerificacaoAmortizacao1",
+          "label": {
+            "pt": "Data de verificação amortização 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a data que será verificado o pagamento da amortização 1. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 1",
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao2",
+          "label": {
+            "pt": "Data de verificação amortização 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 2. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 2",
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao3",
+          "label": {
+            "pt": "Data de verificação amortização 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 3. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 3",
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao4",
+          "label": {
+            "pt": "Data de verificação amortização 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 4. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 4",
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao5",
+          "label": {
+            "pt": "Data de verificação amortização 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 5. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 5",
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao6",
+          "label": {
+            "pt": "Data de verificação amortização 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 6. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 6",
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao7",
+          "label": {
+            "pt": "Data de verificação amortização 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 7. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 7",
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao8",
+          "label": {
+            "pt": "Data de verificação amortização 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 8. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 8",
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao9",
+          "label": {
+            "pt": "Data de verificação amortização 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 9. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 9",
+          "required": false,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao10",
+          "label": {
+            "pt": "Data de verificação amortização 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 10. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 10",
+          "required": false,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao11",
+          "label": {
+            "pt": "Data de verificação amortização 11"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 11. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 11",
+          "required": false,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao12",
+          "label": {
+            "pt": "Data de verificação amortização 12"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 12. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 12",
+          "required": false,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao13",
+          "label": {
+            "pt": "Data de verificação amortização 13"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 13. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 13",
+          "required": false,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao14",
+          "label": {
+            "pt": "Data de verificação amortização 14"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 14. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 14",
+          "required": false,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao15",
+          "label": {
+            "pt": "Data de verificação amortização 15"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 15. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 15",
+          "required": false,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao16",
+          "label": {
+            "pt": "Data de verificação amortização 16"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 16. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 16",
+          "required": false,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao17",
+          "label": {
+            "pt": "Data de verificação amortização 17"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 17. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 17",
+          "required": false,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao18",
+          "label": {
+            "pt": "Data de verificação amortização 18"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 18. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 18",
+          "required": false,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao19",
+          "label": {
+            "pt": "Data de verificação amortização 19"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 19. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 19",
+          "required": false,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao20",
+          "label": {
+            "pt": "Data de verificação amortização 20"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 20. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 20",
+          "required": false,
+          "options": [],
+          "order": 200,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao21",
+          "label": {
+            "pt": "Data de verificação amortização 21"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 21. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 21",
+          "required": false,
+          "options": [],
+          "order": 210,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao22",
+          "label": {
+            "pt": "Data de verificação amortização 22"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 22. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 22",
+          "required": false,
+          "options": [],
+          "order": 220,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao23",
+          "label": {
+            "pt": "Data de verificação amortização 23"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 23. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 23",
+          "required": false,
+          "options": [],
+          "order": 230,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao24",
+          "label": {
+            "pt": "Data de verificação amortização 24"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 24. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 24",
+          "required": false,
+          "options": [],
+          "order": 240,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao25",
+          "label": {
+            "pt": "Data de verificação amortização 25"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 25. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 25",
+          "required": false,
+          "options": [],
+          "order": 250,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao26",
+          "label": {
+            "pt": "Data de verificação amortização 26"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 26. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 26",
+          "required": false,
+          "options": [],
+          "order": 260,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao27",
+          "label": {
+            "pt": "Data de verificação amortização 27"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 27. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 27",
+          "required": false,
+          "options": [],
+          "order": 270,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao28",
+          "label": {
+            "pt": "Data de verificação amortização 28"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 28. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 28",
+          "required": false,
+          "options": [],
+          "order": 280,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao29",
+          "label": {
+            "pt": "Data de verificação amortização 29"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 29. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 29",
+          "required": false,
+          "options": [],
+          "order": 290,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao30",
+          "label": {
+            "pt": "Data de verificação amortização 30"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 30. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 30",
+          "required": false,
+          "options": [],
+          "order": 300,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao31",
+          "label": {
+            "pt": "Data de verificação amortização 31"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 31. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 31",
+          "required": false,
+          "options": [],
+          "order": 310,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao32",
+          "label": {
+            "pt": "Data de verificação amortização 32"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 32. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 32",
+          "required": false,
+          "options": [],
+          "order": 320,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao33",
+          "label": {
+            "pt": "Data de verificação amortização 33"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 33. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 33",
+          "required": false,
+          "options": [],
+          "order": 330,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao34",
+          "label": {
+            "pt": "Data de verificação amortização 34"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a data que será verificado o pagamento da amortização 34. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 34",
+          "required": true,
+          "options": [],
+          "order": 340,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao35",
+          "label": {
+            "pt": "Data de verificação amortização 35"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 35. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 35",
+          "required": false,
+          "options": [],
+          "order": 350,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao36",
+          "label": {
+            "pt": "Data de verificação amortização 36"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 36. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 36",
+          "required": false,
+          "options": [],
+          "order": 360,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao37",
+          "label": {
+            "pt": "Data de verificação amortização 37"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 37. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 37",
+          "required": false,
+          "options": [],
+          "order": 370,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao38",
+          "label": {
+            "pt": "Data de verificação amortização 38"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 38. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 38",
+          "required": false,
+          "options": [],
+          "order": 380,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao39",
+          "label": {
+            "pt": "Data de verificação amortização 39"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 39. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 39",
+          "required": false,
+          "options": [],
+          "order": 390,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao40",
+          "label": {
+            "pt": "Data de verificação amortização 40"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 40. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 40",
+          "required": false,
+          "options": [],
+          "order": 400,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao41",
+          "label": {
+            "pt": "Data de verificação amortização 41"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 41. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 41",
+          "required": false,
+          "options": [],
+          "order": 410,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao42",
+          "label": {
+            "pt": "Data de verificação amortização 42"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 42. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 42",
+          "required": false,
+          "options": [],
+          "order": 420,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao43",
+          "label": {
+            "pt": "Data de verificação amortização 43"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 43. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 43",
+          "required": false,
+          "options": [],
+          "order": 430,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao44",
+          "label": {
+            "pt": "Data de verificação amortização 44"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 44. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 44",
+          "required": false,
+          "options": [],
+          "order": 440,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao45",
+          "label": {
+            "pt": "Data de verificação amortização 45"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 45. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 45",
+          "required": false,
+          "options": [],
+          "order": 450,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao46",
+          "label": {
+            "pt": "Data de verificação amortização 46"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 46. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 46",
+          "required": false,
+          "options": [],
+          "order": 460,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao47",
+          "label": {
+            "pt": "Data de verificação amortização 47"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 47. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 47",
+          "required": false,
+          "options": [],
+          "order": 470,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao48",
+          "label": {
+            "pt": "Data de verificação amortização 48"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 48. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 48",
+          "required": false,
+          "options": [],
+          "order": 480,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao49",
+          "label": {
+            "pt": "Data de verificação amortização 49"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 49. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 49",
+          "required": false,
+          "options": [],
+          "order": 490,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao50",
+          "label": {
+            "pt": "Data de verificação amortização 50"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 50. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 50",
+          "required": false,
+          "options": [],
+          "order": 500,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao51",
+          "label": {
+            "pt": "Data de verificação amortização 51"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 51. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 51",
+          "required": false,
+          "options": [],
+          "order": 510,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao52",
+          "label": {
+            "pt": "Data de verificação amortização 52"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 52. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 52",
+          "required": false,
+          "options": [],
+          "order": 520,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao53",
+          "label": {
+            "pt": "Data de verificação amortização 53"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 53. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 53",
+          "required": false,
+          "options": [],
+          "order": 530,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao54",
+          "label": {
+            "pt": "Data de verificação amortização 54"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 54. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 54",
+          "required": false,
+          "options": [],
+          "order": 540,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao55",
+          "label": {
+            "pt": "Data de verificação amortização 55"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 55. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 55",
+          "required": false,
+          "options": [],
+          "order": 550,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao56",
+          "label": {
+            "pt": "Data de verificação amortização 56"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 56. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 56",
+          "required": false,
+          "options": [],
+          "order": 560,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao57",
+          "label": {
+            "pt": "Data de verificação amortização 57"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 57. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 57",
+          "required": false,
+          "options": [],
+          "order": 570,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao58",
+          "label": {
+            "pt": "Data de verificação amortização 58"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 58. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 58",
+          "required": false,
+          "options": [],
+          "order": 580,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao59",
+          "label": {
+            "pt": "Data de verificação amortização 59"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 59. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 59",
+          "required": false,
+          "options": [],
+          "order": 590,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao60",
+          "label": {
+            "pt": "Data de verificação amortização 60"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 60. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 60",
+          "required": false,
+          "options": [],
+          "order": 600,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao61",
+          "label": {
+            "pt": "Data de verificação amortização 61"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 61. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 61",
+          "required": false,
+          "options": [],
+          "order": 610,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao62",
+          "label": {
+            "pt": "Data de verificação amortização 62"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 62. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 62",
+          "required": false,
+          "options": [],
+          "order": 620,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao63",
+          "label": {
+            "pt": "Data de verificação amortização 63"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 63. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 63",
+          "required": false,
+          "options": [],
+          "order": 630,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao64",
+          "label": {
+            "pt": "Data de verificação amortização 64"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 64. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 64",
+          "required": false,
+          "options": [],
+          "order": 640,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao65",
+          "label": {
+            "pt": "Data de verificação amortização 65"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 65. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 65",
+          "required": false,
+          "options": [],
+          "order": 650,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao66",
+          "label": {
+            "pt": "Data de verificação amortização 66"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 66. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 66",
+          "required": false,
+          "options": [],
+          "order": 660,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao67",
+          "label": {
+            "pt": "Data de verificação amortização 67"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a data que será verificado o pagamento da amortização 67. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 67",
+          "required": true,
+          "options": [],
+          "order": 670,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao68",
+          "label": {
+            "pt": "Data de verificação amortização 68"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 68. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 68",
+          "required": false,
+          "options": [],
+          "order": 680,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao69",
+          "label": {
+            "pt": "Data de verificação amortização 69"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 69. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 69",
+          "required": false,
+          "options": [],
+          "order": 690,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao70",
+          "label": {
+            "pt": "Data de verificação amortização 70"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 70. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 70",
+          "required": false,
+          "options": [],
+          "order": 700,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao71",
+          "label": {
+            "pt": "Data de verificação amortização 71"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 71. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 71",
+          "required": false,
+          "options": [],
+          "order": 710,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao72",
+          "label": {
+            "pt": "Data de verificação amortização 72"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 72. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 72",
+          "required": false,
+          "options": [],
+          "order": 720,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao73",
+          "label": {
+            "pt": "Data de verificação amortização 73"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 73. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 73",
+          "required": false,
+          "options": [],
+          "order": 730,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao74",
+          "label": {
+            "pt": "Data de verificação amortização 74"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 74. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 74",
+          "required": false,
+          "options": [],
+          "order": 740,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao75",
+          "label": {
+            "pt": "Data de verificação amortização 75"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 75. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 75",
+          "required": false,
+          "options": [],
+          "order": 750,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao76",
+          "label": {
+            "pt": "Data de verificação amortização 76"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 76. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 76",
+          "required": false,
+          "options": [],
+          "order": 760,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao77",
+          "label": {
+            "pt": "Data de verificação amortização 77"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 77. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 77",
+          "required": false,
+          "options": [],
+          "order": 770,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao78",
+          "label": {
+            "pt": "Data de verificação amortização 78"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 78. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 78",
+          "required": false,
+          "options": [],
+          "order": 780,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao79",
+          "label": {
+            "pt": "Data de verificação amortização 79"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 79. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 79",
+          "required": false,
+          "options": [],
+          "order": 790,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao80",
+          "label": {
+            "pt": "Data de verificação amortização 80"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 80. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 80",
+          "required": false,
+          "options": [],
+          "order": 800,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao81",
+          "label": {
+            "pt": "Data de verificação amortização 81"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 81. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 81",
+          "required": false,
+          "options": [],
+          "order": 810,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao82",
+          "label": {
+            "pt": "Data de verificação amortização 82"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 82. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 82",
+          "required": false,
+          "options": [],
+          "order": 820,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao83",
+          "label": {
+            "pt": "Data de verificação amortização 83"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 83. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 83",
+          "required": false,
+          "options": [],
+          "order": 830,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao84",
+          "label": {
+            "pt": "Data de verificação amortização 84"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 84. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 84",
+          "required": false,
+          "options": [],
+          "order": 840,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao85",
+          "label": {
+            "pt": "Data de verificação amortização 85"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 85. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 85",
+          "required": false,
+          "options": [],
+          "order": 850,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao86",
+          "label": {
+            "pt": "Data de verificação amortização 86"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 86. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 86",
+          "required": false,
+          "options": [],
+          "order": 860,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao87",
+          "label": {
+            "pt": "Data de verificação amortização 87"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 87. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 87",
+          "required": false,
+          "options": [],
+          "order": 870,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao88",
+          "label": {
+            "pt": "Data de verificação amortização 88"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 88. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 88",
+          "required": false,
+          "options": [],
+          "order": 880,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao89",
+          "label": {
+            "pt": "Data de verificação amortização 89"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 89. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 89",
+          "required": false,
+          "options": [],
+          "order": 890,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao90",
+          "label": {
+            "pt": "Data de verificação amortização 90"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 90. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 90",
+          "required": false,
+          "options": [],
+          "order": 900,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao91",
+          "label": {
+            "pt": "Data de verificação amortização 91"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 91. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 91",
+          "required": false,
+          "options": [],
+          "order": 910,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao92",
+          "label": {
+            "pt": "Data de verificação amortização 92"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 92. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 92",
+          "required": false,
+          "options": [],
+          "order": 920,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao93",
+          "label": {
+            "pt": "Data de verificação amortização 93"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 93. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 93",
+          "required": false,
+          "options": [],
+          "order": 930,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao94",
+          "label": {
+            "pt": "Data de verificação amortização 94"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 94. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 94",
+          "required": false,
+          "options": [],
+          "order": 940,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao95",
+          "label": {
+            "pt": "Data de verificação amortização 95"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 95. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 95",
+          "required": false,
+          "options": [],
+          "order": 950,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao96",
+          "label": {
+            "pt": "Data de verificação amortização 96"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 96. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 96",
+          "required": false,
+          "options": [],
+          "order": 960,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao97",
+          "label": {
+            "pt": "Data de verificação amortização 97"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 97. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 97",
+          "required": false,
+          "options": [],
+          "order": 970,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao98",
+          "label": {
+            "pt": "Data de verificação amortização 98"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 98. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 98",
+          "required": false,
+          "options": [],
+          "order": 980,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao99",
+          "label": {
+            "pt": "Data de verificação amortização 99"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 99. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 99",
+          "required": false,
+          "options": [],
+          "order": 990,
+          "inGrid": false
+        },
+        {
+          "key": "dataDeVerificacaoAmortizacao100DadosFixosDaTelaDeRemunerador",
+          "label": {
+            "pt": "Data de verificação amortização 100 Dados Fixos da tela de Remunerador"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a data que será verificado o pagamento da amortização 100. Formato: DD/MM/AAAA. no Fluxo"
+          },
+          "dataType": "date",
+          "b3Field": "Data de verificação amortização 100 Dados Fixos da tela de Remunerador",
+          "required": false,
+          "options": [],
+          "order": 1000,
+          "inGrid": false
+        },
+        {
+          "key": "remuneradorNoFluxo",
+          "label": {
+            "pt": "Remunerador no Fluxo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicar as datas de liquidação do valor de amortização pago pelo fundo. O valor da amortização será repassado no fluxo do COE. IMPORTANTE: Para essa figura deverá ser utilizado “Amortização Fundo - Figura 1082”. Caso desejem utilizar outro remunerador, acionar o time de Produtos – Derivativos e COE."
+          },
+          "dataType": "string",
+          "b3Field": "Remunerador no Fluxo",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 1010,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": []
+}

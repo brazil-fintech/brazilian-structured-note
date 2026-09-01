@@ -14,13 +14,16 @@ public class B3ReferenceTests
 
     [Fact]
     public void The_reference_exports_load_without_errors() =>
-        Assert.Empty(Reference.Errors.Where(e => !e.Contains("has no figure code")));
+        Assert.Empty(Reference.Errors);
 
     [Fact]
     public void The_figure_catalogue_covers_the_published_range()
     {
-        // B3 publishes COE001001–COE001088; two rows carry a name with no code and are skipped.
-        Assert.InRange(Reference.Figures.Count, 80, 88);
+        // B3 publishes COE001001–COE001088. Two rows of the export carry a name with no code;
+        // their codes come from the manual's annex, so the catalogue is complete.
+        Assert.Equal(88, Reference.Figures.Count);
+        Assert.NotNull(Reference.Figure("COE001085"));
+        Assert.NotNull(Reference.Figure("COE001086"));
         Assert.NotNull(Reference.Figure("COE001005"));
         Assert.Equal("Call Spread", Reference.Figure("COE001005")!.Name);
         Assert.True(Reference.Figure("COE001005")!.Calculated);

@@ -1,0 +1,233 @@
+{
+  "figureCode": "COE001013",
+  "figureName": "Double Digital",
+  "commercialName": "Double Digital",
+  "description": {
+    "pt": "Figura COE001013 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001013. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0 e menor que strike 2."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0 e maior que strike 1."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "insideCoupon",
+          "label": {
+            "pt": "Remuneração dentro (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o VFE quando detectado que a cotação estiver entre o Strike 1 e o Strike 2. Formato: Numérico percentual com 4 inteiros e 4 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Remuneração dentro (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "outsideCoupon",
+          "label": {
+            "pt": "Remuneração fora (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o VFE quando detectado que a cotação estiver abaixo do Strike 1 ou acima do Strike 2. Formato: Numérico percentual com 4 inteiros e 4 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Remuneração fora (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "insideFloatingPercentage",
+          "label": {
+            "pt": "Remuneração Flutuante dentro (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual destacado a ser aplicado sobre o Remunerador Flutuante quando detectado que a cotação estiver entre o Strike 1 e o Strike 2. Formato: Numérico percentual com 4 inteiros e 4 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Remuneração Flutuante dentro (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "outsideFloatingPercentage",
+          "label": {
+            "pt": "Remuneração Flutuante fora (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual destacado a ser aplicado sobre o Remunerador Flutuante quando detectado que a cotação estiver abaixo do Strike 1 ou acima do Strike 2. Formato: Numérico percentual com 4 inteiros e 4 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Remuneração Flutuante fora (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalRemunerator",
+          "label": {
+            "pt": "Remuneração Adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório Indica o tipo de remunerador que será utilizado. Campo com as opções: Pré, DI, PRE252-LIN e NO PERIODO."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração Adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE252_LIN",
+              "label": {
+                "pt": "PRE252-LIN"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "label": {
+                "pt": "NO PERIODO"
+              }
+            }
+          ],
+          "order": 30,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001013.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001013.strike2-positive",
+      "targets": [
+        "payoff.strike2"
+      ],
+      "assert": "payoff.strike2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 2 (%)” deve ser maior que zero.",
+        "en": "“Strike 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

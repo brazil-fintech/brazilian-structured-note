@@ -106,11 +106,13 @@ docs/
   clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
                                 Fórmulas, Manual de Normas) — see its README
 
-reference/b3/                 ← B3's published exports: figures, domains, fields, underlyings
+reference/b3/                 ← B3's published exports: figures, domains, fields, underlyings,
+                                and the per-figure attribute annex of the Manual de Operações
 domain/                       ← the figure catalog the platform runs on — see its README
   common/                     ← reusable blocks: identification, underlying, remuneration,
                                 barriers, autocall, settlement
-  figures/                    ← one file per B3 figure code
+  figures/                    ← one file per B3 figure code, hand-written
+    generated/                ← the rest of the catalogue, written by tools/Coe.DomainGen
 src/
   Coe.Core/                   ← template model, expression AST + evaluator, validation engine
   Coe.Ingestion/              ← domain-file reader and template compiler
@@ -119,6 +121,8 @@ src/
   Coe.Api/                    ← minimal API: templates, assets, validation
   Coe.Worker/                 ← ingestion worker (file watch + interval)
 web/                          ← React + TypeScript: asset list, figure picker, dynamic form
+tools/b3-annex/               ← extracts the figure-attribute annex out of B3's manual (PDF → CSV)
+tools/Coe.DomainGen/          ← turns that annex into a domain file per catalogue figure
 tests/Coe.Tests/              ← expression, compiler, validation and database suites
 tests/Coe.Benchmarks/         ← BenchmarkDotNet harness for the validation path
 db/                           ← re-runnable schema and reference-data scripts
@@ -142,6 +146,15 @@ the save; warnings do not, and the ones a user accepts are stored on the asset f
 
 **The API is the authority.** Whatever the browser checked, every save re-runs the full
 validation server-side, re-derives computed attributes from their inputs, and only then writes.
+
+**The whole catalogue is bookable.** B3 publishes 88 payoff figures and describes the attributes
+of 84 of them in the field annex of the *Manual de Operações*. That annex is extracted to
+[reference/b3/campos-figuras.csv](reference/b3/README.md) and compiled into a domain file per
+figure, so every figure B3 documents has a real form — with the type, precision, domain and
+conditions taken from B3's own instructions. Ten figures are additionally hand-written, with the
+formula symbols and the economic warnings a desk would otherwise catch by eye; those always win.
+The four figures whose annex B3 has withdrawn appear in the picker marked as having no form,
+rather than silently missing.
 
 **Checked against B3's own data.** The figure catalogue, registration domains, strategy-field
 dictionary and underlying master are committed under [reference/b3/](reference/b3/README.md), and

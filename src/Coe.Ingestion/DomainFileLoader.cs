@@ -21,6 +21,9 @@ public sealed record DomainFileSet(
 /// </summary>
 public sealed class DomainFileLoader(string rootDirectory)
 {
+    /// <summary>Subfolder of <c>figures/</c> holding files written by <c>tools/Coe.DomainGen</c>.</summary>
+    public const string GeneratedFolder = "generated";
+
     public string RootDirectory { get; } = rootDirectory;
 
     public DomainFileSet Load()
@@ -49,9 +52,26 @@ public sealed class DomainFileLoader(string rootDirectory)
             return new DomainFileSet(fragments, figures, errors);
         }
 
-        foreach (var path in Directory.EnumerateFiles(figuresDir, "*.json", SearchOption.AllDirectories).Order(StringComparer.Ordinal))
+        // Curated files sit directly under figures/; generated ones under figures/generated/.
+        // Reading the curated ones first lets a hand-written figure shadow its generated twin,
+        // so promoting a figure to a curated file is dropping the file in — not remembering to
+        // delete something.
+        var paths = Directory.EnumerateFiles(figuresDir, "*.json", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal)
+            .OrderBy(p => p.Contains(GeneratedFolder, StringComparison.Ordinal));
+
+        var codes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var path in paths)
         {
             if (TryRead(path, errors) is not { } read) continue;
+
+            if (read.File.FigureCode is { Length: > 0 } code && !codes.Add(code))
+            {
+                if (path.Contains(GeneratedFolder, StringComparison.Ordinal)) continue;
+                errors.Add($"{read.RelativePath}: figure {code} is declared by more than one file.");
+                continue;
+            }
 
             var composite = new StringBuilder(read.Hash);
             foreach (var id in read.File.Extends.Order(StringComparer.Ordinal))

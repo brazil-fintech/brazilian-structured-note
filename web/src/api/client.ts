@@ -12,6 +12,33 @@ export interface FigureSummary {
   templateVersion?: number;
 }
 
+/** A figure of B3's catalogue, whether or not this platform can book it. */
+export interface FigureCatalogueEntry {
+  code: string;
+  name: string;
+  b3Name?: string;
+  commercialName?: string;
+  description?: string;
+  modalities: string[];
+  availability: 'Available' | 'Pending' | 'Quarantined' | 'Retired' | 'NotConfigured';
+  bookable: boolean;
+  templateVersion?: number;
+  calculatedByB3: boolean;
+  inB3Catalogue: boolean;
+  lastError?: string;
+}
+
+export interface FigureCoverage {
+  published: number;
+  configured: number;
+  bookable: number;
+}
+
+export interface FigureCatalogueResponse {
+  figures: FigureCatalogueEntry[];
+  coverage: FigureCoverage;
+}
+
 export interface AssetListItem {
   id: string;
   figureCode: string;
@@ -97,6 +124,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const api = {
   listFigures: (includeDisabled = false) =>
     request<FigureSummary[]>(`/figures?includeDisabled=${includeDisabled}`),
+
+  listFigureCatalogue: () => request<FigureCatalogueResponse>('/figures/catalogue'),
 
   getTemplate: (figureCode: string, version?: number) =>
     request<FigureTemplate>(`/figures/${encodeURIComponent(figureCode)}/template${version ? `?version=${version}` : ''}`),

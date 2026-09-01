@@ -1,29 +1,40 @@
 import { useMemo, useState } from 'react';
-import type { FigureSummary } from '../api/client';
+import type { FigureCatalogueEntry } from '../api/client';
 import { ui } from '../engine/texts';
 
 interface Props {
-  figures: FigureSummary[];
+  figures: FigureCatalogueEntry[];
+  coverage: { published: number; configured: number; bookable: number };
   culture: string;
-  onPick: (figure: FigureSummary) => void;
+  onPick: (figure: FigureCatalogueEntry) => void;
   onCancel: () => void;
 }
 
 /**
- * Step one of booking: pick the figure. The list is whatever the ingestion worker has enabled,
- * so a figure B3 publishes shows up here without a front-end release.
+ * Step one of booking: pick the figure.
+ *
+ * The list is B3's whole catalogue, not only the figures this platform can book. A figure with
+ * no compiled template is still shown — greyed out, unclickable, and labelled — because the
+ * alternative is a screen that silently omits figures the desk can see in B3's own catalogue and
+ * gives no way to tell "not offered here" from "does not exist".
  */
-export function FigurePicker({ figures, culture, onPick, onCancel }: Props) {
+export function FigurePicker({ figures, coverage, culture, onPick, onCancel }: Props) {
   const [query, setQuery] = useState('');
+  const [bookableOnly, setBookableOnly] = useState(false);
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
-    if (!term) return figures;
-    return figures.filter((figure) =>
-      figure.code.toLowerCase().includes(term) ||
-      figure.name.toLowerCase().includes(term) ||
-      (figure.commercialName ?? '').toLowerCase().includes(term));
-  }, [figures, query]);
+    return figures.filter((figure) => {
+      if (bookableOnly && !figure.bookable) return false;
+      if (!term) return true;
+      return (
+        figure.code.toLowerCase().includes(term) ||
+        figure.name.toLowerCase().includes(term) ||
+        (figure.b3Name ?? '').toLowerCase().includes(term) ||
+        (figure.commercialName ?? '').toLowerCase().includes(term)
+      );
+    });
+  }, [figures, query, bookableOnly]);
 
   return (
     <div className="picker">
@@ -37,26 +48,58 @@ export function FigurePicker({ figures, culture, onPick, onCancel }: Props) {
         </button>
       </header>
 
-      <input
-        type="search"
-        className="field__input picker__search"
-        placeholder={`${ui.chooseFigure(culture)}…`}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div className="picker__controls">
+        <input
+          type="search"
+          className="field__input picker__search"
+          placeholder={`${ui.chooseFigure(culture)}…`}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <label className="picker__toggle">
+          <input
+            type="checkbox"
+            checked={bookableOnly}
+            onChange={(e) => setBookableOnly(e.target.checked)}
+          />
+          {ui.bookableOnly(culture)}
+        </label>
+        <span className="picker__coverage">
+          {ui.figureCoverage(culture, coverage.bookable, coverage.published)}
+        </span>
+      </div>
 
       <div className="picker__grid">
         {filtered.map((figure) => (
-          <button key={figure.code} type="button" className="figure-card" onClick={() => onPick(figure)}>
+          <button
+            key={figure.code}
+            type="button"
+            className={`figure-card${figure.bookable ? '' : ' figure-card--unavailable'}`}
+            disabled={!figure.bookable}
+            title={figure.bookable ? undefined : ui.availability(culture, figure.availability)}
+            onClick={() => onPick(figure)}
+          >
             <div className="figure-card__head">
               <span className="badge">{figure.code}</span>
               {figure.modalities.map((modality) => (
                 <span key={modality} className={`chip chip--${modality.toLowerCase()}`}>{modality}</span>
               ))}
+              {!figure.bookable && (
+                <span className="chip chip--muted">{ui.availability(culture, figure.availability)}</span>
+              )}
             </div>
             <div className="figure-card__title">{figure.commercialName ?? figure.name}</div>
-            <div className="figure-card__subtitle">{figure.name}</div>
-            {figure.description && <p className="figure-card__description">{figure.description}</p>}
+            <div className="figure-card__subtitle">{figure.b3Name ?? figure.name}</div>
+            {figure.bookable && figure.description && (
+              <p className="figure-card__description">{figure.description}</p>
+            )}
+            {!figure.bookable && (
+              <p className="figure-card__description">
+                {figure.lastError
+                  ? ui.figureQuarantined(culture)
+                  : ui.figureNotConfigured(culture)}
+              </p>
+            )}
           </button>
         ))}
       </div>

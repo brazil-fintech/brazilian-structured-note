@@ -7,9 +7,14 @@ result. **Adding a figure means adding a file here — no code, no deploy.**
 
 ```
 domain/
-  common/     reusable blocks a figure inherits through "extends"
-  figures/    one file per B3 figure code
+  common/                reusable blocks a figure inherits through "extends"
+  figures/               hand-written figures — the ones a person has modelled
+    generated/           the rest of B3's catalogue, written from the manual's field annex
 ```
+
+A figure with a hand-written file wins: the generator skips it, and the loader ignores a
+generated file whose code a curated file already claims. Promoting a figure is dropping a file
+into `figures/` — nothing to delete, nothing to remember.
 
 ## What happens to a file you drop in
 
@@ -215,6 +220,43 @@ of constants. `$name` reads a host variable (`$today`).
 rule whose assertion is null says nothing. That is what keeps a half-filled form quiet instead
 of wrong. Use `isNull` / `notNull` when you mean to test for absence.
 
+## The generated figures
+
+Ten figures are written by hand. The other 74 come from B3's own documentation:
+`tools/Coe.DomainGen` reads the figure catalogue and the field annex extracted to
+[`reference/b3/campos-figuras.csv`](../reference/b3/README.md#the-figure-attribute-annex), and
+writes one file per figure into `figures/generated/`.
+
+```bash
+dotnet run --project tools/Coe.DomainGen        # from the repository root
+```
+
+It prints a line per figure — attributes written, attributes inherited from a common block,
+rules derived, rows skipped — so a manual that changes shows up as a diff in both the CSV and
+the files.
+
+What it takes from B3's instruction for each attribute:
+
+| B3 writes | becomes |
+|---|---|
+| "Formato: Numérico percentual com 4 inteiros e 8 decimais" | `dataType: percent`, `decimals: 8`, `max: 9999` |
+| "Formato: DD/MM/AAAA" | `dataType: date` |
+| "Campo com as opções: Data Única, Janela de Datas e Mais Datas" | `dataType: enum` with those three options |
+| "Campo de preenchimento obrigatório" | `required: true` |
+| "obrigatório, se indicado 'Janela de datas'" | `requiredWhen` on whichever attribute offers that value |
+| "maior que 0" | a rule asserting `> 0`, with B3's field name in the message |
+| "Não preencher se a 'Classe do Ativo Subjacente' for igual a 'CESTA'" | `visibleWhen: underlying.assetClass != 'CESTA'` |
+
+Everything else in the instruction is kept verbatim as the attribute's `help`, because the desk
+reads the same sentences. An attribute a common block already carries — the fixing window, the
+quotation type, the barrier direction — is inherited rather than restated, so the curated version
+with its labels, defaults and rules is the one that renders.
+
+**What generation does not give you.** No formula symbols, no link to a page under
+`docs/payoffs/`, no economic warnings, and no modality restriction — B3 does not publish the
+modality per figure, so a generated file offers both rather than inventing a rule. That is the
+work a curated file adds, and it is why the ten exist.
+
 ## Checklist for a new figure
 
 1. Copy the closest file in `figures/`; set `figureCode`, `figureName`, `commercialName`,
@@ -225,9 +267,15 @@ of wrong. Use `isNull` / `notNull` when you mean to test for absence.
    the matching page under [`docs/payoffs/`](../docs/payoffs/README.md).
 4. Write the rules that a booking desk would otherwise catch by eye: level ordering, the
    modality the figure is registered under, and economic sanity checks as warnings.
-5. Run `dotnet test` — the suite compiles every file in this directory and fails on an unknown
-   attribute, an ambiguous name, a rule with no target, a duplicate figure code, a figure code
-   B3 does not publish, or an option code that is not in the B3 domain the field names.
+5. Run `dotnet test` — the suite compiles every file in this directory, generated ones included,
+   and fails on an unknown attribute, an ambiguous name, a rule with no target, a duplicate
+   figure code, a figure code B3 does not publish, or an option code that is not in the B3 domain
+   the field names.
+
+To replace a generated figure with a curated one, copy `figures/generated/<code>.json` up into
+`figures/`, give it a descriptive filename, and work from there — the generated copy stops being
+loaded the moment the curated file declares the same `figureCode`, and the next regeneration
+drops it.
 
 ## Where to read more
 

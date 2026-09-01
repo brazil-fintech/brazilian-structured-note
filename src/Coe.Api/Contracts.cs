@@ -15,6 +15,32 @@ public sealed record FigureSummary(
     string Status,
     int? TemplateVersion);
 
+/// <summary>
+/// One figure of B3's catalogue as the picker sees it, whether or not this platform can book it.
+/// </summary>
+public sealed record FigureCatalogueEntry(
+    string Code,
+    string Name,
+    string? B3Name,
+    string? CommercialName,
+    string? Description,
+    IReadOnlyList<string> Modalities,
+    // Available | Pending | Quarantined | Retired | NotConfigured.
+    string Availability,
+    // True only when a new asset can be booked against this figure right now.
+    bool Bookable,
+    int? TemplateVersion,
+    bool CalculatedByB3,
+    // False when the code is modelled here but absent from the loaded B3 export.
+    bool InB3Catalogue,
+    // Why a quarantined figure does not compile.
+    string? LastError);
+
+/// <summary>How much of B3's catalogue the platform actually covers.</summary>
+public sealed record FigureCoverage(int Published, int Configured, int Bookable);
+
+public sealed record FigureCatalogueResponse(IReadOnlyList<FigureCatalogueEntry> Figures, FigureCoverage Coverage);
+
 /// <summary>A row of the asset list.</summary>
 public sealed record AssetListItem(
     Guid Id,

@@ -1,0 +1,555 @@
+{
+  "figureCode": "COE001049",
+  "figureName": "Call KO + Put",
+  "commercialName": "Call KO + Put",
+  "description": {
+    "pt": "Figura COE001049 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001049. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "assetClass1",
+          "label": {
+            "pt": "Classe do ativo subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 1 (TAXAS DE CAMBIO, INDICES)."
+          },
+          "dataType": "string",
+          "b3Field": "Classe do ativo subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "asset1",
+          "label": {
+            "pt": "Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Ativo subjacente da Call KO. Campo com as opções IBOVESPA e DOLAR DOS EUA."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue1",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial do Ativo Subjacente 1. Esse valor serve de referência para o cálculo do strike e da barreira de KO da Call KO. Formato: numérico, 10 inteiros e 4 decimais."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass2",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 2 (TAXAS DE CAMBIO, INDICES)."
+          },
+          "dataType": "string",
+          "b3Field": "Classe do Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "asset2",
+          "label": {
+            "pt": "Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Ativo subjacente da Put. Campo com as opções IBOVESPA e DOLAR DOS EUA."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue2",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Valor inicial do Ativo Subjacente 2. Esse valor serve de referência para o cálculo do strike da Put. Formato: numérico, 10 inteiros e 4 decimais."
+          },
+          "dataType": "string",
+          "b3Field": "Valor Inicial Ativo Subjacente 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "quoteType1",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada na liquidação da operação, referente ao Ativo Subjacente 1 (ativo subjacente da Call KO). Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 1",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "quoteType2",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada na liquidação da operação, referente ao Ativo Subjacente 2 (ativo subjacente da Put). Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste. 1- Informações referentes a Call KO"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 2",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike da Call KO, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente 1. Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de Alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike da Put, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 2. Formato: numérico com 4 inteiros e 8 decimais, maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 2(%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 2",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente 2. Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de baixa (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "upsideBarrier",
+          "label": {
+            "pt": "Barreira cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a barreira de knock out da Call KO, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira cenário de Alta (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "koRebate",
+          "label": {
+            "pt": "Rebate KO(%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de knock out seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KO(%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para verificação de barreira cenário de alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Tipo de cotação a ser considerada na verificação da barreira de knock out. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para verificação de barreira cenário de alta",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 110,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001049.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.quantity1-positive",
+      "targets": [
+        "payoff.quantity1"
+      ],
+      "assert": "payoff.quantity1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 1” deve ser maior que zero.",
+        "en": "“Quantidade 1” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.upsideBarrier-positive",
+      "targets": [
+        "barriers.upsideBarrier"
+      ],
+      "assert": "barriers.upsideBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira cenário de Alta (%)” deve ser maior que zero.",
+        "en": "“Barreira cenário de Alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de Alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de Alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.strike2-positive",
+      "targets": [
+        "payoff.strike2"
+      ],
+      "assert": "payoff.strike2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 2(%)” deve ser maior que zero.",
+        "en": "“Strike 2(%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.quantity2-positive",
+      "targets": [
+        "payoff.quantity2"
+      ],
+      "assert": "payoff.quantity2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 2” deve ser maior que zero.",
+        "en": "“Quantidade 2” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001049.downsideParticipation-positive",
+      "targets": [
+        "payoff.downsideParticipation"
+      ],
+      "assert": "payoff.downsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de baixa (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de baixa (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

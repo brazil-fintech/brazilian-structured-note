@@ -1,0 +1,302 @@
+{
+  "figureCode": "COE001038",
+  "figureName": "Double One Touch",
+  "commercialName": "Double One Touch",
+  "description": {
+    "pt": "Figura COE001038 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001038. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "downsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Não preencher se a “Classe do Ativo Subjacente” for igual a “CESTA”. Indicação de qual será a cotação a ser considerada. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa",
+          "required": true,
+          "visibleWhen": "underlying.assetClass != 'CESTA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Verificação de Barreiras no Cenário de Alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Não preencher se a “Classe do Ativo Subjacente” for igual a “CESTA”. Indicação de qual será a cotação a ser considerada. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Alta",
+          "required": true,
+          "visibleWhen": "underlying.assetClass != 'CESTA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "upperBarrier",
+          "label": {
+            "pt": "Barreira superior (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0 e maior que Barreira inferior."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira superior (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "lowerBarrier",
+          "label": {
+            "pt": "Barreira inferior (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0 e menor que Barreira superior."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira inferior (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalRemunerator",
+          "label": {
+            "pt": "Remuneração Adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o tipo de remunerador que será utilizado. Campo com as opções: Pré, DI e No Período."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração Adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "DI",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "label": {
+                "pt": "No Período"
+              }
+            }
+          ],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "additionalFloatingPercentage",
+          "label": {
+            "pt": "Remunerador Flutuante Adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “DI”. Para o indicador “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante Adicional (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "additionalCouponRate",
+          "label": {
+            "pt": "Cupom Remunerador Adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se indicado “Pré”. Formato: Numérico com 5 inteiros e 4 decimais, incluindo o sinal “-“ e “+”. A não indicação do sinal deve ser considerada como “+”"
+          },
+          "dataType": "decimal",
+          "b3Field": "Cupom Remunerador Adicional",
+          "decimals": 4,
+          "max": 99999,
+          "required": false,
+          "requiredWhen": "remuneration.additionalRemunerator == 'PRE'",
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001038.upperBarrier-positive",
+      "targets": [
+        "barriers.upperBarrier"
+      ],
+      "assert": "barriers.upperBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira superior (%)” deve ser maior que zero.",
+        "en": "“Barreira superior (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001038.lowerBarrier-positive",
+      "targets": [
+        "barriers.lowerBarrier"
+      ],
+      "assert": "barriers.lowerBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira inferior (%)” deve ser maior que zero.",
+        "en": "“Barreira inferior (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001038.additionalFloatingPercentage-positive",
+      "targets": [
+        "remuneration.additionalFloatingPercentage"
+      ],
+      "assert": "remuneration.additionalFloatingPercentage > 0",
+      "args": {},
+      "message": {
+        "pt": "“Remunerador Flutuante Adicional (%)” deve ser maior que zero.",
+        "en": "“Remunerador Flutuante Adicional (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

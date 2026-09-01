@@ -1,0 +1,354 @@
+{
+  "figureCode": "COE001051",
+  "figureName": "Call Spread KI + Put",
+  "commercialName": "Call Spread KI + Put",
+  "description": {
+    "pt": "Figura COE001051 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001051. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a quantidade de Call Spread KI. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a quantidade de Put. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 2",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de Baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente. Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de Baixa (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente. Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de Alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "upsideCap",
+          "label": {
+            "pt": "Limitador cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, deverá ser maior que o Strike (%) e maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador cenário de Alta (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "kiBarrier",
+          "label": {
+            "pt": "Barreira KI (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a barreira de knock in da Call Spread KI, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: numérico com 4 inteiros e 8 decimais, sempre maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira KI (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "kiRebate",
+          "label": {
+            "pt": "Rebate KI (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de knock in não seja atingida no período de verificação. Formato: numérico com 4 inteiros e 4 decimais, maior ou igual a zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KI (%)",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "upsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para verificação de barreira cenário de alta"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Tipo de cotação a ser considerada na verificação da barreira de knock in. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para verificação de barreira cenário de alta",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 90,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001051.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.quantity1-positive",
+      "targets": [
+        "payoff.quantity1"
+      ],
+      "assert": "payoff.quantity1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 1” deve ser maior que zero.",
+        "en": "“Quantidade 1” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.quantity2-positive",
+      "targets": [
+        "payoff.quantity2"
+      ],
+      "assert": "payoff.quantity2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 2” deve ser maior que zero.",
+        "en": "“Quantidade 2” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.downsideParticipation-positive",
+      "targets": [
+        "payoff.downsideParticipation"
+      ],
+      "assert": "payoff.downsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de Baixa (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de Baixa (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de Alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de Alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.upsideCap-positive",
+      "targets": [
+        "payoff.upsideCap"
+      ],
+      "assert": "payoff.upsideCap > 0",
+      "args": {},
+      "message": {
+        "pt": "“Limitador cenário de Alta (%)” deve ser maior que zero.",
+        "en": "“Limitador cenário de Alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001051.kiBarrier-positive",
+      "targets": [
+        "barriers.kiBarrier"
+      ],
+      "assert": "barriers.kiBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira KI (%)” deve ser maior que zero.",
+        "en": "“Barreira KI (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

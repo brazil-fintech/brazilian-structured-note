@@ -19,6 +19,7 @@ public sealed class FigureCatalog(
         ActiveTemplateVersion, SourceFile, SourceHash, LastError, FirstSeenUtc, UpdatedUtc, EnabledUtc
         """;
 
+
     public Task<Figure?> GetAsync(string code, CancellationToken ct = default) =>
         _retry.ExecuteAsync("figure.get", async token =>
         {
@@ -44,6 +45,52 @@ public sealed class FigureCatalog(
             await using var reader = await command.ExecuteReaderAsync(token);
             var figures = new List<Figure>();
             while (await reader.ReadAsync(token)) figures.Add(ReadFigure(reader));
+            return figures;
+        }, ct);
+
+    /// <summary>
+    /// B3's catalogue and the platform's figures, side by side.
+    ///
+    /// A FULL OUTER JOIN rather than a LEFT JOIN from either side: the reference export may not
+    /// have been loaded yet (b3.Figure empty, and the picker must still offer what is bookable),
+    /// and a figure modelled here may be missing from a newer export (which is worth showing, not
+    /// hiding). One round trip; both tables are small enough that the sort is free.
+    /// </summary>
+    public Task<IReadOnlyList<CatalogueFigure>> ListCatalogueAsync(CancellationToken ct = default) =>
+        _retry.ExecuteAsync<IReadOnlyList<CatalogueFigure>>("figure.list_catalogue", async token =>
+        {
+            // The figure columns keep the order ReadFigure expects, starting at ordinal 4.
+            const string sql = """
+                SELECT COALESCE(b.Code, f.Code) AS Code,
+                       b.Name AS B3Name,
+                       ISNULL(b.Calculated, CAST(0 AS bit)) AS Calculated,
+                       CASE WHEN b.Code IS NULL THEN CAST(0 AS bit) ELSE CAST(1 AS bit) END AS InCatalogue,
+                       f.Code, f.Name, f.CommercialName, f.DescriptionPt, f.DescriptionEn,
+                       f.Modalities, f.Status, f.ActiveTemplateVersion, f.SourceFile, f.SourceHash,
+                       f.LastError, f.FirstSeenUtc, f.UpdatedUtc, f.EnabledUtc
+                  FROM b3.Figure b
+                  FULL OUTER JOIN figure.Figure f ON f.Code = b.Code
+                 ORDER BY COALESCE(b.Code, f.Code);
+                """;
+
+            await using var connection = await connections.OpenAsync(token);
+            await using var command = new SqlCommand(sql, connection);
+
+            await using var reader = await command.ExecuteReaderAsync(token);
+            var figures = new List<CatalogueFigure>();
+            while (await reader.ReadAsync(token))
+            {
+                figures.Add(new CatalogueFigure
+                {
+                    Code = reader.GetString(0),
+                    B3Name = reader.GetNullableString(1),
+                    CalculatedByB3 = reader.GetBoolean(2),
+                    InB3Catalogue = reader.GetBoolean(3),
+                    // The platform side of an outer join is null for a figure with no domain file.
+                    Figure = reader.IsDBNull(4) ? null : ReadFigure(reader, offset: 4)
+                });
+            }
+
             return figures;
         }, ct);
 
@@ -217,21 +264,25 @@ public sealed class FigureCatalog(
             await command.ExecuteNonQueryAsync(token);
         }, ct);
 
-    private static Figure ReadFigure(SqlDataReader reader) => new()
+    /// <summary>
+    /// Reads the figure columns starting at <paramref name="offset"/>, so the same mapping serves a
+    /// plain SELECT and the catalogue join that puts B3's columns first.
+    /// </summary>
+    private static Figure ReadFigure(SqlDataReader reader, int offset = 0) => new()
     {
-        Code = reader.GetString(0),
-        Name = reader.GetString(1),
-        CommercialName = reader.GetNullableString(2),
-        DescriptionPt = reader.GetNullableString(3),
-        DescriptionEn = reader.GetNullableString(4),
-        Modalities = reader.GetString(5),
-        Status = reader.GetEnum(6, FigureStatus.Pending),
-        ActiveTemplateVersion = reader.GetNullableInt32(7),
-        SourceFile = reader.GetNullableString(8),
-        SourceHash = reader.GetNullableString(9),
-        LastError = reader.GetNullableString(10),
-        FirstSeenUtc = reader.GetDateTimeOffset(11),
-        UpdatedUtc = reader.GetDateTimeOffset(12),
-        EnabledUtc = reader.GetNullableDateTimeOffset(13)
+        Code = reader.GetString(offset),
+        Name = reader.GetString(offset + 1),
+        CommercialName = reader.GetNullableString(offset + 2),
+        DescriptionPt = reader.GetNullableString(offset + 3),
+        DescriptionEn = reader.GetNullableString(offset + 4),
+        Modalities = reader.GetString(offset + 5),
+        Status = reader.GetEnum(offset + 6, FigureStatus.Pending),
+        ActiveTemplateVersion = reader.GetNullableInt32(offset + 7),
+        SourceFile = reader.GetNullableString(offset + 8),
+        SourceHash = reader.GetNullableString(offset + 9),
+        LastError = reader.GetNullableString(offset + 10),
+        FirstSeenUtc = reader.GetDateTimeOffset(offset + 11),
+        UpdatedUtc = reader.GetDateTimeOffset(offset + 12),
+        EnabledUtc = reader.GetNullableDateTimeOffset(offset + 13)
     };
 }

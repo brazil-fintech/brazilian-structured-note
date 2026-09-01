@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { api, type AssetListItem, type FigureSummary } from './api/client';
+import { api, type AssetListItem, type FigureCatalogueEntry, type FigureCoverage, type FigureSummary } from './api/client';
 import { AssetForm } from './components/AssetForm';
 import { AssetList } from './components/AssetList';
 import { FigurePicker } from './components/FigurePicker';
@@ -14,6 +14,9 @@ type View =
 export default function App() {
   const [culture, setCulture] = useState<'pt-BR' | 'en-GB'>('pt-BR');
   const [figures, setFigures] = useState<FigureSummary[]>([]);
+  // The list filter offers what can be booked; the picker shows B3's whole catalogue.
+  const [catalogue, setCatalogue] = useState<FigureCatalogueEntry[]>([]);
+  const [coverage, setCoverage] = useState<FigureCoverage>({ published: 0, configured: 0, bookable: 0 });
   const [view, setView] = useState<View>({ kind: 'list' });
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -22,9 +25,13 @@ export default function App() {
     api.listFigures()
       .then(setFigures)
       .catch((e: Error) => setError(e.message));
+
+    api.listFigureCatalogue()
+      .then((result) => { setCatalogue(result.figures); setCoverage(result.coverage); })
+      .catch((e: Error) => setError(e.message));
   }, []);
 
-  const openNew = useCallback(async (figure: FigureSummary) => {
+  const openNew = useCallback(async (figure: FigureCatalogueEntry) => {
     setBusy(true);
     setError(null);
     try {
@@ -97,7 +104,8 @@ export default function App() {
 
         {view.kind === 'pick' && (
           <FigurePicker
-            figures={figures}
+            figures={catalogue}
+            coverage={coverage}
             culture={culture}
             onPick={(figure) => { void openNew(figure); }}
             onCancel={() => setView({ kind: 'list' })}

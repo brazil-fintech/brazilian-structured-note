@@ -165,6 +165,7 @@ in `Pending` for a desk to release it.
 | | |
 |---|---|
 | `GET /api/figures` | figures available for booking (`?includeDisabled=true` for the rest) |
+| `GET /api/figures/catalogue` | B3's whole catalogue with each figure's availability here, plus coverage counts — what the picker renders |
 | `GET /api/figures/{code}/template` | the compiled template; `?version=` for a specific one |
 | `GET /api/assets?referenceDate=…` | assets live on the date: `issueDate <= referenceDate <= maturityDate` |
 | `GET /api/assets/{id}` | the full instance document, plus the rowversion for concurrency |

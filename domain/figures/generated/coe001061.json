@@ -1,0 +1,281 @@
+{
+  "figureCode": "COE001061",
+  "figureName": "CCall + VPutSpread",
+  "commercialName": "CCall + VPutSpread",
+  "description": {
+    "pt": "Figura COE001061 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001061. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a quantidade do Ativo Subjacente. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de Alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente. Participação da CallSpread Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de Alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "strike2",
+          "label": {
+            "pt": "Strike 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o strike, em percentual. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "quantity2",
+          "label": {
+            "pt": "Quantidade 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar a quantidade do Ativo Subjacente. A quantidade indicada deverá ser maior que zero. Formato: Numérico com 10 inteiros e 4 decimais.."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 2",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "downsideCap",
+          "label": {
+            "pt": "Limitador Cenário de Baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Limitador da PutSpread. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador Cenário de Baixa (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de Baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente. Participação da PutSpread. Formato: Numérico com 6 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de Baixa (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001061.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.quantity1-positive",
+      "targets": [
+        "payoff.quantity1"
+      ],
+      "assert": "payoff.quantity1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 1” deve ser maior que zero.",
+        "en": "“Quantidade 1” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de Alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de Alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.strike2-positive",
+      "targets": [
+        "payoff.strike2"
+      ],
+      "assert": "payoff.strike2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 2 (%)” deve ser maior que zero.",
+        "en": "“Strike 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.quantity2-positive",
+      "targets": [
+        "payoff.quantity2"
+      ],
+      "assert": "payoff.quantity2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 2” deve ser maior que zero.",
+        "en": "“Quantidade 2” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.downsideCap-positive",
+      "targets": [
+        "payoff.downsideCap"
+      ],
+      "assert": "payoff.downsideCap > 0",
+      "args": {},
+      "message": {
+        "pt": "“Limitador Cenário de Baixa (%)” deve ser maior que zero.",
+        "en": "“Limitador Cenário de Baixa (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001061.downsideParticipation-positive",
+      "targets": [
+        "payoff.downsideParticipation"
+      ],
+      "assert": "payoff.downsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de Baixa (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de Baixa (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

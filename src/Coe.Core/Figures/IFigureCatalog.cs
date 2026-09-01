@@ -26,6 +26,12 @@ public interface IFigureCatalog
 
     Task<IReadOnlyList<Figure>> ListAsync(bool enabledOnly = true, CancellationToken ct = default);
 
+    /// <summary>
+    /// Every figure B3 publishes, joined with the platform's own — so a caller can tell a figure
+    /// that is missing from the picker apart from one nobody has modelled yet.
+    /// </summary>
+    Task<IReadOnlyList<CatalogueFigure>> ListCatalogueAsync(CancellationToken ct = default);
+
     /// <summary>Inserts the figure, or updates the mutable columns of an existing one.</summary>
     Task UpsertAsync(Figure figure, CancellationToken ct = default);
 

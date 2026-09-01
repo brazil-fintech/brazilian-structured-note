@@ -1,0 +1,319 @@
+{
+  "figureCode": "COE001079",
+  "figureName": "COE de Crédito - CDS + Call",
+  "commercialName": "COE de Crédito - CDS + Call",
+  "description": {
+    "pt": "Figura COE001079 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001079. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "ativoSubjacenteCall",
+          "label": {
+            "pt": "Ativo subjacente Call"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório Formato: Texto com 40 posições Informar o ativo subjacente referência para a Call"
+          },
+          "dataType": "string",
+          "b3Field": "Ativo subjacente Call",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "precoInicialCall",
+          "label": {
+            "pt": "Preço inicial Call"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0. Informar a cotação inicial do ativo subjacente referência para a Call."
+          },
+          "dataType": "percent",
+          "b3Field": "Preço inicial Call",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a quantidade do ativo subjacente que é utilizado no cálculo de ajuste referente ao Strike 1. Formato: Numérico com 8 inteiros e 8 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 8,
+          "max": 99999999,
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do ativo subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de alta (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "liquidacaoEmCasoDeEventoDeCreditoRecoveryValue",
+          "label": {
+            "pt": "Liquidação em caso de evento de crédito (Recovery Value)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar como ocorrerá a liquidação do ativo em caso de evento de crédito. Formato: Texto com 40 posições Eventos de Crédito"
+          },
+          "dataType": "string",
+          "b3Field": "Liquidação em caso de evento de crédito (Recovery Value)",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "credit",
+      "label": {
+        "pt": "Evento de crédito",
+        "en": "Credit event"
+      },
+      "kind": "tab",
+      "order": 55,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "referenceEntity",
+          "label": {
+            "pt": "Entidade de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Emissora, devedora ou garantidora das obrigações financeiras Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Entidade de referência",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "referenceObligation",
+          "label": {
+            "pt": "Obrigação de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Obrigação financeira da entidade de referência discriminada no COE Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Obrigação de referência",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "obligationCount",
+          "label": {
+            "pt": "Quantidade de obrigações"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar se a obrigação de referência será com base em um ativo ou em uma cesta/entidade de referência. Campo com as opções: Single name, Cesta"
+          },
+          "dataType": "enum",
+          "b3Field": "Quantidade de obrigações",
+          "required": true,
+          "options": [
+            {
+              "code": "SINGLE_NAME",
+              "label": {
+                "pt": "Single name"
+              }
+            },
+            {
+              "code": "CESTA",
+              "label": {
+                "pt": "Cesta"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "calculationAgent",
+          "label": {
+            "pt": "Agente de cálculo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela apuração dos valores a serem pagos ou das obrigações de referência a serem entregues pelo emissor do COE Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Agente de cálculo",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "eventDetermination",
+          "label": {
+            "pt": "Determinação de ocorrência de evento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela comunicação da ocorrência do evento de crédito Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Determinação de ocorrência de evento",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "settlementConditions",
+          "label": {
+            "pt": "Condições para liquidação"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar as condições para liquidação antecipada Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Condições para liquidação",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001079.precoInicialCall-positive",
+      "targets": [
+        "payoff.precoInicialCall"
+      ],
+      "assert": "payoff.precoInicialCall > 0",
+      "args": {},
+      "message": {
+        "pt": "“Preço inicial Call” deve ser maior que zero.",
+        "en": "“Preço inicial Call” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001079.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001079.upsideParticipation-positive",
+      "targets": [
+        "payoff.upsideParticipation"
+      ],
+      "assert": "payoff.upsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de alta (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

@@ -128,11 +128,11 @@
           "b3Domain": "PERIODO DE VERIFICACAO DAS BARREIRAS"
         },
         {
-          "key": "fixingDate",
+          "key": "barrierFixingDate",
           "order": 50,
           "label": {
-            "pt": "Data para Fixing",
-            "en": "Fixing date"
+            "pt": "Data para Fixing da barreira",
+            "en": "Barrier fixing date"
           },
           "dataType": "date",
           "b3Field": "Data para Fixing",
@@ -253,10 +253,10 @@
     {
       "id": "barriers.fixing-within-tenor",
       "targets": [
-        "barriers.fixingDate"
+        "barriers.barrierFixingDate"
       ],
       "when": "verificationPeriod == 'EUROPEIA'",
-      "assert": "fixingDate > common.issueDate and fixingDate <= common.maturityDate",
+      "assert": "barrierFixingDate > common.issueDate and barrierFixingDate <= common.maturityDate",
       "message": {
         "pt": "A Data para Fixing deve estar entre a emissão (exclusive) e o vencimento.",
         "en": "The fixing date must fall between the issue date (exclusive) and maturity."

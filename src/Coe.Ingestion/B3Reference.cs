@@ -60,6 +60,9 @@ public sealed partial class B3Reference
     /// <summary>The export's own as-of stamp, when the file carries one.</summary>
     public string? AsOf { get; private set; }
 
+    /// <summary>The per-figure attribute lists from the Manual de Operações annex.</summary>
+    public B3FigureFields FigureFields { get; private set; } = B3FigureFields.Empty;
+
     public static B3Reference Empty { get; } = new();
 
     public B3Figure? Figure(string code) => _figuresByCode.GetValueOrDefault(code);
@@ -84,6 +87,9 @@ public sealed partial class B3Reference
             return reference;
         }
 
+        // The annex is loaded first: it carries the codes for the catalogue rows B3 exports
+        // with a name and no code.
+        reference.FigureFields = B3FigureFields.Load(directory);
         reference.LoadFigures(Path.Combine(directory, FiguresFile), errors);
         reference.LoadDomains(Path.Combine(directory, DomainsFile), errors);
         reference.LoadStrategyFields(Path.Combine(directory, StrategyFieldsFile), errors);
@@ -113,9 +119,15 @@ public sealed partial class B3Reference
             var (code, name) = SplitFigureLabel(parts[1]);
             if (code is null)
             {
-                // A handful of rows carry only a name; keep them out rather than invent a code.
-                errors.Add($"{FiguresFile}: row '{parts[1]}' has no figure code and was skipped.");
-                continue;
+                // Two rows carry only a name. The manual's field annex heads the same figures
+                // with a code, so the code is recovered from there rather than invented here —
+                // and rather than dropping figures B3 does publish.
+                code = FigureFields.CodeForName(name);
+                if (code is null)
+                {
+                    errors.Add($"{FiguresFile}: row '{parts[1]}' has no figure code and was skipped.");
+                    continue;
+                }
             }
 
             _figuresByCode[code] = new B3Figure(parts[0], code, name, IsYes(parts[2]));

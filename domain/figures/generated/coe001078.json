@@ -1,0 +1,182 @@
+{
+  "figureCode": "COE001078",
+  "figureName": "COE de Crédito - CDS",
+  "commercialName": "COE de Crédito - CDS",
+  "description": {
+    "pt": "Figura COE001078 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001078. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "diAccrualOffset",
+          "label": {
+            "pt": "Deslocamento do accrual do DI"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar se haverá deslocamento no cálculo do accrual do DI, em relação a data de fluxo do COE* Campo com as opções de D-1 a D-30 *: Para mais informações sobre o cálculo, consultar o Caderno de Fórmulas – COE."
+          },
+          "dataType": "string",
+          "b3Field": "Deslocamento do accrual do DI",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "credit",
+      "label": {
+        "pt": "Evento de crédito",
+        "en": "Credit event"
+      },
+      "kind": "tab",
+      "order": 55,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "referenceEntity",
+          "label": {
+            "pt": "Entidade de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Emissora, devedora ou garantidora das obrigações financeiras Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Entidade de referência",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "referenceObligation",
+          "label": {
+            "pt": "Obrigação de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Obrigação financeira da entidade de referência discriminada no COE Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Obrigação de referência",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "obligationCount",
+          "label": {
+            "pt": "Quantidade de obrigações"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar se a obrigação de referência será com base em um ativo ou em uma cesta/entidade de referência. Campo com as opções: Single name, Cesta"
+          },
+          "dataType": "enum",
+          "b3Field": "Quantidade de obrigações",
+          "required": true,
+          "options": [
+            {
+              "code": "SINGLE_NAME",
+              "label": {
+                "pt": "Single name"
+              }
+            },
+            {
+              "code": "CESTA",
+              "label": {
+                "pt": "Cesta"
+              }
+            }
+          ],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "calculationAgent",
+          "label": {
+            "pt": "Agente de cálculo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela apuração dos valores a serem pagos ou das obrigações de referência a serem entregues pelo emissor do COE Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Agente de cálculo",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "eventDetermination",
+          "label": {
+            "pt": "Determinação de ocorrência de evento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela comunicação da ocorrência do evento de crédito Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Determinação de ocorrência de evento",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "settlementConditions",
+          "label": {
+            "pt": "Condições para liquidação"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar as condições para liquidação antecipada Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Condições para liquidação",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": []
+}

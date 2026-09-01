@@ -37,6 +37,7 @@ public class ValidationEngineTests
                 ["asset"] = "IBOV",
                 ["initialValue"] = 132000m,
                 ["fixingWindow"] = "DATA_UNICA",
+                ["fixingDate"] = "2027-01-15",
                 ["quoteType"] = "FECHAMENTO",
                 ["hasLookback"] = false
             },

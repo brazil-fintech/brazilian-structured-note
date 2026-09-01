@@ -1,0 +1,408 @@
+{
+  "figureCode": "COE001083",
+  "figureName": "COE de Crédito–Troca de Indexadores",
+  "commercialName": "COE de Crédito–Troca de Indexadores",
+  "description": {
+    "pt": "Figura COE001083 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001083. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "periodAsset1",
+          "label": {
+            "pt": "Ativo Subjacente Período 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 1 (Pré, DI ou IPCA)."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente Período 1",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "periodAsset2",
+          "label": {
+            "pt": "Ativo Subjacente Período 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 2 (Pré, DI ou IPCA)."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente Período 2",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "assetSwitchDate",
+          "label": {
+            "pt": "Data da troca do ativo subjacente"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a data na qual haverá a troca de ativo subjacente. Esta data deverá ser maior que a data de início e menor que a data de vencimento Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data da troca do ativo subjacente",
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "indexParticipation1",
+          "label": {
+            "pt": "Participação Indexador 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se “Ativo Subjacente 1” indicado como “DI” ou “IPCA”. Se “Ativo Subjacente 1” e “Ativo Subjacente 2” forem preenchidos de forma igual, selecionando “DI” ou “IPCA” em ambos, este campo deve ser preenchido com um percentual diferente de “Participação Indexador 2 (%)”. Para “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação Indexador 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "indexParticipation2",
+          "label": {
+            "pt": "Participação Indexador 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se “Ativo Subjacente 2” indicado como “DI” ou “IPCA”. Se “Ativo Subjacente 1” e “Ativo Subjacente 2 forem preenchidos de forma igual, selecionando “DI” ou “IPCA” em ambos, este campo deve ser preenchido com um percentual diferente de “Participação Indexador 1 (%)”. Para “Pré”, este campo não deverá ser preenchido. Formato: Numérico com 10 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação Indexador 2 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "periodCouponRate1",
+          "label": {
+            "pt": "Cupom Período 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se “Ativo Subjacente 1” indicado como “Pré”. Preenchimento opcional se indicado como “DI” ou “IPCA”. Se “Ativo Subjacente 2” também tiver sido indicado como “Pré”, este campo deve ser preenchido com um percentual diferente de “Cupom Período 2 (%)”. Formato: Numérico com 10 inteiros e 8 decimais, incluindo o sinal “-“ e “+”. A não indicação do sinal deve ser considerada como “+”."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Período 1 (%)",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "periodDayCountBasis1",
+          "label": {
+            "pt": "Base Período 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório quando informado o campo Cupom Período 1 (%). Campo indicador para informar a base do Cupom do Período 1. Campo com as opções: 252 exp, 360 exp e 360 lin."
+          },
+          "dataType": "enum",
+          "b3Field": "Base Período 1",
+          "required": true,
+          "options": [
+            {
+              "code": "V252_EXP",
+              "label": {
+                "pt": "252 exp"
+              }
+            },
+            {
+              "code": "V360_EXP",
+              "label": {
+                "pt": "360 exp"
+              }
+            },
+            {
+              "code": "V360_LIN",
+              "label": {
+                "pt": "360 lin"
+              }
+            }
+          ],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "periodCouponRate2",
+          "label": {
+            "pt": "Cupom Período 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório se “Ativo Subjacente 2” indicado como “Pré”. Preenchimento opcional se indicado como “DI” ou “IPCA”. Se “Ativo Subjacente 1” também tiver sido indicado como “Pré”, este campo deve ser preenchido com um percentual diferente de “Cupom Período 1 (%)”. Formato: Numérico com 10 inteiros e 8 decimais, incluindo o sinal “-“ e “+”. A não indicação do sinal deve ser considerada como “+”."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom Período 2 (%)",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "periodDayCountBasis2",
+          "label": {
+            "pt": "Base Período 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, quando informado o campo Cupom Período 2 (%). Campo indicador para informar a base do Cupom do Período 2. Campo com as opções: 252 exp, 360 exp e 360 lin."
+          },
+          "dataType": "enum",
+          "b3Field": "Base Período 2",
+          "required": true,
+          "options": [
+            {
+              "code": "V252_EXP",
+              "label": {
+                "pt": "252 exp"
+              }
+            },
+            {
+              "code": "V360_EXP",
+              "label": {
+                "pt": "360 exp"
+              }
+            },
+            {
+              "code": "V360_LIN",
+              "label": {
+                "pt": "360 lin"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "credit",
+      "label": {
+        "pt": "Evento de crédito",
+        "en": "Credit event"
+      },
+      "kind": "tab",
+      "order": 55,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "referenceEntity",
+          "label": {
+            "pt": "Entidade de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Emissora, devedora ou garantidora das obrigações financeiras Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Entidade de referência",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "referenceObligation",
+          "label": {
+            "pt": "Obrigação de referência"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Obrigação financeira da entidade de referência discriminada no COE Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Obrigação de referência",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "obligationCount",
+          "label": {
+            "pt": "Quantidade de obrigações"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar se a obrigação de referência será com base em um ativo ou em uma cesta/entidade de referência. Campo com as opções: Single name, Cesta"
+          },
+          "dataType": "enum",
+          "b3Field": "Quantidade de obrigações",
+          "required": true,
+          "options": [
+            {
+              "code": "SINGLE_NAME",
+              "label": {
+                "pt": "Single name"
+              }
+            },
+            {
+              "code": "CESTA",
+              "label": {
+                "pt": "Cesta"
+              }
+            }
+          ],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "calculationAgent",
+          "label": {
+            "pt": "Agente de cálculo"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela apuração dos valores a serem pagos ou das obrigações de referência a serem entregues pelo emissor do COE Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Agente de cálculo",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "eventDetermination",
+          "label": {
+            "pt": "Determinação de ocorrência de evento"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela comunicação da ocorrência do evento de crédito Campo com a opção: Emissor"
+          },
+          "dataType": "string",
+          "b3Field": "Determinação de ocorrência de evento",
+          "maxLength": 100,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "settlementConditions",
+          "label": {
+            "pt": "Condições para liquidação"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informar as condições para liquidação antecipada Formato: Texto com 40 posições"
+          },
+          "dataType": "string",
+          "b3Field": "Condições para liquidação",
+          "maxLength": 100,
+          "required": false,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001083.indexParticipation1-positive",
+      "targets": [
+        "payoff.indexParticipation1"
+      ],
+      "assert": "payoff.indexParticipation1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação Indexador 1 (%)” deve ser maior que zero.",
+        "en": "“Participação Indexador 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001083.indexParticipation2-positive",
+      "targets": [
+        "payoff.indexParticipation2"
+      ],
+      "assert": "payoff.indexParticipation2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação Indexador 2 (%)” deve ser maior que zero.",
+        "en": "“Participação Indexador 2 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

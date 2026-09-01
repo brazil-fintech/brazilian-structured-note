@@ -52,6 +52,36 @@ export const ui = {
       ? 'The attributes below change with the figure. Common data stays at the top; each block gets its own tab.'
       : 'Os atributos abaixo mudam conforme a figura. Os dados gerais ficam no topo; cada bloco tem sua aba.',
   cancel: (c: string) => (en(c) ? 'Cancel' : 'Cancelar'),
+  bookableOnly: (c: string) => (en(c) ? 'Only what can be booked' : 'Somente o que pode ser registrado'),
+  figureCoverage: (c: string, bookable: number, published: number) =>
+    en(c)
+      ? `${bookable} of B3's ${published} figures can be booked here`
+      : `${bookable} das ${published} figuras da B3 podem ser registradas aqui`,
+  figureNotConfigured: (c: string) =>
+    en(c)
+      ? 'B3 publishes this figure, but its attributes are not modelled here yet, so there is no form to fill in.'
+      : 'A B3 publica esta figura, mas seus atributos ainda não estão modelados aqui — não há formulário para preencher.',
+  figureQuarantined: (c: string) =>
+    en(c)
+      ? 'The domain file for this figure does not compile; the ingestion log has the errors.'
+      : 'O arquivo de domínio desta figura não compila; os erros estão no log de ingestão.',
+  availability: (c: string, availability: string) => {
+    const pt: Record<string, string> = {
+      Available: 'Disponível',
+      Pending: 'Não liberada',
+      Quarantined: 'Em quarentena',
+      Retired: 'Descontinuada',
+      NotConfigured: 'Sem formulário'
+    };
+    const gb: Record<string, string> = {
+      Available: 'Available',
+      Pending: 'Not released',
+      Quarantined: 'Quarantined',
+      Retired: 'Retired',
+      NotConfigured: 'No form'
+    };
+    return (en(c) ? gb : pt)[availability] ?? availability;
+  },
   save: (c: string) => (en(c) ? 'Save' : 'Salvar'),
   saveAnyway: (c: string) => (en(c) ? 'Save with warnings' : 'Salvar com alertas'),
   saving: (c: string) => (en(c) ? 'Saving…' : 'Salvando…'),

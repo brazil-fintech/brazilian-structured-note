@@ -1,0 +1,366 @@
+{
+  "figureCode": "COE001050",
+  "figureName": "Call Strike Lookback",
+  "commercialName": "Call Strike Lookback",
+  "description": {
+    "pt": "Figura COE001050 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001050. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1Quantidade1ParticipacaoCenarioDeAlta",
+          "label": {
+            "pt": "Strike 1 (%) Quantidade 1 Participação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Campo de preenchimento opcional. Informa a quantidade do ativo subjacente que é utilizado no cálculo de ajuste referente ao Strike 1. Formato: Numérico com 8 inteiros e 8 decimais. Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do ativo subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0"
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%) Quantidade 1 Participação cenário de alta (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "observations",
+      "label": {
+        "pt": "Observações",
+        "en": "Observations"
+      },
+      "kind": "tab",
+      "order": 45,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "observationDate3",
+          "label": {
+            "pt": "Data de Observação 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 3",
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate4",
+          "label": {
+            "pt": "Data de Observação 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 4",
+          "required": false,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate5",
+          "label": {
+            "pt": "Data de Observação 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 5",
+          "required": false,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate6",
+          "label": {
+            "pt": "Data de Observação 6"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 6",
+          "required": false,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate7",
+          "label": {
+            "pt": "Data de Observação 7"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 7",
+          "required": false,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate8",
+          "label": {
+            "pt": "Data de Observação 8"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 8",
+          "required": false,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate9",
+          "label": {
+            "pt": "Data de Observação 9"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 9",
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate10",
+          "label": {
+            "pt": "Data de Observação 10"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 10",
+          "required": false,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate11",
+          "label": {
+            "pt": "Data de Observação 11"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 11",
+          "required": false,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate12",
+          "label": {
+            "pt": "Data de Observação 12"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 12",
+          "required": false,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate13",
+          "label": {
+            "pt": "Data de Observação 13"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 3ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 4ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 5ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 6ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 7ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 8ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 9ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 10ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 11ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 12ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 13ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 13",
+          "required": false,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate14",
+          "label": {
+            "pt": "Data de Observação 14"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 14",
+          "required": false,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate15",
+          "label": {
+            "pt": "Data de Observação 15"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 15",
+          "required": false,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate16",
+          "label": {
+            "pt": "Data de Observação 16"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 16",
+          "required": false,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate17",
+          "label": {
+            "pt": "Data de Observação 17"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 17",
+          "required": false,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate18",
+          "label": {
+            "pt": "Data de Observação 18"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 18",
+          "required": false,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate19",
+          "label": {
+            "pt": "Data de Observação 19"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 19",
+          "required": false,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "observationDate20",
+          "label": {
+            "pt": "Data de Observação 20"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a 14ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 15ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 16ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 17ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 18ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 19ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA. Campo de preenchimento opcional. Informa a 20ª data da cotação que será considerada para apuração do lookback. Formato: DD/MM/AAAA."
+          },
+          "dataType": "date",
+          "b3Field": "Data de Observação 20",
+          "required": false,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001050.strike1Quantidade1ParticipacaoCenarioDeAlta-positive",
+      "targets": [
+        "payoff.strike1Quantidade1ParticipacaoCenarioDeAlta"
+      ],
+      "assert": "payoff.strike1Quantidade1ParticipacaoCenarioDeAlta > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%) Quantidade 1 Participação cenário de alta (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%) Quantidade 1 Participação cenário de alta (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

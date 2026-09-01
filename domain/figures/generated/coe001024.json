@@ -1,0 +1,322 @@
+{
+  "figureCode": "COE001024",
+  "figureName": "Put KIKO",
+  "commercialName": "Put KIKO",
+  "description": {
+    "pt": "Figura COE001024 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001024. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "strike1",
+          "label": {
+            "pt": "Strike 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Formato: Numérico percentual com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "quantity1",
+          "label": {
+            "pt": "Quantidade 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento opcional. Informa a quantidade do ativo subjacente que é utilizado no cálculo de ajuste referente ao Strike 1. Formato: Numérico com 8 inteiros e 8 decimais."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "decimals": 8,
+          "max": 99999999,
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de baixa (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a desvalorização do ativo subjacente. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de baixa (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 30,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "downsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Não preencher se a “Classe do Ativo Subjacente” for igual a “CESTA”. Indicação de qual será a cotação a ser considerada. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa",
+          "required": true,
+          "visibleWhen": "underlying.assetClass != 'CESTA'",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "kiBarrier",
+          "label": {
+            "pt": "Barreira KI"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo percentual aplicado sobre o valor inicial do Ativo Subjacente indicando a barreira de KI da estrutura. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "decimal",
+          "b3Field": "Barreira KI",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "kiRebate",
+          "label": {
+            "pt": "Rebate KI (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for maior que a barreira no período de verificação. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KI (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "koBarrier",
+          "label": {
+            "pt": "Barreira KO"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo percentual aplicado sobre o valor inicial do Ativo Subjacente. Indica a barreira de KO da estrutura. Formato: Numérico com 4 inteiros e 8 decimais, maior que 0."
+          },
+          "dataType": "decimal",
+          "b3Field": "Barreira KO",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "koRebate",
+          "label": {
+            "pt": "Rebate KO (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o VFE quando detectado que a cotação for menor que a barreira de KO no período de verificação. Formato: Numérico com 4 inteiros e 4 decimais, maior que 0."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate KO (%)",
+          "decimals": 4,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001024.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001024.downsideParticipation-positive",
+      "targets": [
+        "payoff.downsideParticipation"
+      ],
+      "assert": "payoff.downsideParticipation > 0",
+      "args": {},
+      "message": {
+        "pt": "“Participação cenário de baixa (%)” deve ser maior que zero.",
+        "en": "“Participação cenário de baixa (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001024.kiBarrier-positive",
+      "targets": [
+        "barriers.kiBarrier"
+      ],
+      "assert": "barriers.kiBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira KI” deve ser maior que zero.",
+        "en": "“Barreira KI” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001024.kiRebate-positive",
+      "targets": [
+        "barriers.kiRebate"
+      ],
+      "assert": "barriers.kiRebate > 0",
+      "args": {},
+      "message": {
+        "pt": "“Rebate KI (%)” deve ser maior que zero.",
+        "en": "“Rebate KI (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001024.koBarrier-positive",
+      "targets": [
+        "barriers.koBarrier"
+      ],
+      "assert": "barriers.koBarrier > 0",
+      "args": {},
+      "message": {
+        "pt": "“Barreira KO” deve ser maior que zero.",
+        "en": "“Barreira KO” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001024.koRebate-positive",
+      "targets": [
+        "barriers.koRebate"
+      ],
+      "assert": "barriers.koRebate > 0",
+      "args": {},
+      "message": {
+        "pt": "“Rebate KO (%)” deve ser maior que zero.",
+        "en": "“Rebate KO (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}

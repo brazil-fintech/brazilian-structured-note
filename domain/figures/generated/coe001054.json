@@ -1,0 +1,567 @@
+{
+  "figureCode": "COE001054",
+  "figureName": "Alocação Forwards KI",
+  "commercialName": "Alocação Forwards KI",
+  "description": {
+    "pt": "Figura COE001054 do catálogo da B3. Os atributos abaixo são os que a B3 registra para esta figura, conforme o anexo “Descrição dos campos das figuras” do Manual de Operações — COE.",
+    "en": "B3 catalogue figure COE001054. The attributes below are the ones B3 registers for it, from the field annex of the Manual de Operações — COE."
+  },
+  "modalities": [
+    "VNP",
+    "VNR"
+  ],
+  "underlyingClasses": [
+    "ACOES",
+    "ACOES INTERNACIONAIS",
+    "INDICES",
+    "INDICES INTERNACIONAIS",
+    "TAXAS DE CAMBIO",
+    "COMMODITIES",
+    "JUROS",
+    "JUROS INTERNACIONAIS",
+    "TITULOS PUBLICOS",
+    "TITULOS PRIVADOS",
+    "CESTA"
+  ],
+  "extends": [
+    "common/identification",
+    "common/underlying",
+    "common/remuneration",
+    "common/barriers",
+    "common/settlement"
+  ],
+  "removeSections": [],
+  "sections": [
+    {
+      "key": "payoff",
+      "label": {
+        "pt": "Payoff",
+        "en": "Payoff"
+      },
+      "kind": "tab",
+      "order": 30,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "quoteType1",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 1"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Indicação de qual será a cotação a ser considerada na liquidação da operação, referente ao Ativo Subjacente Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 1",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 10,
+          "inGrid": false
+        },
+        {
+          "key": "globalUpsideCap",
+          "label": {
+            "pt": "Limitador de alta global (%)"
+          },
+          "help": {
+            "pt": "Informar o limitador de alta global da estrutura, em percentual que deverá ser aplicado sobre o notional. Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador de alta global (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 20,
+          "inGrid": false
+        },
+        {
+          "key": "dataFinalParaVerificacaoObrigatoriamente",
+          "label": {
+            "pt": "Data Final para Verificação obrigatoriamente"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Data final da janela de verificação da barreira de KI. Esta data deve ser superior a indicada no campo “Data Inicial para verificação”, e inferior a data de vencimento. Formato: DD/MM/AAAA. Dados referente ao remunerador (Pré) da alocação – O percentual da alocação inicial é 100%"
+          },
+          "dataType": "date",
+          "b3Field": "Data Final para Verificação obrigatoriamente",
+          "required": true,
+          "options": [],
+          "order": 40,
+          "inGrid": false
+        },
+        {
+          "key": "strikeki1",
+          "label": {
+            "pt": "Strike_KI 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o Strike e a Barreira de KI da FWD KI 1, em percentual. O percentual será aplicado sobre o Valor Inicial do Ativo Subjacente. Para essa figura o Strike é sempre igual à barreira de Knock In. Formato: Numérico com 4 inteiros e 8 decimais, maior que zero."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike_KI 1 (%)",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
+        },
+        {
+          "key": "quantidade1",
+          "label": {
+            "pt": "Quantidade 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a quantidade (em % do volume financeiro de emissão) da FWD KI Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 1 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "alocacao1",
+          "label": {
+            "pt": "Alocação 1 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar a alocação do Nível 1 (em % do volume financeiro de emissão). Percentual do notional que será remunerado pela taxa Pré no Nível 1. A Alocação 1 deverá ser igual a: (100% - Q1) Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Alocação 1 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "strikeki2",
+          "label": {
+            "pt": "Strike_KI 2"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar o Strike e a Barreira de KI da FWD KI 2, em percentual. O percentual será aplicado sobre o Valor Inicial do Ativo Subjacente. Para essa figura o Strike é sempre igual à barreira de Knock In. Formato: Numérico com 4 inteiros e 8 decimais, maior que zero e menor que o Strike_KI 1"
+          },
+          "dataType": "decimal",
+          "b3Field": "Strike_KI 2",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "quantidade2",
+          "label": {
+            "pt": "Quantidade 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a quantidade (em % do volume financeiro de emissão) da FWD KI Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 2 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "alocacao2",
+          "label": {
+            "pt": "Alocação 2 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a alocação do Nível 2 (em % do volume financeiro de emissão). Percentual do notional que será remunerado pela taxa Pré no Nível 2. A Alocação 2 deverá ser igual a: (100% - Q1 – Q2) Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Alocação 2 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "strikeki3",
+          "label": {
+            "pt": "Strike_KI 3"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar o Strike e a Barreira de KI da FWD KI 3, em percentual. O percentual será aplicado sobre o Valor Inicial do Ativo Subjacente. Para essa figura o Strike é sempre igual à barreira de Knock In. Formato: Numérico com 4 inteiros e 8 decimais, maior que zero e menor que o Strike_KI 2"
+          },
+          "dataType": "decimal",
+          "b3Field": "Strike_KI 3",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "quantidade3",
+          "label": {
+            "pt": "Quantidade 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a quantidade (em % do volume financeiro de emissão) da FWD KI Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 3 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "alocacao3",
+          "label": {
+            "pt": "Alocação 3 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a alocação do Nível 3 (em % do volume financeiro de emissão). Percentual do notional que será remunerado pela taxa Pré no Nível 3. A Alocação 3 deverá ser igual a: (100% - Q1 – Q2 – Q3) Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Alocação 3 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "strikeki4",
+          "label": {
+            "pt": "Strike_KI 4"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar o Strike e a Barreira de KI da FWD KI 4, em percentual. O percentual será aplicado sobre o Valor Inicial do Ativo Subjacente. Para essa figura o Strike é sempre igual à barreira de Knock In. Formato: Numérico com 4 inteiros e 8 decimais, maior que zero e menor que o Strike_KI 3"
+          },
+          "dataType": "decimal",
+          "b3Field": "Strike_KI 4",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "quantidade4",
+          "label": {
+            "pt": "Quantidade 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a quantidade (em % do volume financeiro de emissão) da FWD KI Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 4 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "alocacao4",
+          "label": {
+            "pt": "Alocação 4 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a alocação do Nível 4 (em % do volume financeiro de emissão). Percentual do notional que será remunerado pela taxa Pré no Nível 4. A Alocação 4 deverá ser igual a: (100% - Q1 – Q2 – Q3 – Q4) Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Alocação 4 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "strikeki5",
+          "label": {
+            "pt": "Strike_KI 5"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar o Strike e a Barreira de KI da FWD KI 5, em percentual. O percentual será aplicado sobre o Valor Inicial do Ativo Subjacente. Para essa figura o Strike é sempre igual à barreira de Knock In. Formato: Numérico com 4 inteiros e 8 decimais, maior que zero e menor que o Strike_KI 4"
+          },
+          "dataType": "decimal",
+          "b3Field": "Strike_KI 5",
+          "decimals": 8,
+          "min": 0,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        },
+        {
+          "key": "quantidade5",
+          "label": {
+            "pt": "Quantidade 5 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a quantidade (em % do volume financeiro de emissão) da FWD KI Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Quantidade 5 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 200,
+          "inGrid": false
+        },
+        {
+          "key": "alocacao5",
+          "label": {
+            "pt": "Alocação 5 (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório, se houver. Informar a alocação do Nível 4 (em % do volume financeiro de emissão). Percentual do notional que será remunerado pela taxa Pré no Nível 5. A Alocação 5 deverá ser igual a: (100% - Q1 – Q2 – Q3 – Q4 – Q5) Formato: Numérico com 4 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Alocação 5 (%)",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 210,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "barriers",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "downsideVerificationQuoteType",
+          "label": {
+            "pt": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Tipo de cotação a ser considerada na verificação das barreiras de KI. Campo com as opções: Fechamento, Média, Máximo, Mínimo e Ajuste."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "label": {
+                "pt": "Média"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "label": {
+                "pt": "Máximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 30,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "additionalCouponRate",
+          "label": {
+            "pt": "Cupom remunerador adicional (%)"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Informar o cupom da taxa Pré em % a.a. Formato: Numérico com 10 inteiros e 8 decimais."
+          },
+          "dataType": "percent",
+          "b3Field": "Cupom remunerador adicional (%)",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 50,
+          "inGrid": false
+        },
+        {
+          "key": "additionalDayCountBasis",
+          "label": {
+            "pt": "Base remunerador adicional"
+          },
+          "help": {
+            "pt": "Campo de preenchimento obrigatório. Campo com as opções: 252 EXP; 360 EXP; 360 LIN."
+          },
+          "dataType": "enum",
+          "b3Field": "Base remunerador adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "V252_EXP_360_EXP_360_LIN",
+              "label": {
+                "pt": "252 EXP; 360 EXP; 360 LIN"
+              }
+            }
+          ],
+          "order": 60,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    }
+  ],
+  "rules": [
+    {
+      "id": "coe001054.strikeki1-positive",
+      "targets": [
+        "payoff.strikeki1"
+      ],
+      "assert": "payoff.strikeki1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike_KI 1 (%)” deve ser maior que zero.",
+        "en": "“Strike_KI 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001054.strikeki2-positive",
+      "targets": [
+        "payoff.strikeki2"
+      ],
+      "assert": "payoff.strikeki2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike_KI 2” deve ser maior que zero.",
+        "en": "“Strike_KI 2” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001054.strikeki3-positive",
+      "targets": [
+        "payoff.strikeki3"
+      ],
+      "assert": "payoff.strikeki3 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike_KI 3” deve ser maior que zero.",
+        "en": "“Strike_KI 3” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001054.strikeki4-positive",
+      "targets": [
+        "payoff.strikeki4"
+      ],
+      "assert": "payoff.strikeki4 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike_KI 4” deve ser maior que zero.",
+        "en": "“Strike_KI 4” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001054.strikeki5-positive",
+      "targets": [
+        "payoff.strikeki5"
+      ],
+      "assert": "payoff.strikeki5 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike_KI 5” deve ser maior que zero.",
+        "en": "“Strike_KI 5” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
+}
