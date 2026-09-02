@@ -106,8 +106,9 @@ docs/
   clearing/                   ← B3 clearing documents (Manual de Operações, Caderno de
                                 Fórmulas, Manual de Normas) — see its README
 
-reference/b3/                 ← B3's published exports: figures, domains, fields, underlyings,
-                                and the per-figure attribute annex of the Manual de Operações
+reference/b3/                 ← B3's published exports, pulled from ftp.cetip.com.br/Public:
+                                figures, domains, the derivative-data dictionary and its
+                                per-figure attribute lists, underlyings, participants
 domain/                       ← the figure catalog the platform runs on — see its README
   common/                     ← reusable blocks: identification, underlying, remuneration,
                                 barriers, autocall, settlement
@@ -115,7 +116,8 @@ domain/                       ← the figure catalog the platform runs on — se
     generated/                ← the rest of the catalogue, written by tools/Coe.DomainGen
 src/
   Coe.Core/                   ← template model, expression AST + evaluator, validation engine
-  Coe.Ingestion/              ← domain-file reader and template compiler
+  Coe.Ingestion/              ← domain-file reader, template compiler, CETIP FTP client
+  Coe.Clearing/               ← the CETIP upload files (ENVIAR ARQUIVOS §4.8)
   Coe.Infrastructure/         ← ADO.NET data layer, template cache, booking, server-side checks
   Coe.Observability/          ← Serilog + OpenTelemetry wiring shared by both hosts
   Coe.Api/                    ← minimal API: templates, assets, validation
@@ -156,10 +158,30 @@ redemption is principal plus interest — so they are booked from the common reg
 alone. Fourteen figures are hand-written, carrying the formula symbols and the economic warnings
 a desk would otherwise catch by eye; a curated file always wins over its generated twin.
 
-**Checked against B3's own data.** The figure catalogue, registration domains, strategy-field
-dictionary and underlying master are committed under [reference/b3/](reference/b3/README.md), and
-the compiler validates every domain file against them — a figure code B3 does not publish, or an
-option code it has retired, fails ingestion rather than a registration.
+**Reference data comes straight from CETIP.** The figure catalogue, the registration domains, the
+derivative-data dictionary, the underlying master and the participant mnemonics are pulled from
+`ftp://ftp.cetip.com.br/Public` — the same dated files the *ENVIAR ARQUIVOS* layouts point
+registrants at — and the compiler validates every domain file against them: a figure code B3 does
+not publish, or an option code it has retired, fails ingestion rather than a registration. The
+last-fetched copies stay committed under [reference/b3/](reference/b3/README.md), so a fresh
+checkout compiles without a network and an unreachable directory costs freshness and nothing else.
+
+**Every figure knows which of its attributes B3 will accept.** `DTpFigurasDadosDerivativo` lists,
+per figure, the attributes B3 registers for it and the identifier each one is written under —
+1,647 pairings over all 88 figures, including the four the manual's annex does not describe. The
+compiler attaches those identifiers to the domain files by B3's own name for the attribute —
+1,205 of the 1,647 today — and reports the rest per figure. "Is this figure complete?" now has a
+published answer rather than a reading of the manual, and the gap is a list rather than a
+suspicion. The export also settles what the manual's prose only describes: the generated figures
+take their type, precision and size from it, which corrected 71 attributes whose precision had
+been read out of a sentence.
+
+**The registration is a file, and the platform writes it.** From a booked asset,
+`GET /api/assets/{id}/clearing` produces the CETIP upload files of §4.8 of the *Manual de
+Transferência de Arquivos*: the Registro COE, plus the cash-flow, basket and fixing-date files
+the booked values call for. Every field is written at the position the manual prints for it and
+the builder refuses one that does not start where the last ended, so a mistranscribed layout
+fails at the first field instead of arriving at B3 shifted by one character.
 
 **Built to be watched and to stay quick.** Serilog writes structured logs stamped with the trace
 and span they happened in; OpenTelemetry exports traces and metrics for validation, ingestion,
@@ -170,7 +192,7 @@ process and the browser fetches each one once behind an ETag. Numbers and the re
 
 ```bash
 docker compose up -d mssql                # SQL Server
-dotnet run --project src/Coe.Worker       # compile domain/ into templates, keep watching
+dotnet run --project src/Coe.Worker       # sync CETIP, compile domain/ into templates, keep watching
 dotnet run --project src/Coe.Api          # http://localhost:5080
 cd web && npm install && npm run dev      # http://localhost:5173
 ```
@@ -190,4 +212,7 @@ primary sources are:
   automatic registration waiver; the DIE.
 - **B3, [Manual de Operações — COE](https://www.b3.com.br/pt_br/regulacao/estrutura-normativa/estrutura-normativa/manuais-de-operacoes-8ae490ca69088bf00169104ff0ad7417/certificado-de-operacoes-estruturadas-coe/)** — registration fields and lifecycle events.
 - **B3, [Caderno de Fórmulas — COE](https://www.b3.com.br/data/files/E2/D1/DC/38/839009105391B9F8AC094EA8/CADERNO%20DE%20FORMULAS%20-%20COE.pdf)** — calculation methodology for registered parameters.
+- **B3, Manual de Transferência de Arquivos (*Enviar Arquivos*)** — the fixed-width layouts a
+  registration and its lifecycle events are uploaded as; §4.8 is the COE. Committed under
+  [docs/clearing/](docs/clearing/README.md).
 - **ANBIMA — [COE regulatory summary](https://www.anbima.com.br/pt_br/informar/regulacao/informe-de-legislacao/certificados-de-operacoes-estruturadas-coe.htm)** and self-regulation code for distribution.

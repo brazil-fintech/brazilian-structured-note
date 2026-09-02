@@ -1,4 +1,5 @@
 using System.Globalization;
+using Coe.Clearing;
 using Coe.Core.Assets;
 using Coe.Core.Validation;
 using Coe.Infrastructure;
@@ -97,6 +98,61 @@ public static class AssetEndpoints
         group.MapPut("/{id:guid}", async (Guid id, SaveAssetRequest request, AssetBookingService booking, HttpContext http, CancellationToken ct) =>
             await SaveAsync(id, request, booking, http, ct))
             .WithName("UpdateAsset");
+
+        // The registration as B3 receives it: the Registro COE file, plus the cash-flow, basket
+        // and fixing-date files the booked values call for.
+        group.MapGet("/{id:guid}/clearing", async (
+            Guid id, string? participant, string? date,
+            AssetClearingService clearing, CancellationToken ct) =>
+        {
+            if (!TryParseDate(date, out var fileDate))
+                return Results.BadRequest(new { message = "date must be an ISO date (yyyy-MM-dd)." });
+
+            try
+            {
+                var set = await clearing.GenerateAsync(id, participant, fileDate, ct);
+                if (set is null) return Results.NotFound();
+
+                return Results.Ok(new ClearingResponse(
+                    set.Files.Select(f => new ClearingFileResponse(
+                        f.Layout, f.Operation, f.FileName, f.RecordCount, f.Content)).ToList(),
+                    set.Notes));
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or ClearingFormatException)
+            {
+                // A value that will not fit its field, or a missing participant name: the desk
+                // can fix both, and a 500 would say neither.
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        })
+        .WithName("GetAssetClearingFiles")
+        .WithSummary("The CETIP upload files for a booked asset (ENVIAR ARQUIVOS 4.8.1, 4.8.9, 4.8.10 and 4.8.12).");
+
+        // The same file, as bytes, in the single-byte encoding CETIP reads.
+        group.MapGet("/{id:guid}/clearing/{operation}", async (
+            Guid id, string operation, string? participant, string? date,
+            AssetClearingService clearing, CancellationToken ct) =>
+        {
+            if (!TryParseDate(date, out var fileDate))
+                return Results.BadRequest(new { message = "date must be an ISO date (yyyy-MM-dd)." });
+
+            try
+            {
+                var set = await clearing.GenerateAsync(id, participant, fileDate, ct);
+                if (set is null) return Results.NotFound();
+
+                var file = set.Find(operation);
+                return file is null
+                    ? Results.NotFound(new { message = $"This asset produces no '{operation}' file." })
+                    : Results.File(file.ToBytes(), "text/plain", file.FileName);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or ClearingFormatException)
+            {
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        })
+        .WithName("DownloadAssetClearingFile")
+        .WithSummary("One CETIP upload file, encoded as B3 reads it.");
 
         return app;
     }

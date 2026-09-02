@@ -12,23 +12,30 @@ template. Adding `COE001042` means adding `domain/figures/coe001042-….json`.
 ## The pieces
 
 ```
-reference/b3/              ← B3's published exports: figures, domains, fields, underlyings
+ftp://ftp.cetip.com.br/Public   ← B3's dated exports, published daily
+        │
+        │  newest file per export, transcoded to UTF-8
+        ▼
+reference/b3/              ← figures, domains, the derivative-data dictionary and its
+                             per-figure attribute lists, underlyings, participants
 domain/                    ← the source of truth for every figure (see domain/README.md)
         │
         │  file watch / poll  ·  domain files are checked against reference/b3/
         ▼
-src/Coe.Worker             ← ingestion: reads domain files, compiles, versions, enables
+src/Coe.Worker             ← ingestion: syncs CETIP, reads domain files, compiles, versions, enables
         │
         ▼
    MSSQL  figure.Figure · figure.FigureTemplate · asset.Asset
           ref.Holiday · ref.Underlying · b3.Figure · b3.Domain · b3.StrategyField
+          b3.DerivativeField · b3.FigureAttribute
         │
         ▼
 src/Coe.Api                ← template + asset endpoints, and the validation authority
         │
         │  GET  /api/figures/{code}/template
-        │  POST /api/assets/validate     ← called as the user types
-        │  POST /api/assets              ← full validation, then save
+        │  POST /api/assets/validate         ← called as the user types
+        │  POST /api/assets                  ← full validation, then save
+        │  GET  /api/assets/{id}/clearing    ← the CETIP upload files
         ▼
 web/                       ← React: asset list, figure picker, dynamic form
 ```
@@ -36,7 +43,8 @@ web/                       ← React: asset list, figure picker, dynamic form
 | Project | What it is |
 |---|---|
 | `src/Coe.Core` | The shared contract: the template model, the portable expression AST and its evaluator, the validation engine, and the entities. No I/O, no framework. |
-| `src/Coe.Ingestion` | Reading domain files and compiling them: the infix expression parser, name resolution, fragment merging, and the ingestion pass itself. |
+| `src/Coe.Ingestion` | Reading domain files and compiling them: the infix expression parser, name resolution, fragment merging, and the ingestion pass itself. Also the CETIP client — a small RFC 959 FTP implementation and the sync that keeps `reference/b3/` current. |
+| `src/Coe.Clearing` | Writing the CETIP upload files: the position-checked fixed-width builder and one layout per section of *ENVIAR ARQUIVOS* 4.8. Depends on `Coe.Core` alone. |
 | `src/Coe.Infrastructure` | ADO.NET over `Microsoft.Data.SqlClient`, the figure catalog, the template cache, the booking service, and the server-side checks. |
 | `src/Coe.Observability` | Serilog wiring and the OpenTelemetry trace/metric pipeline, shared by both hosts. |
 | `src/Coe.Api` | Minimal-API endpoints and DI wiring. |
@@ -49,6 +57,65 @@ reasons that matter here: the shapes the platform needs are unusual for an ORM (
 unpaged total in one statement, an `OUTPUT` clause returning a rowversion, a single-statement
 upsert), and the instance document is JSON that no entity mapping would model usefully. The cost
 is that the SQL is yours to maintain; the tests in `DatabaseTests` run it against a real server.
+
+## Reference data comes from CETIP, not from a commit
+
+B3 publishes its reference data to `ftp://ftp.cetip.com.br/Public` — one dated file per export
+per day, `20260828_DTpFiguras.txt` — and the *ENVIAR ARQUIVOS* layouts point registrants at those
+files by name for the domains their fields accept. The worker lists the directory, takes the
+newest file for each export, transcodes it from CETIP's Windows-1252/CRLF to UTF-8/LF, and writes
+it into `reference/b3/`. Nothing else about the file changes.
+
+It runs at start-up and then no more often than `Cetip:MinimumInterval` — six hours by default,
+because the exports are published once a day and the ingestion loop wakes every few minutes. When
+a file changes, `B3ReferenceProvider` swaps the whole set in one reference assignment and the
+next compile checks against it; a pass already running keeps the set it started with, because a
+figure checked half against yesterday's catalogue and half against today's is worse than one
+checked wholly against either.
+
+**None of it is load-bearing.** A directory that cannot be reached, an export not yet published,
+a listing that comes back short: each leaves the copy on disk in place and is reported, and a
+sync refuses to replace a file with an older one. The exports stay committed, so a fresh checkout
+compiles and the tests run without a network. `Cetip:LocalMirrorDirectory` points the whole
+mechanism at a folder instead, which is how a desk behind a firewall mirrors once and shares, and
+how the test suite exercises the selection, transcoding and manifest logic without a socket.
+
+The FTP client is a few hundred lines of RFC 959 rather than a package: `FtpWebRequest` is
+obsoleted (SYSLIB0014), and a listing with the dates on it is the whole requirement. Passive mode
+only — the public directory sits behind a firewall that will not open a port back — with `EPSV`
+tried before `PASV`, and the peer of the control connection preferred over the address a NATted
+server advertises for itself.
+
+## The registration files
+
+A booked asset is not finished until B3 has it. `Coe.Clearing` writes the upload files of section
+4.8 of the *Manual de Transferência de Arquivos (Enviar Arquivos)*: the **Registro COE** (0001)
+always, plus **Registro Fluxo de Caixa** (FLUX), **RegistroCestas** (CEST) and **Registro Datas
+Fixing** (DTFX) when the booked values call for them — the same conditions under which the
+booking screen shows those tabs. The custody operations (LCOP and the D0 deposit) and the six
+lifecycle files (trigger, PU update, mark-to-market, notional, physical delivery, extraordinary
+payment) are there too, each taking the values known on the day rather than reading the asset.
+
+Three things make the difference between a layout that works and one that is nearly right:
+
+**Positions are declared and checked.** Every field is written with the "from" and "to" the
+manual prints for it, and `FixedWidthRecord` refuses a write that does not start exactly where
+the last one ended. A layout is fifty numbered rows, and the failure mode of transcribing one is
+an off-by-one that shifts everything after it — a file B3 rejects citing the wrong field, or
+worse accepts with a number read out of the middle of two others. The record also has to end on
+the length the manual states.
+
+**Codes are B3's, padding is the layout's.** An enum is stored as a readable mnemonic
+(`BEST_OF`); the option's `b3Code` is the code B3 publishes for it (`1`); the field writes it
+padded to its declared width (`01`). The platform never invents a code, and an option without a
+`b3Code` leaves the field blank rather than writing something B3 does not know.
+
+**What cannot be written is said out loud.** The variable-data record carries one line per
+attribute that has a `b3DataCode`, and the response names how many attributes do not. Name
+matching against B3's export reaches 1,205 of the 1,647 published attributes today; the rest are
+named per figure in the ingestion warnings and counted beside the file. An attribute B3 registers
+for the figure that the template cannot address is a gap in the registration, and this is the
+only place a desk would see it before B3 does.
 
 ## The template is the contract
 
@@ -172,7 +239,11 @@ in `Pending` for a desk to release it.
 | `POST /api/assets/validate` | as-you-type validation; messages pinned to instance paths |
 | `POST /api/assets` · `PUT /api/assets/{id}` | full validation, then save |
 | `GET /api/reference/{source}` | lists a field's `optionSource` (`underlyings`, 1,582 codes from B3's master) |
+| `GET /api/assets/{id}/clearing` | the CETIP upload files for a booked asset, with a note on what went into each |
+| `GET /api/assets/{id}/clearing/{operation}` | one of them as bytes, encoded as B3 reads it |
 | `POST /api/admin/ingest` | re-read the domain files now, without waiting for the worker |
+| `POST /api/admin/cetip/sync` | pull CETIP's public directory now and reload what changed |
+| `GET /api/admin/cetip` | provenance: which dated export each reference file came from, and when |
 
 ## Performance
 
@@ -262,6 +333,11 @@ never opens the JSON. Booking is the only writer of those columns, so they canno
 
 Concurrency on edit uses the SQL Server `rowversion`: the client sends back what it loaded, and
 a save against a stale version returns 409 rather than overwriting someone else's work.
+
+`b3.DerivativeField`, `b3.DerivativeFieldValue` and `b3.FigureAttribute` hold B3's derivative-data
+dictionary and its per-figure attribute lists — the published answer to "what does this figure
+register, and what does each attribute hold?". Like every `b3.*` table they are replaced whole on
+each pass, because the export is the truth and a row that leaves it must leave here too.
 
 The schema lives in `db/*.sql` and is applied at startup by both the API and the worker. Every
 script is written to be re-runnable, so a fresh database and a long-lived one converge without a

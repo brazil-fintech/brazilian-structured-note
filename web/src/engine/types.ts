@@ -56,6 +56,12 @@ export interface TemplateField {
   label: LocalizedText;
   dataType: FieldDataType;
   b3Field?: string;
+  /**
+   * The attribute's identifier in B3's derivative-data dictionary. Carried so the form can say
+   * which attributes a registration will actually be able to write; the field without one is
+   * bookable but not registrable.
+   */
+  b3DataCode?: string;
   symbol?: string;
   help?: LocalizedText;
   unit?: string;

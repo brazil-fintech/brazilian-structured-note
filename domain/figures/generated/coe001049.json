@@ -82,9 +82,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial do Ativo Subjacente 1. Esse valor serve de referência para o cálculo do strike e da barreira de KO da Call KO. Formato: numérico, 10 inteiros e 4 decimais."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000047",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 50,
@@ -130,9 +131,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial do Ativo Subjacente 2. Esse valor serve de referência para o cálculo do strike da Put. Formato: numérico, 10 inteiros e 4 decimais."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000051",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 140,
@@ -161,6 +163,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Liquidação 1",
+          "b3DataCode": "C0000053",
           "required": true,
           "options": [
             {
@@ -207,6 +210,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Liquidação 2",
+          "b3DataCode": "C0000054",
           "required": true,
           "options": [
             {
@@ -253,6 +257,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 1 (%)",
+          "b3DataCode": "C0000001",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -271,6 +276,7 @@
           },
           "dataType": "decimal",
           "b3Field": "Quantidade 1",
+          "b3DataCode": "C0000048",
           "decimals": 4,
           "min": 0,
           "max": 9999999999,
@@ -289,6 +295,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação cenário de Alta (%)",
+          "b3DataCode": "C0000002",
           "decimals": 4,
           "min": 0,
           "max": 999999,
@@ -307,6 +314,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 2(%)",
+          "b3DataCode": "C0000022",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -325,6 +333,7 @@
           },
           "dataType": "decimal",
           "b3Field": "Quantidade 2",
+          "b3DataCode": "C0000052",
           "decimals": 4,
           "min": 0,
           "max": 9999999999,
@@ -343,6 +352,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação cenário de baixa (%)",
+          "b3DataCode": "C0000018",
           "decimals": 4,
           "min": 0,
           "max": 999999,
@@ -370,6 +380,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira cenário de Alta (%)",
+          "b3DataCode": "C0000028",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -388,6 +399,7 @@
           },
           "dataType": "percent",
           "b3Field": "Rebate KO(%)",
+          "b3DataCode": "C0000034",
           "decimals": 4,
           "max": 9999,
           "required": true,
@@ -405,6 +417,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para verificação de barreira cenário de alta",
+          "b3DataCode": "C0000011",
           "required": true,
           "options": [
             {

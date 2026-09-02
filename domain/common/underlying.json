@@ -230,6 +230,91 @@
           "b3Domain": "TIPO CESTA"
         },
         {
+          "key": "basketParityCurrency",
+          "order": 41,
+          "label": {
+            "pt": "Moeda Paridade da Cesta",
+            "en": "Basket parity currency"
+          },
+          "help": {
+            "pt": "Moeda em que a cesta é apurada. Fora do real, a paridade inicial e a data de fixing da paridade passam a ser obrigatórias.",
+            "en": "The currency the basket is struck in. Outside the real, the initial parity and its fixing date become mandatory."
+          },
+          "dataType": "enum",
+          "b3Field": "Moeda Paridade",
+          "visibleWhen": "assetClass == 'CESTA'",
+          "requiredWhen": "assetClass == 'CESTA'",
+          "default": "BRL",
+          "options": [
+            {
+              "code": "BRL",
+              "b3Code": "001",
+              "label": {
+                "pt": "Real",
+                "en": "Brazilian real"
+              }
+            },
+            {
+              "code": "GBP",
+              "b3Code": "002",
+              "label": {
+                "pt": "Libra esterlina",
+                "en": "Pound sterling"
+              }
+            },
+            {
+              "code": "EUR",
+              "b3Code": "003",
+              "label": {
+                "pt": "Euro",
+                "en": "Euro"
+              }
+            },
+            {
+              "code": "JPY",
+              "b3Code": "004",
+              "label": {
+                "pt": "Iene",
+                "en": "Japanese yen"
+              }
+            },
+            {
+              "code": "USD",
+              "b3Code": "005",
+              "label": {
+                "pt": "Dólar dos EUA",
+                "en": "US dollar"
+              }
+            }
+          ]
+        },
+        {
+          "key": "basketInitialParity",
+          "order": 42,
+          "label": {
+            "pt": "Valor Inicial da Paridade da Cesta",
+            "en": "Basket initial parity"
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Paridade",
+          "decimals": 8,
+          "min": 0,
+          "visibleWhen": "assetClass == 'CESTA' and basketParityCurrency != 'BRL'",
+          "requiredWhen": "assetClass == 'CESTA' and basketParityCurrency != 'BRL'"
+        },
+        {
+          "key": "basketParityFixingDate",
+          "order": 43,
+          "label": {
+            "pt": "Data Fixing da Paridade da Cesta",
+            "en": "Basket parity fixing date"
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing Paridade",
+          "visibleWhen": "assetClass == 'CESTA' and basketParityCurrency != 'BRL'",
+          "requiredWhen": "assetClass == 'CESTA' and basketParityCurrency != 'BRL'"
+        },
+        {
           "key": "fixingWindow",
           "order": 50,
           "label": {
@@ -237,7 +322,7 @@
             "en": "Final fixing capture"
           },
           "dataType": "enum",
-          "b3Field": "Período de captura para liquidação",
+          "b3Field": "Período de captura do ativo subjacente para liquidação",
           "required": true,
           "default": "DATA_UNICA",
           "options": [
@@ -246,21 +331,24 @@
               "label": {
                 "pt": "Data Única",
                 "en": "Single date"
-              }
+              },
+              "b3Code": "1"
             },
             {
               "code": "JANELA",
               "label": {
                 "pt": "Janela de Datas",
                 "en": "Date window"
-              }
+              },
+              "b3Code": "2"
             },
             {
               "code": "MAIS_DATAS",
               "label": {
                 "pt": "Mais Datas",
                 "en": "Explicit schedule"
-              }
+              },
+              "b3Code": "52"
             }
           ]
         },
@@ -289,7 +377,8 @@
           },
           "dataType": "date",
           "visibleWhen": "fixingWindow == 'JANELA'",
-          "requiredWhen": "fixingWindow == 'JANELA'"
+          "requiredWhen": "fixingWindow == 'JANELA'",
+          "b3Field": "Data inicial para fixing"
         },
         {
           "key": "fixingWindowEnd",
@@ -300,7 +389,8 @@
           },
           "dataType": "date",
           "visibleWhen": "fixingWindow == 'JANELA'",
-          "requiredWhen": "fixingWindow == 'JANELA'"
+          "requiredWhen": "fixingWindow == 'JANELA'",
+          "b3Field": "Data final para fixing"
         },
         {
           "key": "maturityFixingType",
@@ -319,21 +409,24 @@
               "label": {
                 "pt": "Máximo",
                 "en": "Maximum"
-              }
+              },
+              "b3Code": "54"
             },
             {
               "code": "MINIMO",
               "label": {
                 "pt": "Mínimo",
                 "en": "Minimum"
-              }
+              },
+              "b3Code": "55"
             },
             {
               "code": "MEDIA",
               "label": {
                 "pt": "Média",
                 "en": "Mean"
-              }
+              },
+              "b3Code": "53"
             }
           ]
         },
@@ -354,35 +447,40 @@
               "label": {
                 "pt": "Fechamento",
                 "en": "Close"
-              }
+              },
+              "b3Code": "3"
             },
             {
               "code": "MEDIA",
               "label": {
                 "pt": "Média",
                 "en": "Average"
-              }
+              },
+              "b3Code": "4"
             },
             {
               "code": "MAXIMO",
               "label": {
                 "pt": "Máximo",
                 "en": "High"
-              }
+              },
+              "b3Code": "5"
             },
             {
               "code": "MINIMO",
               "label": {
                 "pt": "Mínimo",
                 "en": "Low"
-              }
+              },
+              "b3Code": "6"
             },
             {
               "code": "AJUSTE",
               "label": {
                 "pt": "Ajuste",
                 "en": "Settlement price"
-              }
+              },
+              "b3Code": "7"
             }
           ]
         },
@@ -435,21 +533,24 @@
               "label": {
                 "pt": "Máximo",
                 "en": "Maximum"
-              }
+              },
+              "b3Code": "1"
             },
             {
               "code": "MEDIA",
               "label": {
                 "pt": "Média",
                 "en": "Mean"
-              }
+              },
+              "b3Code": "2"
             },
             {
               "code": "MINIMO",
               "label": {
                 "pt": "Mínimo",
                 "en": "Minimum"
-              }
+              },
+              "b3Code": "0"
             }
           ]
         },
@@ -480,8 +581,42 @@
           "b3Field": "Valor Inicial da Paridade",
           "decimals": 8,
           "min": 0,
-          "visibleWhen": "quanto == false and assetClass in ['TAXAS DE CAMBIO', 'ACOES INTERNACIONAIS', 'INDICES INTERNACIONAIS', 'CESTA']",
-          "requiredWhen": "quanto == false and assetClass in ['TAXAS DE CAMBIO', 'ACOES INTERNACIONAIS', 'INDICES INTERNACIONAIS', 'CESTA']"
+          "visibleWhen": "quanto == false and assetClass in ['TAXAS DE CAMBIO', 'ACOES INTERNACIONAIS', 'INDICES INTERNACIONAIS']",
+          "requiredWhen": "quanto == false and assetClass in ['TAXAS DE CAMBIO', 'ACOES INTERNACIONAIS', 'INDICES INTERNACIONAIS']",
+          "help": {
+            "pt": "Cotação da moeda do ativo na data inicial. Não é preenchido quando a Classe do Ativo Subjacente é CESTA, mesmo com Variação Quanto = Não: a paridade da cesta é registrada no arquivo RegistroCestas.",
+            "en": "The asset currency's quote on the start date. Not filled when the underlying class is a basket, even with quanto = no: a basket's parity is registered on the RegistroCestas file."
+          }
+        },
+        {
+          "key": "parityStartDate",
+          "order": 152,
+          "label": {
+            "pt": "Data Inicial Moeda Paridade (não quanto)",
+            "en": "Parity currency start date"
+          },
+          "help": {
+            "pt": "Data a que se refere o Valor Inicial da Paridade. Não preencher para cestas.",
+            "en": "The date the initial parity value refers to. Not filled for baskets."
+          },
+          "dataType": "date",
+          "b3Field": "Data Inicial Moeda Paridade Não Quanto",
+          "visibleWhen": "quanto == false and assetClass != 'CESTA'"
+        },
+        {
+          "key": "parityFixingDate",
+          "order": 153,
+          "label": {
+            "pt": "Data Fixing Moeda Paridade (não quanto)",
+            "en": "Parity currency fixing date"
+          },
+          "help": {
+            "pt": "Data de captura da paridade para a liquidação. Não preencher para cestas.",
+            "en": "The date the parity is captured for settlement. Not filled for baskets."
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing Moeda Paridade Não Quanto",
+          "visibleWhen": "quanto == false and assetClass != 'CESTA'"
         },
         {
           "key": "dividendProtection",
@@ -500,21 +635,24 @@
               "label": {
                 "pt": "Sim — Ajustado pelo Emissor",
                 "en": "Yes — adjusted by the issuer"
-              }
+              },
+              "b3Code": "01"
             },
             {
               "code": "CETIP",
               "label": {
                 "pt": "Sim — Cetip",
                 "en": "Yes — Cetip"
-              }
+              },
+              "b3Code": "02"
             },
             {
               "code": "NAO",
               "label": {
                 "pt": "Não",
                 "en": "No"
-              }
+              },
+              "b3Code": "03"
             }
           ]
         }
@@ -530,11 +668,11 @@
       },
       "repeating": true,
       "minItems": 2,
-      "maxItems": 30,
+      "maxItems": 20,
       "visibleWhen": "underlying.assetClass == 'CESTA'",
       "help": {
-        "pt": "Parametrização de Cestas. O valor inicial da cesta é sempre 10.000.",
-        "en": "Basket parameterisation. The initial basket value is always 10,000."
+        "pt": "Parametrização de Cestas, como o arquivo RegistroCestas (CEST) a registra: de 1 a 20 ativos. O valor inicial da cesta é sempre 10.000.",
+        "en": "Basket parameterisation, as the RegistroCestas (CEST) file registers it: between 1 and 20 assets. The initial basket value is always 10,000."
       },
       "itemFields": [
         {
@@ -557,10 +695,69 @@
             "en": "Weight (%)"
           },
           "dataType": "percent",
-          "required": true,
           "min": -1000,
           "max": 1000,
-          "decimals": 6
+          "decimals": 6,
+          "requiredWhen": "underlying.basketType in ['STANDARD', 'SPREAD', 'RAINBOW']",
+          "visibleWhen": "not (underlying.basketType in ['WORST_OF', 'BEST_OF'])",
+          "help": {
+            "pt": "Peso do componente. Obrigatório para cestas Standard e Spread; não é registrado em Worst of e Best of, que não ponderam.",
+            "en": "The component's weight. Mandatory for a Standard or Spread basket; not registered for Worst of and Best of, which do not weight."
+          }
+        },
+        {
+          "key": "componentQuoteType",
+          "order": 25,
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação",
+            "en": "Settlement quote type"
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação",
+          "required": true,
+          "default": "FECHAMENTO",
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "01",
+              "label": {
+                "pt": "Fechamento",
+                "en": "Close"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "02",
+              "label": {
+                "pt": "Ajuste",
+                "en": "Settlement price"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "03",
+              "label": {
+                "pt": "Média",
+                "en": "Average"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "04",
+              "label": {
+                "pt": "Máximo",
+                "en": "High"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "05",
+              "label": {
+                "pt": "Mínimo",
+                "en": "Low"
+              }
+            }
+          ]
         },
         {
           "key": "componentInitialValue",
@@ -571,7 +768,54 @@
           },
           "dataType": "decimal",
           "min": 0,
-          "decimals": 8
+          "decimals": 8,
+          "required": true,
+          "help": {
+            "pt": "Valor do componente na data de fixing inicial. Obrigatório no arquivo RegistroCestas.",
+            "en": "The component's value on its initial fixing date. Mandatory on the RegistroCestas file."
+          }
+        },
+        {
+          "key": "componentFixingDate",
+          "order": 35,
+          "label": {
+            "pt": "Data de Fixing do Componente",
+            "en": "Component fixing date"
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing",
+          "required": true
+        }
+      ]
+    },
+    {
+      "key": "fixingDates",
+      "kind": "tab",
+      "order": 16,
+      "label": {
+        "pt": "Datas de fixing",
+        "en": "Fixing dates"
+      },
+      "repeating": true,
+      "minItems": 1,
+      "maxItems": 999,
+      "visibleWhen": "underlying.fixingWindow == 'MAIS_DATAS'",
+      "help": {
+        "pt": "Datas de captura quando o período é 'Mais Datas'. É o conteúdo do arquivo Registro Datas Fixing (DTFX), que completa um registro deixado com status PENDENTE DATA FIXING.",
+        "en": "The capture dates when the period is 'more dates'. This is the content of the Registro Datas Fixing (DTFX) file, which completes a registration left with status PENDENTE DATA FIXING."
+      },
+      "itemFields": [
+        {
+          "key": "fixingDate",
+          "order": 10,
+          "label": {
+            "pt": "Data de Fixing",
+            "en": "Fixing date"
+          },
+          "dataType": "date",
+          "b3Field": "Data Fixing",
+          "required": true,
+          "inGrid": true
         }
       ]
     }
@@ -716,6 +960,96 @@
       "message": {
         "pt": "Cada componente da cesta deve aparecer uma única vez.",
         "en": "Each basket component may appear only once."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "basket.weights-not-for-best-worst",
+      "targets": [
+        "basket"
+      ],
+      "when": "underlying.assetClass == 'CESTA' and underlying.basketType in ['WORST_OF', 'BEST_OF']",
+      "assert": "all(basket, isNull(@.weight))",
+      "message": {
+        "pt": "Cestas Worst of e Best of não registram pesos: a apuração usa o pior ou o melhor componente.",
+        "en": "Worst of and Best of baskets register no weights: settlement uses the worst or the best component."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "basket.fixing-within-tenor",
+      "targets": [
+        "basket"
+      ],
+      "when": "underlying.assetClass == 'CESTA'",
+      "assert": "all(basket, isNull(@.componentFixingDate) or @.componentFixingDate <= common.maturityDate)",
+      "message": {
+        "pt": "A data de fixing de um componente não pode ser posterior ao vencimento.",
+        "en": "A component's fixing date cannot fall after maturity."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "underlying.parity-dates-order",
+      "targets": [
+        "underlying.parityFixingDate"
+      ],
+      "when": "notNull(parityStartDate) and notNull(parityFixingDate)",
+      "assert": "parityFixingDate >= parityStartDate",
+      "message": {
+        "pt": "A data de fixing da paridade não pode ser anterior à data inicial da paridade.",
+        "en": "The parity fixing date cannot precede the parity start date."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "fixingDates.required-for-more-dates",
+      "targets": [
+        "underlying.fixingWindow"
+      ],
+      "when": "fixingWindow == 'MAIS_DATAS'",
+      "assert": "count(fixingDates) > 0",
+      "message": {
+        "pt": "Um período de captura 'Mais Datas' exige a lista de datas de fixing.",
+        "en": "A 'more dates' capture period needs its list of fixing dates."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "both"
+    },
+    {
+      "id": "fixingDates.within-tenor",
+      "forEachSection": "fixingDates",
+      "targets": [
+        "fixingDates[].fixingDate"
+      ],
+      "assert": "fixingDate > common.issueDate and fixingDate <= common.maturityDate",
+      "message": {
+        "pt": "As datas de fixing devem estar entre a emissão (exclusive) e o vencimento.",
+        "en": "Fixing dates must fall between the issue date (exclusive) and maturity."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "fixingDates.distinct",
+      "targets": [
+        "fixingDates"
+      ],
+      "when": "underlying.fixingWindow == 'MAIS_DATAS'",
+      "assert": "isDistinct(fixingDates, @.fixingDate)",
+      "message": {
+        "pt": "Há datas de fixing repetidas.",
+        "en": "The fixing schedule repeats a date."
       },
       "severity": "error",
       "execution": "both",

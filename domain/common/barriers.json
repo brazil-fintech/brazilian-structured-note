@@ -26,7 +26,7 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6
+          "decimals": 8
         },
         {
           "key": "barrierDirection",
@@ -102,7 +102,7 @@
           "options": [
             {
               "code": "AMERICANA",
-              "b3Code": "311",
+              "b3Code": "10",
               "label": {
                 "pt": "Americana",
                 "en": "American"
@@ -114,7 +114,7 @@
             },
             {
               "code": "EUROPEIA",
-              "b3Code": "312",
+              "b3Code": "11",
               "label": {
                 "pt": "Europeia",
                 "en": "European"
@@ -125,7 +125,10 @@
               }
             }
           ],
-          "b3Domain": "PERIODO DE VERIFICACAO DAS BARREIRAS"
+          "help": {
+            "pt": "Americana verifica a barreira em todos os dias do período; Europeia apenas na data de verificação. A B3 registra o campo com códigos próprios do COE (10 e 11), distintos dos do domínio de opções.",
+            "en": "American checks the barrier on every day of the period; European only on the verification date. B3 registers the field under codes of its own for the COE (10 and 11), which are not those of the options domain."
+          }
         },
         {
           "key": "barrierFixingDate",

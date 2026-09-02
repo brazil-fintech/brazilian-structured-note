@@ -1,0 +1,69 @@
+{
+  "lastSyncUtc": "2026-08-31T00:00:00+00:00",
+  "origin": "ftp://ftp.cetip.com.br/Public",
+  "entries": {
+    "figuras": {
+      "remoteFile": "20260828_DTpFiguras.txt",
+      "asOf": "20260828",
+      "bytes": 3298,
+      "sha256": "ae124b70a5bfb03d89e7102a9e89fc9c194c32a4115d72cb9d2dd6abbaa92797",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "dados-derivativo": {
+      "remoteFile": "20260828_DTpTipoDadosDerivativo.txt",
+      "asOf": "20260828",
+      "bytes": 50068,
+      "sha256": "9d1038e3143057931834aef29eb4a7b65ab3d7838dd6887ab85b9c4eef8b1238",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "figuras-dados-derivativo": {
+      "remoteFile": "20260828_DTpFigurasDadosDerivativo.txt",
+      "asOf": "20260828",
+      "bytes": 308871,
+      "sha256": "5f24083a568ffd8fdcea7b799aeb6e5a7a94022d62ce7d1f7ea31004e6d569e8",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "dados-estrategia": {
+      "remoteFile": "20260828_DTpDadosEstrategia.txt",
+      "asOf": "20260828",
+      "bytes": 639615,
+      "sha256": "847a8fc62e5b682875fd674c42e4633725aa2d00db3dcb69e880953bf338ab43",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "dominios-coe": {
+      "remoteFile": "20260828_DominiosCOE.txt",
+      "asOf": "20260828",
+      "bytes": 2085,
+      "sha256": "e3821b25ec5aa6f0822d09d311a49d11862a8788933ac54be513b795e0817827",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "dominios-derivativos": {
+      "remoteFile": "20260828_Dominios_DERIVATIVOS_COE.txt",
+      "asOf": "20260828",
+      "bytes": 10418,
+      "sha256": "2df99538b39264e7f342c7d6ef83ec1a063ac079c45943e4806c92d954f7911e",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "ativos-subjacentes": {
+      "remoteFile": "20260828_Ativos_Subjacentes.txt",
+      "asOf": "20260828",
+      "bytes": 785349,
+      "sha256": "a793c4060797745fa248296c1218a773fd9f09b306ab20c455298bb91fe61a38",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "curvas-moedas-feeder": {
+      "remoteFile": "20260831_Cadastro_Curvas_Moedas_Feeder_Dominios.txt",
+      "asOf": "20260831",
+      "bytes": 276327,
+      "sha256": "effc003f69913c63150a0d405e7ccc07dbf1e4127b6bf0c4b5bb6147dd389fdc",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    },
+    "mnemonicos": {
+      "remoteFile": "20260828_mnemonicos_cetip.txt",
+      "asOf": "20260828",
+      "bytes": 21165,
+      "sha256": "3e9c3152a34534911d70b320093549ae4be63f2f668bcc4a42820c7d3bedf533",
+      "fetchedUtc": "2026-08-31T00:00:00+00:00"
+    }
+  }
+}

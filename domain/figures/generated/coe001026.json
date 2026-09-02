@@ -48,6 +48,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira (%)",
+          "b3DataCode": "C0000030",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -66,6 +67,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Verificação",
+          "b3DataCode": "C0000025",
           "required": true,
           "visibleWhen": "underlying.assetClass != 'CESTA'",
           "options": [
@@ -122,6 +124,7 @@
           },
           "dataType": "enum",
           "b3Field": "Remuneração Adicional",
+          "b3DataCode": "C0000019",
           "required": true,
           "options": [
             {
@@ -156,6 +159,7 @@
           },
           "dataType": "percent",
           "b3Field": "Remunerador Flutuante Adicional (%)",
+          "b3DataCode": "C0000020",
           "decimals": 4,
           "min": 0,
           "max": 9999,
@@ -175,6 +179,7 @@
           },
           "dataType": "decimal",
           "b3Field": "Cupom Remunerador Adicional",
+          "b3DataCode": "C0000021",
           "decimals": 4,
           "max": 99999,
           "required": false,

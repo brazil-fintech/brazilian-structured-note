@@ -50,9 +50,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Observação: Caso as barreiras de alta sejam iguais, os strikes deverão ser diferentes."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 1(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000001",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 10,
@@ -66,9 +67,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. A quantidade indicada deverá ser maior que zero."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 1",
-          "maxLength": 100,
+          "b3DataCode": "C000070",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 20,
@@ -98,9 +100,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. Observação: Caso as barreiras de alta sejam iguais, os strikes deverão ser diferentes."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 2(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000022",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 60,
@@ -114,9 +117,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. A quantidade indicada deverá ser maior que zero."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 2",
-          "maxLength": 100,
+          "b3DataCode": "C000071",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 70,
@@ -130,9 +134,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre a valorização do Ativo Subjacente."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Participação cenário de Alta 2 (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000041",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 80,
@@ -203,9 +208,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Indica percentual a ser aplicado sobre o Valor Financeiro de Emissão caso a barreira de alta seja atingida."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Rebate no Cenário de Alta 2(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000101",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 100,
@@ -231,5 +237,36 @@
       "itemFields": []
     }
   ],
-  "rules": []
+  "rules": [
+    {
+      "id": "coe001042.quantity1-positive",
+      "targets": [
+        "payoff.quantity1"
+      ],
+      "assert": "payoff.quantity1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 1” deve ser maior que zero.",
+        "en": "“Quantidade 1” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
+    {
+      "id": "coe001042.quantity2-positive",
+      "targets": [
+        "payoff.quantity2"
+      ],
+      "assert": "payoff.quantity2 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Quantidade 2” deve ser maior que zero.",
+        "en": "“Quantidade 2” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    }
+  ]
 }

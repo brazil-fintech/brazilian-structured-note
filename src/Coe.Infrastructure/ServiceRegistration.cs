@@ -3,6 +3,7 @@ using Coe.Core.Validation;
 using Coe.Infrastructure.Data;
 using Coe.Infrastructure.ServerChecks;
 using Coe.Ingestion;
+using Coe.Ingestion.Cetip;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,11 +53,28 @@ public static class ServiceRegistration
         ingestion.ReferenceDirectory = ResolvePath(ingestion.ReferenceDirectory);
         services.AddSingleton(ingestion);
 
-        // Read once at startup: these are published exports that change when someone drops in a
-        // newer file, and every compile checks against them.
-        services.AddSingleton(B3Reference.Load(ingestion.ReferenceDirectory));
+        var cetip = new CetipFtpOptions();
+        configuration.GetSection(CetipFtpOptions.SectionName).Bind(cetip);
+        if (!string.IsNullOrWhiteSpace(cetip.LocalMirrorDirectory))
+            cetip.LocalMirrorDirectory = ResolvePath(cetip.LocalMirrorDirectory);
+        services.AddSingleton(cetip);
+
+        // The exports are no longer a fixture read once at start-up: they are pulled from
+        // CETIP's public directory while the process runs, so the reference set is held behind
+        // a provider that can swap it, and every reader takes a snapshot per pass.
+        services.AddSingleton(sp => new B3ReferenceProvider(
+            ingestion.ReferenceDirectory, sp.GetRequiredService<ILogger<B3ReferenceProvider>>()));
+        services.AddSingleton(sp => new CetipReferenceSync(
+            cetip, ingestion.ReferenceDirectory, sp.GetRequiredService<ILogger<CetipReferenceSync>>()));
+
         services.AddSingleton<FigureIngestionService>();
         services.AddSingleton<B3ReferenceImporter>();
+        services.AddSingleton<ReferenceDataRefresher>();
+
+        var clearing = new ClearingOptions();
+        configuration.GetSection(ClearingOptions.SectionName).Bind(clearing);
+        services.AddSingleton(clearing);
+        services.AddSingleton<AssetClearingService>();
 
         services.AddHealthChecks().AddCheck<SqlHealthCheck>("sql", tags: ["ready"]);
 

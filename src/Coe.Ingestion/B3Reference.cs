@@ -63,6 +63,13 @@ public sealed partial class B3Reference
     /// <summary>The per-figure attribute lists from the Manual de Operações annex.</summary>
     public B3FigureFields FigureFields { get; private set; } = B3FigureFields.Empty;
 
+    /// <summary>
+    /// B3's derivative-data dictionary and its per-figure attribute lists. This is the
+    /// authority for what a figure registers and what the variable-data record of the
+    /// <em>Registro COE</em> file carries; the annex above is the prose that explains it.
+    /// </summary>
+    public B3DerivativeFields DerivativeFields { get; private set; } = B3DerivativeFields.Empty;
+
     public static B3Reference Empty { get; } = new();
 
     public B3Figure? Figure(string code) => _figuresByCode.GetValueOrDefault(code);
@@ -71,6 +78,17 @@ public sealed partial class B3Reference
         _domains.TryGetValue(domainType, out var values) ? values : [];
 
     public B3StrategyField? StrategyField(string code) => _strategyFields.GetValueOrDefault(code);
+
+    /// <summary>The attributes B3 registers for a figure, from <c>DTpFigurasDadosDerivativo</c>.</summary>
+    public IReadOnlyList<B3FigureAttribute> FigureAttributes(string figureCode) =>
+        DerivativeFields.ForFigure(figureCode);
+
+    /// <summary>One field of the derivative-data dictionary, by its <c>C…</c> identifier.</summary>
+    public B3DerivativeField? DerivativeField(string code) => DerivativeFields.Field(code);
+
+    /// <summary>A figure's attributes, keyed on the normalised form of B3's own field name.</summary>
+    public IReadOnlyDictionary<string, B3FigureAttribute> FigureAttributesByName(string figureCode) =>
+        DerivativeFields.AttributesByName(figureCode);
 
     /// <summary>
     /// Reads whatever is present. A missing directory is not an error: the platform still
@@ -94,6 +112,23 @@ public sealed partial class B3Reference
         reference.LoadDomains(Path.Combine(directory, DomainsFile), errors);
         reference.LoadStrategyFields(Path.Combine(directory, StrategyFieldsFile), errors);
         reference.LoadUnderlyings(Path.Combine(directory, UnderlyingsFile), errors);
+
+        // Last: the per-figure attribute lists are keyed on the sequence number, so the
+        // catalogue has to be in place to turn that into a figure code. The sequences are
+        // unique in every export published so far and nothing guarantees they stay that way;
+        // a downloaded file must not be able to throw here, so a repeat is reported and the
+        // first row keeps the sequence.
+        var codeByOrdinal = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var figure in reference._figuresByCode.Values)
+        {
+            if (figure.Ordinal.Length == 0) continue;
+            if (!codeByOrdinal.TryAdd(figure.Ordinal, figure.Code))
+                errors.Add($"{FiguresFile}: sequence '{figure.Ordinal}' is used by more than one figure.");
+        }
+
+        reference.DerivativeFields = B3DerivativeFields.Load(directory);
+        reference.DerivativeFields.ResolveFigureCodes(codeByOrdinal);
+        errors.AddRange(reference.DerivativeFields.Errors);
 
         reference.Errors = errors;
         return reference;

@@ -75,6 +75,13 @@ public sealed class FieldDto
     /// <summary>Code in B3's strategy-field dictionary, checked against reference/b3/dados-estrategia.csv.</summary>
     public string? B3FieldCode { get; set; }
 
+    /// <summary>
+    /// Identifier in B3's derivative-data dictionary (<c>DTpTipoDadosDerivativo</c>), checked
+    /// against reference/b3/dados-derivativo.csv. This is the code the variable-data record of
+    /// the Registro COE upload file carries, so a field that has one is registrable.
+    /// </summary>
+    public string? B3DataCode { get; set; }
+
     /// <summary>B3 domain the options come from, checked against reference/b3/dominios-derivativos.csv.</summary>
     public string? B3Domain { get; set; }
 

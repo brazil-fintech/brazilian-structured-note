@@ -154,6 +154,14 @@ public sealed record TemplateField
     public string? B3FieldCode { get; init; }
 
     /// <summary>
+    /// Identifier of this attribute in B3's derivative-data dictionary
+    /// (<c>DTpTipoDadosDerivativo</c>), e.g. <c>C0000032</c>. This is the code the
+    /// "Identificador do Campo" of the Registro COE variable-data record carries, so an
+    /// attribute with one can be written to B3 and an attribute without one cannot.
+    /// </summary>
+    public string? B3DataCode { get; init; }
+
+    /// <summary>
     /// The B3 domain this field's options come from (<c>TIPO CESTA</c>). When set, every option
     /// must carry a <see cref="FieldOption.B3Code"/> that exists and is enabled in that domain.
     /// </summary>

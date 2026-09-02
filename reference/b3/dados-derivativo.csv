@@ -1,0 +1,852 @@
+20260831
+COD CAMPO;NOME CAMPO;DESC CAMPO;TAMANHO;QTD DECIMAIS;OBRIGATORIO;DOMINIO;ID DOMINIO
+C0000001;Strike 1(%);NUMERICO;4;8;S;;
+C0000002;Participação cenário de alta (%);NUMERICO;6;4;S;;
+C0000003;Período de captura do ativo subjacente para liquidação;DOMINIO;10;;S;Data única;1
+C0000003;Período de captura do ativo subjacente para liquidação;DOMINIO;10;;S;Janela de datas;2
+C0000003;Período de captura do ativo subjacente para liquidação;DOMINIO;10;;S;MAIS DATAS;52
+C0000004;Data para fixing;DATA;10;;N;;
+C0000005;Data inicial para fixing;DATA;10;;N;;
+C0000006;Data final para fixing;DATA;10;;N;;
+C0000007;Tipo de Cotação para Liquidação;DOMINIO;0;;S;Fechamento;3
+C0000007;Tipo de Cotação para Liquidação;DOMINIO;0;;S;Media;4
+C0000007;Tipo de Cotação para Liquidação;DOMINIO;0;;S;Maximo;5
+C0000007;Tipo de Cotação para Liquidação;DOMINIO;0;;S;Mínimo;6
+C0000007;Tipo de Cotação para Liquidação;DOMINIO;0;;S;Ajuste;7
+C0000008;Barreira KIKO;NUMERICO;4;8;S;;
+C0000009;Rebate no Cenário de Alta(%);NUMERICO;4;4;S;;
+C0000010;Período de pagamento;DOMINIO;10;;S;Ato;8
+C0000010;Período de pagamento;DOMINIO;10;;S;Vencimento;9
+C0000011;Tipo de cotação para verificação de barreira cenario de alta;DOMINIO;10;;S;Fechamento;3
+C0000011;Tipo de cotação para verificação de barreira cenario de alta;DOMINIO;10;;S;Media;4
+C0000011;Tipo de cotação para verificação de barreira cenario de alta;DOMINIO;10;;S;Maximo;5
+C0000011;Tipo de cotação para verificação de barreira cenario de alta;DOMINIO;10;;S;Mínimo;6
+C0000011;Tipo de cotação para verificação de barreira cenario de alta;DOMINIO;10;;S;Ajuste;7
+C0000012;Periodo de verificação de barreiras;DOMINIO;10;;S;Americana;10
+C0000012;Periodo de verificação de barreiras;DOMINIO;10;;S;Européia;11
+C0000013;Data inicial para verificação;DATA;10;;N;;
+C0000014;Data final para verificação;DATA;10;;N;;
+C0000015;Barreira KO (%);NUMERICO;4;8;S;;
+C0000016;Rebate no Cenário de Baixa(%);NUMERICO;4;4;S;;
+C0000017;Tipo de cotação para verificação de barreira cenario de baixa;DOMINIO;10;;S;Fechamento;3
+C0000017;Tipo de cotação para verificação de barreira cenario de baixa;DOMINIO;10;;S;Media;4
+C0000017;Tipo de cotação para verificação de barreira cenario de baixa;DOMINIO;10;;S;Maximo;5
+C0000017;Tipo de cotação para verificação de barreira cenario de baixa;DOMINIO;10;;S;Mínimo;6
+C0000017;Tipo de cotação para verificação de barreira cenario de baixa;DOMINIO;10;;S;Ajuste;7
+C0000018;Participação cenário de baixa (%);NUMERICO;6;4;S;;
+C0000019;Remuneração adicional;DOMINIO;10;;S;Pré;12
+C0000019;Remuneração adicional;DOMINIO;10;;S;DI;13
+C0000019;Remuneração adicional;DOMINIO;10;;S;PRE252-LIN;19
+C0000019;Remuneração adicional;DOMINIO;10;;S;NO PERIODO;20
+C0000020;Remunerador flutuante adicional (%);NUMERICO;4;4;N;;
+C0000021;Cupom remunerador adicional (%);NUMERICO;9;4;N;;
+C0000022;Strike 2(%);NUMERICO;4;8;S;;
+C0000023;Remuneração dentro (%);NUMERICO;4;4;N;;
+C0000024;Remuneração fora (%);NUMERICO;4;4;N;;
+C0000025;Tipo de Cotação para Verificação;DOMINIO;0;;S;Fechamento;3
+C0000025;Tipo de Cotação para Verificação;DOMINIO;0;;S;Media;4
+C0000025;Tipo de Cotação para Verificação;DOMINIO;0;;S;Maximo;5
+C0000025;Tipo de Cotação para Verificação;DOMINIO;0;;S;Mínimo;6
+C0000025;Tipo de Cotação para Verificação;DOMINIO;0;;S;Ajuste;7
+C0000026;Rebate KI(%);NUMERICO;4;4;S;;
+C0000027;Limitador cenario de baixa (%);NUMERICO;4;8;S;;
+C0000028;Barreira cenário de alta (%);NUMERICO;4;8;S;;
+C0000029;Barreira cenário de baixa (%);NUMERICO;4;8;S;;
+C0000030;Barreira (%);NUMERICO;4;8;S;;
+C0000031;Direção barreira;DOMINIO;10;;S;Acima;17
+C0000031;Direção barreira;DOMINIO;10;;S;Abaixo;18
+C0000032;Limitador cenário de alta (%);NUMERICO;4;8;S;;
+C0000033;Barreira KI (%);NUMERICO;4;8;S;;
+C0000034;Rebate KO(%);NUMERICO;4;4;S;;
+C0000035;Barreira inferior (%);NUMERICO;4;8;S;;
+C0000036;Barreira superior (%);NUMERICO;4;8;S;;
+C0000037;Fator barreira movel superior;NUMERICO;4;4;S;;
+C0000038;Fator barreira movel inferior;NUMERICO;4;4;S;;
+C0000039;Remunerador Flutuante Dentro (%);NUMERICO;4;4;N;;
+C0000040;Remunerador Flutuante Fora (%);NUMERICO;4;4;N;;
+C0000041;Participação cenário de alta 2 (%);NUMERICO;6;4;S;;
+C0000042;Participação cenário de baixa 2 (%);NUMERICO;6;4;S;;
+C0000043;Vértice de Baixa (%);NUMERICO;4;8;S;;
+C0000044;Vértice de Alta (%);NUMERICO;4;8;S;;
+C0000045;Remuneração Acima;NUMERICO;4;4;S;;
+C0000046;Remuneração Abaixo;NUMERICO;4;4;S;;
+C0000047;Valor Inicial Ativo Subjacente 1;NUMERICO;10;4;S;;
+C0000048;Quantidade 1;NUMERICO;10;4;N;;
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;TAXAS DE CAMBIO;23
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;INDICES;24
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;ACOES;2058
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;ACOES INTERNACIONAIS;2059
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;COMMODITIES;2060
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;INDICES DE PRECOS;2061
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;INDICES INTERNACIONA;2062
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;JUROS;2063
+C0000049;Classe do Ativo Subjacente 2;DOMINIO;0;;S;JUROS INTERNACIONAIS;2064
+C0000050;Ativo Subjacente 2;DOMINIO;0;;S;IBOVESPA;21
+C0000050;Ativo Subjacente 2;DOMINIO;0;;S;DOLAR DOS EUA;22
+C0000051;Valor Inicial Ativo Subjacente 2;NUMERICO;10;4;S;;
+C0000052;Quantidade 2;NUMERICO;10;4;S;;
+C0000053;Tipo de Cotação para Liquidação 1;DOMINIO;0;;S;Fechamento;3
+C0000053;Tipo de Cotação para Liquidação 1;DOMINIO;0;;S;Media;4
+C0000053;Tipo de Cotação para Liquidação 1;DOMINIO;0;;S;Maximo;5
+C0000053;Tipo de Cotação para Liquidação 1;DOMINIO;0;;S;Mínimo;6
+C0000053;Tipo de Cotação para Liquidação 1;DOMINIO;0;;S;Ajuste;7
+C0000054;Tipo de Cotação para Liquidação 2;DOMINIO;0;;S;Fechamento;3
+C0000054;Tipo de Cotação para Liquidação 2;DOMINIO;0;;S;Media;4
+C0000054;Tipo de Cotação para Liquidação 2;DOMINIO;0;;S;Maximo;5
+C0000054;Tipo de Cotação para Liquidação 2;DOMINIO;0;;S;Mínimo;6
+C0000054;Tipo de Cotação para Liquidação 2;DOMINIO;0;;S;Ajuste;7
+C0000055;Limitador cenário de baixa 1 (%);NUMERICO;4;8;S;;
+C0000056;Limitador cenário de baixa 2 (%);NUMERICO;4;8;S;;
+C0000057;Ativo Subjacente 1;DOMINIO;0;;S;IBOVESPA;21
+C0000057;Ativo Subjacente 1;DOMINIO;0;;S;DOLAR DOS EUA;22
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;TAXAS DE CAMBIO;23
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;INDICES;24
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;ACOES;2058
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;ACOES INTERNACIONAIS;2059
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;COMMODITIES;2060
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;INDICES DE PRECOS;2061
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;INDICES INTERNACIONA;2062
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;JUROS;2063
+C0000058;Classe do Ativo Subjacente 1;DOMINIO;0;;S;JUROS INTERNACIONAIS;2064
+C0000060;Strike 3(%);NUMERICO;4;8;N;;
+C0000061;Strike 4(%);NUMERICO;4;8;N;;
+C0000062;Strike 5(%);NUMERICO;4;8;N;;
+C0000063;Strike 6(%);NUMERICO;4;8;N;;
+C0000064;Remunerador flutuante Camada 1 (%);NUMERICO;10;8;N;;
+C0000065;Cupom remunerador Camada 1 (%);NUMERICO;10;8;S;;
+C0000066;Remunerador flutuante Camada 2 (%);NUMERICO;10;8;N;;
+C0000067;Cupom remunerador Camada 2 (%);NUMERICO;10;8;S;;
+C0000068;Remunerador flutuante Camada 3 (%);NUMERICO;10;8;N;;
+C0000069;Cupom remunerador Camada 3 (%);NUMERICO;10;8;N;;
+C0000072;Opções Dependentes;DOMINIO;0;;S;SIM;50
+C0000072;Opções Dependentes;DOMINIO;0;;S;NÃO;51
+C0000100;Barreira cenário de alta 2 (%);NUMERICO;4;8;S;;
+C0000101;Rebate no Cenário de Alta 2 (%);NUMERICO;4;4;S;;
+C0000102;Quantidade de Camadas;DOMINIO;0;;S;2;25
+C0000102;Quantidade de Camadas;DOMINIO;0;;S;3;26
+C0000104;Barreira de Baixa (%);NUMERICO;4;8;N;;
+C0000105;Cupom barreira de baixa (%);NUMERICO;5;4;N;;
+C0000106;Quantidade mínima de ativos acima do Strike;NUMERICO;2;1;S;;
+C0000107;Ativo Subjacente Período 1;DOMINIO;0;;S;Pré;12
+C0000107;Ativo Subjacente Período 1;DOMINIO;0;;S;DI;13
+C0000107;Ativo Subjacente Período 1;DOMINIO;0;;S;IPCA;14
+C0000108;Ativo Subjacente Período 2;DOMINIO;0;;S;Pré;12
+C0000108;Ativo Subjacente Período 2;DOMINIO;0;;S;DI;13
+C0000108;Ativo Subjacente Período 2;DOMINIO;0;;S;IPCA;14
+C0000109;Participação Indexador 1 (%);NUMERICO;10;8;N;;
+C0000110;Participação Indexador 2 (%);NUMERICO;10;8;N;;
+C0000111;Cupom Período 1 (%);NUMERICO;10;8;N;;
+C0000112;Cupom Período 2 (%);NUMERICO;10;8;N;;
+C0000113;Base Período 1;DOMINIO;0;;N;252 exp;2000
+C0000113;Base Período 1;DOMINIO;0;;N;360 exp;2001
+C0000113;Base Período 1;DOMINIO;0;;N;360 lin;2002
+C0000114;Base Período 2;DOMINIO;0;;N;252 exp;2000
+C0000114;Base Período 2;DOMINIO;0;;N;360 exp;2001
+C0000114;Base Período 2;DOMINIO;0;;N;360 lin;2002
+C0000115;Data da troca do ativo subjacente;DATA;0;;S;;
+C0000116;Quantidade 3;NUMERICO;10;4;S;;
+C0000117;Participação cenário de Baixa 3 (%);NUMERICO;6;4;S;;
+C0000118;Barreira no Cenário de Alta 3 (%);NUMERICO;4;8;S;;
+C0000119;Rebate no Cenário de Alta 3 (%);NUMERICO;4;4;S;;
+C0000120;Quantidade 4;NUMERICO;10;4;N;;
+C0000121;Participação cenário de Baixa 4(%);NUMERICO;6;4;S;;
+C0000122;Barreira de KI 4;NUMERICO;4;8;S;;
+C0000123;Rebate KI 4;NUMERICO;4;4;S;;
+C0000124;Tipo de Cotação para verificação das barreiras;DOMINIO;0;;S;Fechamento;3
+C0000124;Tipo de Cotação para verificação das barreiras;DOMINIO;0;;S;Media;4
+C0000124;Tipo de Cotação para verificação das barreiras;DOMINIO;0;;S;Maximo;5
+C0000124;Tipo de Cotação para verificação das barreiras;DOMINIO;0;;S;Mínimo;6
+C0000124;Tipo de Cotação para verificação das barreiras;DOMINIO;0;;S;Ajuste;7
+C0000125;Período de verificação das barreiras;DOMINIO;0;;S;Americana;10
+C0000125;Período de verificação das barreiras;DOMINIO;0;;S;Européia;11
+C0000126;Strike 3 (%);NUMERICO;4;8;S;;
+C0000127;Strike 4 (%);NUMERICO;4;8;S;;
+C0000128;Data de Observação 1;DATA;0;;S;;
+C0000129;Data de Observação 2;DATA;0;;N;;
+C0000130;Data de Observação 3;DATA;0;;N;;
+C0000131;Data de Observação 4;DATA;0;;N;;
+C0000132;Data de Observação 5;DATA;0;;N;;
+C0000133;Data de Observação 6;DATA;0;;N;;
+C0000134;Data de Observação 7;DATA;0;;N;;
+C0000135;Data de Observação 8;DATA;0;;N;;
+C0000136;Data de Observação 9;DATA;0;;N;;
+C0000137;Data de Observação 10;DATA;0;;N;;
+C0000138;Data de Observação 11;DATA;0;;N;;
+C0000139;Data de Observação 12;DATA;0;;N;;
+C0000140;Data de Observação 13;DATA;0;;N;;
+C0000141;Data de Observação 14;DATA;0;;N;;
+C0000142;Data de Observação 15;DATA;0;;N;;
+C0000143;Data de Observação 16;DATA;0;;N;;
+C0000144;Data de Observação 17;DATA;0;;N;;
+C0000145;Data de Observação 18;DATA;0;;N;;
+C0000146;Data de Observação 19;DATA;0;;N;;
+C0000147;Data de Observação 20;DATA;0;;N;;
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-1;2003
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-2;2004
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-3;2005
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-4;2006
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-5;2007
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-6;2008
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-7;2009
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-8;2010
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-9;2011
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-10;2012
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-11;2013
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-12;2014
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-13;2015
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-14;2016
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-15;2017
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-16;2018
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-17;2019
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-18;2020
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-19;2021
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-20;2022
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-21;2023
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-22;2024
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-23;2025
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-24;2026
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-25;2027
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-26;2028
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-27;2029
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-28;2030
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-29;2031
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D-30;2032
+C0000148;Deslocamento do accrual do DI;DOMINIO;0;;N;D0;2038
+C0000149;Limitador de alta global (%);NUMERICO;4;8;N;;
+C0000150;Base remunerador adicional;DOMINIO;0;;S;252 exp;2000
+C0000150;Base remunerador adicional;DOMINIO;0;;S;360 exp;2001
+C0000150;Base remunerador adicional;DOMINIO;0;;S;360 lin;2002
+C0000151;Strike_KI 1;NUMERICO;4;8;S;;
+C0000152;Quantidade 1 (%);NUMERICO;4;8;S;;
+C0000153;Alocação 1 (%);NUMERICO;4;8;S;;
+C0000154;Strike_KI 2;NUMERICO;4;8;N;;
+C0000155;Quantidade 2 (%);NUMERICO;4;8;N;;
+C0000156;Alocação 2 (%);NUMERICO;4;8;N;;
+C0000157;Strike_KI 3;NUMERICO;4;8;N;;
+C0000158;Quantidade 3 (%);NUMERICO;4;8;N;;
+C0000159;Alocação 3 (%);NUMERICO;4;8;N;;
+C0000160;Strike_KI 4;NUMERICO;4;8;N;;
+C0000161;Quantidade 4 (%);NUMERICO;4;8;N;;
+C0000162;Alocação 4 (%);NUMERICO;4;8;N;;
+C0000163;Strike_KI 5;NUMERICO;4;8;N;;
+C0000164;Quantidade 5 (%);NUMERICO;4;8;N;;
+C0000165;Alocação 5 (%);NUMERICO;4;8;N;;
+C0000167;Participação cenário de alta 3 (%);NUMERICO;6;4;S;;
+C0000168;Tipo de Fixing para Vencimento;DOMINIO;20;;N;Média do período;53
+C0000168;Tipo de Fixing para Vencimento;DOMINIO;20;;N;Máximo do período;54
+C0000168;Tipo de Fixing para Vencimento;DOMINIO;20;;N;Mínimo do período;55
+C0000169;Tem KO Condicional?;DOMINIO;0;;S;SIM;50
+C0000169;Tem KO Condicional?;DOMINIO;0;;S;NÃO;51
+C0000170;Tipo de Cesta da Call;DOMINIO;0;;S;Standard;2033
+C0000170;Tipo de Cesta da Call;DOMINIO;0;;S;Best Of;2034
+C0000170;Tipo de Cesta da Call;DOMINIO;0;;S;Worst Of;2035
+C0000171;Tipo de Cesta da Put KI;DOMINIO;0;;S;Standard;2033
+C0000171;Tipo de Cesta da Put KI;DOMINIO;0;;S;Best Of;2034
+C0000171;Tipo de Cesta da Put KI;DOMINIO;0;;S;Worst Of;2035
+C0000172;Participação Indexador 3 (%);NUMERICO;10;8;N;;
+C0000173;Participação Indexador 4 (%);NUMERICO;10;8;N;;
+C0000174;Participação Indexador 5 (%);NUMERICO;10;8;N;;
+C0000175;Participação Indexador 6 (%);NUMERICO;10;8;N;;
+C0000176;Participação Indexador 7 (%);NUMERICO;10;8;N;;
+C0000177;Participação Indexador 8 (%);NUMERICO;10;8;N;;
+C0000178;Participação Indexador 9 (%);NUMERICO;10;8;N;;
+C0000179;Participação Indexador 10 (%);NUMERICO;10;8;N;;
+C0000180;Fixing para pagamentos intermediários;DOMINIO;0;;S;D-1;2003
+C0000180;Fixing para pagamentos intermediários;DOMINIO;0;;S;D-2;2004
+C0000180;Fixing para pagamentos intermediários;DOMINIO;0;;S;D-3;2005
+C0000180;Fixing para pagamentos intermediários;DOMINIO;0;;S;D-4;2006
+C0000180;Fixing para pagamentos intermediários;DOMINIO;0;;S;D-5;2007
+C0000181;Remuneração Mínima;NUMERICO;4;4;N;;
+C0000182;Amortização 1 (%);NUMERICO;10;8;N;;
+C0000183;Amortização 2 (%);NUMERICO;10;8;N;;
+C0000184;Amortização 3 (%);NUMERICO;10;8;N;;
+C0000185;Amortização 4 (%);NUMERICO;10;8;N;;
+C0000186;Amortização 5 (%);NUMERICO;10;8;N;;
+C0000187;Amortização 6 (%);NUMERICO;10;8;N;;
+C0000188;Amortização 7 (%);NUMERICO;10;8;N;;
+C0000189;Amortização 8 (%);NUMERICO;10;8;N;;
+C0000190;Amortização 9 (%);NUMERICO;10;8;N;;
+C0000191;Amortização 10 (%);NUMERICO;10;8;N;;
+C0000192;Amortização 11 (%);NUMERICO;10;8;N;;
+C0000193;Amortização 12 (%);NUMERICO;10;8;N;;
+C0000194;Barreira cenário de baixa 2 (%);NUMERICO;4;8;N;;
+C0000195;Rebate no Cenário de Baixa 2 (%);NUMERICO;4;4;N;;
+C0000196;Strike 3_ (%);NUMERICO;4;8;N;;
+C0000197;Participação cenário de Baixa 3_ (%);NUMERICO;6;4;N;;
+C0000198;Barreira no Cenário de Baixa 3 (%);NUMERICO;4;8;N;;
+C0000199;Rebate no Cenário de Baixa 3 (%);NUMERICO;4;4;N;;
+C0000200;Participação 1(%);NUMERICO;4;8;S;;
+C0000201;Trigger 1;DOMINIO;0;;S;Acima;17
+C0000201;Trigger 1;DOMINIO;0;;S;Abaixo;18
+C0000202;Participação 2(%);NUMERICO;4;8;S;;
+C0000203;Trigger 2;DOMINIO;0;;S;Acima;17
+C0000203;Trigger 2;DOMINIO;0;;S;Abaixo;18
+C0000204;Tipo verificação dos indexadores;DOMINIO;0;;S;DEPENDENTE;2039
+C0000204;Tipo verificação dos indexadores;DOMINIO;0;;S;INDEPENDENTE;2040
+C0000205;Indexador 1;TEXTO;20;;S;;
+C0000206;Classe Indexador 1;TEXTO;20;;S;;
+C0000207;Indexador 2;TEXTO;20;;S;;
+C0000208;Classe Indexador 2;TEXTO;20;;S;;
+C0000209;Remunerador 1;DOMINIO;0;;S;Pré;12
+C0000209;Remunerador 1;DOMINIO;0;;S;DI;13
+C0000209;Remunerador 1;DOMINIO;0;;S;IPCA;14
+C0000210;Taxa (%) Remunerador 1;NUMERICO;4;8;S;;
+C0000211;Remunerador 2;DOMINIO;0;;S;Pré;12
+C0000211;Remunerador 2;DOMINIO;0;;S;DI;13
+C0000211;Remunerador 2;DOMINIO;0;;S;IPCA;14
+C0000212;Taxa (%) Remunerador 2;NUMERICO;4;8;S;;
+C0000213;Barreira no Cenário de Alta 4 (%);NUMERICO;4;8;S;;
+C0000214;Rebate no Cenário de Alta 4 (%);NUMERICO;4;4;S;;
+C0000215;Barreira no Cenário de Alta 5 (%);NUMERICO;4;8;S;;
+C0000216;Rebate no Cenário de Alta 5 (%);NUMERICO;4;4;S;;
+C0000217;Barreira no Cenário de Alta 6 (%);NUMERICO;4;8;S;;
+C0000218;Rebate no Cenário de Alta 6 (%);NUMERICO;4;4;S;;
+C0000219;Strike 7(%);NUMERICO;4;8;N;;
+C0000220;Barreira no Cenário de Alta 7 (%);NUMERICO;4;8;N;;
+C0000221;Rebate no Cenário de Alta 7 (%);NUMERICO;4;4;N;;
+C0000222;Strike 8(%);NUMERICO;4;8;N;;
+C0000223;Barreira no Cenário de Alta 8 (%);NUMERICO;4;8;N;;
+C0000224;Rebate no Cenário de Alta 8 (%);NUMERICO;4;4;N;;
+C0000225;Strike 9(%);NUMERICO;4;8;N;;
+C0000226;Barreira no Cenário de Alta 9 (%);NUMERICO;4;8;N;;
+C0000227;Rebate no Cenário de Alta 9 (%);NUMERICO;4;4;N;;
+C0000228;Strike 10(%);NUMERICO;4;8;N;;
+C0000229;Barreira no Cenário de Alta 10 (%);NUMERICO;4;8;N;;
+C0000230;Rebate no Cenário de Alta 10 (%);NUMERICO;4;4;N;;
+C0000231;Strike 11(%);NUMERICO;4;8;S;;
+C0000232;Entidade de referência;TEXTO;40;;S;;
+C0000233;Obrigação de referência;TEXTO;40;;N;;
+C0000234;Quantidade de obrigações;DOMINIO;0;;S;Single name;2041
+C0000234;Quantidade de obrigações;DOMINIO;0;;S;Cesta;2042
+C0000235;Agente de cálculo;DOMINIO;0;;S;Emissor;2043
+C0000236;Determinação de ocorrência de evento;DOMINIO;0;;S;Emissor;2043
+C0000237;Condições para liquidação;TEXTO;40;;N;;
+C0000238;Liquidação em caso de evento de crédito (Recovery Value);TEXTO;40;;S;;
+C0000239;Taxa de proteção;TEXTO;40;;N;;
+C0000240;Falência ou similar;DOMINIO;0;;N;SIM;50
+C0000241;Falha de pagamento;DOMINIO;0;;N;SIM;50
+C0000242;Reestruturação;DOMINIO;0;;N;SIM;50
+C0000243;Vencimento antecipado de obrigações;DOMINIO;0;;N;SIM;50
+C0000244;Descumprimento de obrigações;DOMINIO;0;;N;SIM;50
+C0000245;Repúdio ou moratória;DOMINIO;0;;N;SIM;50
+C0000246;Intervenção estatal;DOMINIO;0;;N;SIM;50
+C0000247;Ativo subjacente Call;TEXTO;40;;S;;
+C0000248;Preço inicial Call;NUMERICO;8;8;S;;
+C0000250;Data verificação amortização 1;DATA;0;;S;;
+C0000251;Data verificação amortização 2;DATA;0;;N;;
+C0000252;Data verificação amortização 3;DATA;0;;N;;
+C0000253;Data verificação amortização 4;DATA;0;;N;;
+C0000254;Data verificação amortização 5;DATA;0;;N;;
+C0000255;Data verificação amortização 6;DATA;0;;N;;
+C0000256;Data verificação amortização 7;DATA;0;;N;;
+C0000257;Data verificação amortização 8;DATA;0;;N;;
+C0000258;Data verificação amortização 9;DATA;0;;N;;
+C0000259;Data verificação amortização 10;DATA;0;;N;;
+C0000260;Data verificação amortização 11;DATA;0;;N;;
+C0000261;Data verificação amortização 12;DATA;0;;N;;
+C0000262;Data verificação amortização 13;DATA;0;;N;;
+C0000263;Data verificação amortização 14;DATA;0;;N;;
+C0000264;Data verificação amortização 15;DATA;0;;N;;
+C0000265;Data verificação amortização 16;DATA;0;;N;;
+C0000266;Data verificação amortização 17;DATA;0;;N;;
+C0000267;Data verificação amortização 18;DATA;0;;N;;
+C0000268;Data verificação amortização 19;DATA;0;;N;;
+C0000269;Data verificação amortização 20;DATA;0;;N;;
+C0000270;Data verificação amortização 21;DATA;0;;N;;
+C0000271;Data verificação amortização 22;DATA;0;;N;;
+C0000272;Data verificação amortização 23;DATA;0;;N;;
+C0000273;Data verificação amortização 24;DATA;0;;N;;
+C0000274;Data verificação amortização 25;DATA;0;;N;;
+C0000275;Data verificação amortização 26;DATA;0;;N;;
+C0000276;Data verificação amortização 27;DATA;0;;N;;
+C0000277;Data verificação amortização 28;DATA;0;;N;;
+C0000278;Data verificação amortização 29;DATA;0;;N;;
+C0000279;Data verificação amortização 30;DATA;0;;N;;
+C0000280;Data verificação amortização 31;DATA;0;;N;;
+C0000281;Data verificação amortização 32;DATA;0;;N;;
+C0000282;Data verificação amortização 33;DATA;0;;N;;
+C0000283;Data verificação amortização 34;DATA;0;;N;;
+C0000284;Data verificação amortização 35;DATA;0;;N;;
+C0000285;Data verificação amortização 36;DATA;0;;N;;
+C0000286;Data verificação amortização 37;DATA;0;;N;;
+C0000287;Data verificação amortização 38;DATA;0;;N;;
+C0000288;Data verificação amortização 39;DATA;0;;N;;
+C0000289;Data verificação amortização 40;DATA;0;;N;;
+C0000290;Data verificação amortização 41;DATA;0;;N;;
+C0000291;Data verificação amortização 42;DATA;0;;N;;
+C0000292;Data verificação amortização 43;DATA;0;;N;;
+C0000293;Data verificação amortização 44;DATA;0;;N;;
+C0000294;Data verificação amortização 45;DATA;0;;N;;
+C0000295;Data verificação amortização 46;DATA;0;;N;;
+C0000296;Data verificação amortização 47;DATA;0;;N;;
+C0000297;Data verificação amortização 48;DATA;0;;N;;
+C0000298;Data verificação amortização 49;DATA;0;;N;;
+C0000299;Data verificação amortização 50;DATA;0;;N;;
+C0000300;Data verificação amortização 51;DATA;0;;N;;
+C0000301;Data verificação amortização 52;DATA;0;;N;;
+C0000302;Data verificação amortização 53;DATA;0;;N;;
+C0000303;Data verificação amortização 54;DATA;0;;N;;
+C0000304;Data verificação amortização 55;DATA;0;;N;;
+C0000305;Data verificação amortização 56;DATA;0;;N;;
+C0000306;Data verificação amortização 57;DATA;0;;N;;
+C0000307;Data verificação amortização 58;DATA;0;;N;;
+C0000308;Data verificação amortização 59;DATA;0;;N;;
+C0000309;Data verificação amortização 60;DATA;0;;N;;
+C0000310;Data verificação amortização 61;DATA;0;;N;;
+C0000311;Data verificação amortização 62;DATA;0;;N;;
+C0000312;Data verificação amortização 63;DATA;0;;N;;
+C0000313;Data verificação amortização 64;DATA;0;;N;;
+C0000314;Data verificação amortização 65;DATA;0;;N;;
+C0000315;Data verificação amortização 66;DATA;0;;N;;
+C0000316;Data verificação amortização 67;DATA;0;;N;;
+C0000317;Data verificação amortização 68;DATA;0;;N;;
+C0000318;Data verificação amortização 69;DATA;0;;N;;
+C0000319;Data verificação amortização 70;DATA;0;;N;;
+C0000320;Data verificação amortização 71;DATA;0;;N;;
+C0000321;Data verificação amortização 72;DATA;0;;N;;
+C0000322;Data verificação amortização 73;DATA;0;;N;;
+C0000323;Data verificação amortização 74;DATA;0;;N;;
+C0000324;Data verificação amortização 75;DATA;0;;N;;
+C0000325;Data verificação amortização 76;DATA;0;;N;;
+C0000326;Data verificação amortização 77;DATA;0;;N;;
+C0000327;Data verificação amortização 78;DATA;0;;N;;
+C0000328;Data verificação amortização 79;DATA;0;;N;;
+C0000329;Data verificação amortização 80;DATA;0;;N;;
+C0000330;Data verificação amortização 81;DATA;0;;N;;
+C0000331;Data verificação amortização 82;DATA;0;;N;;
+C0000332;Data verificação amortização 83;DATA;0;;N;;
+C0000333;Data verificação amortização 84;DATA;0;;N;;
+C0000334;Data verificação amortização 85;DATA;0;;N;;
+C0000335;Data verificação amortização 86;DATA;0;;N;;
+C0000336;Data verificação amortização 87;DATA;0;;N;;
+C0000337;Data verificação amortização 88;DATA;0;;N;;
+C0000338;Data verificação amortização 89;DATA;0;;N;;
+C0000339;Data verificação amortização 90;DATA;0;;N;;
+C0000340;Data verificação amortização 91;DATA;0;;N;;
+C0000341;Data verificação amortização 92;DATA;0;;N;;
+C0000342;Data verificação amortização 93;DATA;0;;N;;
+C0000343;Data verificação amortização 94;DATA;0;;N;;
+C0000344;Data verificação amortização 95;DATA;0;;N;;
+C0000345;Data verificação amortização 96;DATA;0;;N;;
+C0000346;Data verificação amortização 97;DATA;0;;N;;
+C0000347;Data verificação amortização 98;DATA;0;;N;;
+C0000348;Data verificação amortização 99;DATA;0;;N;;
+C0000349;Data verificação amortização 100;DATA;0;;N;;
+C0000350;Expiry date Loan;DATA;0;;N;;
+C0000351;Notional Loan;NUMERICO;10;8;N;;
+C0000352;Lender Loan;TEXTO;50;;N;;
+C0000353;Borrower Loan;TEXTO;50;;N;;
+C0000354;ID Loan;TEXTO;50;;N;;
+C0000355;Data Duration Fee;DATA;0;;N;;
+C0000356;Duration Fee;NUMERICO;10;8;N;;
+C0000357;Moeda Referência Loan;TEXTO;40;;N;;
+C0000358;Limitador de Baixa Fluxo SOFR (%);NUMERICO;10;8;N;;
+C0000359;Limitador cenário de alta 2 (%);NUMERICO;10;8;N;;
+C0000360;Opção 1;DOMINIO;0;;S;Call;2046
+C0000360;Opção 1;DOMINIO;0;;S;Put;2047
+C0000360;Opção 1;DOMINIO;0;;S;Callspread;2048
+C0000360;Opção 1;DOMINIO;0;;S;Putspread;2049
+C0000360;Opção 1;DOMINIO;0;;S;Call KI;2050
+C0000360;Opção 1;DOMINIO;0;;S;Call KO;2051
+C0000360;Opção 1;DOMINIO;0;;S;Put KI;2052
+C0000360;Opção 1;DOMINIO;0;;S;Put KO;2053
+C0000360;Opção 1;DOMINIO;0;;S;Call Digital;2054
+C0000360;Opção 1;DOMINIO;0;;S;Put Digital;2055
+C0000361;Ativo Subjacente1;TEXTO;40;;S;;
+C0000362;Valor Inicial Ativo Subjacente 4;NUMERICO;10;4;N;;
+C0000363;Participação 4(%);NUMERICO;4;8;N;;
+C0000364;Limitador 1(%);NUMERICO;4;8;N;;
+C0000365;Limitador 4(%);NUMERICO;4;8;N;;
+C0000366;Barreira 1(%);NUMERICO;4;8;N;;
+C0000367;Barreira 4(%);NUMERICO;4;8;N;;
+C0000368;Rebate 4(%);NUMERICO;4;8;N;;
+C0000369;Rebate 1(%);NUMERICO;4;8;N;;
+C0000370;Periodo de verificação de barreiras 4;DOMINIO;0;;N;Americana;10
+C0000370;Periodo de verificação de barreiras 4;DOMINIO;0;;N;Européia;11
+C0000371;Tipo de cotação para verificação de barreira 4;DOMINIO;0;;N;Fechamento;3
+C0000371;Tipo de cotação para verificação de barreira 4;DOMINIO;0;;N;Media;4
+C0000371;Tipo de cotação para verificação de barreira 4;DOMINIO;0;;N;Maximo;5
+C0000371;Tipo de cotação para verificação de barreira 4;DOMINIO;0;;N;Mínimo;6
+C0000371;Tipo de cotação para verificação de barreira 4;DOMINIO;0;;N;Ajuste;7
+C0000372;Periodo de verificação de barreiras 1;DOMINIO;0;;N;Americana;10
+C0000372;Periodo de verificação de barreiras 1;DOMINIO;0;;N;Européia;11
+C0000373;Tipo de cotação para verificação de barreira 1;DOMINIO;0;;N;Fechamento;3
+C0000373;Tipo de cotação para verificação de barreira 1;DOMINIO;0;;N;Media;4
+C0000373;Tipo de cotação para verificação de barreira 1;DOMINIO;0;;N;Maximo;5
+C0000373;Tipo de cotação para verificação de barreira 1;DOMINIO;0;;N;Mínimo;6
+C0000373;Tipo de cotação para verificação de barreira 1;DOMINIO;0;;N;Ajuste;7
+C0000374;Data inicial para verificação 4;DATA;0;;N;;
+C0000375;Data final para verificação 4;DATA;0;;N;;
+C0000376;Data inicial para verificação 1;DATA;0;;N;;
+C0000377;Data para fixing 4;DATA;0;;N;;
+C0000378;Data inicial para fixing 4;DATA;0;;N;;
+C0000379;Data final para fixing 4;DATA;0;;N;;
+C0000380;Data final para verificação 1;DATA;0;;N;;
+C0000381;Opção 5;DOMINIO;0;;N;Call;2046
+C0000381;Opção 5;DOMINIO;0;;N;Put;2047
+C0000381;Opção 5;DOMINIO;0;;N;Callspread;2048
+C0000381;Opção 5;DOMINIO;0;;N;Putspread;2049
+C0000381;Opção 5;DOMINIO;0;;N;Call KI;2050
+C0000381;Opção 5;DOMINIO;0;;N;Call KO;2051
+C0000381;Opção 5;DOMINIO;0;;N;Put KI;2052
+C0000381;Opção 5;DOMINIO;0;;N;Put KO;2053
+C0000381;Opção 5;DOMINIO;0;;N;Call Digital;2054
+C0000381;Opção 5;DOMINIO;0;;N;Put Digital;2055
+C0000382;Período de captura do ativo subjacente para liquidação 1;DOMINIO;0;;N;Data única;1
+C0000382;Período de captura do ativo subjacente para liquidação 1;DOMINIO;0;;N;Janela de datas;2
+C0000383;Ativo Subjacente 5;TEXTO;40;;N;;
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;INDICES;24
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;ACOES;2058
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;COMMODITIES;2060
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;JUROS;2063
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000384;Classe do Ativo Subjacente 5;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000385;Valor Inicial Ativo Subjacente 5;NUMERICO;10;4;N;;
+C0000386;Participação 5(%);NUMERICO;4;8;N;;
+C0000387;Limitador 5(%);NUMERICO;4;8;N;;
+C0000388;Barreira 5(%);NUMERICO;4;8;N;;
+C0000389;Rebate 5(%);NUMERICO;4;8;N;;
+C0000390;Periodo de verificação de barreiras 5;DOMINIO;0;;N;Americana;10
+C0000390;Periodo de verificação de barreiras 5;DOMINIO;0;;N;Européia;11
+C0000391;Tipo de cotação para verificação de barreira 5;DOMINIO;0;;N;Fechamento;3
+C0000391;Tipo de cotação para verificação de barreira 5;DOMINIO;0;;N;Media;4
+C0000391;Tipo de cotação para verificação de barreira 5;DOMINIO;0;;N;Maximo;5
+C0000391;Tipo de cotação para verificação de barreira 5;DOMINIO;0;;N;Mínimo;6
+C0000391;Tipo de cotação para verificação de barreira 5;DOMINIO;0;;N;Ajuste;7
+C0000392;Data inicial para verificação 5;DATA;0;;N;;
+C0000393;Data final para verificação 5;DATA;0;;N;;
+C0000394;Data para fixing 5;DATA;0;;N;;
+C0000395;Data inicial para fixing 5;DATA;0;;N;;
+C0000396;Data final para fixing 5;DATA;0;;N;;
+C0000397;Opção 6;DOMINIO;0;;N;Call;2046
+C0000397;Opção 6;DOMINIO;0;;N;Put;2047
+C0000397;Opção 6;DOMINIO;0;;N;Callspread;2048
+C0000397;Opção 6;DOMINIO;0;;N;Putspread;2049
+C0000397;Opção 6;DOMINIO;0;;N;Call KI;2050
+C0000397;Opção 6;DOMINIO;0;;N;Call KO;2051
+C0000397;Opção 6;DOMINIO;0;;N;Put KI;2052
+C0000397;Opção 6;DOMINIO;0;;N;Put KO;2053
+C0000397;Opção 6;DOMINIO;0;;N;Call Digital;2054
+C0000397;Opção 6;DOMINIO;0;;N;Put Digital;2055
+C0000398;Ativo Subjacente 6;TEXTO;40;;N;;
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;INDICES;24
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;ACOES;2058
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;COMMODITIES;2060
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;JUROS;2063
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000399;Classe do Ativo Subjacente 6;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000400;Valor Inicial Ativo Subjacente 6;NUMERICO;10;4;N;;
+C0000401;Quantidade 6;NUMERICO;4;8;N;;
+C0000402;Participação 6(%);NUMERICO;4;8;N;;
+C0000403;Limitador 6(%);NUMERICO;4;8;N;;
+C0000404;Barreira 6(%);NUMERICO;4;8;N;;
+C0000405;Rebate 6(%);NUMERICO;4;8;N;;
+C0000406;Periodo de verificação de barreiras 6;DOMINIO;0;;N;Americana;10
+C0000406;Periodo de verificação de barreiras 6;DOMINIO;0;;N;Européia;11
+C0000407;Tipo de cotação para verificação de barreira 6;DOMINIO;0;;N;Fechamento;3
+C0000407;Tipo de cotação para verificação de barreira 6;DOMINIO;0;;N;Media;4
+C0000407;Tipo de cotação para verificação de barreira 6;DOMINIO;0;;N;Maximo;5
+C0000407;Tipo de cotação para verificação de barreira 6;DOMINIO;0;;N;Mínimo;6
+C0000407;Tipo de cotação para verificação de barreira 6;DOMINIO;0;;N;Ajuste;7
+C0000408;Data inicial para verificação 6;DATA;0;;N;;
+C0000409;Data final para verificação 6;DATA;0;;N;;
+C0000410;Data para fixing 6;DATA;0;;N;;
+C0000411;Data inicial para fixing 6;DATA;0;;N;;
+C0000412;Data final para fixing 6;DATA;0;;N;;
+C0000413;Opção 7;DOMINIO;0;;N;Call;2046
+C0000413;Opção 7;DOMINIO;0;;N;Put;2047
+C0000413;Opção 7;DOMINIO;0;;N;Callspread;2048
+C0000413;Opção 7;DOMINIO;0;;N;Putspread;2049
+C0000413;Opção 7;DOMINIO;0;;N;Call KI;2050
+C0000413;Opção 7;DOMINIO;0;;N;Call KO;2051
+C0000413;Opção 7;DOMINIO;0;;N;Put KI;2052
+C0000413;Opção 7;DOMINIO;0;;N;Put KO;2053
+C0000413;Opção 7;DOMINIO;0;;N;Call Digital;2054
+C0000413;Opção 7;DOMINIO;0;;N;Put Digital;2055
+C0000414;Ativo Subjacente 7;TEXTO;40;;N;;
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;INDICES;24
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;ACOES;2058
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;COMMODITIES;2060
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;JUROS;2063
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000415;Classe do Ativo Subjacente 7;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000416;Valor Inicial Ativo Subjacente 7;NUMERICO;10;4;N;;
+C0000417;Quantidade 7;NUMERICO;4;8;N;;
+C0000418;Participação 7(%);NUMERICO;4;8;N;;
+C0000419;Limitador 7(%);NUMERICO;4;8;N;;
+C0000420;Barreira 7(%);NUMERICO;4;8;N;;
+C0000421;Rebate 7(%);NUMERICO;4;8;N;;
+C0000422;Periodo de verificação de barreiras 7;DOMINIO;0;;N;Americana;10
+C0000422;Periodo de verificação de barreiras 7;DOMINIO;0;;N;Européia;11
+C0000423;Tipo de cotação para verificação de barreira 7;DOMINIO;0;;N;Fechamento;3
+C0000423;Tipo de cotação para verificação de barreira 7;DOMINIO;0;;N;Media;4
+C0000423;Tipo de cotação para verificação de barreira 7;DOMINIO;0;;N;Maximo;5
+C0000423;Tipo de cotação para verificação de barreira 7;DOMINIO;0;;N;Mínimo;6
+C0000423;Tipo de cotação para verificação de barreira 7;DOMINIO;0;;N;Ajuste;7
+C0000424;Data inicial para verificação 7;DATA;0;;N;;
+C0000425;Data final para verificação 7;DATA;0;;N;;
+C0000426;Data para fixing 7;DATA;0;;N;;
+C0000427;Data inicial para fixing 7;DATA;0;;N;;
+C0000428;Data final para fixing 7;DATA;0;;N;;
+C0000429;Opção 8;DOMINIO;0;;N;Call;2046
+C0000429;Opção 8;DOMINIO;0;;N;Put;2047
+C0000429;Opção 8;DOMINIO;0;;N;Callspread;2048
+C0000429;Opção 8;DOMINIO;0;;N;Putspread;2049
+C0000429;Opção 8;DOMINIO;0;;N;Call KI;2050
+C0000429;Opção 8;DOMINIO;0;;N;Call KO;2051
+C0000429;Opção 8;DOMINIO;0;;N;Put KI;2052
+C0000429;Opção 8;DOMINIO;0;;N;Put KO;2053
+C0000429;Opção 8;DOMINIO;0;;N;Call Digital;2054
+C0000429;Opção 8;DOMINIO;0;;N;Put Digital;2055
+C0000430;Ativo Subjacente 8;TEXTO;40;;N;;
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;INDICES;24
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;ACOES;2058
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;COMMODITIES;2060
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;JUROS;2063
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000431;Classe do Ativo Subjacente 8;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000432;Valor Inicial Ativo Subjacente 8;NUMERICO;10;4;N;;
+C0000433;Quantidade 8;NUMERICO;4;8;N;;
+C0000434;Participação 8(%);NUMERICO;4;8;N;;
+C0000435;Limitador 8(%);NUMERICO;4;8;N;;
+C0000436;Barreira 8(%);NUMERICO;4;8;N;;
+C0000437;Rebate 8(%);NUMERICO;4;8;N;;
+C0000438;Periodo de verificação de barreiras 8;DOMINIO;0;;N;Americana;10
+C0000438;Periodo de verificação de barreiras 8;DOMINIO;0;;N;Européia;11
+C0000439;Tipo de cotação para verificação de barreira 8;DOMINIO;0;;N;Fechamento;3
+C0000439;Tipo de cotação para verificação de barreira 8;DOMINIO;0;;N;Media;4
+C0000439;Tipo de cotação para verificação de barreira 8;DOMINIO;0;;N;Maximo;5
+C0000439;Tipo de cotação para verificação de barreira 8;DOMINIO;0;;N;Mínimo;6
+C0000439;Tipo de cotação para verificação de barreira 8;DOMINIO;0;;N;Ajuste;7
+C0000440;Data inicial para verificação 8;DATA;0;;N;;
+C0000441;Data final para verificação 8;DATA;0;;N;;
+C0000442;Data para fixing 8;DATA;0;;N;;
+C0000443;Data inicial para fixing 8;DATA;0;;N;;
+C0000444;Data final para fixing 8;DATA;0;;N;;
+C0000445;Opção 9;DOMINIO;0;;N;Call;2046
+C0000445;Opção 9;DOMINIO;0;;N;Put;2047
+C0000445;Opção 9;DOMINIO;0;;N;Callspread;2048
+C0000445;Opção 9;DOMINIO;0;;N;Putspread;2049
+C0000445;Opção 9;DOMINIO;0;;N;Call KI;2050
+C0000445;Opção 9;DOMINIO;0;;N;Call KO;2051
+C0000445;Opção 9;DOMINIO;0;;N;Put KI;2052
+C0000445;Opção 9;DOMINIO;0;;N;Put KO;2053
+C0000445;Opção 9;DOMINIO;0;;N;Call Digital;2054
+C0000445;Opção 9;DOMINIO;0;;N;Put Digital;2055
+C0000446;Ativo Subjacente 9;TEXTO;40;;N;;
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;INDICES;24
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;ACOES;2058
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;COMMODITIES;2060
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;JUROS;2063
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000447;Classe do Ativo Subjacente 9;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000448;Valor Inicial Ativo Subjacente 9;NUMERICO;10;4;N;;
+C0000449;Quantidade 9;NUMERICO;4;8;N;;
+C0000450;Participação 9(%);NUMERICO;4;8;N;;
+C0000451;Limitador 9(%);NUMERICO;4;8;N;;
+C0000452;Barreira 9(%);NUMERICO;4;8;N;;
+C0000453;Rebate 9(%);NUMERICO;4;8;N;;
+C0000454;Periodo de verificação de barreiras 9;DOMINIO;0;;N;Americana;10
+C0000454;Periodo de verificação de barreiras 9;DOMINIO;0;;N;Européia;11
+C0000455;Tipo de cotação para verificação de barreira 9;DOMINIO;0;;N;Fechamento;3
+C0000455;Tipo de cotação para verificação de barreira 9;DOMINIO;0;;N;Media;4
+C0000455;Tipo de cotação para verificação de barreira 9;DOMINIO;0;;N;Maximo;5
+C0000455;Tipo de cotação para verificação de barreira 9;DOMINIO;0;;N;Mínimo;6
+C0000455;Tipo de cotação para verificação de barreira 9;DOMINIO;0;;N;Ajuste;7
+C0000456;Data inicial para verificação 9;DATA;0;;N;;
+C0000457;Data final para verificação 9;DATA;0;;N;;
+C0000458;Data para fixing 9;DATA;0;;N;;
+C0000459;Data inicial para fixing 9;DATA;0;;N;;
+C0000460;Data final para fixing 9;DATA;0;;N;;
+C0000461;Opção 10;DOMINIO;0;;N;Call;2046
+C0000461;Opção 10;DOMINIO;0;;N;Put;2047
+C0000461;Opção 10;DOMINIO;0;;N;Callspread;2048
+C0000461;Opção 10;DOMINIO;0;;N;Putspread;2049
+C0000461;Opção 10;DOMINIO;0;;N;Call KI;2050
+C0000461;Opção 10;DOMINIO;0;;N;Call KO;2051
+C0000461;Opção 10;DOMINIO;0;;N;Put KI;2052
+C0000461;Opção 10;DOMINIO;0;;N;Put KO;2053
+C0000461;Opção 10;DOMINIO;0;;N;Call Digital;2054
+C0000461;Opção 10;DOMINIO;0;;N;Put Digital;2055
+C0000462;Ativo Subjacente 10;TEXTO;40;;N;;
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;INDICES;24
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;ACOES;2058
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;COMMODITIES;2060
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;JUROS;2063
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000463;Classe do Ativo Subjacente 10;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000464;Valor Inicial Ativo Subjacente 10;NUMERICO;10;4;N;;
+C0000465;Quantidade 10;NUMERICO;4;8;N;;
+C0000466;Participação 10(%);NUMERICO;4;8;N;;
+C0000467;Limitador 10(%);NUMERICO;4;8;N;;
+C0000468;Barreira 10(%);NUMERICO;4;8;N;;
+C0000469;Rebate 10(%);NUMERICO;4;8;N;;
+C0000470;Periodo de verificação de barreiras 10;DOMINIO;0;;N;Americana;10
+C0000470;Periodo de verificação de barreiras 10;DOMINIO;0;;N;Européia;11
+C0000471;Tipo de cotação para verificação de barreira 10;DOMINIO;0;;N;Fechamento;3
+C0000471;Tipo de cotação para verificação de barreira 10;DOMINIO;0;;N;Media;4
+C0000471;Tipo de cotação para verificação de barreira 10;DOMINIO;0;;N;Maximo;5
+C0000471;Tipo de cotação para verificação de barreira 10;DOMINIO;0;;N;Mínimo;6
+C0000471;Tipo de cotação para verificação de barreira 10;DOMINIO;0;;N;Ajuste;7
+C0000472;Data inicial para verificação 10;DATA;0;;N;;
+C0000473;Data final para verificação 10;DATA;0;;N;;
+C0000474;Data para fixing 10;DATA;0;;N;;
+C0000475;Data inicial para fixing 10;DATA;0;;N;;
+C0000476;Data final para fixing 10;DATA;0;;N;;
+C0000477;Data para fixing 1;DATA;0;;N;;
+C0000478;Data inicial para fixing 1;DATA;0;;N;;
+C0000479;Data final para fixing 1;DATA;0;;N;;
+C0000480;Opção 2;DOMINIO;0;;S;Call;2046
+C0000480;Opção 2;DOMINIO;0;;S;Put;2047
+C0000480;Opção 2;DOMINIO;0;;S;Callspread;2048
+C0000480;Opção 2;DOMINIO;0;;S;Putspread;2049
+C0000480;Opção 2;DOMINIO;0;;S;Call KI;2050
+C0000480;Opção 2;DOMINIO;0;;S;Call KO;2051
+C0000480;Opção 2;DOMINIO;0;;S;Put KI;2052
+C0000480;Opção 2;DOMINIO;0;;S;Put KO;2053
+C0000480;Opção 2;DOMINIO;0;;S;Call Digital;2054
+C0000480;Opção 2;DOMINIO;0;;S;Put Digital;2055
+C0000481;Ativo Subjacente2;TEXTO;40;;S;;
+C0000482;Limitador 2(%);NUMERICO;4;8;N;;
+C0000483;Barreira 2(%);NUMERICO;4;8;N;;
+C0000484;Rebate 2(%);NUMERICO;4;8;N;;
+C0000485;Periodo de verificação de barreiras 2;DOMINIO;0;;N;Americana;10
+C0000485;Periodo de verificação de barreiras 2;DOMINIO;0;;N;Européia;11
+C0000486;Tipo de cotação para verificação de barreira 2;DOMINIO;0;;N;Fechamento;3
+C0000486;Tipo de cotação para verificação de barreira 2;DOMINIO;0;;N;Media;4
+C0000486;Tipo de cotação para verificação de barreira 2;DOMINIO;0;;N;Maximo;5
+C0000486;Tipo de cotação para verificação de barreira 2;DOMINIO;0;;N;Mínimo;6
+C0000486;Tipo de cotação para verificação de barreira 2;DOMINIO;0;;N;Ajuste;7
+C0000487;Data inicial para verificação 2;DATA;0;;N;;
+C0000488;Data final para verificação 2;DATA;0;;N;;
+C0000489;Data para fixing 2;DATA;0;;N;;
+C0000490;Data inicial para fixing 2;DATA;0;;N;;
+C0000491;Data final para fixing 2;DATA;0;;N;;
+C0000492;Opção 3;DOMINIO;0;;N;Call;2046
+C0000492;Opção 3;DOMINIO;0;;N;Put;2047
+C0000492;Opção 3;DOMINIO;0;;N;Callspread;2048
+C0000492;Opção 3;DOMINIO;0;;N;Putspread;2049
+C0000492;Opção 3;DOMINIO;0;;N;Call KI;2050
+C0000492;Opção 3;DOMINIO;0;;N;Call KO;2051
+C0000492;Opção 3;DOMINIO;0;;N;Put KI;2052
+C0000492;Opção 3;DOMINIO;0;;N;Put KO;2053
+C0000492;Opção 3;DOMINIO;0;;N;Call Digital;2054
+C0000492;Opção 3;DOMINIO;0;;N;Put Digital;2055
+C0000493;Ativo Subjacente 3;TEXTO;40;;N;;
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;INDICES;24
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;ACOES;2058
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;COMMODITIES;2060
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;JUROS;2063
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000494;Classe do Ativo Subjacente 3;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000495;Valor Inicial Ativo Subjacente 3;NUMERICO;10;4;N;;
+C0000496;Participação 3(%);NUMERICO;4;8;N;;
+C0000497;Limitador 3(%);NUMERICO;4;8;N;;
+C0000498;Barreira 3(%);NUMERICO;4;8;N;;
+C0000499;Rebate 3(%);NUMERICO;4;8;N;;
+C0000500;Periodo de verificação de barreiras 3;DOMINIO;0;;N;Americana;10
+C0000500;Periodo de verificação de barreiras 3;DOMINIO;0;;N;Européia;11
+C0000501;Tipo de cotação para verificação de barreira 3;DOMINIO;0;;N;Fechamento;3
+C0000501;Tipo de cotação para verificação de barreira 3;DOMINIO;0;;N;Media;4
+C0000501;Tipo de cotação para verificação de barreira 3;DOMINIO;0;;N;Maximo;5
+C0000501;Tipo de cotação para verificação de barreira 3;DOMINIO;0;;N;Mínimo;6
+C0000501;Tipo de cotação para verificação de barreira 3;DOMINIO;0;;N;Ajuste;7
+C0000502;Data inicial para verificação 3;DATA;0;;N;;
+C0000503;Data final para verificação 3;DATA;0;;N;;
+C0000504;Data para fixing 3;DATA;0;;N;;
+C0000505;Data inicial para fixing 3;DATA;0;;N;;
+C0000506;Data final para fixing 3;DATA;0;;N;;
+C0000507;Opção 4;DOMINIO;0;;N;Call;2046
+C0000507;Opção 4;DOMINIO;0;;N;Put;2047
+C0000507;Opção 4;DOMINIO;0;;N;Callspread;2048
+C0000507;Opção 4;DOMINIO;0;;N;Putspread;2049
+C0000507;Opção 4;DOMINIO;0;;N;Call KI;2050
+C0000507;Opção 4;DOMINIO;0;;N;Call KO;2051
+C0000507;Opção 4;DOMINIO;0;;N;Put KI;2052
+C0000507;Opção 4;DOMINIO;0;;N;Put KO;2053
+C0000507;Opção 4;DOMINIO;0;;N;Call Digital;2054
+C0000507;Opção 4;DOMINIO;0;;N;Put Digital;2055
+C0000508;Ativo Subjacente 4;TEXTO;40;;N;;
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;INDICES;24
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;ACOES;2058
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;ACOES INTERNACIONAIS;2059
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;COMMODITIES;2060
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;INDICES DE PRECOS;2061
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;INDICES INTERNACIONA;2062
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;JUROS;2063
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;JUROS INTERNACIONAIS;2064
+C0000509;Classe do Ativo Subjacente 4;DOMINIO;0;;N;TAXA DE CAMBIO;2065
+C0000510;Período de captura do ativo subjacente para liquidação 2;DOMINIO;0;;N;Data única;1
+C0000510;Período de captura do ativo subjacente para liquidação 2;DOMINIO;0;;N;Janela de datas;2
+C0000511;Período de captura do ativo subjacente para liquidação 3;DOMINIO;0;;N;Data única;1
+C0000511;Período de captura do ativo subjacente para liquidação 3;DOMINIO;0;;N;Janela de datas;2
+C0000512;Período de captura do ativo subjacente para liquidação 4;DOMINIO;0;;N;Data única;1
+C0000512;Período de captura do ativo subjacente para liquidação 4;DOMINIO;0;;N;Janela de datas;2
+C0000513;Período de captura do ativo subjacente para liquidação 5;DOMINIO;0;;N;Data única;1
+C0000513;Período de captura do ativo subjacente para liquidação 5;DOMINIO;0;;N;Janela de datas;2
+C0000514;Período de captura do ativo subjacente para liquidação 6;DOMINIO;0;;N;Data única;1
+C0000514;Período de captura do ativo subjacente para liquidação 6;DOMINIO;0;;N;Janela de datas;2
+C0000515;Período de captura do ativo subjacente para liquidação 7;DOMINIO;0;;N;Data única;1
+C0000515;Período de captura do ativo subjacente para liquidação 7;DOMINIO;0;;N;Janela de datas;2
+C0000516;Período de captura do ativo subjacente para liquidação 8;DOMINIO;0;;N;Data única;1
+C0000516;Período de captura do ativo subjacente para liquidação 8;DOMINIO;0;;N;Janela de datas;2
+C0000517;Período de captura do ativo subjacente para liquidação 9;DOMINIO;0;;N;Data única;1
+C0000517;Período de captura do ativo subjacente para liquidação 9;DOMINIO;0;;N;Janela de datas;2
+C0000518;Período de captura do ativo subjacente para liquidação 10;DOMINIO;0;;N;Data única;1
+C0000518;Período de captura do ativo subjacente para liquidação 10;DOMINIO;0;;N;Janela de datas;2
+C0000519;Strike 5 (%);NUMERICO;4;8;N;;
+C0000520;Strike 6 (%);NUMERICO;4;8;N;;
+C0000521;Tipo de fixing para vencimento 1;DOMINIO;0;;N;Minimo do periodo;2066
+C0000521;Tipo de fixing para vencimento 1;DOMINIO;0;;N;Maximo do periodo;2067
+C0000521;Tipo de fixing para vencimento 1;DOMINIO;0;;N;Media do periodo;2068
+C0000522;Tipo de fixing para vencimento 2;DOMINIO;0;;N;Minimo do periodo;2066
+C0000522;Tipo de fixing para vencimento 2;DOMINIO;0;;N;Maximo do periodo;2067
+C0000522;Tipo de fixing para vencimento 2;DOMINIO;0;;N;Media do periodo;2068
+C0000523;Tipo de fixing para vencimento 3;DOMINIO;0;;N;Minimo do periodo;2066
+C0000523;Tipo de fixing para vencimento 3;DOMINIO;0;;N;Maximo do periodo;2067
+C0000523;Tipo de fixing para vencimento 3;DOMINIO;0;;N;Media do periodo;2068
+C0000524;Tipo de fixing para vencimento 4;DOMINIO;0;;N;Minimo do periodo;2066
+C0000524;Tipo de fixing para vencimento 4;DOMINIO;0;;N;Maximo do periodo;2067
+C0000524;Tipo de fixing para vencimento 4;DOMINIO;0;;N;Media do periodo;2068
+C0000525;Tipo de fixing para vencimento 5;DOMINIO;0;;N;Minimo do periodo;2066
+C0000525;Tipo de fixing para vencimento 5;DOMINIO;0;;N;Maximo do periodo;2067
+C0000525;Tipo de fixing para vencimento 5;DOMINIO;0;;N;Media do periodo;2068
+C0000526;Tipo de fixing para vencimento 6;DOMINIO;0;;N;Minimo do periodo;2066
+C0000526;Tipo de fixing para vencimento 6;DOMINIO;0;;N;Maximo do periodo;2067
+C0000526;Tipo de fixing para vencimento 6;DOMINIO;0;;N;Media do periodo;2068
+C0000527;Tipo de fixing para vencimento 7;DOMINIO;0;;N;Minimo do periodo;2066
+C0000527;Tipo de fixing para vencimento 7;DOMINIO;0;;N;Maximo do periodo;2067
+C0000527;Tipo de fixing para vencimento 7;DOMINIO;0;;N;Media do periodo;2068
+C0000528;Tipo de fixing para vencimento 8;DOMINIO;0;;N;Minimo do periodo;2066
+C0000528;Tipo de fixing para vencimento 8;DOMINIO;0;;N;Maximo do periodo;2067
+C0000528;Tipo de fixing para vencimento 8;DOMINIO;0;;N;Media do periodo;2068
+C0000529;Tipo de fixing para vencimento 9;DOMINIO;0;;N;Minimo do periodo;2066
+C0000529;Tipo de fixing para vencimento 9;DOMINIO;0;;N;Maximo do periodo;2067
+C0000529;Tipo de fixing para vencimento 9;DOMINIO;0;;N;Media do periodo;2068
+C0000530;Tipo de fixing para vencimento 10;DOMINIO;0;;N;Minimo do periodo;2066
+C0000530;Tipo de fixing para vencimento 10;DOMINIO;0;;N;Maximo do periodo;2067
+C0000530;Tipo de fixing para vencimento 10;DOMINIO;0;;N;Media do periodo;2068
+C0000531;Quantidade 5;NUMERICO;10;4;N;;
+C000070;Quantidade 1;NUMERICO;12;8;N;;
+C000071;Quantidade 2;NUMERICO;12;8;N;;

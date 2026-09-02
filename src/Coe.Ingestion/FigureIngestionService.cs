@@ -49,11 +49,9 @@ public sealed record IngestionReport(
 public sealed class FigureIngestionService(
     IFigureCatalog catalog,
     IngestionOptions options,
-    B3Reference reference,
+    B3ReferenceProvider references,
     ILogger<FigureIngestionService> logger)
 {
-    private readonly TemplateCompiler _compiler = new(reference);
-
     public async Task<IngestionReport> RunAsync(CancellationToken ct = default)
     {
         var started = Stopwatch.GetTimestamp();
@@ -61,6 +59,11 @@ public sealed class FigureIngestionService(
 
         var run = new IngestionRun { StartedUtc = DateTimeOffset.UtcNow };
         var messages = new List<string>();
+
+        // Taken once, for the whole pass: the exports can be replaced by a CETIP sync while
+        // this runs, and every figure in one pass must be checked against the same catalogue.
+        var reference = references.Current;
+        var compiler = new TemplateCompiler(reference);
 
         // A missing or partial reference export is a warning, not a failure: the platform still
         // compiles and serves, it simply cannot cross-check against B3's catalogue.
@@ -80,7 +83,7 @@ public sealed class FigureIngestionService(
                 using var fileActivity = CoeDiagnostics.Ingestion.StartActivity("coe.ingest.figure", ActivityKind.Internal);
                 fileActivity?.SetTag("coe.figure.code", loaded.File.FigureCode);
                 fileActivity?.SetTag("coe.source.file", loaded.RelativePath);
-                await IngestOneAsync(loaded, set.Fragments, run, messages, ct);
+                await IngestOneAsync(loaded, set.Fragments, compiler, run, messages, ct);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
@@ -114,6 +117,7 @@ public sealed class FigureIngestionService(
     private async Task IngestOneAsync(
         LoadedDomainFile loaded,
         IReadOnlyDictionary<string, DomainFile> fragments,
+        TemplateCompiler compiler,
         IngestionRun run,
         List<string> messages,
         CancellationToken ct)
@@ -139,7 +143,7 @@ public sealed class FigureIngestionService(
         }
 
         var nextVersion = await catalog.LatestTemplateVersionAsync(code, ct) + 1;
-        var result = _compiler.Compile(file, fragments, nextVersion);
+        var result = compiler.Compile(file, fragments, nextVersion);
 
         foreach (var warning in result.Warnings)
             messages.Add($"{loaded.RelativePath}: warning — {warning}");
