@@ -1,6 +1,7 @@
 using System.Text.Json.Nodes;
 using Coe.Clearing;
 using Coe.Core.Assets;
+using Coe.Core.Templates;
 using Coe.Ingestion;
 using Microsoft.Extensions.Logging;
 
@@ -24,16 +25,68 @@ public sealed class ClearingOptions
 /// The asset is the source of everything in them: the template it was booked against says which
 /// attribute is which of B3's, and the values say what they hold. Nothing is asked of the caller
 /// beyond the issuer's short name, which is not a property of the certificate.
+///
+/// Generating and keeping are separate on purpose. A generation is a read — the preview a desk
+/// looks at, repeatable and free — while a save is the record that these bytes are what B3 was
+/// sent, on this date, under this participant name, from the values the asset held at that
+/// moment. Only the second writes, and it stores the files rather than the inputs to rebuild
+/// them: an edit, a new template version or a different short name would all produce a different
+/// file from the same certificate.
 /// </summary>
 public sealed class AssetClearingService(
     IAssetRepository assets,
     ITemplateStore templates,
     B3ReferenceProvider references,
+    IClearingFileRepository storedFiles,
     ClearingOptions options,
     ILogger<AssetClearingService> logger)
 {
+    /// <summary>The files as they would be sent, without keeping them.</summary>
     public async Task<ClearingFileSet?> GenerateAsync(
-        Guid assetId, string? participantName, DateOnly? fileDate, CancellationToken ct = default)
+        Guid assetId, string? participantName, DateOnly? fileDate, CancellationToken ct = default) =>
+        (await PrepareAsync(assetId, participantName, fileDate, ct))?.Set;
+
+    /// <summary>
+    /// Generates the files and stores them, bytes and all. What comes back is the stored set,
+    /// with the identifiers each file can be downloaded by afterwards.
+    /// </summary>
+    public async Task<StoredClearingFileSet?> SaveAsync(
+        Guid assetId, string? participantName, DateOnly? fileDate, string? user, CancellationToken ct = default)
+    {
+        var generation = await PrepareAsync(assetId, participantName, fileDate, ct);
+        if (generation is null) return null;
+
+        var set = new StoredClearingFileSet(
+            Id: Guid.Empty,
+            AssetId: assetId,
+            FigureCode: generation.Asset.FigureCode,
+            // The version the files were actually written against, which is the one the asset
+            // was booked on unless it is gone and the active one stood in for it.
+            TemplateVersion: generation.Template.Version,
+            ParticipantName: generation.ParticipantName,
+            FileDate: generation.FileDate,
+            Notes: generation.Set.Notes,
+            GeneratedUtc: DateTimeOffset.UtcNow,
+            GeneratedBy: user,
+            Files: generation.Set.Files.Select(Store).ToList());
+
+        return await storedFiles.AddAsync(set, ct);
+    }
+
+    /// <summary>Every generation kept for this asset, newest first, without the uploads.</summary>
+    public Task<IReadOnlyList<ClearingFileSetRow>> ListSavedAsync(Guid assetId, CancellationToken ct = default) =>
+        storedFiles.ListAsync(assetId, limit: 50, ct);
+
+    /// <summary>One stored file with its bytes, as it was written.</summary>
+    public Task<StoredClearingFile?> GetSavedFileAsync(Guid assetId, Guid fileId, CancellationToken ct = default) =>
+        storedFiles.GetFileAsync(assetId, fileId, ct);
+
+    /// <summary>What a generation produced, and the inputs it was produced under.</summary>
+    private sealed record Generation(
+        Asset Asset, FigureTemplate Template, ClearingFileSet Set, string ParticipantName, DateOnly FileDate);
+
+    private async Task<Generation?> PrepareAsync(
+        Guid assetId, string? participantName, DateOnly? fileDate, CancellationToken ct)
     {
         var asset = await assets.GetAsync(assetId, ct);
         if (asset is null) return null;
@@ -53,12 +106,14 @@ public sealed class AssetClearingService(
                 "No participant short name is configured (Clearing:ParticipantName) and none was given; "
                 + "every CETIP upload header carries one.");
 
+        var stamp = fileDate ?? DateOnly.FromDateTime(DateTime.UtcNow);
+
         var request = new ClearingRequest(
             template,
             ParseValues(asset),
             participant,
             references.Current.Figure(asset.FigureCode)?.Ordinal ?? string.Empty,
-            fileDate ?? DateOnly.FromDateTime(DateTime.UtcNow),
+            stamp,
             asset.InstrumentCode);
 
         var set = ClearingFileGenerator.ForRegistration(request);
@@ -67,7 +122,19 @@ public sealed class AssetClearingService(
             "Wrote {Count} CETIP file(s) for asset {AssetId} ({FigureCode}): {Files}",
             set.Files.Count, assetId, asset.FigureCode, string.Join(", ", set.Files.Select(f => f.Operation)));
 
-        return set;
+        return new Generation(asset, template, set, participant, stamp);
+    }
+
+    /// <summary>
+    /// One file on its way to the database: the bytes as they would be uploaded, single-byte
+    /// encoded, and the hash that says whether a later generation produced the same file.
+    /// </summary>
+    private static StoredClearingFile Store(CetipFile file)
+    {
+        var content = file.ToBytes();
+        return new StoredClearingFile(
+            Guid.Empty, file.Layout, file.Operation, file.FileName, file.RecordCount,
+            content, ClearingFileRepository.Hash(content));
     }
 
     /// <summary>

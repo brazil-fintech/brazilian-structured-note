@@ -109,6 +109,32 @@ export interface ClearingResponse {
   notes: string[];
 }
 
+/** One upload file kept in the database. The bytes stay there; this identifies them. */
+export interface StoredClearingFile {
+  id: string;
+  layout: string;
+  operation: string;
+  fileName: string;
+  records: number;
+  bytes: number;
+  /** sha256 over the stored bytes — what says whether two generations produced the same file. */
+  contentHash: string;
+}
+
+/** One kept generation, with what its files were written from and under. */
+export interface StoredClearingSet {
+  id: string;
+  assetId: string;
+  figureCode: string;
+  templateVersion: number;
+  participantName: string;
+  fileDate: string;
+  notes: string[];
+  generatedUtc: string;
+  generatedBy?: string;
+  files: StoredClearingFile[];
+}
+
 /** The optional inputs of a generation: neither is a property of the certificate. */
 export interface ClearingParams {
   /** Overrides the issuer short name configured server-side (Clearing:ParticipantName). */
@@ -241,6 +267,26 @@ export const api = {
    */
   clearingFileBlob: async (assetId: string, operation: string, params: ClearingParams = {}) => {
     const response = await fetch(`${BASE}${clearingPath(assetId, params, operation)}`);
+    if (!response.ok) throw new ApiError(response.status, await failureMessage(response));
+    return response.blob();
+  },
+
+  /**
+   * Generates the files and keeps them. This is the only clearing call that writes: the preview
+   * above is a read, and what is stored here is the record of what B3 was sent, on this date and
+   * under this participant name, from the values the asset held at that moment.
+   */
+  saveClearingFiles: (assetId: string, params: ClearingParams = {}) =>
+    request<StoredClearingSet>(clearingPath(assetId, params), { method: 'POST' }),
+
+  /** The generations kept for an asset, newest first, without the uploads themselves. */
+  savedClearingSets: (assetId: string) =>
+    request<StoredClearingSet[]>(`/assets/${encodeURIComponent(assetId)}/clearing/saved`),
+
+  /** A kept file, byte for byte as it was stored — nothing is regenerated to serve it. */
+  savedClearingFileBlob: async (assetId: string, fileId: string) => {
+    const path = `/assets/${encodeURIComponent(assetId)}/clearing/saved/${encodeURIComponent(fileId)}`;
+    const response = await fetch(`${BASE}${path}`);
     if (!response.ok) throw new ApiError(response.status, await failureMessage(response));
     return response.blob();
   },

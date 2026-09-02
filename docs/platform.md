@@ -123,6 +123,14 @@ The ingestion warning that names an unaddressable attribute is now silent, and a
 there. When B3 publishes something new, the build fails and says which figure and which
 attribute — which is the point of holding the per-figure lists at all.
 
+**A generation can be kept.** `POST /api/assets/{id}/clearing` writes the same files and stores
+them, and it is the only clearing call that writes — the GET routes are reads, so a preview
+refreshed twice does not leave two rows behind. What is stored is the files themselves rather
+than the inputs to rebuild them, for the reason above: the same certificate does not produce the
+same file twice once anything around it has moved. `GET …/clearing/saved` lists what was kept and
+`GET …/clearing/saved/{fileId}` hands back one of them byte for byte, without regenerating
+anything — which is the point of having stored it.
+
 **The desk reaches them from the booking screen.** A save lands on the files screen for the
 certificate that was just booked, and the *Arquivos B3* action on any row of the asset list
 reopens it. Two inputs sit above the result, because neither belongs to the certificate: the
@@ -261,6 +269,9 @@ in `Pending` for a desk to release it.
 | `GET /api/reference/{source}` | lists a field's `optionSource` (`underlyings`, 1,582 codes from B3's master) |
 | `GET /api/assets/{id}/clearing` | the CETIP upload files for a booked asset, with a note on what went into each |
 | `GET /api/assets/{id}/clearing/{operation}` | one of them as bytes, encoded as B3 reads it |
+| `POST /api/assets/{id}/clearing` | writes those files and keeps them — the only clearing call that writes |
+| `GET /api/assets/{id}/clearing/saved` | the generations kept for the asset, newest first, without the uploads |
+| `GET /api/assets/{id}/clearing/saved/{fileId}` | one kept file, byte for byte as it was stored |
 | `POST /api/admin/ingest` | re-read the domain files now, without waiting for the worker |
 | `POST /api/admin/cetip/sync` | pull CETIP's public directory now and reload what changed |
 | `GET /api/admin/cetip` | provenance: which dated export each reference file came from, and when |
@@ -358,6 +369,17 @@ a save against a stale version returns 409 rather than overwriting someone else'
 dictionary and its per-figure attribute lists — the published answer to "what does this figure
 register, and what does each attribute hold?". Like every `b3.*` table they are replaced whole on
 each pass, because the export is the truth and a row that leaves it must leave here too.
+
+`clearing.FileSet` and `clearing.File` keep the upload files a certificate was registered with.
+A generated file is not a derived value that can be recomputed at will: it is what B3 received on
+a given day, under a given participant short name, from the values the asset held at that moment,
+and an edit, a new template version or a different short name would each produce a different file
+from the same certificate. So the bytes are stored — as `varbinary`, exactly as they would be
+uploaded, since CETIP reads a single-byte encoding and keeping text would leave the re-encoding
+to whoever read the row back — beside a sha256 of them, the participant name, the file date and
+the template version they were written against. The set and its files are inserted in one
+transaction: a Registro COE kept without the Fluxo de Caixa that completes it would read as a
+registration that needed none.
 
 The schema lives in `db/*.sql` and is applied at startup by both the API and the worker. Every
 script is written to be re-runnable, so a fresh database and a long-lived one converge without a

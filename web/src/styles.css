@@ -358,6 +358,23 @@ body {
 .clearing__notes { margin: 0; padding: 12px 16px 16px 32px; color: var(--ink-soft); font-size: 13px; }
 .clearing__notes li { margin-bottom: 4px; }
 
+.clearing__empty--inset { padding: 12px 16px; margin: 0; }
+
+.clearing__saved { list-style: none; margin: 0; padding: 0; }
+.clearing__saved-set { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.clearing__saved-set:last-child { border-bottom: none; }
+.clearing__saved-head { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+
+.clearing__saved-files { list-style: none; margin: 0; padding: 0; }
+.clearing__saved-files li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+.clearing__saved-name { font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace; font-size: 12px; }
+
 @media (max-width: 720px) {
   .app__main { padding: 12px; }
   .repeating__row { flex-direction: column; }

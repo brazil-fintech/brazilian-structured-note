@@ -139,4 +139,17 @@ export const ui = {
       ? 'Asset saved. Generate the B3 upload files below, or go back to the list.'
       : 'Ativo salvo. Gere abaixo os arquivos de envio à B3, ou volte para a lista.',
   backToList: (c: string) => (en(c) ? 'Back to the list' : 'Voltar para a lista'),
+  saveFiles: (c: string) => (en(c) ? 'Generate and keep' : 'Gerar e arquivar'),
+  savingFiles: (c: string) => (en(c) ? 'Keeping…' : 'Arquivando…'),
+  filesSaved: (c: string) =>
+    en(c)
+      ? 'Files stored. They are kept exactly as they would be uploaded, and stay readable after the asset is edited.'
+      : 'Arquivos armazenados. Ficam guardados exatamente como seriam enviados e permanecem legíveis após a edição do ativo.',
+  savedSets: (c: string) => (en(c) ? 'Files kept for this certificate' : 'Arquivos guardados deste certificado'),
+  noSavedSets: (c: string) =>
+    en(c) ? 'Nothing has been kept for this certificate yet.' : 'Nada foi guardado deste certificado ainda.',
+  generatedAt: (c: string) => (en(c) ? 'Generated' : 'Gerado em'),
+  generatedBy: (c: string) => (en(c) ? 'by' : 'por'),
+  bytes: (c: string, count: number) =>
+    `${new Intl.NumberFormat(en(c) ? 'en-GB' : 'pt-BR').format(count)} bytes`,
 };
