@@ -10,17 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     # The database tests run against this; without it they skip rather than fail.
+    #
+    # The password comes from the COE_SQL_PASSWORD Actions secret. The literal below is what a
+    # fork without that secret falls back to, so a pull request still runs the database tests:
+    # it names a container that lives for one job on one runner and is never reachable from
+    # outside it. Nothing deployed reads it — deploy/docker-compose.hosted.yml has no default
+    # at all and refuses to start without the secret. The health probe below reads the password
+    # from the container's own environment rather than repeating it; a password with spaces or
+    # shell metacharacters would not survive that, so generate one from base64.
     services:
       mssql:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           ACCEPT_EULA: "Y"
-          MSSQL_SA_PASSWORD: "Your_password123"
+          MSSQL_SA_PASSWORD: ${{ secrets.COE_SQL_PASSWORD || 'Coe_Ci_Throwaway_2026!' }}
           MSSQL_PID: Developer
         ports:
           - 1433:1433
         options: >-
-          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Your_password123 -C -Q 'SELECT 1' || exit 1"
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -C -Q 'SELECT 1' || exit 1"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 12
@@ -38,7 +46,7 @@ jobs:
       # drops its own database on the service container above.
       - run: dotnet test --no-build --configuration Release --verbosity normal
         env:
-          COE_TEST_SQL: "Server=localhost,1433;User Id=sa;Password=Your_password123;TrustServerCertificate=True;Encrypt=True"
+          COE_TEST_SQL: "Server=localhost,1433;User Id=sa;Password=${{ secrets.COE_SQL_PASSWORD || 'Coe_Ci_Throwaway_2026!' }};TrustServerCertificate=True;Encrypt=True"
 
   web:
     runs-on: ubuntu-latest

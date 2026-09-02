@@ -1,6 +1,7 @@
 import type { FigureTemplate, InstanceValues, Json, ValidationMessage } from '../engine/types';
+import { apiBaseUrl } from './config';
 
-const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
+const BASE = apiBaseUrl;
 
 export interface FigureSummary {
   code: string;

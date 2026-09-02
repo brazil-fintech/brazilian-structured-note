@@ -402,6 +402,10 @@ dotnet run --project src/Coe.Api          # http://localhost:5080
 cd web && npm install && npm run dev      # http://localhost:5173
 ```
 
+Or from the images GitHub publishes, without a checkout at all — the API, the worker and the
+screen are on `ghcr.io` and the screen is also on GitHub Pages. `docs/hosting.md` has the compose
+file, the settings a container takes and where the SQL password comes from.
+
 Connection string: `ConnectionStrings:Coe`, overridable with `ConnectionStrings__Coe` in the
 environment. In Development the host creates the database if it is missing
 (`Database:CreateDatabaseIfMissing`); elsewhere that is off, because silently creating an empty

@@ -1,0 +1,94 @@
+# The whole platform from the images GitHub publishes — nothing is built locally.
+#
+#   curl -O https://raw.githubusercontent.com/brazil-fintech/brazilian-structured-note/main/deploy/docker-compose.hosted.yml
+#   docker compose -f docker-compose.hosted.yml up -d
+#   open http://localhost:8080
+#
+# One setting has no default and must be supplied: COE_SQL_PASSWORD, the SQL Server sa password.
+# It lives in the repository's Actions secrets (Settings → Secrets and variables → Actions →
+# COE_SQL_PASSWORD), which is what the workflows read, and in a local `.env` beside this file
+# for a machine running the stack by hand — never in a file that is committed. The rest of the
+# settings, all optional, are in deploy/hosted.env.example.
+#
+#   echo "COE_SQL_PASSWORD=$(openssl rand -base64 24)aA1!" > .env
+name: coe
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: coe-mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${COE_SQL_PASSWORD:?set COE_SQL_PASSWORD (see the header of this file)}
+      MSSQL_PID: Developer
+    ports:
+      - "${COE_SQL_PORT:-1433}:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  # Compiles domain/ into templates and keeps B3's exports fresh. It is the process that owns
+  # the CETIP sync here, so the two hosts never write the mirror at the same moment.
+  worker:
+    image: ghcr.io/brazil-fintech/brazilian-structured-note/worker:${COE_TAG:-latest}
+    container_name: coe-worker
+    depends_on:
+      mssql:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__Coe: Server=mssql,1433;Database=${COE_DATABASE:-Coe};User Id=sa;Password=${COE_SQL_PASSWORD:?set COE_SQL_PASSWORD (see the header of this file)};TrustServerCertificate=True;Encrypt=True
+      # A fresh SQL Server has no database yet; the scripts in db/ create the schema inside it.
+      Database__CreateDatabaseIfMissing: "true"
+      Cetip__Enabled: ${COE_CETIP_ENABLED:-true}
+      Clearing__ParticipantName: ${COE_PARTICIPANT_NAME:-}
+      Observability__OtlpEndpoint: ${COE_OTLP_ENDPOINT:-}
+    volumes:
+      # Seeded from the image, then kept: what the worker fetched from CETIP survives a restart.
+      - reference:/app/reference/b3
+    restart: unless-stopped
+
+  api:
+    image: ghcr.io/brazil-fintech/brazilian-structured-note/api:${COE_TAG:-latest}
+    container_name: coe-api
+    depends_on:
+      mssql:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__Coe: Server=mssql,1433;Database=${COE_DATABASE:-Coe};User Id=sa;Password=${COE_SQL_PASSWORD:?set COE_SQL_PASSWORD (see the header of this file)};TrustServerCertificate=True;Encrypt=True
+      Database__CreateDatabaseIfMissing: "true"
+      # The worker syncs on its own schedule; the API still exposes /api/admin/cetip/sync.
+      Cetip__SyncOnStartup: "false"
+      Clearing__ParticipantName: ${COE_PARTICIPANT_NAME:-}
+      Observability__OtlpEndpoint: ${COE_OTLP_ENDPOINT:-}
+      # Only needed when a browser calls the API from another origin — the GitHub Pages copy of
+      # the app, say. Through the web container below the two share an origin and this is unused.
+      Cors__Origins__0: ${COE_WEB_ORIGIN:-http://localhost:8080}
+    ports:
+      - "${COE_API_PORT:-5080}:8080"
+    volumes:
+      - reference:/app/reference/b3
+    restart: unless-stopped
+
+  web:
+    image: ghcr.io/brazil-fintech/brazilian-structured-note/web:${COE_TAG:-latest}
+    container_name: coe-web
+    depends_on:
+      - api
+    environment:
+      # The browser calls /api on this origin and nginx forwards it, so no preflight sits in
+      # front of every validation call.
+      COE_API_BASE_URL: /api
+      COE_API_PROXY_PASS: http://api:8080
+    ports:
+      - "${COE_WEB_PORT:-8080}:8080"
+    restart: unless-stopped
+
+volumes:
+  mssql-data:
+  reference:

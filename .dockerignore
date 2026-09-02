@@ -1,0 +1,16 @@
+# The build stages copy what they need; everything below is either rebuilt inside the
+# image or has no business in one.
+.git
+.github
+**/bin
+**/obj
+**/node_modules
+web/dist
+docs
+tests
+tools
+reference/b3/*.zip
+BenchmarkDotNet.Artifacts
+**/appsettings.Local.json
+**/.venv
+**/__pycache__

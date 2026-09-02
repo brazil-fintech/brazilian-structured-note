@@ -94,6 +94,7 @@ formula, parameters, worked example, scenario table and drawing:
 README.md                     ← you are here: product design overview
 docs/
   README.md                   ← documentation index
+  hosting.md                  ← running the published images, the Pages app and Codespaces
   overview.md                 ← full product design: legal framework, lifecycle, risks, tax
   parameters.md               ← every parameter: registration fields + payoff parameters
   calculations.md             ← calculation conventions: CDI/pre/IPCA accrual, DU/252,
@@ -128,7 +129,10 @@ tools/Coe.DomainGen/          ← turns that annex into a domain file per catalo
 tests/Coe.Tests/              ← expression, compiler, validation and database suites
 tests/Coe.Benchmarks/         ← BenchmarkDotNet harness for the validation path
 db/                           ← re-runnable schema and reference-data scripts
-deploy/                       ← OpenTelemetry collector config for local work
+deploy/                       ← the container images (API, worker, web), the compose file that
+                                runs them from GitHub's registry, and the OTel collector config
+.devcontainer/                ← the Codespaces machine: .NET SDK, Node, Docker, forwarded ports
+.github/workflows/            ← build and test; publish the images; publish the screen to Pages
 ```
 
 ## The platform
@@ -215,6 +219,24 @@ dotnet run --project src/Coe.Worker       # sync CETIP, compile domain/ into tem
 dotnet run --project src/Coe.Api          # http://localhost:5080
 cd web && npm install && npm run dev      # http://localhost:5173
 ```
+
+**And it runs from GitHub without a checkout.** The API, the worker and the booking screen are
+published as container images on GitHub's own registry, and the screen is also published to
+GitHub Pages. The images carry `db/`, `domain/` and `reference/b3/`, so a fresh container needs
+nothing but a SQL Server: the API creates the schema, the worker compiles all 88 figures of B3's
+catalogue, and the screen is ready to book against them.
+
+```bash
+curl -O https://raw.githubusercontent.com/brazil-fintech/brazilian-structured-note/main/deploy/docker-compose.hosted.yml
+echo "COE_SQL_PASSWORD=$(openssl rand -base64 24)aA1!" > .env   # the one setting with no default
+docker compose -f docker-compose.hosted.yml up -d               # screen on :8080, API on :5080
+```
+
+The published screen is at
+[brazil-fintech.github.io/brazilian-structured-note](https://brazil-fintech.github.io/brazilian-structured-note/)
+— add `?api=https://your-host/api` to point it at your own instance — and *Code → Codespaces*
+gives a machine with the SDK, Node and Docker already on it. Everything hosting needs, including
+where the SQL password comes from, is in [docs/hosting.md](docs/hosting.md).
 
 Full architecture in [docs/platform.md](docs/platform.md); how to add or change a figure in
 [domain/README.md](domain/README.md).

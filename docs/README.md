@@ -18,6 +18,7 @@ structured note. Start with the [repository README](../README.md) for the short 
 | Document | Contents |
 |---|---|
 | [platform.md](platform.md) | The booking platform: how a figure becomes a form, template compilation and versioning, the three validation scopes, endpoints, data model, running it locally |
+| [hosting.md](hosting.md) | Running it from GitHub: the published container images, the compose file that brings the stack up, the booking screen on GitHub Pages, Codespaces, and where the SQL password comes from |
 | [../domain/README.md](../domain/README.md) | Authoring guide for the figure catalog: file shape, sections, fields, rules, the expression language, and the checklist for adding a figure |
 
 ## Payoffs
