@@ -89,7 +89,7 @@ public sealed class ClearingFileRepository(
                 """;
 
             const string insertFile = """
-                INSERT INTO clearing.File
+                INSERT INTO clearing.UploadFile
                     (Id, SetId, Layout, Operation, FileName, RecordCount, Content, ByteCount, ContentHash)
                 VALUES
                     (@id, @setId, @layout, @operation, @fileName, @recordCount, @content, @byteCount, @contentHash);
@@ -157,7 +157,7 @@ public sealed class ClearingFileRepository(
                  ORDER BY GeneratedUtc DESC, Id DESC;
 
                 SELECT f.SetId, f.Id, f.Layout, f.Operation, f.FileName, f.RecordCount, f.ByteCount, f.ContentHash
-                  FROM clearing.File AS f
+                  FROM clearing.UploadFile AS f
                  WHERE f.SetId IN (SELECT TOP (@limit) Id
                                      FROM clearing.FileSet
                                     WHERE AssetId = @assetId
@@ -221,7 +221,7 @@ public sealed class ClearingFileRepository(
             // one certificate must not read another's upload.
             const string sql = """
                 SELECT f.Id, f.Layout, f.Operation, f.FileName, f.RecordCount, f.Content, f.ContentHash
-                  FROM clearing.File AS f
+                  FROM clearing.UploadFile AS f
                   JOIN clearing.FileSet AS s ON s.Id = f.SetId
                  WHERE f.Id = @fileId AND s.AssetId = @assetId;
                 """;

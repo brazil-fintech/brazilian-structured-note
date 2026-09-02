@@ -185,7 +185,7 @@ the builder refuses one that does not start where the last ended, so a mistransc
 fails at the first field instead of arriving at B3 shifted by one character.
 
 **A registration that was sent is kept.** `POST /api/assets/{id}/clearing` writes the files and
-stores them in `clearing.FileSet` / `clearing.File` — the bytes themselves, exactly as they would
+stores them in `clearing.FileSet` / `clearing.UploadFile` — the bytes themselves, exactly as they would
 be uploaded, with the participant short name, the file date and the template version they were
 written under. The same certificate does not produce the same file twice once it has been edited,
 the template has moved on or the short name has changed, so what B3 received is only answerable

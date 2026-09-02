@@ -370,7 +370,7 @@ dictionary and its per-figure attribute lists — the published answer to "what 
 register, and what does each attribute hold?". Like every `b3.*` table they are replaced whole on
 each pass, because the export is the truth and a row that leaves it must leave here too.
 
-`clearing.FileSet` and `clearing.File` keep the upload files a certificate was registered with.
+`clearing.FileSet` and `clearing.UploadFile` keep the upload files a certificate was registered with.
 A generated file is not a derived value that can be recomputed at will: it is what B3 received on
 a given day, under a given participant short name, from the values the asset held at that moment,
 and an edit, a new template version or a different short name would each produce a different file

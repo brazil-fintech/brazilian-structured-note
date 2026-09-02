@@ -47,13 +47,15 @@ CREATE TABLE clearing.FileSet
 );
 GO
 
-IF OBJECT_ID('clearing.File') IS NULL
-CREATE TABLE clearing.File
+/* Named UploadFile, not File: FILE is a reserved word in T-SQL and an unquoted
+   clearing.File is a syntax error rather than a table. */
+IF OBJECT_ID('clearing.UploadFile') IS NULL
+CREATE TABLE clearing.UploadFile
 (
-    Id          UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_ClearingFile PRIMARY KEY
-                CONSTRAINT DF_ClearingFile_Id DEFAULT NEWSEQUENTIALID(),
+    Id          UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_ClearingUploadFile PRIMARY KEY
+                CONSTRAINT DF_ClearingUploadFile_Id DEFAULT NEWSEQUENTIALID(),
     SetId       UNIQUEIDENTIFIER NOT NULL
-                CONSTRAINT FK_ClearingFile_Set REFERENCES clearing.FileSet(Id) ON DELETE CASCADE,
+                CONSTRAINT FK_ClearingUploadFile_Set REFERENCES clearing.FileSet(Id) ON DELETE CASCADE,
 
     Layout      NVARCHAR(80)     NOT NULL,   /* "4.8.1 Registro COE" */
     Operation   NVARCHAR(10)     NOT NULL,   /* the code its header carries: 0001, FLUX, … */
@@ -71,7 +73,7 @@ CREATE TABLE clearing.File
 
     /* One file per operation within a set: a certificate produces at most one
        Registro COE, one Fluxo de Caixa, one RegistroCestas, one Datas Fixing. */
-    CONSTRAINT UQ_ClearingFile_Operation UNIQUE (SetId, Operation)
+    CONSTRAINT UQ_ClearingUploadFile_Operation UNIQUE (SetId, Operation)
 );
 GO
 
