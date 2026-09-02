@@ -183,6 +183,101 @@
           "options": [],
           "order": 290,
           "inGrid": false
+        },
+        {
+          "key": "strike6",
+          "label": {
+            "pt": "Strike 6(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 6(%)",
+          "b3DataCode": "C0000063",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 300,
+          "inGrid": false
+        },
+        {
+          "key": "strike7",
+          "label": {
+            "pt": "Strike 7(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 7(%)",
+          "b3DataCode": "C0000219",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 310,
+          "inGrid": false
+        },
+        {
+          "key": "strike8",
+          "label": {
+            "pt": "Strike 8(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 8(%)",
+          "b3DataCode": "C0000222",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 320,
+          "inGrid": false
+        },
+        {
+          "key": "strike9",
+          "label": {
+            "pt": "Strike 9(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 9(%)",
+          "b3DataCode": "C0000225",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 330,
+          "inGrid": false
+        },
+        {
+          "key": "strike10",
+          "label": {
+            "pt": "Strike 10(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Strike 10(%)",
+          "b3DataCode": "C0000228",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 340,
+          "inGrid": false
         }
       ],
       "itemFields": []

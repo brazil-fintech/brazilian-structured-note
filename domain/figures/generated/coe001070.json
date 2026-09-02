@@ -97,6 +97,38 @@
           "options": [],
           "order": 30,
           "inGrid": false
+        },
+        {
+          "key": "periodoDeVerificacaoDasBarreiras",
+          "label": {
+            "pt": "Período de verificação das barreiras"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de verificação das barreiras",
+          "b3DataCode": "C0000125",
+          "required": true,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
         }
       ],
       "itemFields": []

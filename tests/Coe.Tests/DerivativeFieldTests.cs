@@ -104,38 +104,97 @@ public sealed class DerivativeFieldTests
     }
 
     [Fact]
-    public void Most_of_what_B3_registers_can_be_written_out()
+    public void Every_attribute_B3_registers_can_be_written_out()
     {
-        // The compiler matches a field to a published attribute by B3's own name for it. That
-        // does not reach everything — B3 names an attribute one way in the export and another on
-        // the registration screen often enough — so this is a floor, not a claim of completeness,
-        // and it exists to catch a change that quietly stops the matching from working.
-        var resolved = DomainFiles.Compiled.Values
-            .Where(result => result.Succeeded)
-            .SelectMany(result => result.Template!.AllFields())
-            .Count(field => field.B3DataCode is not null);
+        // The whole point of holding B3's per-figure attribute lists: an attribute the platform
+        // cannot address is one the registration file goes out without. This is the assertion
+        // that keeps that at zero. If B3 publishes an attribute a figure has no field for, this
+        // fails and names it, which is the signal to add the field or the series.
+        var unmapped = new List<string>();
 
-        Assert.True(resolved > 1_100, $"only {resolved} attribute(s) resolved to a B3 data code");
+        foreach (var figure in DomainFiles.Reference.Figures.OrderBy(f => f.Code, StringComparer.Ordinal))
+        {
+            var published = DomainFiles.Reference.FigureAttributes(figure.Code);
+            if (published.Count == 0) continue;
+
+            var result = DomainFiles.Compiled[figure.Code];
+            Assert.True(result.Succeeded, $"{figure.Code} failed to compile: {string.Join("; ", result.Errors)}");
+
+            var addressable = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var field in result.Template!.AllFields())
+            {
+                if (field.B3DataCode is { } code) addressable.Add(code);
+                foreach (var series in field.B3SeriesCodes) addressable.Add(series);
+            }
+
+            unmapped.AddRange(published
+                .Where(a => !addressable.Contains(a.FieldCode))
+                .Select(a => $"{figure.Code} {a.FieldCode} '{a.Name}'"));
+        }
+
+        Assert.True(unmapped.Count == 0,
+            $"{unmapped.Count} published attribute(s) have no field:{Environment.NewLine}"
+            + string.Join(Environment.NewLine, unmapped));
     }
 
     [Fact]
-    public void A_figure_whose_attributes_none_of_the_files_name_is_reported_not_hidden()
+    public void A_repeating_column_maps_to_the_numbered_run_B3_registers()
     {
-        // Four figures match nothing today: two credit COEs B3 publishes without a code, the
-        // fund-amortisation figure, and the range accrual, whose curated file uses its own names.
-        // The compiler says so per figure rather than leaving a silent gap.
-        var silent = DomainFiles.Compiled
-            .Where(pair => pair.Value.Succeeded)
-            .Where(pair => pair.Value.Template!.AllFields().All(f => f.B3DataCode is null))
-            .Where(pair => DomainFiles.Reference.FigureAttributes(pair.Key).Count > 0)
-            .Select(pair => pair.Key)
-            .ToList();
+        // B3's file format is flat, so a schedule the form shows as rows is a run of numbered
+        // fields to it. The observation dates of the autocall figure are ten of them.
+        var dates = DomainFiles.Template("COE001064").FindField("observations[].observationDate");
 
-        foreach (var code in silent)
+        Assert.NotNull(dates);
+        Assert.Equal(10, dates.B3SeriesCodes.Count);
+        Assert.Equal("C0000128", dates.B3SeriesCodes[0]);
+        Assert.Equal("C0000137", dates.B3SeriesCodes[9]);
+
+        // And B3 pairs each date with the participation used on it.
+        var participation = DomainFiles.Template("COE001064").FindField("observations[].participation");
+        Assert.NotNull(participation);
+        Assert.Equal(10, participation.B3SeriesCodes.Count);
+        Assert.Equal("C0000109", participation.B3SeriesCodes[0]);
+    }
+
+    [Fact]
+    public void A_figure_with_no_such_series_gets_an_empty_one()
+    {
+        // The series is declared on the shared cash-flow block, so every figure that extends it
+        // asks the question; only the ones B3 registers an amortisation run for get an answer.
+        Assert.Equal(12, DomainFiles.Template("COE001072").FindField("cashflows[].amountPercent")!.B3SeriesCodes.Count);
+        Assert.Empty(DomainFiles.Template("COE001005").FindField("cashflows[].amountPercent")!.B3SeriesCodes);
+    }
+
+    [Theory]
+    [InlineData("Strike 1(%)", "Strike 2(%)")]
+    [InlineData("Barreira cenário de alta (%)", "Barreira cenário de baixa (%)")]
+    [InlineData("Data de Observação 1", "Data de Observação 10")]
+    public void Attributes_that_differ_in_substance_stay_apart(string one, string other) =>
+        Assert.NotEqual(B3DerivativeFields.SignatureOf(one), B3DerivativeFields.SignatureOf(other));
+
+    [Theory]
+    [InlineData("Data de verificação amortização 1", "Data verificação amortização 1")]
+    [InlineData("Barreira no Cenário de Alta", "Barreira cenário de alta (%)")]
+    [InlineData("Tipo de Cotação para Verificação de Barreiras no Cenário de Alta",
+                "Tipo de cotação para verificação de barreira cenario de alta")]
+    public void The_same_attribute_spelled_two_ways_reduces_alike(string annex, string export) =>
+        Assert.Equal(B3DerivativeFields.SignatureOf(annex), B3DerivativeFields.SignatureOf(export));
+
+    [Fact]
+    public void No_figure_has_two_attributes_that_reduce_alike()
+    {
+        // What makes signature matching safe to fall back on: within a figure the reduced names
+        // are still distinct, so a match is never a choice between two attributes.
+        foreach (var figure in DomainFiles.Reference.Figures)
         {
-            Assert.Contains(
-                DomainFiles.Compiled[code].Warnings,
-                warning => warning.Contains("carries no b3DataCode", StringComparison.Ordinal));
+            var seen = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var attribute in DomainFiles.Reference.FigureAttributes(figure.Code))
+            {
+                var signature = B3DerivativeFields.SignatureOf(attribute.Name);
+                Assert.False(seen.TryGetValue(signature, out var first),
+                    $"{figure.Code}: '{attribute.Name}' and '{first}' reduce to the same words");
+                seen[signature] = attribute.Name;
+            }
         }
     }
 }

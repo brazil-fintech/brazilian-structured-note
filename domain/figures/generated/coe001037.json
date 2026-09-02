@@ -194,6 +194,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Alta",
+          "b3DataCode": "C0000011",
           "required": true,
           "visibleWhen": "underlying.assetClass != 'CESTA'",
           "options": [

@@ -47,11 +47,11 @@
           },
           "dataType": "percent",
           "symbol": "K",
-          "b3Field": "Strike",
+          "b3Field": "Strike 1(%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "default": 100,
           "help": {
             "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
@@ -67,11 +67,11 @@
           },
           "dataType": "percent",
           "symbol": "Part",
-          "b3Field": "Participação",
+          "b3Field": "Participação cenário de alta (%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 4,
           "default": 100,
           "help": {
             "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
@@ -87,15 +87,33 @@
           },
           "dataType": "percent",
           "symbol": "Cap",
-          "b3Field": "Limitador",
+          "b3Field": "Limitador cenário de alta (%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "help": {
             "pt": "Performance máxima considerada pela fórmula.",
             "en": "Maximum performance considered by the formula."
           }
+        },
+        {
+          "key": "quantity1",
+          "order": 1000,
+          "label": {
+            "pt": "Quantidade 1",
+            "en": "Quantity 1"
+          },
+          "help": {
+            "pt": "Quantidade do ativo subjacente usada no ajuste do Strike 1. Registrada pela B3 junto do strike; em branco quando o ajuste não se aplica.",
+            "en": "The quantity of the underlying used to adjust Strike 1. B3 registers it alongside the strike; left blank when no adjustment applies."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "required": false,
+          "min": 0,
+          "max": 999999999999,
+          "decimals": 8
         }
       ]
     }

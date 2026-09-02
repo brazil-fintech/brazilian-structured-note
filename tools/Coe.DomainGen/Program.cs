@@ -34,11 +34,12 @@ Console.WriteLine($"  generated           {written.Count}");
 Console.WriteLine($"  no field annex      {generator.WithoutAnnex.Count}"
                 + (generator.WithoutAnnex.Count > 0 ? $"  ({string.Join(", ", generator.WithoutAnnex)})" : ""));
 Console.WriteLine();
-Console.WriteLine($"{"Figure",-12} {"Fields",6} {"Inherited",9} {"Rules",5} {"Skipped",7}  Name");
+Console.WriteLine($"{"Figure",-12} {"Fields",6} {"Export",6} {"Inherited",9} {"Rules",5} {"Skipped",7}  Name");
 
 foreach (var figure in written)
-    Console.WriteLine($"{figure.Code,-12} {figure.Fields,6} {figure.Inherited,9} {figure.Rules,5} {figure.Skipped,7}  {figure.Name}");
+    Console.WriteLine($"{figure.Code,-12} {figure.Fields,6} {figure.FromExport,6} {figure.Inherited,9} {figure.Rules,5} {figure.Skipped,7}  {figure.Name}");
 
 Console.WriteLine();
-Console.WriteLine($"{written.Sum(f => f.Fields)} attributes written across {written.Count} files.");
+Console.WriteLine($"{written.Sum(f => f.Fields)} attributes written across {written.Count} files, "
+                + $"{written.Sum(f => f.FromExport)} of them from the export where the annex is silent.");
 return 0;

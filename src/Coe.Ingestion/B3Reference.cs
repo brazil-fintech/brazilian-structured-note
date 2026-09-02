@@ -91,6 +91,21 @@ public sealed partial class B3Reference
         DerivativeFields.AttributesByName(figureCode);
 
     /// <summary>
+    /// The attribute of <paramref name="figureCode"/> whose name reduces to the same words as
+    /// <paramref name="name"/>, when exactly one does. Weaker than a name match, and used only
+    /// after one fails.
+    /// </summary>
+    public B3FigureAttribute? FigureAttributeLike(string figureCode, string? name) =>
+        DerivativeFields.AttributeBySignature(figureCode, B3DerivativeFields.SignatureOf(name));
+
+    /// <summary>
+    /// The numbered run of attributes a figure registers under one concept, in order — what a
+    /// repeating section's rows map onto.
+    /// </summary>
+    public IReadOnlyList<B3FigureAttribute> FigureAttributeSeries(string figureCode, string concept) =>
+        DerivativeFields.SeriesFor(figureCode, concept);
+
+    /// <summary>
     /// Reads whatever is present. A missing directory is not an error: the platform still
     /// compiles and runs, it simply cannot cross-check against B3's catalogue.
     /// </summary>

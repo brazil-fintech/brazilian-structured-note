@@ -183,35 +183,40 @@
               "label": {
                 "pt": "Fechamento",
                 "en": "Close"
-              }
+              },
+              "b3Code": "3"
             },
             {
               "code": "MINIMO",
               "label": {
                 "pt": "Mínimo",
                 "en": "Low"
-              }
+              },
+              "b3Code": "6"
             },
             {
               "code": "MAXIMO",
               "label": {
                 "pt": "Máximo",
                 "en": "High"
-              }
+              },
+              "b3Code": "5"
             },
             {
               "code": "MEDIA",
               "label": {
                 "pt": "Média",
                 "en": "Average"
-              }
+              },
+              "b3Code": "4"
             },
             {
               "code": "AJUSTE",
               "label": {
                 "pt": "Ajuste",
                 "en": "Settlement price"
-              }
+              },
+              "b3Code": "7"
             }
           ],
           "help": {

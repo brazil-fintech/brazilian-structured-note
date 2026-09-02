@@ -50,8 +50,9 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
-          "default": 90
+          "decimals": 8,
+          "default": 90,
+          "b3Field": "Barreira cenário de baixa (%)"
         },
         {
           "key": "upperBound",
@@ -65,8 +66,9 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
-          "default": 115
+          "decimals": 8,
+          "default": 115,
+          "b3Field": "Barreira cenário de alta (%)"
         },
         {
           "key": "maxCoupon",
@@ -77,11 +79,11 @@
           },
           "dataType": "percent",
           "symbol": "C_max",
-          "b3Field": "RemAd",
+          "b3Field": "Cupom remunerador adicional (%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 4,
           "help": {
             "pt": "Cupom pago quando todas as observações ficam dentro da banda.",
             "en": "The coupon paid when every observation falls inside the range."
@@ -143,7 +145,8 @@
             "en": "Observation period start"
           },
           "dataType": "date",
-          "required": true
+          "required": true,
+          "b3Field": "Data inicial para verificação"
         },
         {
           "key": "observationEnd",
@@ -153,7 +156,132 @@
             "en": "Observation period end"
           },
           "dataType": "date",
-          "required": true
+          "required": true,
+          "b3Field": "Data final para verificação"
+        },
+        {
+          "key": "additionalRemuneration",
+          "order": 1000,
+          "label": {
+            "pt": "Remuneração Adicional",
+            "en": "Additional remuneration"
+          },
+          "help": {
+            "pt": "Indexador do cupom acumulado por dia dentro do intervalo.",
+            "en": "The indexer of the coupon accrued for each day inside the range."
+          },
+          "dataType": "enum",
+          "b3Field": "Remuneração adicional",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "b3Code": "12",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "13",
+              "label": {
+                "pt": "DI",
+                "en": "DI"
+              }
+            },
+            {
+              "code": "PRE252_LIN",
+              "b3Code": "19",
+              "label": {
+                "pt": "PRE252-LIN",
+                "en": "PRE252-LIN"
+              }
+            },
+            {
+              "code": "NO_PERIODO",
+              "b3Code": "20",
+              "label": {
+                "pt": "No período",
+                "en": "Period rate"
+              }
+            }
+          ]
+        },
+        {
+          "key": "additionalFloatingPercentage",
+          "order": 1010,
+          "label": {
+            "pt": "Remunerador Flutuante Adicional (%)",
+            "en": "Additional floating remunerator (%)"
+          },
+          "help": {
+            "pt": "Percentual do indexador flutuante da remuneração adicional.",
+            "en": "The percentage of the floating indexer on the additional remuneration."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador flutuante adicional (%)",
+          "required": false,
+          "min": 0,
+          "max": 9999,
+          "decimals": 4
+        },
+        {
+          "key": "verificationQuoteType",
+          "order": 1020,
+          "label": {
+            "pt": "Tipo de Cotação para Verificação",
+            "en": "Verification quote type"
+          },
+          "help": {
+            "pt": "Cotação usada a cada dia para decidir se o ativo esteve dentro do intervalo.",
+            "en": "The quotation taken each day to decide whether the asset was inside the range."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Verificação",
+          "required": true,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento",
+                "en": "Close"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Média",
+                "en": "Average"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Máximo",
+                "en": "High"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo",
+                "en": "Low"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste",
+                "en": "Settlement price"
+              }
+            }
+          ]
         }
       ]
     }

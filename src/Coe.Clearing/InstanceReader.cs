@@ -102,14 +102,14 @@ public sealed class InstanceReader
 
         foreach (var section in _template.Sections)
         {
-            if (section.Repeating) continue;
+            if (section.Repeating) { AppendSeries(section, written); continue; }
 
             foreach (var field in section.Fields)
             {
                 if (field.B3DataCode is not { } code || code.Length == 0) continue;
 
-                var value = FormatVariable(field);
-                if (value is not null) written.Add((field, value));
+                var value = Format(field, Node(field.Path));
+                if (value is not null) written.Add((field with { B3DataCode = code }, value));
             }
         }
 
@@ -117,36 +117,71 @@ public sealed class InstanceReader
     }
 
     /// <summary>
+    /// The rows of a repeating section, written as the numbered attributes B3 registers them as.
+    ///
+    /// A schedule the form shows as ten rows is ten separate fields in B3's file — "Data de
+    /// Observação 1" through "Data de Observação 10" — because the record format is flat. The
+    /// column names the series and the compiler resolved it to the codes in order, so row
+    /// <c>i</c> goes out under code <c>i</c>.
+    ///
+    /// A row past the end of the series is one more than B3 registers for the figure. It is left
+    /// out rather than written under a code belonging to something else; validation is where a
+    /// schedule that is too long should be caught, not here.
+    /// </summary>
+    private void AppendSeries(TemplateSection section, List<(TemplateField, string)> written)
+    {
+        var columns = section.ItemFields.Where(f => f.B3SeriesCodes.Count > 0).ToList();
+        if (columns.Count == 0) return;
+
+        var rows = Rows(section.Key);
+        for (var i = 0; i < rows.Count; i++)
+        {
+            foreach (var column in columns)
+            {
+                if (i >= column.B3SeriesCodes.Count) continue;
+
+                var value = Format(column, rows[i].Node(column.Key));
+                if (value is not null) written.Add((column with { B3DataCode = column.B3SeriesCodes[i] }, value));
+            }
+        }
+    }
+
+
+    /// <summary>
     /// One variable-data value, in the form its dictionary type takes: a domain field writes the
     /// identifier of the value, a date writes AAAAMMDD, and a number writes its digits without a
     /// separator, as everywhere else in these files.
     /// </summary>
-    private string? FormatVariable(TemplateField field)
+    private static string? Format(TemplateField field, JsonNode? node)
     {
-        var node = Node(field.Path);
         if (node is null) return null;
+
+        var value = Values.FromJson(node);
 
         switch (field.DataType)
         {
             case FieldDataType.Enum:
             case FieldDataType.EnumSet:
-                return DomainCode(field.Path);
+                return DomainCode(field, Values.AsString(value));
 
             case FieldDataType.Boolean:
                 // A boolean in the platform is a two-value domain at B3; where the template
                 // spells the two options out, they win, and otherwise S/N is B3's own shorthand.
-                return DomainCode(field.Path) ?? (Flag(field.Path) ? "S" : "N");
+                return DomainCode(field, Values.AsString(value))
+                       ?? (Values.AsBool(value) == true ? "S" : "N");
 
             case FieldDataType.Date:
-                return Date(field.Path)?.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+                return Values.AsDate(value)?.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
 
             case FieldDataType.Integer:
-                return Integer(field.Path)?.ToString(CultureInfo.InvariantCulture);
+                return Values.AsNumber(value) is { } whole
+                    ? decimal.Truncate(whole).ToString(CultureInfo.InvariantCulture)
+                    : null;
 
             case FieldDataType.Decimal:
             case FieldDataType.Percent:
             case FieldDataType.Money:
-                if (Number(field.Path) is not { } number) return null;
+                if (Values.AsNumber(value) is not { } number) return null;
                 var decimals = field.Decimals ?? 0;
                 var scaled = decimal.Round(number, decimals, MidpointRounding.AwayFromZero);
                 return decimals == 0
@@ -154,7 +189,7 @@ public sealed class InstanceReader
                     : scaled.ToString("F" + decimals.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
 
             default:
-                var text = Text(field.Path);
+                var text = Values.AsString(value);
                 return string.IsNullOrEmpty(text) ? null : text;
         }
     }

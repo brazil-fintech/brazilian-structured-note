@@ -7,7 +7,7 @@ namespace Coe.DomainGen;
 
 /// <summary>What one figure's generation produced, for the run report.</summary>
 public sealed record GeneratedFigure(
-    string Code, string Name, string RelativePath, int Fields, int Inherited, int Skipped, int Rules);
+    string Code, string Name, string RelativePath, int Fields, int Inherited, int Skipped, int Rules, int FromExport);
 
 /// <summary>
 /// Writes a domain file for every figure in B3's catalogue whose attributes the Manual de
@@ -78,7 +78,10 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
         var drafts = new List<DraftField>();
         var inherited = 0;
         var skipped = 0;
+        var fromExport = 0;
         var seen = new HashSet<string>(StringComparer.Ordinal);
+        var accountedFor = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var inheritedSections = new HashSet<string>(StringComparer.Ordinal);
         var order = 0;
 
         // What B3 publishes for this figure, keyed on its own name for each attribute. The annex
@@ -92,16 +95,42 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
 
             // An attribute a common fragment already carries is inherited, not restated: the
             // curated version has the labels, defaults and rules this generator cannot infer.
-            if (Vocabulary.CoveredBy(Vocabulary.Normalize(row.Label)) is not null) { inherited++; continue; }
+            if (Vocabulary.CoveredBy(Vocabulary.Normalize(row.Label)) is { } covered)
+            {
+                inherited++;
+                inheritedSections.Add(SectionOf(covered));
+                continue;
+            }
 
             order += 10;
             var draft = FieldInterpreter.Interpret(row, order);
             if (!seen.Add($"{draft.Placement.Section}.{draft.Placement.Key}")) { skipped++; continue; }
 
-            ApplyPublishedMetadata(draft, published);
+            var matched = ApplyPublishedMetadata(draft, figure.Code, published);
+            if (matched is not null) accountedFor.Add(matched.FieldCode);
 
             draft.Path = $"{draft.Placement.Section}.{draft.Placement.Key}";
             drafts.Add(draft);
+        }
+
+        // Whatever B3 publishes for the figure and the annex never mentioned. Written from the
+        // export alone, so the figure can carry every attribute its registration may need.
+        foreach (var attribute in reference.FigureAttributes(figure.Code))
+        {
+            if (accountedFor.Contains(attribute.FieldCode)) continue;
+            if (Vocabulary.CoveredBy(Vocabulary.Normalize(attribute.Name)) is { } coveredByFragment)
+            {
+                inherited++;
+                inheritedSections.Add(SectionOf(coveredByFragment));
+                continue;
+            }
+
+            order += 10;
+            var draft = FromPublished(attribute, order);
+            if (!seen.Add($"{draft.Placement.Section}.{draft.Placement.Key}")) { skipped++; continue; }
+
+            drafts.Add(draft);
+            fromExport++;
         }
 
         var sections = BuildSections(drafts);
@@ -125,14 +154,25 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
             // inventing a restriction B3 never stated.
             Modalities = ["VNP", "VNR"],
             UnderlyingClasses = [.. UnderlyingClasses],
-            Extends = [.. BuildExtends(drafts)],
+            Extends = [.. BuildExtends(drafts, inheritedSections)],
             Sections = sections,
             Rules = rules
         };
 
         var fieldCount = sections.Sum(s => s.Fields.Count);
-        return (file, new GeneratedFigure(figure.Code, figure.Name, string.Empty, fieldCount, inherited, skipped, rules.Count));
+        return (file, new GeneratedFigure(figure.Code, figure.Name, string.Empty, fieldCount, inherited, skipped, rules.Count, fromExport));
     }
+
+    /// <summary>
+    /// The published attribute this drafted one describes: B3's own name for it first, then the
+    /// same name reduced to the words that carry its meaning. The annex and the export write the
+    /// same attribute differently often enough — "Data de verificação amortização 1" against
+    /// "Data verificação amortização 1" — that a name match alone leaves a whole figure unmapped.
+    /// </summary>
+    private B3FigureAttribute? Match(
+        string label, string figureCode, IReadOnlyDictionary<string, B3FigureAttribute> published) =>
+        published.GetValueOrDefault(B3DerivativeFields.NormalizeName(label))
+        ?? reference.FigureAttributeLike(figureCode, label);
 
     /// <summary>
     /// Corrects a drafted attribute against B3's published metadata for the same figure.
@@ -140,18 +180,21 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
     /// The annex describes an attribute in a sentence, and reading a sentence is guesswork: it
     /// gives the precision as "4 inteiros e 8 decimais" in most places, as "8 decimais" alone in
     /// others, and sometimes not at all, in which case the interpreter falls back to text.
-    /// <c>DTpFigurasDadosDerivativo</c> states the type, the precision, the size and the
-    /// mandatory flag as data, per figure. Where a name matches, those come from there, and the
-    /// prose is left to do what it is good at: explaining the field.
+    /// <c>DTpFigurasDadosDerivativo</c> states the type, the precision, the size, the mandatory
+    /// flag and — for a domain — the accepted values, as data, per figure. Where a name matches,
+    /// those come from there, and the prose is left to do what it is good at: explaining the field.
     ///
     /// The bounds are not touched. B3's export says how many integer digits a number has; it
     /// does not say a participation may not exceed 1,000%, which the annex does.
     /// </summary>
-    private static void ApplyPublishedMetadata(
-        DraftField draft, IReadOnlyDictionary<string, B3FigureAttribute> published)
+    /// <returns>The attribute that was applied, so the caller knows it is accounted for.</returns>
+    private B3FigureAttribute? ApplyPublishedMetadata(
+        DraftField draft, string figureCode, IReadOnlyDictionary<string, B3FigureAttribute> published)
     {
-        if (published.Count == 0) return;
-        if (!published.TryGetValue(B3DerivativeFields.NormalizeName(draft.Source.Label), out var attribute)) return;
+        if (published.Count == 0) return null;
+
+        var attribute = Match(draft.Source.Label, figureCode, published);
+        if (attribute is null) return null;
 
         var field = draft.Field;
 
@@ -173,26 +216,128 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
                 break;
 
             case "DATA":
-                if (field.DataType != "date") return;
+                if (field.DataType != "date") return null;
                 break;
 
             case "DOMINIO":
-                // The options come from the annex, which lists them; adopting the type without
-                // them would leave an enum with nothing to choose from.
-                if (field.DataType is not ("enum" or "enumSet" or "boolean")) return;
+                // The annex lists a domain's values only sometimes, and drafts the field as text
+                // when it does not. The export always lists them, with the code B3 registers
+                // each under, so a field with none takes both from there.
+                if (field.Options.Count == 0 && attribute.DomainValues.Count > 0)
+                {
+                    field.DataType = "enum";
+                    field.Decimals = null;
+                    field.MaxLength = null;
+                    field.Options = OptionsOf(attribute);
+                }
+                else if (field.DataType is not ("enum" or "enumSet" or "boolean"))
+                {
+                    return null;
+                }
                 break;
 
             default:
-                return;
+                return null;
         }
 
         // B3's flag is the figure's own, and can be stricter than the annex's wording.
         if (attribute.Mandatory) field.Required = true;
 
         field.B3DataCode = attribute.FieldCode;
+        return attribute;
     }
 
-    private static List<string> BuildExtends(List<DraftField> drafts)
+    /// <summary>The values a domain field accepts, with the code B3 registers each under.</summary>
+    private static List<OptionDto> OptionsOf(B3FigureAttribute attribute) =>
+    [
+        .. attribute.DomainValues
+            .Where(value => !string.IsNullOrWhiteSpace(value.Name))
+            .DistinctBy(value => Vocabulary.OptionCode(value.Name), StringComparer.Ordinal)
+            .Select(value => new OptionDto
+            {
+                Code = Vocabulary.OptionCode(value.Name),
+                B3Code = value.Code,
+                Label = new LocalizedTextDto { Pt = value.Name }
+            })
+    ];
+
+    /// <summary>
+    /// Drafts an attribute B3 publishes for the figure that the annex never described.
+    ///
+    /// The annex is a table in a manual and it has gaps — 80 of the 180 attributes B3 registers
+    /// for the basket-of-options figure are simply not in it. Everything a field needs is in the
+    /// export: the name, the type, the precision or the size, whether it is mandatory, and the
+    /// values a domain accepts. What is missing is the prose, so the help text says where the
+    /// field came from rather than pretending to an explanation.
+    /// </summary>
+    private static DraftField FromPublished(B3FigureAttribute attribute, int order)
+    {
+        var normalized = Vocabulary.Normalize(attribute.Name);
+        var placement = Vocabulary.Place(normalized);
+
+        var field = new FieldDto
+        {
+            Key = placement.Key,
+            Order = order,
+            Label = new LocalizedTextDto { Pt = attribute.Name },
+            Help = new LocalizedTextDto
+            {
+                Pt = "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. "
+                   + "O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+                En = "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of "
+                   + "the Manual de Operações does not describe it, so there is no filling instruction."
+            },
+            B3Field = attribute.Name,
+            B3DataCode = attribute.FieldCode,
+            Required = attribute.Mandatory,
+            DataType = "string"
+        };
+
+        switch (attribute.DataType.ToUpperInvariant())
+        {
+            case "NUMERICO":
+                // The percent sign survives normalization precisely so it can be read here: it
+                // is what separates a rate from a count.
+                field.DataType = normalized.Contains('%') ? "percent" : "decimal";
+                field.Decimals = attribute.Decimals;
+                field.Max = UpperBound(attribute.Length);
+                break;
+
+            case "DATA":
+                field.DataType = "date";
+                break;
+
+            case "DOMINIO":
+                field.DataType = "enum";
+                field.Options = OptionsOf(attribute);
+                break;
+
+            default:
+                if (attribute.Length > 0) field.MaxLength = attribute.Length;
+                break;
+        }
+
+        return new DraftField
+        {
+            Source = new B3FigureField(attribute.FigureCode, attribute.Position, attribute.Name, string.Empty),
+            NormalizedLabel = normalized,
+            Placement = placement,
+            Field = field,
+            Path = $"{placement.Section}.{placement.Key}"
+        };
+    }
+
+    /// <summary>The largest value a number of <paramref name="integerDigits"/> digits can hold.</summary>
+    private static decimal? UpperBound(int integerDigits)
+    {
+        if (integerDigits is < 1 or > 18) return null;
+
+        var bound = 1m;
+        for (var i = 0; i < integerDigits; i++) bound *= 10m;
+        return bound - 1m;
+    }
+
+    private static List<string> BuildExtends(List<DraftField> drafts, IReadOnlySet<string> inheritedSections)
     {
         var extends = new List<string>
         {
@@ -201,9 +346,22 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
 
         // A figure with barrier attributes gets the curated barrier block, so its own barrier
         // levels sit beside the direction, verification period and window the fragment defines.
-        if (drafts.Any(d => d.Placement.Section == "barriers")) extends.Insert(3, "common/barriers");
+        //
+        // Inherited attributes count as much as drafted ones. A figure whose only barrier
+        // attributes are the verification period and window is entirely served by the fragment
+        // and drafts nothing into the section — and without this would end up not extending the
+        // fragment either, unable to carry attributes B3 registers for it.
+        if (drafts.Any(d => d.Placement.Section == "barriers") || inheritedSections.Contains("barriers"))
+            extends.Insert(3, "common/barriers");
 
         return extends;
+    }
+
+    /// <summary>The section of a path like <c>barriers.verificationPeriod</c>.</summary>
+    private static string SectionOf(string path)
+    {
+        var cut = path.IndexOf('.', StringComparison.Ordinal);
+        return cut < 0 ? path : path[..cut];
     }
 
     private List<SectionDto> BuildSections(List<DraftField> drafts)

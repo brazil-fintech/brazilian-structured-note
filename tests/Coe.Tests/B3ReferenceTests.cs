@@ -86,16 +86,17 @@ public class B3ReferenceTests
         warning.Contains("does not carry B3's mandatory attribute", StringComparison.Ordinal);
 
     [Fact]
-    public void The_attributes_a_figure_cannot_yet_write_are_named_rather_than_counted()
+    public void No_figure_reports_an_attribute_it_cannot_write()
     {
-        // The point of the coverage warning is that the gap is a list someone can work through.
+        // The coverage warning names the attributes B3 registers for a figure that its domain
+        // file has no field for. Every one of them has been closed, so the warning should be
+        // silent; if it speaks again, B3 has published something new and it says what.
         var coverage = DomainFiles.Compiled
-            .SelectMany(kv => kv.Value.Warnings)
+            .SelectMany(kv => kv.Value.Warnings.Select(w => $"{kv.Key}: {w}"))
             .Where(IsCoverageWarning)
             .ToList();
 
-        Assert.NotEmpty(coverage);
-        Assert.All(coverage, warning => Assert.Contains("COE00", warning, StringComparison.Ordinal));
+        Assert.True(coverage.Count == 0, string.Join(Environment.NewLine, coverage));
     }
 
     [Fact]

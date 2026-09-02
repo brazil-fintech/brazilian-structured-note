@@ -41,10 +41,11 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         // The attributes B3 publishes for this figure, keyed on its own name for them. A field
         // that names the attribute the way B3 prints it adopts the code B3 registers it under,
         // so the registration file can be written without anyone copying 1,600 codes by hand.
-        var published = _reference.FigureAttributesByName(file.FigureCode ?? string.Empty);
+        var figureCode = file.FigureCode ?? string.Empty;
+        var published = _reference.FigureAttributesByName(figureCode);
 
         foreach (var dto in sections.OrderBy(s => s.Order).ThenBy(s => s.Key, StringComparer.Ordinal))
-            compiledSections.Add(CompileSection(dto, resolver, errors, warnings, _reference, published));
+            compiledSections.Add(CompileSection(dto, resolver, errors, warnings, _reference, published, figureCode));
 
         CheckFigureAttributeCoverage(file, compiledSections, warnings);
 
@@ -192,11 +193,11 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
 
     private static TemplateSection CompileSection(
         SectionDto dto, PathResolver resolver, List<string> errors, List<string> warnings, B3Reference reference,
-        IReadOnlyDictionary<string, B3FigureAttribute> published)
+        IReadOnlyDictionary<string, B3FigureAttribute> published, string figureCode)
     {
         var fields = (dto.Repeating ? dto.ItemFields : dto.Fields)
             .OrderBy(f => f.Order)
-            .Select(f => CompileField(dto, f, resolver, errors, warnings, reference, published))
+            .Select(f => CompileField(dto, f, resolver, errors, warnings, reference, published, figureCode))
             .ToList();
 
         return new TemplateSection
@@ -218,7 +219,7 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
 
     private static TemplateField CompileField(
         SectionDto section, FieldDto dto, PathResolver resolver, List<string> errors, List<string> warnings,
-        B3Reference reference, IReadOnlyDictionary<string, B3FigureAttribute> published)
+        B3Reference reference, IReadOnlyDictionary<string, B3FigureAttribute> published, string figureCode)
     {
         var scope = section.Key;
         var path = section.Repeating ? $"{section.Key}[].{dto.Key}" : $"{section.Key}.{dto.Key}";
@@ -243,12 +244,22 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         // Cotação para Liquidação", exactly what it calls the registration-level field, and the
         // two are registered under different code sets in different files.
         var declaredDataCode = dto.B3DataCode is not null;
-        var dataCode = dto.B3DataCode ?? (section.Repeating ? null : ResolveDataCode(dto, dataType, published));
+        var dataCode = dto.B3DataCode
+                       ?? (section.Repeating ? null : ResolveDataCode(dto, dataType, published, reference, figureCode));
 
         if (declaredDataCode && section.Repeating)
             warnings.Add(
                 $"'{path}' declares a b3DataCode, but the variable-data record cannot address a "
-                + "repeating column; the cash-flow and basket files carry those attributes.");
+                + "repeating column; name the numbered series with b3Series instead.");
+
+        // A repeating column maps to a run of numbered attributes rather than to one: B3's file
+        // format is flat, so what the form shows as ten rows it registers as ten fields.
+        var seriesCodes = section.Repeating && dto.B3Series is { Length: > 0 } concept
+            ? reference.FigureAttributeSeries(figureCode, concept).Select(a => a.FieldCode).ToList()
+            : [];
+
+        if (dto.B3Series is { Length: > 0 } && !section.Repeating)
+            warnings.Add($"'{path}' names a b3Series but its section does not repeat; use b3DataCode.");
 
         // A code that exists in the dictionary but not in this figure's attribute list is a
         // field B3 will reject on the registration file as not belonging to the figure.
@@ -276,6 +287,7 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
             B3Field = dto.B3Field,
             B3FieldCode = dto.B3FieldCode,
             B3DataCode = dataCode,
+            B3SeriesCodes = seriesCodes,
             B3Domain = dto.B3Domain,
             Symbol = dto.Symbol,
             Unit = dto.Unit,
@@ -408,14 +420,21 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
     /// A file that states <c>b3DataCode</c> outright always wins: this only fills a blank.
     /// </summary>
     private static string? ResolveDataCode(
-        FieldDto dto, FieldDataType dataType, IReadOnlyDictionary<string, B3FigureAttribute> published)
+        FieldDto dto, FieldDataType dataType, IReadOnlyDictionary<string, B3FigureAttribute> published,
+        B3Reference reference, string figureCode)
     {
         if (published.Count == 0) return null;
 
         foreach (var candidate in new[] { dto.B3Field, dto.Label?.Pt })
         {
-            var key = B3DerivativeFields.NormalizeName(candidate);
-            if (key.Length == 0 || !published.TryGetValue(key, out var attribute)) continue;
+            if (string.IsNullOrWhiteSpace(candidate)) continue;
+
+            // B3's name for the attribute first; failing that, the same name reduced to the
+            // words that carry its meaning, which is what bridges "Data de verificação
+            // amortização 1" to the export's "Data verificação amortização 1".
+            var attribute = published.GetValueOrDefault(B3DerivativeFields.NormalizeName(candidate))
+                            ?? reference.FigureAttributeLike(figureCode, candidate);
+            if (attribute is null) continue;
 
             // Concept names repeat across the catalogue: a "Strike" that B3 registers as a date
             // is not this figure's percentage strike, whatever the two are called. A match the
@@ -450,6 +469,10 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
             .Select(f => f.B3DataCode ?? string.Empty)
             .Where(code => code.Length > 0)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        // A repeating column that names a series accounts for every attribute in that run.
+        foreach (var code in sections.Where(s => s.Repeating).SelectMany(s => s.ItemFields).SelectMany(f => f.B3SeriesCodes))
+            mapped.Add(code);
 
         var missing = expected.Where(a => !mapped.Contains(a.FieldCode)).ToList();
         if (missing.Count == 0) return;

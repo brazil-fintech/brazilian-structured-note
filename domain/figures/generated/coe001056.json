@@ -201,6 +201,57 @@
           ],
           "order": 110,
           "inGrid": false
+        },
+        {
+          "key": "upsideParticipation",
+          "label": {
+            "pt": "Participação cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de alta (%)",
+          "b3DataCode": "C0000002",
+          "decimals": 4,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "periodoDeVerificacaoDasBarreiras",
+          "label": {
+            "pt": "Período de verificação das barreiras"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de verificação das barreiras",
+          "b3DataCode": "C0000125",
+          "required": true,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 160,
+          "inGrid": false
         }
       ],
       "itemFields": []
@@ -256,6 +307,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira no cenário de alta 2 (%)",
+          "b3DataCode": "C0000100",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -327,6 +379,44 @@
             }
           ],
           "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "upsideRebate",
+          "label": {
+            "pt": "Rebate no Cenário de Alta(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Alta(%)",
+          "b3DataCode": "C0000009",
+          "decimals": 4,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 140,
+          "inGrid": false
+        },
+        {
+          "key": "upsideBarrier",
+          "label": {
+            "pt": "Barreira cenário de alta (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Barreira cenário de alta (%)",
+          "b3DataCode": "C0000028",
+          "decimals": 8,
+          "max": 9999,
+          "required": true,
+          "options": [],
+          "order": 150,
           "inGrid": false
         }
       ],

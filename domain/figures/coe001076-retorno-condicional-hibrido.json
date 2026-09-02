@@ -257,6 +257,124 @@
               }
             }
           ]
+        },
+        {
+          "key": "hybridRemunerator1",
+          "order": 1000,
+          "label": {
+            "pt": "Remunerador 1",
+            "en": "Remunerator 1"
+          },
+          "help": {
+            "pt": "Primeiro indexador da remuneração híbrida.",
+            "en": "The first indexer of the hybrid remuneration."
+          },
+          "dataType": "enum",
+          "b3Field": "Remunerador 1",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "b3Code": "12",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "13",
+              "label": {
+                "pt": "DI",
+                "en": "DI"
+              }
+            },
+            {
+              "code": "IPCA",
+              "b3Code": "14",
+              "label": {
+                "pt": "IPCA",
+                "en": "IPCA"
+              }
+            }
+          ]
+        },
+        {
+          "key": "hybridRate1",
+          "order": 1010,
+          "label": {
+            "pt": "Taxa do Remunerador 1 (%)",
+            "en": "Remunerator 1 rate (%)"
+          },
+          "help": {
+            "pt": "Taxa aplicada ao primeiro indexador.",
+            "en": "The rate applied to the first indexer."
+          },
+          "dataType": "percent",
+          "b3Field": "Taxa (%) Remunerador 1",
+          "required": true,
+          "min": 0,
+          "max": 9999,
+          "decimals": 8
+        },
+        {
+          "key": "hybridRemunerator2",
+          "order": 1020,
+          "label": {
+            "pt": "Remunerador 2",
+            "en": "Remunerator 2"
+          },
+          "help": {
+            "pt": "Segundo indexador da remuneração híbrida.",
+            "en": "The second indexer of the hybrid remuneration."
+          },
+          "dataType": "enum",
+          "b3Field": "Remunerador 2",
+          "required": true,
+          "options": [
+            {
+              "code": "PRE",
+              "b3Code": "12",
+              "label": {
+                "pt": "Pré",
+                "en": "Fixed"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "13",
+              "label": {
+                "pt": "DI",
+                "en": "DI"
+              }
+            },
+            {
+              "code": "IPCA",
+              "b3Code": "14",
+              "label": {
+                "pt": "IPCA",
+                "en": "IPCA"
+              }
+            }
+          ]
+        },
+        {
+          "key": "hybridRate2",
+          "order": 1030,
+          "label": {
+            "pt": "Taxa do Remunerador 2 (%)",
+            "en": "Remunerator 2 rate (%)"
+          },
+          "help": {
+            "pt": "Taxa aplicada ao segundo indexador.",
+            "en": "The rate applied to the second indexer."
+          },
+          "dataType": "percent",
+          "b3Field": "Taxa (%) Remunerador 2",
+          "required": true,
+          "min": 0,
+          "max": 9999,
+          "decimals": 8
         }
       ]
     }

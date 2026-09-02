@@ -155,6 +155,91 @@
           "options": [],
           "order": 60,
           "inGrid": false
+        },
+        {
+          "key": "quoteType1",
+          "label": {
+            "pt": "Tipo de Cotação para Liquidação 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cotação para Liquidação 1",
+          "b3DataCode": "C0000053",
+          "required": true,
+          "options": [
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            }
+          ],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "periodoDeVerificacaoDasBarreiras",
+          "label": {
+            "pt": "Período de verificação das barreiras"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de verificação das barreiras",
+          "b3DataCode": "C0000125",
+          "required": true,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 110,
+          "inGrid": false
         }
       ],
       "itemFields": []

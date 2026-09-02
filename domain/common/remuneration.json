@@ -592,7 +592,8 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 8
+          "decimals": 8,
+          "b3Series": "Amortização"
         },
         {
           "key": "callBarrier",

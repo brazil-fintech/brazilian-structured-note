@@ -75,6 +75,1112 @@
           "options": [],
           "order": 170,
           "inGrid": false
+        },
+        {
+          "key": "assetClass2",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 2"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 2",
+          "b3DataCode": "C0000049",
+          "required": true,
+          "options": [
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            }
+          ],
+          "order": 1010,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass1",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 1",
+          "b3DataCode": "C0000058",
+          "required": true,
+          "options": [
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            }
+          ],
+          "order": 1020,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue4",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 4",
+          "b3DataCode": "C0000362",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1050,
+          "inGrid": false
+        },
+        {
+          "key": "asset5",
+          "label": {
+            "pt": "Ativo Subjacente 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 5",
+          "b3DataCode": "C0000383",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1130,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass5",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 5",
+          "b3DataCode": "C0000384",
+          "required": false,
+          "options": [
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            }
+          ],
+          "order": 1140,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue5",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 5",
+          "b3DataCode": "C0000385",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1150,
+          "inGrid": false
+        },
+        {
+          "key": "asset6",
+          "label": {
+            "pt": "Ativo Subjacente 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 6",
+          "b3DataCode": "C0000398",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1200,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass6",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 6",
+          "b3DataCode": "C0000399",
+          "required": false,
+          "options": [
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            }
+          ],
+          "order": 1210,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue6",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 6",
+          "b3DataCode": "C0000400",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1220,
+          "inGrid": false
+        },
+        {
+          "key": "asset7",
+          "label": {
+            "pt": "Ativo Subjacente 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 7",
+          "b3DataCode": "C0000414",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1280,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass7",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 7",
+          "b3DataCode": "C0000415",
+          "required": false,
+          "options": [
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            }
+          ],
+          "order": 1290,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue7",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 7",
+          "b3DataCode": "C0000416",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1300,
+          "inGrid": false
+        },
+        {
+          "key": "asset8",
+          "label": {
+            "pt": "Ativo Subjacente 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 8",
+          "b3DataCode": "C0000430",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1360,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass8",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 8",
+          "b3DataCode": "C0000431",
+          "required": false,
+          "options": [
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            }
+          ],
+          "order": 1370,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue8",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 8",
+          "b3DataCode": "C0000432",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1380,
+          "inGrid": false
+        },
+        {
+          "key": "asset9",
+          "label": {
+            "pt": "Ativo Subjacente 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 9",
+          "b3DataCode": "C0000446",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1440,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass9",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 9",
+          "b3DataCode": "C0000447",
+          "required": false,
+          "options": [
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            }
+          ],
+          "order": 1450,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue9",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 9",
+          "b3DataCode": "C0000448",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1460,
+          "inGrid": false
+        },
+        {
+          "key": "asset10",
+          "label": {
+            "pt": "Ativo Subjacente 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 10",
+          "b3DataCode": "C0000462",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1520,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass10",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 10",
+          "b3DataCode": "C0000463",
+          "required": false,
+          "options": [
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            }
+          ],
+          "order": 1530,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue10",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 10",
+          "b3DataCode": "C0000464",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1540,
+          "inGrid": false
+        },
+        {
+          "key": "asset3",
+          "label": {
+            "pt": "Ativo Subjacente 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 3",
+          "b3DataCode": "C0000493",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1620,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass3",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 3",
+          "b3DataCode": "C0000494",
+          "required": false,
+          "options": [
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            }
+          ],
+          "order": 1630,
+          "inGrid": false
+        },
+        {
+          "key": "initialValue3",
+          "label": {
+            "pt": "Valor Inicial Ativo Subjacente 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Valor Inicial Ativo Subjacente 3",
+          "b3DataCode": "C0000495",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1640,
+          "inGrid": false
+        },
+        {
+          "key": "asset4",
+          "label": {
+            "pt": "Ativo Subjacente 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Ativo Subjacente 4",
+          "b3DataCode": "C0000508",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 1690,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass4",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 4",
+          "b3DataCode": "C0000509",
+          "required": false,
+          "options": [
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXA_DE_CAMBIO",
+              "b3Code": "2065",
+              "label": {
+                "pt": "TAXA DE CAMBIO"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            }
+          ],
+          "order": 1700,
+          "inGrid": false
         }
       ],
       "itemFields": []
@@ -247,7 +1353,7 @@
           "b3Field": "Data para fixing 1",
           "b3DataCode": "C0000477",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 110,
           "inGrid": false
@@ -264,7 +1370,7 @@
           "b3Field": "Data inicial para fixing 1",
           "b3DataCode": "C0000478",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 120,
           "inGrid": false
@@ -281,7 +1387,7 @@
           "b3Field": "Data final para fixing 1",
           "b3DataCode": "C0000479",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 130,
           "inGrid": false
@@ -479,7 +1585,7 @@
           "b3Field": "Data para fixing 2",
           "b3DataCode": "C0000489",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 250,
           "inGrid": false
@@ -496,7 +1602,7 @@
           "b3Field": "Data inicial para fixing 2",
           "b3DataCode": "C0000490",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 260,
           "inGrid": false
@@ -513,7 +1619,7 @@
           "b3Field": "Data final para fixing 2",
           "b3DataCode": "C0000491",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 270,
           "inGrid": false
@@ -583,7 +1689,7 @@
           "b3Field": "Data para fixing 3",
           "b3DataCode": "C0000504",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 340,
           "inGrid": false
@@ -600,7 +1706,7 @@
           "b3Field": "Data inicial para fixing 3",
           "b3DataCode": "C0000505",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 350,
           "inGrid": false
@@ -617,7 +1723,7 @@
           "b3Field": "Data final para fixing 3",
           "b3DataCode": "C0000506",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 360,
           "inGrid": false
@@ -687,7 +1793,7 @@
           "b3Field": "Data para fixing 4",
           "b3DataCode": "C0000377",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 430,
           "inGrid": false
@@ -704,7 +1810,7 @@
           "b3Field": "Data inicial para fixing 4",
           "b3DataCode": "C0000378",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 440,
           "inGrid": false
@@ -721,7 +1827,7 @@
           "b3Field": "Data final para fixing 4",
           "b3DataCode": "C0000379",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 450,
           "inGrid": false
@@ -791,7 +1897,7 @@
           "b3Field": "Data para fixing 5",
           "b3DataCode": "C0000394",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 520,
           "inGrid": false
@@ -808,7 +1914,7 @@
           "b3Field": "Data inicial para fixing 5",
           "b3DataCode": "C0000395",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 530,
           "inGrid": false
@@ -825,7 +1931,7 @@
           "b3Field": "Data final para fixing 5",
           "b3DataCode": "C0000396",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 540,
           "inGrid": false
@@ -895,7 +2001,7 @@
           "b3Field": "Data para fixing 6",
           "b3DataCode": "C0000410",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 610,
           "inGrid": false
@@ -912,7 +2018,7 @@
           "b3Field": "Data inicial para fixing 6",
           "b3DataCode": "C0000411",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 620,
           "inGrid": false
@@ -929,7 +2035,7 @@
           "b3Field": "Data final para fixing 6",
           "b3DataCode": "C0000412",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 630,
           "inGrid": false
@@ -999,7 +2105,7 @@
           "b3Field": "Data para fixing 7",
           "b3DataCode": "C0000426",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 700,
           "inGrid": false
@@ -1016,7 +2122,7 @@
           "b3Field": "Data inicial para fixing 7",
           "b3DataCode": "C0000427",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 710,
           "inGrid": false
@@ -1033,7 +2139,7 @@
           "b3Field": "Data final para fixing 7",
           "b3DataCode": "C0000428",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 720,
           "inGrid": false
@@ -1103,7 +2209,7 @@
           "b3Field": "Data para fixing 8",
           "b3DataCode": "C0000442",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 790,
           "inGrid": false
@@ -1120,7 +2226,7 @@
           "b3Field": "Data inicial para fixing 8",
           "b3DataCode": "C0000443",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 800,
           "inGrid": false
@@ -1137,7 +2243,7 @@
           "b3Field": "Data final para fixing 8",
           "b3DataCode": "C0000444",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 810,
           "inGrid": false
@@ -1207,7 +2313,7 @@
           "b3Field": "Data para fixing 9",
           "b3DataCode": "C0000458",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 880,
           "inGrid": false
@@ -1224,7 +2330,7 @@
           "b3Field": "Data inicial para fixing 9",
           "b3DataCode": "C0000459",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 890,
           "inGrid": false
@@ -1241,7 +2347,7 @@
           "b3Field": "Data final para fixing 9",
           "b3DataCode": "C0000460",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 900,
           "inGrid": false
@@ -1311,7 +2417,7 @@
           "b3Field": "Data para fixing 10",
           "b3DataCode": "C0000474",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'DATA_UNICA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'DATA_UNICA'",
           "options": [],
           "order": 970,
           "inGrid": false
@@ -1328,7 +2434,7 @@
           "b3Field": "Data inicial para fixing 10",
           "b3DataCode": "C0000475",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 980,
           "inGrid": false
@@ -1345,7 +2451,7 @@
           "b3Field": "Data final para fixing 10",
           "b3DataCode": "C0000476",
           "required": false,
-          "requiredWhen": "underlying.fixingWindow == 'JANELA'",
+          "requiredWhen": "payoff.fixingWindow1 == 'JANELA_DE_DATAS'",
           "options": [],
           "order": 990,
           "inGrid": false
@@ -1383,6 +2489,1864 @@
             }
           ],
           "order": 1000,
+          "inGrid": false
+        },
+        {
+          "key": "quantity3",
+          "label": {
+            "pt": "Quantidade 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 3",
+          "b3DataCode": "C0000116",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": true,
+          "options": [],
+          "order": 1030,
+          "inGrid": false
+        },
+        {
+          "key": "quantity4",
+          "label": {
+            "pt": "Quantidade 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 4",
+          "b3DataCode": "C0000120",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1040,
+          "inGrid": false
+        },
+        {
+          "key": "participation4",
+          "label": {
+            "pt": "Participação 4(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 4(%)",
+          "b3DataCode": "C0000363",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1060,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira4",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 4",
+          "b3DataCode": "C0000371",
+          "required": false,
+          "options": [
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            }
+          ],
+          "order": 1080,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira1",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 1",
+          "b3DataCode": "C0000373",
+          "required": false,
+          "options": [
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            }
+          ],
+          "order": 1100,
+          "inGrid": false
+        },
+        {
+          "key": "opcao5",
+          "label": {
+            "pt": "Opção 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 5",
+          "b3DataCode": "C0000381",
+          "required": false,
+          "options": [
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            }
+          ],
+          "order": 1110,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow1",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 1",
+          "b3DataCode": "C0000382",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1120,
+          "inGrid": false
+        },
+        {
+          "key": "participation5",
+          "label": {
+            "pt": "Participação 5(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 5(%)",
+          "b3DataCode": "C0000386",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1160,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira5",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 5",
+          "b3DataCode": "C0000391",
+          "required": false,
+          "options": [
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 1180,
+          "inGrid": false
+        },
+        {
+          "key": "opcao6",
+          "label": {
+            "pt": "Opção 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 6",
+          "b3DataCode": "C0000397",
+          "required": false,
+          "options": [
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            }
+          ],
+          "order": 1190,
+          "inGrid": false
+        },
+        {
+          "key": "quantity6",
+          "label": {
+            "pt": "Quantidade 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 6",
+          "b3DataCode": "C0000401",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1230,
+          "inGrid": false
+        },
+        {
+          "key": "participation6",
+          "label": {
+            "pt": "Participação 6(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 6(%)",
+          "b3DataCode": "C0000402",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1240,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira6",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 6",
+          "b3DataCode": "C0000407",
+          "required": false,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 1260,
+          "inGrid": false
+        },
+        {
+          "key": "opcao7",
+          "label": {
+            "pt": "Opção 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 7",
+          "b3DataCode": "C0000413",
+          "required": false,
+          "options": [
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            }
+          ],
+          "order": 1270,
+          "inGrid": false
+        },
+        {
+          "key": "quantity7",
+          "label": {
+            "pt": "Quantidade 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 7",
+          "b3DataCode": "C0000417",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1310,
+          "inGrid": false
+        },
+        {
+          "key": "participation7",
+          "label": {
+            "pt": "Participação 7(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 7(%)",
+          "b3DataCode": "C0000418",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1320,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira7",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 7",
+          "b3DataCode": "C0000423",
+          "required": false,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            }
+          ],
+          "order": 1340,
+          "inGrid": false
+        },
+        {
+          "key": "opcao8",
+          "label": {
+            "pt": "Opção 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 8",
+          "b3DataCode": "C0000429",
+          "required": false,
+          "options": [
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            }
+          ],
+          "order": 1350,
+          "inGrid": false
+        },
+        {
+          "key": "quantity8",
+          "label": {
+            "pt": "Quantidade 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 8",
+          "b3DataCode": "C0000433",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1390,
+          "inGrid": false
+        },
+        {
+          "key": "participation8",
+          "label": {
+            "pt": "Participação 8(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 8(%)",
+          "b3DataCode": "C0000434",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1400,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira8",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 8",
+          "b3DataCode": "C0000439",
+          "required": false,
+          "options": [
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            }
+          ],
+          "order": 1420,
+          "inGrid": false
+        },
+        {
+          "key": "opcao9",
+          "label": {
+            "pt": "Opção 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 9",
+          "b3DataCode": "C0000445",
+          "required": false,
+          "options": [
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            }
+          ],
+          "order": 1430,
+          "inGrid": false
+        },
+        {
+          "key": "quantity9",
+          "label": {
+            "pt": "Quantidade 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 9",
+          "b3DataCode": "C0000449",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1470,
+          "inGrid": false
+        },
+        {
+          "key": "participation9",
+          "label": {
+            "pt": "Participação 9(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 9(%)",
+          "b3DataCode": "C0000450",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1480,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira9",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 9",
+          "b3DataCode": "C0000455",
+          "required": false,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            }
+          ],
+          "order": 1500,
+          "inGrid": false
+        },
+        {
+          "key": "opcao10",
+          "label": {
+            "pt": "Opção 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 10",
+          "b3DataCode": "C0000461",
+          "required": false,
+          "options": [
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            }
+          ],
+          "order": 1510,
+          "inGrid": false
+        },
+        {
+          "key": "quantity10",
+          "label": {
+            "pt": "Quantidade 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 10",
+          "b3DataCode": "C0000465",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1550,
+          "inGrid": false
+        },
+        {
+          "key": "participation10",
+          "label": {
+            "pt": "Participação 10(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 10(%)",
+          "b3DataCode": "C0000466",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1560,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira10",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 10",
+          "b3DataCode": "C0000471",
+          "required": false,
+          "options": [
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            }
+          ],
+          "order": 1580,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira2",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 2"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 2",
+          "b3DataCode": "C0000486",
+          "required": false,
+          "options": [
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            },
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            }
+          ],
+          "order": 1600,
+          "inGrid": false
+        },
+        {
+          "key": "opcao3",
+          "label": {
+            "pt": "Opção 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 3",
+          "b3DataCode": "C0000492",
+          "required": false,
+          "options": [
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            }
+          ],
+          "order": 1610,
+          "inGrid": false
+        },
+        {
+          "key": "participation3",
+          "label": {
+            "pt": "Participação 3(%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação 3(%)",
+          "b3DataCode": "C0000496",
+          "decimals": 8,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 1650,
+          "inGrid": false
+        },
+        {
+          "key": "tipoDeCotacaoParaVerificacaoDeBarreira3",
+          "label": {
+            "pt": "Tipo de cotação para verificação de barreira 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de cotação para verificação de barreira 3",
+          "b3DataCode": "C0000501",
+          "required": false,
+          "options": [
+            {
+              "code": "MEDIA",
+              "b3Code": "4",
+              "label": {
+                "pt": "Media"
+              }
+            },
+            {
+              "code": "AJUSTE",
+              "b3Code": "7",
+              "label": {
+                "pt": "Ajuste"
+              }
+            },
+            {
+              "code": "MINIMO",
+              "b3Code": "6",
+              "label": {
+                "pt": "Mínimo"
+              }
+            },
+            {
+              "code": "MAXIMO",
+              "b3Code": "5",
+              "label": {
+                "pt": "Maximo"
+              }
+            },
+            {
+              "code": "FECHAMENTO",
+              "b3Code": "3",
+              "label": {
+                "pt": "Fechamento"
+              }
+            }
+          ],
+          "order": 1670,
+          "inGrid": false
+        },
+        {
+          "key": "opcao4",
+          "label": {
+            "pt": "Opção 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Opção 4",
+          "b3DataCode": "C0000507",
+          "required": false,
+          "options": [
+            {
+              "code": "PUT_KO",
+              "b3Code": "2053",
+              "label": {
+                "pt": "Put KO"
+              }
+            },
+            {
+              "code": "CALL_DIGITAL",
+              "b3Code": "2054",
+              "label": {
+                "pt": "Call Digital"
+              }
+            },
+            {
+              "code": "PUT_KI",
+              "b3Code": "2052",
+              "label": {
+                "pt": "Put KI"
+              }
+            },
+            {
+              "code": "PUT_DIGITAL",
+              "b3Code": "2055",
+              "label": {
+                "pt": "Put Digital"
+              }
+            },
+            {
+              "code": "CALL",
+              "b3Code": "2046",
+              "label": {
+                "pt": "Call"
+              }
+            },
+            {
+              "code": "PUT",
+              "b3Code": "2047",
+              "label": {
+                "pt": "Put"
+              }
+            },
+            {
+              "code": "CALLSPREAD",
+              "b3Code": "2048",
+              "label": {
+                "pt": "Callspread"
+              }
+            },
+            {
+              "code": "PUTSPREAD",
+              "b3Code": "2049",
+              "label": {
+                "pt": "Putspread"
+              }
+            },
+            {
+              "code": "CALL_KI",
+              "b3Code": "2050",
+              "label": {
+                "pt": "Call KI"
+              }
+            },
+            {
+              "code": "CALL_KO",
+              "b3Code": "2051",
+              "label": {
+                "pt": "Call KO"
+              }
+            }
+          ],
+          "order": 1680,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow2",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 2"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 2",
+          "b3DataCode": "C0000510",
+          "required": false,
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            }
+          ],
+          "order": 1710,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow3",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 3",
+          "b3DataCode": "C0000511",
+          "required": false,
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            }
+          ],
+          "order": 1720,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow4",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 4",
+          "b3DataCode": "C0000512",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1730,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow5",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 5",
+          "b3DataCode": "C0000513",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1740,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow6",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 6",
+          "b3DataCode": "C0000514",
+          "required": false,
+          "options": [
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            },
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            }
+          ],
+          "order": 1750,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow7",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 7",
+          "b3DataCode": "C0000515",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1760,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow8",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 8",
+          "b3DataCode": "C0000516",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1770,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow9",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 9",
+          "b3DataCode": "C0000517",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1780,
+          "inGrid": false
+        },
+        {
+          "key": "fixingWindow10",
+          "label": {
+            "pt": "Período de captura do ativo subjacente para liquidação 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de captura do ativo subjacente para liquidação 10",
+          "b3DataCode": "C0000518",
+          "required": false,
+          "options": [
+            {
+              "code": "JANELA_DE_DATAS",
+              "b3Code": "2",
+              "label": {
+                "pt": "Janela de datas"
+              }
+            },
+            {
+              "code": "DATA_UNICA",
+              "b3Code": "1",
+              "label": {
+                "pt": "Data única"
+              }
+            }
+          ],
+          "order": 1790,
+          "inGrid": false
+        },
+        {
+          "key": "quantity5",
+          "label": {
+            "pt": "Quantidade 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 5",
+          "b3DataCode": "C0000531",
+          "decimals": 4,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 1800,
           "inGrid": false
         }
       ],
@@ -1443,7 +4407,7 @@
           "b3Field": "Data inicial para verificação 1",
           "b3DataCode": "C0000376",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 90,
           "inGrid": false
@@ -1460,7 +4424,7 @@
           "b3Field": "Data final para verificação 1",
           "b3DataCode": "C0000380",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 100,
           "inGrid": false
@@ -1514,7 +4478,7 @@
           "b3Field": "Data inicial para verificação 2",
           "b3DataCode": "C0000487",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 230,
           "inGrid": false
@@ -1531,7 +4495,7 @@
           "b3Field": "Data final para verificação 2",
           "b3DataCode": "C0000488",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 240,
           "inGrid": false
@@ -1585,7 +4549,7 @@
           "b3Field": "Data inicial para verificação 3",
           "b3DataCode": "C0000502",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 320,
           "inGrid": false
@@ -1602,7 +4566,7 @@
           "b3Field": "Data final para verificação 3",
           "b3DataCode": "C0000503",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 330,
           "inGrid": false
@@ -1656,7 +4620,7 @@
           "b3Field": "Data inicial para verificação 4",
           "b3DataCode": "C0000374",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 410,
           "inGrid": false
@@ -1673,7 +4637,7 @@
           "b3Field": "Data final para verificação 4",
           "b3DataCode": "C0000375",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 420,
           "inGrid": false
@@ -1727,7 +4691,7 @@
           "b3Field": "Data inicial para verificação 5",
           "b3DataCode": "C0000392",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 500,
           "inGrid": false
@@ -1744,7 +4708,7 @@
           "b3Field": "Data final para verificação 5",
           "b3DataCode": "C0000393",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 510,
           "inGrid": false
@@ -1798,7 +4762,7 @@
           "b3Field": "Data inicial para verificação 6",
           "b3DataCode": "C0000408",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 590,
           "inGrid": false
@@ -1815,7 +4779,7 @@
           "b3Field": "Data final para verificação 6",
           "b3DataCode": "C0000409",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 600,
           "inGrid": false
@@ -1869,7 +4833,7 @@
           "b3Field": "Data inicial para verificação 7",
           "b3DataCode": "C0000424",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 680,
           "inGrid": false
@@ -1886,7 +4850,7 @@
           "b3Field": "Data final para verificação 7",
           "b3DataCode": "C0000425",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 690,
           "inGrid": false
@@ -1940,7 +4904,7 @@
           "b3Field": "Data inicial para verificação 8",
           "b3DataCode": "C0000440",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 770,
           "inGrid": false
@@ -1957,7 +4921,7 @@
           "b3Field": "Data final para verificação 8",
           "b3DataCode": "C0000441",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 780,
           "inGrid": false
@@ -2011,7 +4975,7 @@
           "b3Field": "Data inicial para verificação 9",
           "b3DataCode": "C0000456",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 860,
           "inGrid": false
@@ -2028,7 +4992,7 @@
           "b3Field": "Data final para verificação 9",
           "b3DataCode": "C0000457",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 870,
           "inGrid": false
@@ -2082,7 +5046,7 @@
           "b3Field": "Data inicial para verificação 10",
           "b3DataCode": "C0000472",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 950,
           "inGrid": false
@@ -2099,9 +5063,329 @@
           "b3Field": "Data final para verificação 10",
           "b3DataCode": "C0000473",
           "required": false,
-          "requiredWhen": "barriers.verificationPeriod == 'AMERICANA'",
+          "requiredWhen": "barriers.verificationPeriod4 == 'AMERICANA'",
           "options": [],
           "order": 960,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod4",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 4"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 4",
+          "b3DataCode": "C0000370",
+          "required": false,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 1070,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod1",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 1",
+          "b3DataCode": "C0000372",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1090,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod5",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 5"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 5",
+          "b3DataCode": "C0000390",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1170,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod6",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 6"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 6",
+          "b3DataCode": "C0000406",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1250,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod7",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 7"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 7",
+          "b3DataCode": "C0000422",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1330,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod8",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 8"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 8",
+          "b3DataCode": "C0000438",
+          "required": false,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 1410,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod9",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 9"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 9",
+          "b3DataCode": "C0000454",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1490,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod10",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 10"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 10",
+          "b3DataCode": "C0000470",
+          "required": false,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 1570,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod2",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 2"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 2",
+          "b3DataCode": "C0000485",
+          "required": false,
+          "options": [
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            },
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            }
+          ],
+          "order": 1590,
+          "inGrid": false
+        },
+        {
+          "key": "verificationPeriod3",
+          "label": {
+            "pt": "Periodo de verificação de barreiras 3"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Periodo de verificação de barreiras 3",
+          "b3DataCode": "C0000500",
+          "required": false,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 1660,
           "inGrid": false
         }
       ],

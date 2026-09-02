@@ -47,11 +47,11 @@
           },
           "dataType": "percent",
           "symbol": "K",
-          "b3Field": "Strike",
+          "b3Field": "Strike 1(%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "default": 100,
           "help": {
             "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
@@ -147,7 +147,8 @@
                 "en": "Fixed rate"
               }
             }
-          ]
+          ],
+          "b3Field": "Remuneração adicional"
         },
         {
           "key": "alternativeRate",
@@ -159,9 +160,28 @@
           "dataType": "percent",
           "min": 0,
           "max": 300,
-          "decimals": 6,
+          "decimals": 4,
           "visibleWhen": "alternativeIndexer != 'SEM_REMUNERACAO'",
-          "requiredWhen": "alternativeIndexer != 'SEM_REMUNERACAO'"
+          "requiredWhen": "alternativeIndexer != 'SEM_REMUNERACAO'",
+          "b3Field": "Cupom remunerador adicional (%)"
+        },
+        {
+          "key": "alternativeFloatingPercentage",
+          "order": 1000,
+          "label": {
+            "pt": "Remunerador Flutuante Adicional (%)",
+            "en": "Additional floating remunerator (%)"
+          },
+          "help": {
+            "pt": "Percentual do indexador flutuante da remuneração adicional — 90 para \"90% do CDI\".",
+            "en": "The percentage of the floating indexer on the additional remuneration — 90 for \"90% of CDI\"."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador flutuante adicional (%)",
+          "required": false,
+          "min": 0,
+          "max": 9999,
+          "decimals": 4
         }
       ]
     }

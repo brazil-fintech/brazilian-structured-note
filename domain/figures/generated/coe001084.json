@@ -57,6 +57,413 @@
           "options": [],
           "order": 70,
           "inGrid": false
+        },
+        {
+          "key": "expiryDateLoan",
+          "label": {
+            "pt": "Expiry date Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "date",
+          "b3Field": "Expiry date Loan",
+          "b3DataCode": "C0000350",
+          "required": false,
+          "options": [],
+          "order": 150,
+          "inGrid": false
+        },
+        {
+          "key": "notionalLoan",
+          "label": {
+            "pt": "Notional Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Notional Loan",
+          "b3DataCode": "C0000351",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 160,
+          "inGrid": false
+        },
+        {
+          "key": "lenderLoan",
+          "label": {
+            "pt": "Lender Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Lender Loan",
+          "b3DataCode": "C0000352",
+          "maxLength": 50,
+          "required": false,
+          "options": [],
+          "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "borrowerLoan",
+          "label": {
+            "pt": "Borrower Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Borrower Loan",
+          "b3DataCode": "C0000353",
+          "maxLength": 50,
+          "required": false,
+          "options": [],
+          "order": 180,
+          "inGrid": false
+        },
+        {
+          "key": "idLoan",
+          "label": {
+            "pt": "ID Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "ID Loan",
+          "b3DataCode": "C0000354",
+          "maxLength": 50,
+          "required": false,
+          "options": [],
+          "order": 190,
+          "inGrid": false
+        },
+        {
+          "key": "dataDurationFee",
+          "label": {
+            "pt": "Data Duration Fee"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "date",
+          "b3Field": "Data Duration Fee",
+          "b3DataCode": "C0000355",
+          "required": false,
+          "options": [],
+          "order": 200,
+          "inGrid": false
+        },
+        {
+          "key": "durationFee",
+          "label": {
+            "pt": "Duration Fee"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "decimal",
+          "b3Field": "Duration Fee",
+          "b3DataCode": "C0000356",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 210,
+          "inGrid": false
+        },
+        {
+          "key": "moedaReferenciaLoan",
+          "label": {
+            "pt": "Moeda Referência Loan"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "string",
+          "b3Field": "Moeda Referência Loan",
+          "b3DataCode": "C0000357",
+          "maxLength": 40,
+          "required": false,
+          "options": [],
+          "order": 220,
+          "inGrid": false
+        },
+        {
+          "key": "limitadorDeBaixaFluxoSofr",
+          "label": {
+            "pt": "Limitador de Baixa Fluxo SOFR (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Limitador de Baixa Fluxo SOFR (%)",
+          "b3DataCode": "C0000358",
+          "decimals": 8,
+          "max": 9999999999,
+          "required": false,
+          "options": [],
+          "order": 230,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
+      "key": "remuneration",
+      "kind": "tab",
+      "order": 0,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "diAccrualOffset",
+          "label": {
+            "pt": "Deslocamento do accrual do DI"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Deslocamento do accrual do DI",
+          "b3DataCode": "C0000148",
+          "required": false,
+          "options": [
+            {
+              "code": "D_16",
+              "b3Code": "2018",
+              "label": {
+                "pt": "D-16"
+              }
+            },
+            {
+              "code": "D_15",
+              "b3Code": "2017",
+              "label": {
+                "pt": "D-15"
+              }
+            },
+            {
+              "code": "D_18",
+              "b3Code": "2020",
+              "label": {
+                "pt": "D-18"
+              }
+            },
+            {
+              "code": "D_19",
+              "b3Code": "2021",
+              "label": {
+                "pt": "D-19"
+              }
+            },
+            {
+              "code": "D_20",
+              "b3Code": "2022",
+              "label": {
+                "pt": "D-20"
+              }
+            },
+            {
+              "code": "D_21",
+              "b3Code": "2023",
+              "label": {
+                "pt": "D-21"
+              }
+            },
+            {
+              "code": "D_22",
+              "b3Code": "2024",
+              "label": {
+                "pt": "D-22"
+              }
+            },
+            {
+              "code": "D_23",
+              "b3Code": "2025",
+              "label": {
+                "pt": "D-23"
+              }
+            },
+            {
+              "code": "D_24",
+              "b3Code": "2026",
+              "label": {
+                "pt": "D-24"
+              }
+            },
+            {
+              "code": "D_25",
+              "b3Code": "2027",
+              "label": {
+                "pt": "D-25"
+              }
+            },
+            {
+              "code": "D_26",
+              "b3Code": "2028",
+              "label": {
+                "pt": "D-26"
+              }
+            },
+            {
+              "code": "D_27",
+              "b3Code": "2029",
+              "label": {
+                "pt": "D-27"
+              }
+            },
+            {
+              "code": "D_28",
+              "b3Code": "2030",
+              "label": {
+                "pt": "D-28"
+              }
+            },
+            {
+              "code": "D_29",
+              "b3Code": "2031",
+              "label": {
+                "pt": "D-29"
+              }
+            },
+            {
+              "code": "D_30",
+              "b3Code": "2032",
+              "label": {
+                "pt": "D-30"
+              }
+            },
+            {
+              "code": "D0",
+              "b3Code": "2038",
+              "label": {
+                "pt": "D0"
+              }
+            },
+            {
+              "code": "D_17",
+              "b3Code": "2019",
+              "label": {
+                "pt": "D-17"
+              }
+            },
+            {
+              "code": "D_14",
+              "b3Code": "2016",
+              "label": {
+                "pt": "D-14"
+              }
+            },
+            {
+              "code": "D_13",
+              "b3Code": "2015",
+              "label": {
+                "pt": "D-13"
+              }
+            },
+            {
+              "code": "D_12",
+              "b3Code": "2014",
+              "label": {
+                "pt": "D-12"
+              }
+            },
+            {
+              "code": "D_11",
+              "b3Code": "2013",
+              "label": {
+                "pt": "D-11"
+              }
+            },
+            {
+              "code": "D_10",
+              "b3Code": "2012",
+              "label": {
+                "pt": "D-10"
+              }
+            },
+            {
+              "code": "D_9",
+              "b3Code": "2011",
+              "label": {
+                "pt": "D-9"
+              }
+            },
+            {
+              "code": "D_8",
+              "b3Code": "2010",
+              "label": {
+                "pt": "D-8"
+              }
+            },
+            {
+              "code": "D_7",
+              "b3Code": "2009",
+              "label": {
+                "pt": "D-7"
+              }
+            },
+            {
+              "code": "D_6",
+              "b3Code": "2008",
+              "label": {
+                "pt": "D-6"
+              }
+            },
+            {
+              "code": "D_5",
+              "b3Code": "2007",
+              "label": {
+                "pt": "D-5"
+              }
+            },
+            {
+              "code": "D_4",
+              "b3Code": "2006",
+              "label": {
+                "pt": "D-4"
+              }
+            },
+            {
+              "code": "D_3",
+              "b3Code": "2005",
+              "label": {
+                "pt": "D-3"
+              }
+            },
+            {
+              "code": "D_2",
+              "b3Code": "2004",
+              "label": {
+                "pt": "D-2"
+              }
+            },
+            {
+              "code": "D_1",
+              "b3Code": "2003",
+              "label": {
+                "pt": "D-1"
+              }
+            }
+          ],
+          "order": 80,
+          "inGrid": false
         }
       ],
       "itemFields": []
@@ -142,11 +549,19 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela apuração dos valores a serem pagos ou das obrigações de referência a serem entregues pelo emissor do COE Campo com a opção: Emissor"
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Agente de cálculo",
-          "maxLength": 100,
+          "b3DataCode": "C0000235",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "EMISSOR",
+              "b3Code": "2043",
+              "label": {
+                "pt": "Emissor"
+              }
+            }
+          ],
           "order": 40,
           "inGrid": false
         },
@@ -158,11 +573,19 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Informar a entidade responsável pela comunicação da ocorrência do evento de crédito Campo com a opção: Emissor"
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Determinação de ocorrência de evento",
-          "maxLength": 100,
+          "b3DataCode": "C0000236",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "EMISSOR",
+              "b3Code": "2043",
+              "label": {
+                "pt": "Emissor"
+              }
+            }
+          ],
           "order": 50,
           "inGrid": false
         },
@@ -181,6 +604,156 @@
           "required": true,
           "options": [],
           "order": 60,
+          "inGrid": false
+        },
+        {
+          "key": "bankruptcy",
+          "label": {
+            "pt": "Falência ou similar"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Falência ou similar",
+          "b3DataCode": "C0000240",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "failureToPay",
+          "label": {
+            "pt": "Falha de pagamento"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Falha de pagamento",
+          "b3DataCode": "C0000241",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 100,
+          "inGrid": false
+        },
+        {
+          "key": "restructuring",
+          "label": {
+            "pt": "Reestruturação"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Reestruturação",
+          "b3DataCode": "C0000242",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 110,
+          "inGrid": false
+        },
+        {
+          "key": "obligationAcceleration",
+          "label": {
+            "pt": "Vencimento antecipado de obrigações"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Vencimento antecipado de obrigações",
+          "b3DataCode": "C0000243",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "obligationDefault",
+          "label": {
+            "pt": "Descumprimento de obrigações"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Descumprimento de obrigações",
+          "b3DataCode": "C0000244",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 130,
+          "inGrid": false
+        },
+        {
+          "key": "repudiationMoratorium",
+          "label": {
+            "pt": "Repúdio ou moratória"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Repúdio ou moratória",
+          "b3DataCode": "C0000245",
+          "required": false,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "SIM"
+              }
+            }
+          ],
+          "order": 140,
           "inGrid": false
         }
       ],
