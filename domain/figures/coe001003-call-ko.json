@@ -48,11 +48,11 @@
           },
           "dataType": "percent",
           "symbol": "K",
-          "b3Field": "Strike",
+          "b3Field": "Strike 1(%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "default": 100,
           "help": {
             "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
@@ -68,11 +68,11 @@
           },
           "dataType": "percent",
           "symbol": "Part",
-          "b3Field": "Participação",
+          "b3Field": "Participação cenário de alta (%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 4,
           "default": 100,
           "help": {
             "pt": "Multiplicador aplicado à performance do ativo repassada ao investidor.",
@@ -97,6 +97,57 @@
             "pt": "Pago quando a barreira de alta é atingida e a perna de opção é extinta.",
             "en": "Paid when the up barrier is reached and the option leg is extinguished."
           }
+        },
+        {
+          "key": "quantity1",
+          "order": 1000,
+          "label": {
+            "pt": "Quantidade 1",
+            "en": "Quantity 1"
+          },
+          "help": {
+            "pt": "Quantidade do ativo subjacente usada no ajuste do Strike 1. Registrada pela B3 junto do strike; em branco quando o ajuste não se aplica.",
+            "en": "The quantity of the underlying used to adjust Strike 1. B3 registers it alongside the strike; left blank when no adjustment applies."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "required": false,
+          "min": 0,
+          "max": 999999999999,
+          "decimals": 8
+        },
+        {
+          "key": "paymentPeriod",
+          "order": 1010,
+          "label": {
+            "pt": "Período de Pagamento",
+            "en": "Payment period"
+          },
+          "help": {
+            "pt": "Quando o rebate é pago depois de a barreira ser atingida: imediatamente, ou só no vencimento.",
+            "en": "When the rebate is paid once the barrier is hit: immediately, or only at maturity."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de pagamento",
+          "required": true,
+          "options": [
+            {
+              "code": "ATO",
+              "b3Code": "8",
+              "label": {
+                "pt": "No ato",
+                "en": "On the event"
+              }
+            },
+            {
+              "code": "VENCIMENTO",
+              "b3Code": "9",
+              "label": {
+                "pt": "No vencimento",
+                "en": "At maturity"
+              }
+            }
+          ]
         }
       ]
     },
@@ -116,11 +167,11 @@
           },
           "dataType": "percent",
           "symbol": "H",
-          "b3Field": "Barreira no Cenário de Alta",
+          "b3Field": "Barreira cenário de alta (%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6
+          "decimals": 8
         },
         {
           "key": "barrierDirection",
@@ -172,14 +223,13 @@
             "en": "Verification quote type"
           },
           "dataType": "enum",
-          "b3Domain": "TIPO DE COTACAO PARA VERIFICACAO DA BARREIRA DE KO",
           "default": "FECHAMENTO",
           "visibleWhen": "verificationPeriod == 'AMERICANA'",
           "requiredWhen": "verificationPeriod == 'AMERICANA'",
           "options": [
             {
               "code": "FECHAMENTO",
-              "b3Code": "304",
+              "b3Code": "3",
               "label": {
                 "pt": "Fechamento",
                 "en": "Close"
@@ -187,7 +237,7 @@
             },
             {
               "code": "MINIMO",
-              "b3Code": "305",
+              "b3Code": "6",
               "label": {
                 "pt": "Mínimo",
                 "en": "Low"
@@ -195,7 +245,7 @@
             },
             {
               "code": "MAXIMO",
-              "b3Code": "306",
+              "b3Code": "5",
               "label": {
                 "pt": "Máximo",
                 "en": "High"
@@ -203,7 +253,7 @@
             },
             {
               "code": "MEDIA",
-              "b3Code": "307",
+              "b3Code": "4",
               "label": {
                 "pt": "Média",
                 "en": "Average"
@@ -211,13 +261,14 @@
             },
             {
               "code": "AJUSTE",
-              "b3Code": "308",
+              "b3Code": "7",
               "label": {
                 "pt": "Ajuste",
                 "en": "Settlement price"
               }
             }
-          ]
+          ],
+          "b3Field": "Tipo de cotação para verificação de barreira cenario de alta"
         }
       ]
     }

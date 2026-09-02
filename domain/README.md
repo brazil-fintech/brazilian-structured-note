@@ -139,13 +139,20 @@ what the "Identificador do Campo" of the *Registro COE* variable-data record car
 attribute without one is bookable and validated but cannot be written to B3.
 
 You rarely write it: the generated files carry it already, and a hand-written one usually resolves
-on its own. B3 publishes, per figure, which of its attributes the figure registers
+on its own from `b3Field`. B3 publishes, per figure, which of its attributes the figure registers
 (`DTpFigurasDadosDerivativo`), so the compiler matches a field to one **by B3's own name for the
 attribute** — which is what `b3Field` is for. Write `b3Field` exactly as the registration screen
 prints it and the code attaches itself; the compiler then reports how many of the figure's
 published attributes are still unaccounted for. Setting `b3DataCode` outright always wins, and
 the compiler holds you to it: the code must exist, agree on type and precision, offer only the
 values that field accepts, and be an attribute B3 registers for *this* figure.
+
+**`b3Series` is the same idea for a repeating column.** B3's file format is flat, so a schedule it
+registers as `Data de Observação 1` through `Data de Observação 10` is ten fields, not a grid.
+Name the series without its number — `"b3Series": "Data de Observação"` — and the compiler
+resolves it, per figure, to those codes in order; the nth row is registered under the nth code. A
+figure B3 registers no such run for simply gets an empty series, so the declaration belongs on the
+shared block rather than on each figure that happens to use it.
 
 `b3FieldCode` is a different dictionary — `DTpDadosEstrategia`, where the same `C…` codes mean
 different attributes — and is left unset almost everywhere; see

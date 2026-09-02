@@ -171,9 +171,11 @@ de Alta (%)`). It cannot be used to attach a code to an attribute by name, which
 
 **Names match across the two published sources, mostly.** Around four fifths of the annex's field
 names appear verbatim in the export for the same figure, once accents, case and the `(%)` suffix
-are set aside. That is what lets a domain file be matched to a published attribute without anyone
-copying 1,647 pairings by hand — 1,205 are matched today — and the rest are reported per figure
-rather than guessed at.
+are set aside. The rest differ only in grammar — a preposition, a plural, a word order — so a
+second pass compares the words that carry the meaning, and a match is taken only when it is the
+only one in the figure. Across B3's catalogue no figure has two attributes that reduce alike,
+which is what makes that safe. Between the two passes all 1,647 pairings are matched, so nothing
+is copied by hand and nothing is guessed at.
 
 It also settles what the annex only describes. `tools/Coe.DomainGen` used to read an attribute's
 type and precision out of a sentence — *"Formato: Numérico percentual com 4 inteiros e 8

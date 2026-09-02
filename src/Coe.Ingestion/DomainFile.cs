@@ -82,6 +82,13 @@ public sealed class FieldDto
     /// </summary>
     public string? B3DataCode { get; set; }
 
+    /// <summary>
+    /// B3's name for the numbered series this repeating column fills, without the number —
+    /// <c>Data de Observação</c> for attributes B3 registers as "Data de Observação 1" upwards.
+    /// The nth row of the section becomes the nth attribute of the series.
+    /// </summary>
+    public string? B3Series { get; set; }
+
     /// <summary>B3 domain the options come from, checked against reference/b3/dominios-derivativos.csv.</summary>
     public string? B3Domain { get; set; }
 

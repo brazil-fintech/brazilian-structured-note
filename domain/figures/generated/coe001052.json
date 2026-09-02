@@ -222,6 +222,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa",
+          "b3DataCode": "C0000017",
           "required": true,
           "options": [
             {

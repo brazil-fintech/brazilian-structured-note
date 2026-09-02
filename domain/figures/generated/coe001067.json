@@ -151,6 +151,25 @@
           "options": [],
           "order": 60,
           "inGrid": false
+        },
+        {
+          "key": "downsideParticipation",
+          "label": {
+            "pt": "Participação cenário de baixa (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Participação cenário de baixa (%)",
+          "b3DataCode": "C0000018",
+          "decimals": 4,
+          "max": 999999,
+          "required": true,
+          "options": [],
+          "order": 70,
+          "inGrid": false
         }
       ],
       "itemFields": []

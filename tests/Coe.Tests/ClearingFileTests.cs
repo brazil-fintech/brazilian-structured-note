@@ -381,6 +381,39 @@ public sealed class ClearingFileTests
     }
 
     [Fact]
+    public void A_schedule_goes_out_as_the_numbered_run_B3_registers()
+    {
+        // The form shows the autocall schedule as rows; B3's file has no row index, so it
+        // registers "Data de Observação 1..10" and the participation used on each. This is the
+        // join working end to end: two rows become four variable records under four codes.
+        var request = Request(values =>
+        {
+            values["autocall"] = new JsonObject { ["hasAutocall"] = true, ["triggerType"] = "FECHAMENTO" };
+            values["observations"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["observationDate"] = "2027-03-01", ["triggerLevel"] = 100m, ["participation"] = 110m
+                },
+                new JsonObject
+                {
+                    ["observationDate"] = "2027-09-01", ["triggerLevel"] = 100m, ["participation"] = 120m
+                }
+            };
+        }, figureCode: "COE001064");
+
+        var variables = CetipRegistrationFiles.Registration(request).Lines.Skip(2)
+            .ToDictionary(line => line.Substring(18, 8).Trim(), line => line[26..].TrimEnd());
+
+        Assert.Equal("20270301", variables["C0000128"]);
+        Assert.Equal("20270901", variables["C0000129"]);
+        Assert.DoesNotContain("C0000130", variables.Keys);   // only the rows that exist
+
+        Assert.Equal("110.00000000", variables["C0000109"]);
+        Assert.Equal("120.00000000", variables["C0000110"]);
+    }
+
+    [Fact]
     public void Every_catalogue_figure_can_be_written_out()
     {
         // Not a check of the values, which are the same minimal ones throughout, but of the

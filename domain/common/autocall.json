@@ -4,7 +4,10 @@
       "key": "autocall",
       "kind": "tab",
       "order": 40,
-      "label": { "pt": "Resgate antecipado automático", "en": "Autocall" },
+      "label": {
+        "pt": "Resgate antecipado automático",
+        "en": "Autocall"
+      },
       "help": {
         "pt": "O autocall não é uma figura própria: é a figura registrada mais o Fluxo de Caixa e o disparo comandado pela função Indicação de Disparo de Trigger.",
         "en": "An autocall is not a figure of its own: it is the registered figure plus the cash-flow schedule and the trigger commanded through the Indicação de Disparo de Trigger function."
@@ -13,7 +16,10 @@
         {
           "key": "hasAutocall",
           "order": 10,
-          "label": { "pt": "Possui autocall", "en": "Has autocall" },
+          "label": {
+            "pt": "Possui autocall",
+            "en": "Has autocall"
+          },
           "dataType": "boolean",
           "required": true,
           "default": false
@@ -21,21 +27,45 @@
         {
           "key": "triggerType",
           "order": 20,
-          "label": { "pt": "Tipo de trigger", "en": "Trigger type" },
+          "label": {
+            "pt": "Tipo de trigger",
+            "en": "Trigger type"
+          },
           "dataType": "enum",
           "default": "FIXO",
           "visibleWhen": "hasAutocall == true",
           "requiredWhen": "hasAutocall == true",
           "options": [
-            { "code": "FIXO", "label": { "pt": "Fixo", "en": "Flat" } },
-            { "code": "STEP_DOWN", "label": { "pt": "Step-down", "en": "Step-down" } },
-            { "code": "STEP_UP", "label": { "pt": "Step-up", "en": "Step-up" } }
+            {
+              "code": "FIXO",
+              "label": {
+                "pt": "Fixo",
+                "en": "Flat"
+              }
+            },
+            {
+              "code": "STEP_DOWN",
+              "label": {
+                "pt": "Step-down",
+                "en": "Step-down"
+              }
+            },
+            {
+              "code": "STEP_UP",
+              "label": {
+                "pt": "Step-up",
+                "en": "Step-up"
+              }
+            }
           ]
         },
         {
           "key": "paymentTiming",
           "order": 30,
-          "label": { "pt": "Período de Pagamento", "en": "Payment timing" },
+          "label": {
+            "pt": "Período de Pagamento",
+            "en": "Payment timing"
+          },
           "help": {
             "pt": "Ato liquida no momento do disparo; Vencimento marca o evento e paga no vencimento.",
             "en": "Ato settles the moment the trigger fires; Vencimento marks the event and pays at maturity."
@@ -46,14 +76,29 @@
           "visibleWhen": "hasAutocall == true",
           "requiredWhen": "hasAutocall == true",
           "options": [
-            { "code": "ATO", "label": { "pt": "Ato", "en": "On trigger" } },
-            { "code": "VENCIMENTO", "label": { "pt": "Vencimento", "en": "At maturity" } }
+            {
+              "code": "ATO",
+              "label": {
+                "pt": "Ato",
+                "en": "On trigger"
+              }
+            },
+            {
+              "code": "VENCIMENTO",
+              "label": {
+                "pt": "Vencimento",
+                "en": "At maturity"
+              }
+            }
           ]
         },
         {
           "key": "couponMemory",
           "order": 40,
-          "label": { "pt": "Memória de cupom", "en": "Coupon memory" },
+          "label": {
+            "pt": "Memória de cupom",
+            "en": "Coupon memory"
+          },
           "help": {
             "pt": "Cupons não pagos em datas anteriores são recuperados na primeira data em que a condição verifica.",
             "en": "Coupons missed on earlier dates are recovered on the first date the condition verifies."
@@ -68,7 +113,10 @@
       "key": "observations",
       "kind": "tab",
       "order": 45,
-      "label": { "pt": "Datas de observação", "en": "Observation dates" },
+      "label": {
+        "pt": "Datas de observação",
+        "en": "Observation dates"
+      },
       "repeating": true,
       "minItems": 1,
       "maxItems": 120,
@@ -77,15 +125,22 @@
         {
           "key": "observationDate",
           "order": 10,
-          "label": { "pt": "Data de observação", "en": "Observation date" },
+          "label": {
+            "pt": "Data de observação",
+            "en": "Observation date"
+          },
           "symbol": "t_i",
           "dataType": "date",
-          "required": true
+          "required": true,
+          "b3Series": "Data de Observação"
         },
         {
           "key": "triggerLevel",
           "order": 20,
-          "label": { "pt": "Trigger de autocall (% de S₀)", "en": "Autocall trigger (% of S₀)" },
+          "label": {
+            "pt": "Trigger de autocall (% de S₀)",
+            "en": "Autocall trigger (% of S₀)"
+          },
           "symbol": "T_i",
           "dataType": "percent",
           "required": true,
@@ -97,7 +152,10 @@
         {
           "key": "couponBarrier",
           "order": 30,
-          "label": { "pt": "Barreira de cupom (% de S₀)", "en": "Coupon barrier (% of S₀)" },
+          "label": {
+            "pt": "Barreira de cupom (% de S₀)",
+            "en": "Coupon barrier (% of S₀)"
+          },
           "symbol": "H_c",
           "dataType": "percent",
           "min": 0,
@@ -107,7 +165,10 @@
         {
           "key": "observationCoupon",
           "order": 40,
-          "label": { "pt": "Cupom da observação (%)", "en": "Observation coupon (%)" },
+          "label": {
+            "pt": "Cupom da observação (%)",
+            "en": "Observation coupon (%)"
+          },
           "symbol": "C",
           "dataType": "percent",
           "min": 0,
@@ -120,7 +181,9 @@
   "rules": [
     {
       "id": "autocall.requires-observations",
-      "targets": ["autocall.hasAutocall"],
+      "targets": [
+        "autocall.hasAutocall"
+      ],
       "when": "hasAutocall == true",
       "assert": "count(observations) > 0",
       "message": {
@@ -134,7 +197,9 @@
     {
       "id": "observations.within-tenor",
       "forEachSection": "observations",
-      "targets": ["observations[].observationDate"],
+      "targets": [
+        "observations[].observationDate"
+      ],
       "assert": "observationDate > common.issueDate and observationDate <= common.maturityDate",
       "message": {
         "pt": "As datas de observação devem estar entre a emissão (exclusive) e o vencimento.",
@@ -146,7 +211,9 @@
     },
     {
       "id": "observations.dates-distinct",
-      "targets": ["observations"],
+      "targets": [
+        "observations"
+      ],
       "when": "autocall.hasAutocall == true",
       "assert": "isDistinct(observations, @.observationDate)",
       "message": {
@@ -160,7 +227,9 @@
     {
       "id": "observations.coupon-needs-barrier",
       "forEachSection": "observations",
-      "targets": ["observations[].couponBarrier"],
+      "targets": [
+        "observations[].couponBarrier"
+      ],
       "when": "notNull(observationCoupon) and observationCoupon > 0",
       "assert": "notNull(couponBarrier)",
       "message": {
@@ -174,7 +243,9 @@
     {
       "id": "observations.coupon-barrier-below-trigger",
       "forEachSection": "observations",
-      "targets": ["observations[].couponBarrier"],
+      "targets": [
+        "observations[].couponBarrier"
+      ],
       "when": "notNull(couponBarrier)",
       "assert": "couponBarrier <= triggerLevel",
       "message": {
@@ -187,7 +258,9 @@
     },
     {
       "id": "autocall.memory-needs-coupons",
-      "targets": ["autocall.couponMemory"],
+      "targets": [
+        "autocall.couponMemory"
+      ],
       "when": "couponMemory == true",
       "assert": "any(observations, @.observationCoupon > 0)",
       "message": {

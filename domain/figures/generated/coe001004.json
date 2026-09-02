@@ -117,6 +117,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira no Cenário de Baixa (%)",
+          "b3DataCode": "C0000029",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -153,6 +154,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Verificação de Barreiras no Cenário de Baixa",
+          "b3DataCode": "C0000017",
           "required": true,
           "visibleWhen": "underlying.assetClass != 'CESTA'",
           "options": [

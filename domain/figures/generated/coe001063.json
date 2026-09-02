@@ -183,6 +183,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira no cenário de alta (%)",
+          "b3DataCode": "C0000028",
           "decimals": 8,
           "min": 0,
           "max": 9999,

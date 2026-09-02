@@ -110,12 +110,18 @@ the length the manual states.
 padded to its declared width (`01`). The platform never invents a code, and an option without a
 `b3Code` leaves the field blank rather than writing something B3 does not know.
 
-**What cannot be written is said out loud.** The variable-data record carries one line per
-attribute that has a `b3DataCode`, and the response names how many attributes do not. Name
-matching against B3's export reaches 1,205 of the 1,647 published attributes today; the rest are
-named per figure in the ingestion warnings and counted beside the file. An attribute B3 registers
-for the figure that the template cannot address is a gap in the registration, and this is the
-only place a desk would see it before B3 does.
+**Everything B3 registers can be written.** The variable-data record carries one line per
+attribute that has a `b3DataCode`, and every one of the 1,647 attributes B3 publishes across the
+88 figures now has one. Attributes are matched to B3's own name for them, first exactly and then
+on the words that carry the meaning — the annex writes "Data de verificação amortização 1" where
+the export writes "Data verificação amortização 1", and one preposition used to cost a figure all
+hundred of its attributes. A repeating section maps to the numbered run B3 registers it as: the
+form shows ten observation dates as ten rows, and the file writes them as
+`Data de Observação 1` through `10`.
+
+The ingestion warning that names an unaddressable attribute is now silent, and a test holds it
+there. When B3 publishes something new, the build fails and says which figure and which
+attribute — which is the point of holding the per-figure lists at all.
 
 ## The template is the contract
 

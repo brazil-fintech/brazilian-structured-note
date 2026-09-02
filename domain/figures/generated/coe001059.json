@@ -33,6 +33,97 @@
   "removeSections": [],
   "sections": [
     {
+      "key": "assets",
+      "label": {
+        "pt": "Ativos",
+        "en": "Underlyings"
+      },
+      "kind": "tab",
+      "order": 18,
+      "repeating": false,
+      "fields": [
+        {
+          "key": "basketTypecall",
+          "label": {
+            "pt": "Tipo de Cesta da Call"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cesta da Call",
+          "b3DataCode": "C0000170",
+          "required": true,
+          "options": [
+            {
+              "code": "BEST_OF",
+              "b3Code": "2034",
+              "label": {
+                "pt": "Best Of"
+              }
+            },
+            {
+              "code": "WORST_OF",
+              "b3Code": "2035",
+              "label": {
+                "pt": "Worst Of"
+              }
+            },
+            {
+              "code": "STANDARD",
+              "b3Code": "2033",
+              "label": {
+                "pt": "Standard"
+              }
+            }
+          ],
+          "order": 120,
+          "inGrid": false
+        },
+        {
+          "key": "basketTypeput",
+          "label": {
+            "pt": "Tipo de Cesta da Put KI"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Tipo de Cesta da Put KI",
+          "b3DataCode": "C0000171",
+          "required": true,
+          "options": [
+            {
+              "code": "BEST_OF",
+              "b3Code": "2034",
+              "label": {
+                "pt": "Best Of"
+              }
+            },
+            {
+              "code": "STANDARD",
+              "b3Code": "2033",
+              "label": {
+                "pt": "Standard"
+              }
+            },
+            {
+              "code": "WORST_OF",
+              "b3Code": "2035",
+              "label": {
+                "pt": "Worst Of"
+              }
+            }
+          ],
+          "order": 130,
+          "inGrid": false
+        }
+      ],
+      "itemFields": []
+    },
+    {
       "key": "payoff",
       "label": {
         "pt": "Payoff",

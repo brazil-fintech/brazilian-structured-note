@@ -169,12 +169,12 @@ checkout compiles without a network and an unreachable directory costs freshness
 **Every figure knows which of its attributes B3 will accept.** `DTpFigurasDadosDerivativo` lists,
 per figure, the attributes B3 registers for it and the identifier each one is written under —
 1,647 pairings over all 88 figures, including the four the manual's annex does not describe. The
-compiler attaches those identifiers to the domain files by B3's own name for the attribute —
-1,205 of the 1,647 today — and reports the rest per figure. "Is this figure complete?" now has a
-published answer rather than a reading of the manual, and the gap is a list rather than a
-suspicion. The export also settles what the manual's prose only describes: the generated figures
-take their type, precision and size from it, which corrected 71 attributes whose precision had
-been read out of a sentence.
+compiler attaches those identifiers to the domain files by B3's own name for the attribute, and
+**all 1,647 of them now map**: every attribute B3 registers, for every figure, is one the platform
+can write. A figure that gains an attribute in a future export fails the build and is named, so
+the gap stays at zero rather than drifting. The export also settles what the manual's prose only
+describes — the generated figures take their type, precision, size and accepted values from it,
+rather than from a sentence in the annex that states them three different ways.
 
 **The registration is a file, and the platform writes it.** From a booked asset,
 `GET /api/assets/{id}/clearing` produces the CETIP upload files of §4.8 of the *Manual de

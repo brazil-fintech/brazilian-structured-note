@@ -48,11 +48,11 @@
           },
           "dataType": "percent",
           "symbol": "K",
-          "b3Field": "Strike",
+          "b3Field": "Strike 1(%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "default": 100,
           "help": {
             "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
@@ -71,8 +71,9 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
-          "default": 100
+          "decimals": 4,
+          "default": 100,
+          "b3Field": "Participação cenário de alta (%)"
         },
         {
           "key": "downsideParticipation",
@@ -86,12 +87,82 @@
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 4,
           "default": 100,
           "help": {
             "pt": "Participação aplicada ao módulo da queda enquanto a barreira resiste.",
             "en": "Participation applied to the absolute fall while the barrier holds."
-          }
+          },
+          "b3Field": "Participação cenário de baixa (%)"
+        },
+        {
+          "key": "quantity1",
+          "order": 1000,
+          "label": {
+            "pt": "Quantidade 1",
+            "en": "Quantity 1"
+          },
+          "help": {
+            "pt": "Quantidade do ativo subjacente usada no ajuste do Strike 1. Registrada pela B3 junto do strike; em branco quando o ajuste não se aplica.",
+            "en": "The quantity of the underlying used to adjust Strike 1. B3 registers it alongside the strike; left blank when no adjustment applies."
+          },
+          "dataType": "decimal",
+          "b3Field": "Quantidade 1",
+          "required": false,
+          "min": 0,
+          "max": 999999999999,
+          "decimals": 8
+        },
+        {
+          "key": "downsideRebate",
+          "order": 1010,
+          "label": {
+            "pt": "Rebate no Cenário de Baixa (%)",
+            "en": "Downside rebate (%)"
+          },
+          "help": {
+            "pt": "Percentual do valor financeiro pago se a barreira de baixa for atingida.",
+            "en": "Percentage of the financial value paid if the downside barrier is hit."
+          },
+          "dataType": "percent",
+          "b3Field": "Rebate no Cenário de Baixa(%)",
+          "required": true,
+          "min": 0,
+          "max": 9999,
+          "decimals": 4
+        },
+        {
+          "key": "dependentOptions",
+          "order": 1020,
+          "label": {
+            "pt": "Opções Dependentes",
+            "en": "Dependent options"
+          },
+          "help": {
+            "pt": "Sim: atingida a barreira, as duas pernas são desmontadas juntas. Não: cada perna vive por si.",
+            "en": "Yes: once the barrier is hit both legs are unwound together. No: each leg stands on its own."
+          },
+          "dataType": "enum",
+          "b3Field": "Opções Dependentes",
+          "required": true,
+          "options": [
+            {
+              "code": "SIM",
+              "b3Code": "50",
+              "label": {
+                "pt": "Sim",
+                "en": "Yes"
+              }
+            },
+            {
+              "code": "NAO",
+              "b3Code": "51",
+              "label": {
+                "pt": "Não",
+                "en": "No"
+              }
+            }
+          ]
         }
       ]
     },
@@ -152,14 +223,13 @@
             "en": "Verification quote type"
           },
           "dataType": "enum",
-          "b3Domain": "TIPO DE COTACAO PARA VERIFICACAO DA BARREIRA DE KI",
           "default": "FECHAMENTO",
           "visibleWhen": "verificationPeriod == 'AMERICANA'",
           "requiredWhen": "verificationPeriod == 'AMERICANA'",
           "options": [
             {
               "code": "FECHAMENTO",
-              "b3Code": "299",
+              "b3Code": "3",
               "label": {
                 "pt": "Fechamento",
                 "en": "Close"
@@ -167,7 +237,7 @@
             },
             {
               "code": "MINIMO",
-              "b3Code": "300",
+              "b3Code": "6",
               "label": {
                 "pt": "Mínimo",
                 "en": "Low"
@@ -175,7 +245,7 @@
             },
             {
               "code": "MAXIMO",
-              "b3Code": "301",
+              "b3Code": "5",
               "label": {
                 "pt": "Máximo",
                 "en": "High"
@@ -183,7 +253,7 @@
             },
             {
               "code": "MEDIA",
-              "b3Code": "302",
+              "b3Code": "4",
               "label": {
                 "pt": "Média",
                 "en": "Average"
@@ -191,13 +261,29 @@
             },
             {
               "code": "AJUSTE",
-              "b3Code": "303",
+              "b3Code": "7",
               "label": {
                 "pt": "Ajuste",
                 "en": "Settlement price"
               }
             }
-          ]
+          ],
+          "b3Field": "Tipo de cotação para verificação de barreira cenario de baixa"
+        },
+        {
+          "key": "barrierLevel",
+          "order": 10,
+          "label": {
+            "pt": "Barreira no Cenário de Baixa (%)",
+            "en": "Downside barrier (%)"
+          },
+          "symbol": "H",
+          "dataType": "percent",
+          "b3Field": "Barreira cenário de baixa (%)",
+          "required": true,
+          "min": 0,
+          "max": 1000,
+          "decimals": 8
         }
       ]
     }

@@ -49,11 +49,11 @@
           },
           "dataType": "percent",
           "symbol": "K",
-          "b3Field": "Strike",
+          "b3Field": "Strike 1(%)",
           "required": true,
           "min": 0,
           "max": 1000,
-          "decimals": 6,
+          "decimals": 8,
           "default": 100,
           "help": {
             "pt": "Nível de performance a partir do qual a perna de opção começa a pagar; usualmente 100% de S₀.",
@@ -98,6 +98,31 @@
             "pt": "Abaixo desta barreira, na data de vencimento, o investidor assume a queda do ativo.",
             "en": "Below this barrier at maturity the investor takes the underlying's fall."
           }
+        }
+      ]
+    },
+    {
+      "key": "observations",
+      "itemFields": [
+        {
+          "key": "participation",
+          "order": 15,
+          "label": {
+            "pt": "Participação na Data (%)",
+            "en": "Participation on the date (%)"
+          },
+          "help": {
+            "pt": "Participação aplicada à performance se o certificado for chamado nesta data de observação. A B3 a registra como \"Participação Indexador N\", emparelhada com a enésima data.",
+            "en": "The participation applied to performance if the certificate is called on this observation date. B3 registers it as \"Participação Indexador N\", paired with the nth date."
+          },
+          "symbol": "Partᵢ",
+          "dataType": "percent",
+          "b3Field": "Participação Indexador",
+          "b3Series": "Participação Indexador",
+          "required": true,
+          "min": 0,
+          "max": 9999999999,
+          "decimals": 8
         }
       ]
     }

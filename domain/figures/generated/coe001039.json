@@ -49,11 +49,26 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 1, referente à Classe do Ativo Subjacente 1 (IBOVESPA, DOLAR DOS EUA)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000057",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "DOLAR_DOS_EUA",
+              "b3Code": "22",
+              "label": {
+                "pt": "DOLAR DOS EUA"
+              }
+            },
+            {
+              "code": "IBOVESPA",
+              "b3Code": "21",
+              "label": {
+                "pt": "IBOVESPA"
+              }
+            }
+          ],
           "order": 10,
           "inGrid": false
         },
@@ -82,11 +97,75 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 2 (TAXAS DE CAMBIO, INDICES)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Classe do Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000049",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            }
+          ],
           "order": 70,
           "inGrid": false
         },
@@ -98,11 +177,26 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 2, referente à Classe do Ativo Subjacente 2 (IBOVESPA, DOLAR DOS EUA)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000050",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "IBOVESPA",
+              "b3Code": "21",
+              "label": {
+                "pt": "IBOVESPA"
+              }
+            },
+            {
+              "code": "DOLAR_DOS_EUA",
+              "b3Code": "22",
+              "label": {
+                "pt": "DOLAR DOS EUA"
+              }
+            }
+          ],
           "order": 80,
           "inGrid": false
         },
@@ -121,6 +215,87 @@
           "required": true,
           "options": [],
           "order": 90,
+          "inGrid": false
+        },
+        {
+          "key": "assetClass1",
+          "label": {
+            "pt": "Classe do Ativo Subjacente 1"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Classe do Ativo Subjacente 1",
+          "b3DataCode": "C0000058",
+          "required": true,
+          "options": [
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            }
+          ],
+          "order": 160,
           "inGrid": false
         }
       ],

@@ -50,11 +50,75 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 1 (TAXAS DE CAMBIO, INDICES)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Classe do ativo subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000058",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            },
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            }
+          ],
           "order": 30,
           "inGrid": false
         },
@@ -66,11 +130,26 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Ativo subjacente da Call KO. Campo com as opções IBOVESPA e DOLAR DOS EUA."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000057",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "DOLAR_DOS_EUA",
+              "b3Code": "22",
+              "label": {
+                "pt": "DOLAR DOS EUA"
+              }
+            },
+            {
+              "code": "IBOVESPA",
+              "b3Code": "21",
+              "label": {
+                "pt": "IBOVESPA"
+              }
+            }
+          ],
           "order": 40,
           "inGrid": false
         },
@@ -99,11 +178,75 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções das Classes de Ativos referente ao Ativo Subjacente 2 (TAXAS DE CAMBIO, INDICES)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Classe do Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000049",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "JUROS_INTERNACIONAIS",
+              "b3Code": "2064",
+              "label": {
+                "pt": "JUROS INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "JUROS",
+              "b3Code": "2063",
+              "label": {
+                "pt": "JUROS"
+              }
+            },
+            {
+              "code": "INDICES_INTERNACIONA",
+              "b3Code": "2062",
+              "label": {
+                "pt": "INDICES INTERNACIONA"
+              }
+            },
+            {
+              "code": "INDICES_DE_PRECOS",
+              "b3Code": "2061",
+              "label": {
+                "pt": "INDICES DE PRECOS"
+              }
+            },
+            {
+              "code": "COMMODITIES",
+              "b3Code": "2060",
+              "label": {
+                "pt": "COMMODITIES"
+              }
+            },
+            {
+              "code": "ACOES_INTERNACIONAIS",
+              "b3Code": "2059",
+              "label": {
+                "pt": "ACOES INTERNACIONAIS"
+              }
+            },
+            {
+              "code": "TAXAS_DE_CAMBIO",
+              "b3Code": "23",
+              "label": {
+                "pt": "TAXAS DE CAMBIO"
+              }
+            },
+            {
+              "code": "INDICES",
+              "b3Code": "24",
+              "label": {
+                "pt": "INDICES"
+              }
+            },
+            {
+              "code": "ACOES",
+              "b3Code": "2058",
+              "label": {
+                "pt": "ACOES"
+              }
+            }
+          ],
           "order": 120,
           "inGrid": false
         },
@@ -115,11 +258,26 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Ativo subjacente da Put. Campo com as opções IBOVESPA e DOLAR DOS EUA."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000050",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "IBOVESPA",
+              "b3Code": "21",
+              "label": {
+                "pt": "IBOVESPA"
+              }
+            },
+            {
+              "code": "DOLAR_DOS_EUA",
+              "b3Code": "22",
+              "label": {
+                "pt": "DOLAR DOS EUA"
+              }
+            }
+          ],
           "order": 130,
           "inGrid": false
         },
@@ -359,6 +517,38 @@
           "required": true,
           "options": [],
           "order": 170,
+          "inGrid": false
+        },
+        {
+          "key": "periodoDeVerificacaoDasBarreiras",
+          "label": {
+            "pt": "Período de verificação das barreiras"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "enum",
+          "b3Field": "Período de verificação das barreiras",
+          "b3DataCode": "C0000125",
+          "required": true,
+          "options": [
+            {
+              "code": "EUROPEIA",
+              "b3Code": "11",
+              "label": {
+                "pt": "Européia"
+              }
+            },
+            {
+              "code": "AMERICANA",
+              "b3Code": "10",
+              "label": {
+                "pt": "Americana"
+              }
+            }
+          ],
+          "order": 180,
           "inGrid": false
         }
       ],

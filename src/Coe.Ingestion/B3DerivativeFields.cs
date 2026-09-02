@@ -78,6 +78,13 @@ public sealed class B3DerivativeFields
     private readonly Dictionary<string, Dictionary<string, B3FigureAttribute>> _byFigureName =
         new(StringComparer.OrdinalIgnoreCase);
 
+    /// <summary>
+    /// Per figure, its attributes indexed on <see cref="SignatureOf"/>. A signature two
+    /// attributes of the same figure share maps to null, so it can never resolve to either.
+    /// </summary>
+    private readonly Dictionary<string, Dictionary<string, B3FigureAttribute?>> _byFigureSignature =
+        new(StringComparer.OrdinalIgnoreCase);
+
     /// <summary>The figure code read straight from the label column, where the row carries one.</summary>
     private readonly Dictionary<string, string> _codeByOrdinal = new(StringComparer.OrdinalIgnoreCase);
 
@@ -106,6 +113,104 @@ public sealed class B3DerivativeFields
         _byFigureName.TryGetValue(figureCode, out var index)
             ? index
             : new Dictionary<string, B3FigureAttribute>(StringComparer.Ordinal);
+
+    /// <summary>
+    /// The attribute whose name carries <paramref name="signature"/>, or null when this figure
+    /// has none or has two that share it.
+    /// </summary>
+    public B3FigureAttribute? AttributeBySignature(string figureCode, string signature) =>
+        _byFigureSignature.TryGetValue(figureCode, out var index) && index.TryGetValue(signature, out var attribute)
+            ? attribute
+            : null;
+
+    /// <summary>
+    /// The attributes of <paramref name="figureCode"/> that form a numbered series under
+    /// <paramref name="concept"/>, in order — "Data de Observação 1" through "Data de
+    /// Observação 10" for the concept "Data de Observação".
+    ///
+    /// B3 registers a schedule as a run of numbered attributes because its file format is flat.
+    /// The platform models the same thing as a repeating section, because that is what it is and
+    /// what a person can fill in. This is the join between the two: the nth row of the section
+    /// is the nth attribute of the series.
+    /// </summary>
+    public IReadOnlyList<B3FigureAttribute> SeriesFor(string figureCode, string concept)
+    {
+        var wanted = SignatureOf(concept);
+        if (wanted.Length == 0) return [];
+
+        var numbered = new List<(int Index, B3FigureAttribute Attribute)>();
+        foreach (var attribute in ForFigure(figureCode))
+        {
+            var (stem, index) = SplitTrailingNumber(attribute.Name);
+            if (index is null || SignatureOf(stem) != wanted) continue;
+            numbered.Add((index.Value, attribute));
+        }
+
+        numbered.Sort((left, right) => left.Index.CompareTo(right.Index));
+        return [.. numbered.Select(pair => pair.Attribute)];
+    }
+
+    /// <summary>
+    /// Splits "Amortização 1 (%)" into "Amortização" and 1. The number is the last word once the
+    /// name is normalised, which is what puts a trailing "(%)" out of the way.
+    /// </summary>
+    private static (string Stem, int? Index) SplitTrailingNumber(string name)
+    {
+        var normalized = NormalizeName(name);
+        var cut = normalized.LastIndexOf(' ');
+        if (cut <= 0) return (normalized, null);
+
+        var tail = normalized[(cut + 1)..];
+        return int.TryParse(tail, NumberStyles.None, CultureInfo.InvariantCulture, out var index)
+            ? (normalized[..cut], index)
+            : (normalized, null);
+    }
+
+    /// <summary>
+    /// The words of a name that carry its meaning, sorted: <see cref="NormalizeName"/> first,
+    /// then Portuguese function words dropped, plurals folded, and the rest ordered.
+    ///
+    /// B3 writes the same attribute differently in the export and in the manual's annex, and the
+    /// differences are almost always grammatical rather than substantive — "Data verificação
+    /// amortização 1" against "Data de verificação amortização 1", "Barreira cenário de alta (%)"
+    /// against "Barreira no Cenário de Alta", "barreira" against "barreiras". Reduced this way
+    /// each pair meets; the numbers that distinguish "Strike 1" from "Strike 2" are words like
+    /// any other and survive.
+    ///
+    /// Sorting is what makes word order irrelevant, and it is also what makes this weaker than a
+    /// name match, so it is only ever tried second and only when the answer is unique within the
+    /// figure. Across B3's own catalogue no figure has two attributes that reduce alike.
+    /// </summary>
+    public static string SignatureOf(string? name)
+    {
+        var words = NormalizeName(name).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length == 0) return string.Empty;
+
+        var carried = new List<string>(words.Length);
+        foreach (var word in words)
+        {
+            if (FunctionWords.Contains(word)) continue;
+            carried.Add(word.Length > 3 && word.EndsWith('s') ? word[..^1] : word);
+        }
+
+        // A name made only of function words keeps them: dropping everything would make it match
+        // every other such name.
+        if (carried.Count == 0) carried.AddRange(words);
+
+        carried.Sort(StringComparer.Ordinal);
+        return string.Join(' ', carried);
+    }
+
+    /// <summary>
+    /// Portuguese articles and prepositions, which B3 includes or omits without changing what an
+    /// attribute is. Deliberately short: every word here is one the platform stops being able to
+    /// tell apart, so it holds only words that carry no meaning on their own.
+    /// </summary>
+    private static readonly HashSet<string> FunctionWords = new(StringComparer.Ordinal)
+    {
+        "a", "ao", "aos", "as", "com", "da", "das", "de", "do", "dos", "e", "em",
+        "na", "nas", "no", "nos", "o", "os", "para", "por"
+    };
 
     /// <summary>
     /// Reduces a field name to what two spellings of the same attribute have in common. Accents,
@@ -163,6 +268,7 @@ public sealed class B3DerivativeFields
     {
         _byFigure.Clear();
         _byFigureName.Clear();
+        _byFigureSignature.Clear();
 
         foreach (var (ordinal, attributes) in _byOrdinal)
         {
@@ -173,13 +279,24 @@ public sealed class B3DerivativeFields
             _byFigure[code] = attributes;
 
             var byName = new Dictionary<string, B3FigureAttribute>(StringComparer.Ordinal);
+            var bySignature = new Dictionary<string, B3FigureAttribute?>(StringComparer.Ordinal);
+
             foreach (var attribute in attributes)
             {
                 // No figure currently names two of its attributes alike once normalised, but
                 // nothing in the export guarantees it; first wins rather than throwing.
                 byName.TryAdd(NormalizeName(attribute.Name), attribute);
+
+                // A signature is weaker evidence than a name, so a repeat disqualifies it
+                // outright rather than picking one: resolving to the wrong attribute would put
+                // the wrong code on a registration.
+                var signature = SignatureOf(attribute.Name);
+                if (signature.Length == 0) continue;
+                bySignature[signature] = bySignature.ContainsKey(signature) ? null : attribute;
             }
+
             _byFigureName[code] = byName;
+            _byFigureSignature[code] = bySignature;
         }
     }
 

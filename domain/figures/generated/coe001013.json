@@ -148,6 +148,44 @@
           "options": [],
           "order": 70,
           "inGrid": false
+        },
+        {
+          "key": "remuneradorFlutuanteDentro",
+          "label": {
+            "pt": "Remunerador Flutuante Dentro (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante Dentro (%)",
+          "b3DataCode": "C0000039",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 80,
+          "inGrid": false
+        },
+        {
+          "key": "remuneradorFlutuanteFora",
+          "label": {
+            "pt": "Remunerador Flutuante Fora (%)"
+          },
+          "help": {
+            "pt": "Atributo publicado pela B3 para esta figura em DTpFigurasDadosDerivativo. O anexo do Manual de Operações não o descreve, portanto não há instrução de preenchimento.",
+            "en": "An attribute B3 publishes for this figure in DTpFigurasDadosDerivativo. The annex of the Manual de Operações does not describe it, so there is no filling instruction."
+          },
+          "dataType": "percent",
+          "b3Field": "Remunerador Flutuante Fora (%)",
+          "b3DataCode": "C0000040",
+          "decimals": 4,
+          "max": 9999,
+          "required": false,
+          "options": [],
+          "order": 90,
+          "inGrid": false
         }
       ],
       "itemFields": []

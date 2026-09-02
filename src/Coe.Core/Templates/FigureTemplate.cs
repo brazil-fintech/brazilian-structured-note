@@ -162,6 +162,13 @@ public sealed record TemplateField
     public string? B3DataCode { get; init; }
 
     /// <summary>
+    /// For a repeating column, the codes of the numbered attributes its rows fill, in order.
+    /// Row <c>i</c> is registered under <c>B3SeriesCodes[i]</c>; rows beyond the end of the list
+    /// are more than B3 registers for the figure and cannot be written.
+    /// </summary>
+    public IReadOnlyList<string> B3SeriesCodes { get; init; } = [];
+
+    /// <summary>
     /// The B3 domain this field's options come from (<c>TIPO CESTA</c>). When set, every option
     /// must carry a <see cref="FieldOption.B3Code"/> that exists and is enabled in that domain.
     /// </summary>

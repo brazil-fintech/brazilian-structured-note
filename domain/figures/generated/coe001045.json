@@ -49,11 +49,33 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 1 (Pré, DI ou IPCA)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente Período 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000107",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "DI",
+              "b3Code": "13",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE",
+              "b3Code": "12",
+              "label": {
+                "pt": "Pré"
+              }
+            },
+            {
+              "code": "IPCA",
+              "b3Code": "14",
+              "label": {
+                "pt": "IPCA"
+              }
+            }
+          ],
           "order": 10,
           "inGrid": false
         },
@@ -65,11 +87,33 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções para o Ativo Subjacente 2 (Pré, ou DI ou IPCA)."
           },
-          "dataType": "string",
+          "dataType": "enum",
           "b3Field": "Ativo Subjacente Período 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000108",
           "required": true,
-          "options": [],
+          "options": [
+            {
+              "code": "IPCA",
+              "b3Code": "14",
+              "label": {
+                "pt": "IPCA"
+              }
+            },
+            {
+              "code": "DI",
+              "b3Code": "13",
+              "label": {
+                "pt": "DI"
+              }
+            },
+            {
+              "code": "PRE",
+              "b3Code": "12",
+              "label": {
+                "pt": "Pré"
+              }
+            }
+          ],
           "order": 50,
           "inGrid": false
         },

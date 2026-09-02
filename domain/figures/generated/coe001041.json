@@ -27,6 +27,7 @@
     "common/identification",
     "common/underlying",
     "common/remuneration",
+    "common/barriers",
     "common/settlement"
   ],
   "removeSections": [],
