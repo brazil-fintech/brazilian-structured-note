@@ -235,8 +235,20 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         // A code the author wrote down is a claim the compiler holds them to; one it inferred
         // from B3's name for the attribute is a convenience, and a disagreement there says the
         // guess was wrong, not that the figure is broken.
+        //
+        // Nothing is inferred for a column of a repeating section. The variable-data record of
+        // the Registro COE has no row index, so it cannot carry one; those attributes belong to
+        // the cash-flow and basket files, which have their own codes for them. Matching by name
+        // would attach the wrong one — B3 calls the basket component's quotation type "Tipo de
+        // Cotação para Liquidação", exactly what it calls the registration-level field, and the
+        // two are registered under different code sets in different files.
         var declaredDataCode = dto.B3DataCode is not null;
-        var dataCode = dto.B3DataCode ?? ResolveDataCode(dto, dataType, published);
+        var dataCode = dto.B3DataCode ?? (section.Repeating ? null : ResolveDataCode(dto, dataType, published));
+
+        if (declaredDataCode && section.Repeating)
+            warnings.Add(
+                $"'{path}' declares a b3DataCode, but the variable-data record cannot address a "
+                + "repeating column; the cash-flow and basket files carry those attributes.");
 
         // A code that exists in the dictionary but not in this figure's attribute list is a
         // field B3 will reject on the registration file as not belonging to the figure.
@@ -433,9 +445,10 @@ public sealed class TemplateCompiler(B3Reference? reference = null)
         if (expected.Count == 0) return;
 
         var mapped = sections
-            .SelectMany(s => s.Fields.Concat(s.ItemFields))
-            .Select(f => f.B3DataCode)
-            .Where(code => !string.IsNullOrWhiteSpace(code))
+            .Where(s => !s.Repeating)
+            .SelectMany(s => s.Fields)
+            .Select(f => f.B3DataCode ?? string.Empty)
+            .Where(code => code.Length > 0)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         var missing = expected.Where(a => !mapped.Contains(a.FieldCode)).ToList();

@@ -138,7 +138,8 @@ attribute's identifier in B3's derivative-data dictionary (`DTpTipoDadosDerivati
 what the "Identificador do Campo" of the *Registro COE* variable-data record carries. An
 attribute without one is bookable and validated but cannot be written to B3.
 
-You rarely write it. B3 publishes, per figure, which of its attributes the figure registers
+You rarely write it: the generated files carry it already, and a hand-written one usually resolves
+on its own. B3 publishes, per figure, which of its attributes the figure registers
 (`DTpFigurasDadosDerivativo`), so the compiler matches a field to one **by B3's own name for the
 attribute** — which is what `b3Field` is for. Write `b3Field` exactly as the registration screen
 prints it and the code attaches itself; the compiler then reports how many of the figure's

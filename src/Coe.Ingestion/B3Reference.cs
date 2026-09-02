@@ -114,10 +114,20 @@ public sealed partial class B3Reference
         reference.LoadUnderlyings(Path.Combine(directory, UnderlyingsFile), errors);
 
         // Last: the per-figure attribute lists are keyed on the sequence number, so the
-        // catalogue has to be in place to turn that into a figure code.
+        // catalogue has to be in place to turn that into a figure code. The sequences are
+        // unique in every export published so far and nothing guarantees they stay that way;
+        // a downloaded file must not be able to throw here, so a repeat is reported and the
+        // first row keeps the sequence.
+        var codeByOrdinal = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var figure in reference._figuresByCode.Values)
+        {
+            if (figure.Ordinal.Length == 0) continue;
+            if (!codeByOrdinal.TryAdd(figure.Ordinal, figure.Code))
+                errors.Add($"{FiguresFile}: sequence '{figure.Ordinal}' is used by more than one figure.");
+        }
+
         reference.DerivativeFields = B3DerivativeFields.Load(directory);
-        reference.DerivativeFields.ResolveFigureCodes(
-            reference._figuresByCode.Values.ToDictionary(f => f.Ordinal, f => f.Code, StringComparer.OrdinalIgnoreCase));
+        reference.DerivativeFields.ResolveFigureCodes(codeByOrdinal);
         errors.AddRange(reference.DerivativeFields.Errors);
 
         reference.Errors = errors;

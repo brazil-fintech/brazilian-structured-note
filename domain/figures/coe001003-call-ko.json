@@ -92,7 +92,7 @@
           "required": true,
           "min": 0,
           "max": 100,
-          "decimals": 6,
+          "decimals": 4,
           "help": {
             "pt": "Pago quando a barreira de alta é atingida e a perna de opção é extinta.",
             "en": "Paid when the up barrier is reached and the option leg is extinguished."

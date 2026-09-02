@@ -62,9 +62,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Indica o percentual a ser aplicado sobre o valor inicial do Ativo Subjacente. Esta barreira será considerada para contabilizar os dias em que a performance do ativo respeitou, ou não, o limite estabelecido."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Barreira (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000030",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 20,
@@ -89,6 +90,7 @@
           },
           "dataType": "enum",
           "b3Field": "Remuneração Adicional",
+          "b3DataCode": "C0000019",
           "required": true,
           "options": [
             {
@@ -123,6 +125,7 @@
           },
           "dataType": "percent",
           "b3Field": "Cupom Remunerador Adicional (%)",
+          "b3DataCode": "C0000021",
           "decimals": 4,
           "max": 99999,
           "required": false,
@@ -139,9 +142,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório, se indicado “DI”. Para o indicador “Pré” ou “Pré252-Lin”, este campo não deverá ser preenchido."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Remunerador Flutuante Adicional (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000020",
+          "decimals": 4,
           "required": false,
           "requiredWhen": "remuneration.additionalRemunerator == 'DI'",
           "options": [],

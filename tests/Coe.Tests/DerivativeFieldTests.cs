@@ -115,7 +115,7 @@ public sealed class DerivativeFieldTests
             .SelectMany(result => result.Template!.AllFields())
             .Count(field => field.B3DataCode is not null);
 
-        Assert.True(resolved > 900, $"only {resolved} attribute(s) resolved to a B3 data code");
+        Assert.True(resolved > 1_100, $"only {resolved} attribute(s) resolved to a B3 data code");
     }
 
     [Fact]

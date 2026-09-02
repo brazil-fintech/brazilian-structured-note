@@ -986,7 +986,7 @@
         "basket"
       ],
       "when": "underlying.assetClass == 'CESTA'",
-      "assert": "all(basket, @.componentFixingDate <= common.maturityDate)",
+      "assert": "all(basket, isNull(@.componentFixingDate) or @.componentFixingDate <= common.maturityDate)",
       "message": {
         "pt": "A data de fixing de um componente não pode ser posterior ao vencimento.",
         "en": "A component's fixing date cannot fall after maturity."

@@ -64,14 +64,38 @@ public class B3ReferenceTests
     }
 
     [Fact]
-    public void Compiling_against_the_catalogue_produces_no_warnings()
+    public void Compiling_against_the_catalogue_reports_nothing_but_the_attributes_still_unmapped()
     {
-        var noisy = DomainFiles.Compiled
-            .Where(kv => kv.Value.Warnings.Count > 0)
-            .Select(kv => $"{kv.Key}: {string.Join("; ", kv.Value.Warnings)}")
+        // Two kinds of warning come out of a compile, and only one of them is acceptable
+        // standing. Attribute coverage is a running score — B3 publishes more attributes per
+        // figure than the domain files can yet address, and the compiler says which — so those
+        // are expected. Everything else means the files have drifted from B3: a renamed figure,
+        // an enum with no options, a retired domain code, a precision that no longer agrees.
+        var drift = DomainFiles.Compiled
+            .SelectMany(kv => kv.Value.Warnings.Select(warning => $"{kv.Key}: {warning}"))
+            .Where(warning => !IsCoverageWarning(warning))
             .ToList();
 
-        Assert.Empty(noisy);
+        // Joined rather than asserted as a collection: xUnit renders the first five items of a
+        // collection and elides the rest, and the point of this test failing is the list.
+        Assert.True(drift.Count == 0, string.Join(Environment.NewLine, drift));
+    }
+
+    private static bool IsCoverageWarning(string warning) =>
+        warning.Contains("carries no b3DataCode", StringComparison.Ordinal) ||
+        warning.Contains("does not carry B3's mandatory attribute", StringComparison.Ordinal);
+
+    [Fact]
+    public void The_attributes_a_figure_cannot_yet_write_are_named_rather_than_counted()
+    {
+        // The point of the coverage warning is that the gap is a list someone can work through.
+        var coverage = DomainFiles.Compiled
+            .SelectMany(kv => kv.Value.Warnings)
+            .Where(IsCoverageWarning)
+            .ToList();
+
+        Assert.NotEmpty(coverage);
+        Assert.All(coverage, warning => Assert.Contains("COE00", warning, StringComparison.Ordinal));
     }
 
     [Fact]

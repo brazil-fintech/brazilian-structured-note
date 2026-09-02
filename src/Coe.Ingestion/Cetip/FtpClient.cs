@@ -172,7 +172,7 @@ public sealed partial class FtpClient : IAsyncDisposable
         if (opened.Code is not (125 or 150)) throw Failed($"'{command}' was refused", opened);
 
         using var buffer = new MemoryStream();
-        var dataStream = _useSsl ? await UpgradeAsync(data.GetStream(), ct) : data.GetStream();
+        Stream dataStream = _useSsl ? await UpgradeAsync(data.GetStream(), ct) : data.GetStream();
         try
         {
             await dataStream.CopyToAsync(buffer, ct);

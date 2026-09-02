@@ -267,8 +267,13 @@ public class ValidationEngineTests
 
         Assert.Contains("\"execution\":\"both\"", json);
         Assert.Contains("\"execution\":\"server\"", json);
+
+        // Matched against the serialized value, not the bare word: B3 names a registration field
+        // "CPF/CNPJ Cliente", and a substring search would find "Client" inside it.
+        Assert.DoesNotContain("\"execution\":\"Client", json);
+        Assert.DoesNotContain("\"execution\":\"Server", json);
         Assert.DoesNotContain("client, server", json);
-        Assert.DoesNotContain("Client", json);
+        Assert.DoesNotContain("Client, Server", json);
     }
 
     // ----- repeating sections -------------------------------------------------------
@@ -341,13 +346,23 @@ public class ValidationEngineTests
         var values = CallSpread();
         values["underlying"]!["assetClass"] = "CESTA";
         values["underlying"]!["basketType"] = "STANDARD";
+        values["underlying"]!["basketParityCurrency"] = "BRL";
         values["underlying"]!["quanto"] = true;
         values["underlying"]!.AsObject().Remove("asset");
         values["underlying"]!.AsObject().Remove("initialValue");
 
+        // B3 registers a quotation type, an initial value and a fixing date per component, on
+        // the RegistroCestas file — the weight alone is not a bookable basket.
         var rows = new JsonArray();
         foreach (var (component, weight) in components)
-            rows.Add(new JsonObject { ["component"] = component, ["weight"] = weight });
+            rows.Add(new JsonObject
+            {
+                ["component"] = component,
+                ["weight"] = weight,
+                ["componentQuoteType"] = "FECHAMENTO",
+                ["componentInitialValue"] = 100m,
+                ["componentFixingDate"] = "2026-02-10"
+            });
         values["basket"] = rows;
         return values;
     }

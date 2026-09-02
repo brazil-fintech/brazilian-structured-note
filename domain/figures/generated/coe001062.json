@@ -52,6 +52,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 1(%)",
+          "b3DataCode": "C0000001",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -68,8 +69,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório, se campo “Período de captura do ativo subjacente para liquidação” for preenchido com \"Data única\". Formato: DD/MM/AAAA."
           },
-          "dataType": "date",
+          "dataType": "decimal",
           "b3Field": "Quantidade 1",
+          "b3DataCode": "C0000048",
+          "decimals": 4,
           "required": false,
           "options": [],
           "order": 20,
@@ -85,6 +88,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação cenário de alta (%)",
+          "b3DataCode": "C0000002",
           "decimals": 4,
           "min": 0,
           "max": 9999,
@@ -103,6 +107,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação cenário de baixa (%)",
+          "b3DataCode": "C0000018",
           "decimals": 4,
           "min": 0,
           "max": 9999,
@@ -121,6 +126,7 @@
           },
           "dataType": "boolean",
           "b3Field": "Opções Dependentes?",
+          "b3DataCode": "C0000072",
           "required": true,
           "options": [
             {
@@ -149,6 +155,7 @@
           },
           "dataType": "percent",
           "b3Field": "Limitador cenário de alta (%)",
+          "b3DataCode": "C0000032",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -194,6 +201,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de cotação para verificação de barreira cenário de baixa",
+          "b3DataCode": "C0000017",
           "required": true,
           "visibleWhen": "underlying.assetClass != 'CESTA'",
           "options": [
@@ -241,6 +249,7 @@
           },
           "dataType": "percent",
           "b3Field": "Rebate KO(%)",
+          "b3DataCode": "C0000034",
           "decimals": 4,
           "min": 0,
           "max": 9999,

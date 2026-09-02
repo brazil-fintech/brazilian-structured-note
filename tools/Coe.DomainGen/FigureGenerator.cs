@@ -81,6 +81,11 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
         var seen = new HashSet<string>(StringComparer.Ordinal);
         var order = 0;
 
+        // What B3 publishes for this figure, keyed on its own name for each attribute. The annex
+        // states an attribute's precision in prose — "Numérico com 4 inteiros e 8 decimais" — and
+        // the export states it as data; where both speak, the export wins.
+        var published = reference.FigureAttributesByName(figure.Code);
+
         foreach (var row in rows.OrderBy(r => r.Ordinal))
         {
             if (!FieldInterpreter.IsField(row)) { skipped++; continue; }
@@ -92,6 +97,8 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
             order += 10;
             var draft = FieldInterpreter.Interpret(row, order);
             if (!seen.Add($"{draft.Placement.Section}.{draft.Placement.Key}")) { skipped++; continue; }
+
+            ApplyPublishedMetadata(draft, published);
 
             draft.Path = $"{draft.Placement.Section}.{draft.Placement.Key}";
             drafts.Add(draft);
@@ -125,6 +132,64 @@ public sealed class FigureGenerator(B3Reference reference, DomainFileSet domain)
 
         var fieldCount = sections.Sum(s => s.Fields.Count);
         return (file, new GeneratedFigure(figure.Code, figure.Name, string.Empty, fieldCount, inherited, skipped, rules.Count));
+    }
+
+    /// <summary>
+    /// Corrects a drafted attribute against B3's published metadata for the same figure.
+    ///
+    /// The annex describes an attribute in a sentence, and reading a sentence is guesswork: it
+    /// gives the precision as "4 inteiros e 8 decimais" in most places, as "8 decimais" alone in
+    /// others, and sometimes not at all, in which case the interpreter falls back to text.
+    /// <c>DTpFigurasDadosDerivativo</c> states the type, the precision, the size and the
+    /// mandatory flag as data, per figure. Where a name matches, those come from there, and the
+    /// prose is left to do what it is good at: explaining the field.
+    ///
+    /// The bounds are not touched. B3's export says how many integer digits a number has; it
+    /// does not say a participation may not exceed 1,000%, which the annex does.
+    /// </summary>
+    private static void ApplyPublishedMetadata(
+        DraftField draft, IReadOnlyDictionary<string, B3FigureAttribute> published)
+    {
+        if (published.Count == 0) return;
+        if (!published.TryGetValue(B3DerivativeFields.NormalizeName(draft.Source.Label), out var attribute)) return;
+
+        var field = draft.Field;
+
+        switch (attribute.DataType.ToUpperInvariant())
+        {
+            case "NUMERICO":
+                // A number the prose failed to describe was drafted as text. B3 says otherwise,
+                // and a registration would be rejected either way, so B3's type is taken --
+                // percent where the field is already one, decimal otherwise.
+                if (field.DataType is not ("percent" or "money" or "integer")) field.DataType = "decimal";
+                field.Decimals = attribute.Decimals;
+                field.MaxLength = null;
+                break;
+
+            case "TEXTO":
+                if (field.DataType is not ("string" or "text")) field.DataType = "string";
+                field.Decimals = null;
+                if (attribute.Length > 0) field.MaxLength = attribute.Length;
+                break;
+
+            case "DATA":
+                if (field.DataType != "date") return;
+                break;
+
+            case "DOMINIO":
+                // The options come from the annex, which lists them; adopting the type without
+                // them would leave an enum with nothing to choose from.
+                if (field.DataType is not ("enum" or "enumSet" or "boolean")) return;
+                break;
+
+            default:
+                return;
+        }
+
+        // B3's flag is the figure's own, and can be stricter than the annex's wording.
+        if (attribute.Mandatory) field.Required = true;
+
+        field.B3DataCode = attribute.FieldCode;
     }
 
     private static List<string> BuildExtends(List<DraftField> drafts)

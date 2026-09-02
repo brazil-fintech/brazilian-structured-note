@@ -51,6 +51,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 1 (%)",
+          "b3DataCode": "C0000001",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -69,6 +70,7 @@
           },
           "dataType": "enum",
           "b3Field": "Fixing para pagamentos intermediários",
+          "b3DataCode": "C0000180",
           "required": true,
           "options": [
             {

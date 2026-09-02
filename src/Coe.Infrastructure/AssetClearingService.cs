@@ -47,7 +47,7 @@ public sealed class AssetClearingService(
             throw new InvalidOperationException(
                 $"No template is stored for {asset.FigureCode} v{asset.TemplateVersion}; the asset cannot be written out.");
 
-        var participant = string.IsNullOrWhiteSpace(participantName) ? options.ParticipantName : participantName;
+        var participant = string.IsNullOrWhiteSpace(participantName) ? options.ParticipantName : participantName!;
         if (string.IsNullOrWhiteSpace(participant))
             throw new InvalidOperationException(
                 "No participant short name is configured (Clearing:ParticipantName) and none was given; "

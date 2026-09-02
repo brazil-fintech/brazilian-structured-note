@@ -80,11 +80,11 @@ public static class CetipPublicFiles
 
     /// <summary>The full institution register — ~50 MB, and nothing in booking a COE reads it.</summary>
     public static readonly CetipExport Institutions =
-        new("cadastro-instituicoes", "cadastro_instituicoes", "cadastro-instituicoes.txt", Consumed: false);
+        new("cadastro-instituicoes", ["cadastro_instituicoes"], "cadastro-instituicoes.txt", Consumed: false);
 
     /// <summary>Funds enabled for trading; carried for completeness, not read by the platform.</summary>
     public static readonly CetipExport TradingEnabled =
-        new("habilitados-negociacao", "habilitados_negociacao", "habilitados-negociacao.txt", Consumed: false);
+        new("habilitados-negociacao", ["habilitados_negociacao"], "habilitados-negociacao.txt", Consumed: false);
 
     public static readonly IReadOnlyList<CetipExport> All =
     [

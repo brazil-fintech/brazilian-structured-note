@@ -50,9 +50,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente. O Strike indicado deverá ser maior que zero."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 1 (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000001",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 10,
@@ -77,6 +78,7 @@
           },
           "dataType": "enum",
           "b3Field": "Remuneração Adicional",
+          "b3DataCode": "C0000019",
           "required": true,
           "options": [
             {
@@ -117,6 +119,7 @@
           },
           "dataType": "percent",
           "b3Field": "Remunerador Flutuante Adicional (%)",
+          "b3DataCode": "C0000020",
           "decimals": 4,
           "min": 0,
           "max": 9999,
@@ -136,6 +139,7 @@
           },
           "dataType": "percent",
           "b3Field": "Cupom Remunerador Adicional (%)",
+          "b3DataCode": "C0000021",
           "decimals": 4,
           "max": 999999999,
           "required": false,
@@ -163,6 +167,7 @@
           },
           "dataType": "percent",
           "b3Field": "Barreira (%)",
+          "b3DataCode": "C0000030",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -181,6 +186,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Verificação",
+          "b3DataCode": "C0000025",
           "required": true,
           "visibleWhen": "underlying.assetClass != 'CESTA'",
           "options": [
@@ -228,6 +234,7 @@
           },
           "dataType": "percent",
           "b3Field": "Rebate KO(%)",
+          "b3DataCode": "C0000034",
           "decimals": 4,
           "max": 9999,
           "required": true,
@@ -258,6 +265,7 @@
           },
           "dataType": "enum",
           "b3Field": "Período de Pagamento",
+          "b3DataCode": "C0000010",
           "required": true,
           "options": [
             {
@@ -281,6 +289,21 @@
     }
   ],
   "rules": [
+    {
+      "id": "coe001048.strike1-positive",
+      "targets": [
+        "payoff.strike1"
+      ],
+      "assert": "payoff.strike1 > 0",
+      "args": {},
+      "message": {
+        "pt": "“Strike 1 (%)” deve ser maior que zero.",
+        "en": "“Strike 1 (%)” must be greater than zero."
+      },
+      "severity": "error",
+      "execution": "both",
+      "trigger": "change"
+    },
     {
       "id": "coe001048.additionalFloatingPercentage-positive",
       "targets": [

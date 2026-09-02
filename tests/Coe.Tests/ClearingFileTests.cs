@@ -30,7 +30,8 @@ public sealed class FixedWidthRecordTests
     [Fact]
     public void Rounds_an_amount_to_the_precision_the_layout_registers()
     {
-        Assert.Equal("1000000", Record().Amount(1, 7, 100.00005m, 4).Build(7));
+        // Rounded away from zero at the fourth decimal: 100.00005 registers as 100.0001.
+        Assert.Equal("1000001", Record().Amount(1, 7, 100.00005m, 4).Build(7));
     }
 
     [Fact]
@@ -42,7 +43,7 @@ public sealed class FixedWidthRecordTests
     [Fact]
     public void Leaves_a_field_blank_whatever_its_type_when_there_is_nothing_to_say()
     {
-        Assert.Equal("        ", Record().Number(1, 4, null).Date(5, 8, null).Build(8));
+        Assert.Equal(new string(' ', 12), Record().Number(1, 4, null).Date(5, 12, null).Build(12));
     }
 
     [Fact]
@@ -245,7 +246,7 @@ public sealed class ClearingFileTests
         var basket = set.Find("CEST");
 
         Assert.NotNull(basket);
-        Assert.Equal(2, basket.RecordCount);
+        Assert.Equal(2, basket.VariableRecordCount);
         Assert.Equal(38, basket.Lines[0].Length);
         Assert.Equal(77, basket.Lines[1].Length);
         Assert.All(basket.Lines.Skip(2), line => Assert.Equal(58, line.Length));
@@ -316,6 +317,7 @@ public sealed class ClearingFileTests
         var flow = ClearingFileGenerator.ForRegistration(request).Find("FLUX");
 
         Assert.NotNull(flow);
+        Assert.Equal(2, flow.VariableRecordCount);
         Assert.Equal(61, flow.Lines[1].Length);
         Assert.All(flow.Lines.Skip(2), line => Assert.Equal(101, line.Length));
 
@@ -353,7 +355,7 @@ public sealed class ClearingFileTests
         Assert.NotNull(dates);
         Assert.Equal(32, dates.Lines[1].Length);
         Assert.Equal("002", dates.Lines[1].Substring(29, 3));
-        Assert.Equal(2, dates.RecordCount);
+        Assert.Equal(2, dates.VariableRecordCount);
         Assert.All(dates.Lines.Skip(2), line => Assert.Equal(18, line.Length));
         Assert.Equal("20270827", dates.Lines[2][10..18]);
     }

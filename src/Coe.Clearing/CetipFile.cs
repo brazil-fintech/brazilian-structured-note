@@ -26,8 +26,16 @@ public sealed record CetipFile(string Layout, string Operation, string FileName,
     /// </summary>
     public byte[] ToBytes() => Windows1252.Encode(Content);
 
-    /// <summary>Records, not counting the header.</summary>
+    /// <summary>Every line after the header: on a multi-part layout, the fixed record too.</summary>
     public int RecordCount => Math.Max(0, Lines.Count - 1);
+
+    /// <summary>
+    /// The variable records alone — the cash-flow events, the basket components, the fixing
+    /// dates. Every layout in 4.8 marks its line type in position 6, and <c>2</c> is the
+    /// repeating part, so this counts what the record itself says rather than assuming a
+    /// header-plus-one shape that only some of the layouts have.
+    /// </summary>
+    public int VariableRecordCount => Lines.Count(line => line.Length > 5 && line[5] == '2');
 
     internal static string Name(string operation, string participant, DateOnly date)
     {

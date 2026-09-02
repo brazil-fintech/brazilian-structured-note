@@ -169,7 +169,15 @@ not the names the registration screen uses (`Limitador_Strike Put_1` against `Li
 de Alta (%)`). It cannot be used to attach a code to an attribute by name, which is why
 `b3FieldCode` is left unset everywhere and validated only where someone sets it deliberately.
 
-**Names match across the two published sources, mostly.** 79% of the annex's field names appear
-verbatim in the export for the same figure, once accents, case and the `(%)` suffix are set
-aside. That is what lets the compiler attach a code to a hand-written field without anyone
-copying 1,647 pairings by hand; the rest are reported per figure rather than guessed at.
+**Names match across the two published sources, mostly.** Around four fifths of the annex's field
+names appear verbatim in the export for the same figure, once accents, case and the `(%)` suffix
+are set aside. That is what lets a domain file be matched to a published attribute without anyone
+copying 1,647 pairings by hand — 1,205 are matched today — and the rest are reported per figure
+rather than guessed at.
+
+It also settles what the annex only describes. `tools/Coe.DomainGen` used to read an attribute's
+type and precision out of a sentence — *"Formato: Numérico percentual com 4 inteiros e 8
+decimais"* — which is stated three different ways across the annex and sometimes not at all. It
+now takes the type, the precision, the size and the mandatory flag from the export and leaves the
+prose to explain the field. That corrected 71 attributes across the generated figures, and turned
+several that had fallen back to text into the numbers B3 registers.

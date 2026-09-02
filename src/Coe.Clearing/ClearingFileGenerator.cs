@@ -37,21 +37,21 @@ public static class ClearingFileGenerator
         {
             var cashFlow = CetipRegistrationFiles.CashFlow(request);
             files.Add(cashFlow);
-            notes.Add($"Fluxo de Caixa: {cashFlow.RecordCount} event(s).");
+            notes.Add($"Fluxo de Caixa: {cashFlow.VariableRecordCount} event(s).");
         }
 
         if (string.Equals(reader.Text("underlying.assetClass"), "CESTA", StringComparison.OrdinalIgnoreCase))
         {
             var basket = CetipRegistrationFiles.Basket(request);
             files.Add(basket);
-            notes.Add($"RegistroCestas: {basket.RecordCount} component(s).");
+            notes.Add($"RegistroCestas: {basket.VariableRecordCount} component(s).");
         }
 
         if (string.Equals(reader.Text("underlying.fixingWindow"), "MAIS_DATAS", StringComparison.Ordinal))
         {
             var fixings = CetipRegistrationFiles.FixingDates(request);
             files.Add(fixings);
-            notes.Add($"Datas Fixing: {fixings.RecordCount} date(s).");
+            notes.Add($"Datas Fixing: {fixings.VariableRecordCount} date(s).");
         }
 
         // An attribute B3 publishes for the figure but the domain file cannot address is one the

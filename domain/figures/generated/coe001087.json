@@ -65,9 +65,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000047",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 20,
@@ -81,9 +82,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000051",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 50,
@@ -126,9 +128,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 1(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000001",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 30,
@@ -142,9 +145,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 1",
-          "maxLength": 100,
+          "b3DataCode": "C000070",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 40,
@@ -158,9 +162,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2.Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2"
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 2",
-          "maxLength": 100,
+          "b3DataCode": "C000071",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 70,
@@ -174,8 +179,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Campo com as opções: Data Única, Janela de Datas e Mais Datas. Indica como será formado o fixing no vencimento. Caso o ativo subjacente seja uma Cesta,não é permitido selecionar a opção “Janela de Datas” Se indicado Janela de Datas ou Mais Datas, será obrigatório o preenchimento do campo “Tipo de Fixing para Vencimento”. Caso seja indicado “Mais Datas” as datas serão indicadas na seção “Mais Datas”.Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 2Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2."
           },
-          "dataType": "enum",
+          "dataType": "decimal",
           "b3Field": "Limitador cenário de alta (%)",
+          "b3DataCode": "C0000032",
+          "decimals": 8,
           "required": true,
           "options": [
             {

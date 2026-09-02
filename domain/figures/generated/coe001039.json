@@ -65,9 +65,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000047",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 20,
@@ -113,9 +114,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de limitadores e strikes referentes ao Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000051",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 90,
@@ -142,9 +144,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 1(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000001",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 30,
@@ -158,9 +161,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000048",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 40,
@@ -174,9 +178,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Limitador cenário de alta (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000032",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 50,
@@ -190,9 +195,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a valorização do Ativo Subjacente 1."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Participação cenário de alta (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000002",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 60,
@@ -206,9 +212,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Percentual aplicado sobre o Valor Inicial do Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Strike 2(%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000022",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 100,
@@ -222,9 +229,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Informar a quantidade do Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Quantidade 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000052",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 110,
@@ -238,9 +246,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre o valor inicial do Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Limitador cenário de baixa (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000027",
+          "decimals": 8,
           "required": true,
           "options": [],
           "order": 120,
@@ -254,9 +263,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Número indicando percentual a ser aplicado sobre a desvalorização do Ativo Subjacente 2."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Participação cenário de baixa (%)",
-          "maxLength": 100,
+          "b3DataCode": "C0000018",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 130,
@@ -272,6 +282,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de Cotação para Liquidação 1",
+          "b3DataCode": "C0000053",
           "required": true,
           "options": [
             {
@@ -318,6 +329,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo de cotação para liquidação 2",
+          "b3DataCode": "C0000054",
           "required": true,
           "options": [
             {

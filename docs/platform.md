@@ -112,10 +112,10 @@ padded to its declared width (`01`). The platform never invents a code, and an o
 
 **What cannot be written is said out loud.** The variable-data record carries one line per
 attribute that has a `b3DataCode`, and the response names how many attributes do not. Name
-matching against B3's export reaches roughly two thirds of the 1,592 published attributes today;
-the rest are named per figure in the ingestion warnings and counted beside the file. An attribute
-B3 registers for the figure that the template cannot address is a gap in the registration, and
-this is the only place a desk would see it before B3 does.
+matching against B3's export reaches 1,205 of the 1,647 published attributes today; the rest are
+named per figure in the ingestion warnings and counted beside the file. An attribute B3 registers
+for the figure that the template cannot address is a gap in the registration, and this is the
+only place a desk would see it before B3 does.
 
 ## The template is the contract
 

@@ -461,7 +461,7 @@
           "dataType": "string",
           "b3Field": "Banco Liquidante",
           "maxLength": 8,
-          "requiredWhen": "settlementModality != 'SEM_MODALIDADE'"
+          "requiredWhen": "notNull(settlementModality) and settlementModality != 'SEM_MODALIDADE'"
         }
       ]
     }

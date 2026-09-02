@@ -50,9 +50,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de participação e strikes referentes ao Ativo Subjacente."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 1",
-          "maxLength": 100,
+          "b3DataCode": "C0000047",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 30,
@@ -66,9 +67,10 @@
           "help": {
             "pt": "Campo de preenchimento obrigatório. Valor inicial que serve para o cálculo (os percentuais indicados nos campos incidirão sobre este campo) de participação e strikes referentes ao Ativo Subjacente."
           },
-          "dataType": "string",
+          "dataType": "decimal",
           "b3Field": "Valor Inicial Ativo Subjacente 2",
-          "maxLength": 100,
+          "b3DataCode": "C0000051",
+          "decimals": 4,
           "required": true,
           "options": [],
           "order": 70,
@@ -97,6 +99,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 1 (%)",
+          "b3DataCode": "C0000001",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -115,6 +118,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação 1(%)",
+          "b3DataCode": "C0000200",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -133,6 +137,7 @@
           },
           "dataType": "enum",
           "b3Field": "Trigger 1",
+          "b3DataCode": "C0000201",
           "required": true,
           "options": [
             {
@@ -161,6 +166,7 @@
           },
           "dataType": "percent",
           "b3Field": "Strike 2 (%)",
+          "b3DataCode": "C0000022",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -179,6 +185,7 @@
           },
           "dataType": "percent",
           "b3Field": "Participação 2(%)",
+          "b3DataCode": "C0000202",
           "decimals": 8,
           "min": 0,
           "max": 9999,
@@ -197,6 +204,7 @@
           },
           "dataType": "enum",
           "b3Field": "Trigger 2",
+          "b3DataCode": "C0000203",
           "required": true,
           "options": [
             {
@@ -225,6 +233,7 @@
           },
           "dataType": "enum",
           "b3Field": "Tipo verificação dos indexadores",
+          "b3DataCode": "C0000204",
           "required": true,
           "options": [
             {
@@ -262,6 +271,7 @@
           },
           "dataType": "percent",
           "b3Field": "Rebate KO(%)",
+          "b3DataCode": "C0000034",
           "decimals": 4,
           "max": 9999,
           "required": true,
