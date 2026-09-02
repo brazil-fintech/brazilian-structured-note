@@ -7,13 +7,15 @@ interface Props {
   figures: FigureSummary[];
   onCreate: () => void;
   onEdit: (asset: AssetListItem) => void;
+  /** Opens the CETIP upload files this asset produces. */
+  onFiles: (asset: AssetListItem) => void;
 }
 
 /**
  * The landing screen. The reference-date filter is the primary one: an asset is listed when
  * it is live on that date, i.e. issued on or before it and not yet matured.
  */
-export function AssetList({ culture, figures, onCreate, onEdit }: Props) {
+export function AssetList({ culture, figures, onCreate, onEdit, onFiles }: Props) {
   const [referenceDate, setReferenceDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [figureCode, setFigureCode] = useState('');
   const [search, setSearch] = useState('');
@@ -125,9 +127,12 @@ export function AssetList({ culture, figures, onCreate, onEdit }: Props) {
                 <td>{asset.maturityDate}</td>
                 <td className="table__number">{formatMoney(asset.notionalAmount, culture)}</td>
                 <td><span className={`status status--${asset.status.toLowerCase()}`}>{asset.status}</span></td>
-                <td>
+                <td className="table__actions">
                   <button type="button" className="button button--ghost" onClick={() => onEdit(asset)}>
                     {ui.edit(culture)}
+                  </button>
+                  <button type="button" className="button button--ghost" onClick={() => onFiles(asset)}>
+                    {ui.b3Files(culture)}
                   </button>
                 </td>
               </tr>

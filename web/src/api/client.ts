@@ -90,6 +90,44 @@ export interface SaveAssetResponse {
   conflict?: string;
 }
 
+/** One CETIP upload file, as `GET /api/assets/{id}/clearing` returns it. */
+export interface ClearingFile {
+  /** The section of the ENVIAR ARQUIVOS manual the layout comes from, e.g. "4.8.1 Registro COE". */
+  layout: string;
+  /** The operation code the header carries, e.g. `0001` or `FLUX`; it also names the download route. */
+  operation: string;
+  fileName: string;
+  /** Lines after the header. */
+  records: number;
+  /** The whole file, CRLF-terminated. */
+  content: string;
+}
+
+export interface ClearingResponse {
+  files: ClearingFile[];
+  /** What went into the files, and what could not — an attribute B3 registers that went out blank. */
+  notes: string[];
+}
+
+/** The optional inputs of a generation: neither is a property of the certificate. */
+export interface ClearingParams {
+  /** Overrides the issuer short name configured server-side (Clearing:ParticipantName). */
+  participant?: string;
+  /** The date the upload is stamped with, ISO. Defaults server-side to today. */
+  date?: string;
+}
+
+/** Built here rather than inline so both the JSON and the bytes route agree on the query. */
+export function clearingPath(assetId: string, params: ClearingParams = {}, operation?: string): string {
+  const query = new URLSearchParams();
+  if (params.participant?.trim()) query.set('participant', params.participant.trim());
+  if (params.date) query.set('date', params.date);
+  const suffix = query.toString();
+  const base = `/assets/${encodeURIComponent(assetId)}/clearing`;
+  const path = operation ? `${base}/${encodeURIComponent(operation)}` : base;
+  return suffix ? `${path}?${suffix}` : path;
+}
+
 export interface ReferenceItem {
   code: string;
   name: string;
@@ -119,6 +157,19 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   return body as T;
+}
+
+/**
+ * What a failed byte response has to say. The API words its refusals as `{ message }`, but a
+ * proxy in front of it may answer with an HTML page, which is not worth a parse error of its own.
+ */
+async function failureMessage(response: Response): Promise<string> {
+  try {
+    const text = await response.text();
+    return (text ? (JSON.parse(text) as { message?: string }).message : null) ?? response.statusText;
+  } catch {
+    return response.statusText;
+  }
 }
 
 export const api = {
@@ -175,6 +226,24 @@ export const api = {
       method: id ? 'PUT' : 'POST',
       body: JSON.stringify(body),
     }),
+
+  /**
+   * The CETIP upload files a booked asset produces. Generated on demand from the stored values,
+   * so nothing is cached that could go stale behind an edit.
+   */
+  clearingFiles: (assetId: string, params: ClearingParams = {}) =>
+    request<ClearingResponse>(clearingPath(assetId, params)),
+
+  /**
+   * One file as bytes. The API encodes it single-byte, as CETIP reads it, so the download goes
+   * through fetch rather than a plain link: re-encoding the JSON preview in the browser would
+   * turn every "ç" of a commercial name into two characters and shift the layout after it.
+   */
+  clearingFileBlob: async (assetId: string, operation: string, params: ClearingParams = {}) => {
+    const response = await fetch(`${BASE}${clearingPath(assetId, params, operation)}`);
+    if (!response.ok) throw new ApiError(response.status, await failureMessage(response));
+    return response.blob();
+  },
 
   reference: (source: string, assetClass?: string) =>
     request<ReferenceItem[]>(`/reference/${source}${assetClass ? `?assetClass=${encodeURIComponent(assetClass)}` : ''}`),

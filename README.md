@@ -134,7 +134,8 @@ deploy/                       ← OpenTelemetry collector config for local work
 ## The platform
 
 **Asset list.** Filtered by a reference date: an asset is listed when it is live on that date,
-i.e. `issueDate ≤ referenceDate ≤ maturityDate`. From there, create a new asset or edit one.
+i.e. `issueDate ≤ referenceDate ≤ maturityDate`. From there, create a new asset, edit one, or
+write the B3 upload files it produces.
 
 **Booking.** Pick a figure, then fill in a form built entirely from that figure's template — the
 common registration attributes pinned at the top, and the payoff, basket, cash-flow and barrier
@@ -182,6 +183,15 @@ Transferência de Arquivos*: the Registro COE, plus the cash-flow, basket and fi
 the booked values call for. Every field is written at the position the manual prints for it and
 the builder refuses one that does not start where the last ended, so a mistranscribed layout
 fails at the first field instead of arriving at B3 shifted by one character.
+
+**And the desk writes it from the screen.** Saving a certificate lands on the B3 files screen for
+it, and the *Arquivos B3* action on any row of the asset list reopens it later. The screen asks
+for the two things the certificate does not carry — the issuer's short name, blank to use the one
+configured on the server, and the date the upload is stamped with — then shows each file it
+produced with its layout, operation code and record count, the lines exactly as they go out, and
+the notes saying what went into them. A file is downloaded from the API rather than from the
+preview, so it arrives in the single-byte encoding CETIP reads: re-encoding the preview in the
+browser would shift every field after the first accented character of a commercial name.
 
 **Built to be watched and to stay quick.** Serilog writes structured logs stamped with the trace
 and span they happened in; OpenTelemetry exports traces and metrics for validation, ingestion,

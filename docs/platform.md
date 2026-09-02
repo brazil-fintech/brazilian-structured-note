@@ -37,7 +37,7 @@ src/Coe.Api                ← template + asset endpoints, and the validation au
         │  POST /api/assets                  ← full validation, then save
         │  GET  /api/assets/{id}/clearing    ← the CETIP upload files
         ▼
-web/                       ← React: asset list, figure picker, dynamic form
+web/                       ← React: asset list, figure picker, dynamic form, B3 files
 ```
 
 | Project | What it is |
@@ -122,6 +122,20 @@ form shows ten observation dates as ten rows, and the file writes them as
 The ingestion warning that names an unaddressable attribute is now silent, and a test holds it
 there. When B3 publishes something new, the build fails and says which figure and which
 attribute — which is the point of holding the per-figure lists at all.
+
+**The desk reaches them from the booking screen.** A save lands on the files screen for the
+certificate that was just booked, and the *Arquivos B3* action on any row of the asset list
+reopens it. Two inputs sit above the result, because neither belongs to the certificate: the
+issuer's short name — left blank, the one in `Clearing:ParticipantName` is used — and the date
+the upload is stamped with. The files come back from `GET /api/assets/{id}/clearing` and are
+shown with their layout, operation code and record count, the lines exactly as they go out in a
+monospaced, unwrapped preview so a field can be counted off against the manual's page, and the
+generator's notes underneath. Downloading takes the same file from
+`GET /api/assets/{id}/clearing/{operation}` rather than from the preview on screen: that route
+encodes it single-byte as CETIP reads it, and a browser re-encoding the JSON string would write
+a UTF-8 "ç" as two characters and shift every field after it. A 400 from either route — a value
+that will not fit its field, a participant name nobody configured — is shown as it was worded,
+since both are the desk's to fix.
 
 ## The template is the contract
 

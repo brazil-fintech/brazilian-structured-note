@@ -2,14 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { api, type AssetListItem, type FigureCatalogueEntry, type FigureCoverage, type FigureSummary } from './api/client';
 import { AssetForm } from './components/AssetForm';
 import { AssetList } from './components/AssetList';
+import { ClearingFiles } from './components/ClearingFiles';
 import { FigurePicker } from './components/FigurePicker';
+import { readPath } from './engine/paths';
 import type { FigureTemplate, InstanceValues } from './engine/types';
 import { ui } from './engine/texts';
 
 type View =
   | { kind: 'list' }
   | { kind: 'pick' }
-  | { kind: 'edit'; template: FigureTemplate; assetId?: string; values?: InstanceValues; rowVersion?: string };
+  | { kind: 'edit'; template: FigureTemplate; assetId?: string; values?: InstanceValues; rowVersion?: string }
+  // Where a booked certificate becomes the files B3 is sent. Reached straight after a creation,
+  // and from the row of any asset already on the list.
+  | { kind: 'files'; assetId: string; assetName?: string; figureCode?: string; justSaved: boolean };
 
 export default function App() {
   const [culture, setCulture] = useState<'pt-BR' | 'en-GB'>('pt-BR');
@@ -66,6 +71,24 @@ export default function App() {
     }
   }, []);
 
+  // Booking a new certificate is not the end of it: the registration still has to be written and
+  // sent, so a creation lands on the screen that writes it. Editing one already booked goes back
+  // to the list as before — its files are a row action away.
+  const afterSave = useCallback((
+    assetId: string, template: FigureTemplate, values: InstanceValues, wasNew: boolean,
+  ) => {
+    if (!wasNew) { setView({ kind: 'list' }); return; }
+
+    const name = readPath(values, 'common.commercialName');
+    setView({
+      kind: 'files',
+      assetId,
+      assetName: typeof name === 'string' && name.length > 0 ? name : undefined,
+      figureCode: template.figureCode,
+      justSaved: true,
+    });
+  }, []);
+
   return (
     <div className="app">
       <header className="app__header">
@@ -99,6 +122,13 @@ export default function App() {
             figures={figures}
             onCreate={() => setView({ kind: 'pick' })}
             onEdit={(asset) => { void openExisting(asset); }}
+            onFiles={(asset) => setView({
+              kind: 'files',
+              assetId: asset.id,
+              assetName: asset.commercialName,
+              figureCode: asset.figureCode,
+              justSaved: false,
+            })}
           />
         )}
 
@@ -121,7 +151,18 @@ export default function App() {
             initialRowVersion={view.rowVersion}
             culture={culture}
             onCancel={() => setView({ kind: 'list' })}
-            onSaved={() => setView({ kind: 'list' })}
+            onSaved={(assetId, values) => afterSave(assetId, view.template, values, view.assetId === undefined)}
+          />
+        )}
+
+        {view.kind === 'files' && (
+          <ClearingFiles
+            assetId={view.assetId}
+            assetName={view.assetName}
+            figureCode={view.figureCode}
+            culture={culture}
+            justSaved={view.justSaved}
+            onBack={() => setView({ kind: 'list' })}
           />
         )}
       </main>

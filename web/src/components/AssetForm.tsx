@@ -13,7 +13,7 @@ interface Props {
   initialRowVersion?: string;
   culture: string;
   onCancel: () => void;
-  onSaved: (assetId: string) => void;
+  onSaved: (assetId: string, values: InstanceValues) => void;
 }
 
 /**

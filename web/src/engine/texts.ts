@@ -105,4 +105,38 @@ export const ui = {
   status: (c: string) => (en(c) ? 'Status' : 'Situação'),
   underlying: (c: string) => (en(c) ? 'Underlying' : 'Ativo subjacente'),
   name: (c: string) => (en(c) ? 'Name' : 'Nome'),
+
+  // ----- B3 / CETIP upload files -----
+  b3Files: (c: string) => (en(c) ? 'B3 files' : 'Arquivos B3'),
+  b3FilesTitle: (c: string) => (en(c) ? 'CETIP upload files' : 'Arquivos de envio CETIP'),
+  b3FilesHelp: (c: string) =>
+    en(c)
+      ? 'The registration as B3 receives it, written from the booked values: the Registro COE, plus the cash-flow, basket and fixing-date files these values call for (ENVIAR ARQUIVOS §4.8).'
+      : 'O registro como a B3 o recebe, escrito a partir dos valores registrados: o Registro COE e os arquivos de fluxo de caixa, cesta e datas de fixing que esses valores exigem (ENVIAR ARQUIVOS §4.8).',
+  participant: (c: string) => (en(c) ? 'Participant short name' : 'Nome simplificado do participante'),
+  participantHelp: (c: string) =>
+    en(c)
+      ? 'Leave blank to use the one configured on the server. Every upload header carries it.'
+      : 'Deixe em branco para usar o configurado no servidor. Todo cabeçalho de envio o carrega.',
+  fileDate: (c: string) => (en(c) ? 'File date' : 'Data do arquivo'),
+  generate: (c: string) => (en(c) ? 'Generate files' : 'Gerar arquivos'),
+  generating: (c: string) => (en(c) ? 'Generating…' : 'Gerando…'),
+  regenerate: (c: string) => (en(c) ? 'Generate again' : 'Gerar novamente'),
+  download: (c: string) => (en(c) ? 'Download' : 'Baixar'),
+  downloadAll: (c: string) => (en(c) ? 'Download all' : 'Baixar todos'),
+  copyContent: (c: string) => (en(c) ? 'Copy' : 'Copiar'),
+  copied: (c: string) => (en(c) ? 'Copied' : 'Copiado'),
+  records: (c: string, count: number) =>
+    en(c) ? `${count} record(s)` : `${count} registro(s)`,
+  operation: (c: string) => (en(c) ? 'Operation' : 'Operação'),
+  notes: (c: string) => (en(c) ? 'What went into the files' : 'O que entrou nos arquivos'),
+  noFilesYet: (c: string) =>
+    en(c)
+      ? 'No file has been generated yet.'
+      : 'Nenhum arquivo foi gerado ainda.',
+  assetSaved: (c: string) =>
+    en(c)
+      ? 'Asset saved. Generate the B3 upload files below, or go back to the list.'
+      : 'Ativo salvo. Gere abaixo os arquivos de envio à B3, ou volte para a lista.',
+  backToList: (c: string) => (en(c) ? 'Back to the list' : 'Voltar para a lista'),
 };

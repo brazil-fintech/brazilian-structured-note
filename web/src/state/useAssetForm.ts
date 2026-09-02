@@ -15,7 +15,8 @@ export interface UseAssetFormOptions {
   initialValues?: InstanceValues;
   initialRowVersion?: string;
   culture?: string;
-  onSaved?: (assetId: string) => void;
+  /** The saved values come with the id: the caller names the certificate without re-reading it. */
+  onSaved?: (assetId: string, values: InstanceValues) => void;
 }
 
 export interface AssetFormState {
@@ -246,7 +247,7 @@ export function useAssetForm(options: UseAssetFormOptions): AssetFormState {
 
       setRowVersion(response.rowVersion);
       setServerMessages({});
-      if (response.assetId) options.onSaved?.(response.assetId);
+      if (response.assetId) options.onSaved?.(response.assetId, latestValues.current);
       return true;
     } catch (error) {
       setSaveError((error as Error).message);
