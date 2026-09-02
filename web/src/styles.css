@@ -319,8 +319,69 @@ body {
 .repeating__actions { display: flex; align-items: center; gap: 10px; padding-top: 12px; }
 .repeating__hint { font-size: 12px; color: var(--ink-faint); }
 
+/* ----- CETIP upload files -----
+   The preview is the file itself, so it is monospaced and never wrapped: a wrapped line would
+   stop the columns lining up with the manual's positions, which is the only reason to read it
+   on screen at all. */
+
+.table__actions { white-space: nowrap; text-align: right; }
+
+.clearing__subtitle { display: flex; align-items: center; gap: 8px; margin: 6px 0 0; }
+.clearing__help { margin: 6px 0 0; color: var(--ink-soft); font-size: 12px; max-width: 90ch; }
+.clearing__actions { display: flex; align-items: flex-end; gap: 8px; }
+.clearing__empty { color: var(--ink-faint); font-size: 13px; }
+
+.clearing__file-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.clearing__file-meta { display: flex; align-items: center; gap: 8px; }
+
+.clearing__preview {
+  margin: 0;
+  padding: 12px 16px;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre;
+  font: 12px/1.6 "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+  color: var(--ink);
+  background: #fafbfc;
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.clearing__notes { margin: 0; padding: 12px 16px 16px 32px; color: var(--ink-soft); font-size: 13px; }
+.clearing__notes li { margin-bottom: 4px; }
+
+.clearing__empty--inset { padding: 12px 16px; margin: 0; }
+
+.clearing__saved { list-style: none; margin: 0; padding: 0; }
+.clearing__saved-set { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.clearing__saved-set:last-child { border-bottom: none; }
+.clearing__saved-head { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+
+.clearing__saved-files { list-style: none; margin: 0; padding: 0; }
+.clearing__saved-files li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+.clearing__saved-name { font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace; font-size: 12px; }
+
 @media (max-width: 720px) {
   .app__main { padding: 12px; }
   .repeating__row { flex-direction: column; }
   .repeating__index, .repeating__remove { padding-top: 0; }
+}
+
+@media (max-width: 720px) {
+  .clearing__file-head { align-items: flex-start; flex-direction: column; }
+  .clearing__actions { width: 100%; }
 }

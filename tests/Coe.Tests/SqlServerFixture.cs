@@ -40,6 +40,7 @@ public sealed class SqlServerFixture : IAsyncLifetime
     public SqlConnectionOptions Options { get; private set; } = null!;
     public FigureCatalog Catalog { get; private set; } = null!;
     public AssetRepository Assets { get; private set; } = null!;
+    public ClearingFileRepository ClearingFiles { get; private set; } = null!;
     public BusinessCalendar Calendar { get; private set; } = null!;
 
     public async Task InitializeAsync()
@@ -62,6 +63,7 @@ public sealed class SqlServerFixture : IAsyncLifetime
 
         Catalog = new FigureCatalog(Connections, Options, NullLogger<FigureCatalog>.Instance);
         Assets = new AssetRepository(Connections, Options, NullLogger<AssetRepository>.Instance);
+        ClearingFiles = new ClearingFileRepository(Connections, Options, NullLogger<ClearingFileRepository>.Instance);
         Calendar = new BusinessCalendar(Connections, Options, NullLogger<BusinessCalendar>.Instance);
     }
 

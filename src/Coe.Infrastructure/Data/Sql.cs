@@ -83,6 +83,18 @@ public static class Sql
         return p;
     }
 
+    /// <summary>
+    /// For <c>varbinary(max)</c> columns. -1 is the declared size, for the same reason a
+    /// <c>nvarchar(max)</c> parameter takes it: sized from the value, a stored upload file would
+    /// produce one cached plan per file length.
+    /// </summary>
+    public static SqlParameter VarBinaryMax(this SqlCommand command, string name, byte[]? value)
+    {
+        var p = command.Parameters.Add(name, SqlDbType.VarBinary, -1);
+        p.Value = (object?)value ?? DBNull.Value;
+        return p;
+    }
+
     public static SqlParameter RowVersion(this SqlCommand command, string name, byte[]? value)
     {
         var p = command.Parameters.Add(name, SqlDbType.Binary, 8);

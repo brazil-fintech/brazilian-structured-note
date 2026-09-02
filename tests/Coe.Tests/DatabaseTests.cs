@@ -1,7 +1,9 @@
 using Coe.Core.Assets;
 using Coe.Core.Figures;
 using Coe.Core.Templates;
+using Coe.Core.Text;
 using Coe.Infrastructure;
+using Microsoft.Data.SqlClient;
 using Xunit;
 
 namespace Coe.Tests;
@@ -260,5 +262,112 @@ public class DatabaseTests(SqlServerFixture sql)
 
         Assert.Equal(1, found.Total);
         Assert.Contains(marker, found.Items[0].CommercialName, StringComparison.Ordinal);
+    }
+
+    // ----- stored upload files -------------------------------------------------------
+
+    /// <summary>A stored generation, with bytes that are not valid UTF-8 on purpose.</summary>
+    private static StoredClearingFileSet ClearingSet(Guid assetId, string figureCode, params string[] operations) =>
+        new(
+            Id: Guid.Empty,
+            AssetId: assetId,
+            FigureCode: figureCode,
+            TemplateVersion: 1,
+            ParticipantName: "BANCO EXEMPLO",
+            FileDate: new DateOnly(2026, 9, 2),
+            Notes: ["Registro COE: 12 attribute(s) in the variable-data record."],
+            GeneratedUtc: DateTimeOffset.UtcNow,
+            GeneratedBy: "desk@example.com",
+            Files: operations.Select(operation =>
+            {
+                // 0xE7 is "ç" in the encoding CETIP reads and an invalid byte in UTF-8: if the
+                // column or the round trip ever became text, this is what would break.
+                var content = Windows1252.Encode($"COE  1{operation}CONFIRMA\u00c7\u00c3O\r\n");
+                return new StoredClearingFile(
+                    Guid.Empty, $"4.8.1 {operation}", operation, $"COE_{operation}.txt", 1,
+                    content, ClearingFileRepository.Hash(content));
+            }).ToList());
+
+    [SqlServerFact]
+    public async Task Generated_files_are_stored_and_come_back_byte_for_byte()
+    {
+        var figureCode = $"TEST{Random.Shared.Next(100000, 999999)}";
+        var asset = await NewAssetAsync(figureCode);
+        await sql.Assets.AddAsync(asset);
+
+        var set = ClearingSet(asset.Id, figureCode, "0001", "FLUX");
+        var stored = await sql.ClearingFiles.AddAsync(set);
+
+        Assert.NotEqual(Guid.Empty, stored.Id);
+        Assert.All(stored.Files, file => Assert.NotEqual(Guid.Empty, file.Id));
+
+        var registration = stored.Files.Single(f => f.Operation == "0001");
+        var reloaded = await sql.ClearingFiles.GetFileAsync(asset.Id, registration.Id);
+
+        // The whole point of storing the bytes: what comes back is the upload, not a re-encoding
+        // of a preview of it.
+        Assert.Equal(registration.Content, reloaded!.Content);
+        Assert.Equal(registration.ContentHash, reloaded.ContentHash);
+        Assert.Equal("COE_0001.txt", reloaded.FileName);
+    }
+
+    [SqlServerFact]
+    public async Task The_history_lists_generations_newest_first_and_keeps_its_notes()
+    {
+        var figureCode = $"TEST{Random.Shared.Next(100000, 999999)}";
+        var asset = await NewAssetAsync(figureCode);
+        await sql.Assets.AddAsync(asset);
+
+        var older = ClearingSet(asset.Id, figureCode, "0001") with
+        {
+            GeneratedUtc = DateTimeOffset.UtcNow.AddDays(-1)
+        };
+        await sql.ClearingFiles.AddAsync(older);
+        await sql.ClearingFiles.AddAsync(ClearingSet(asset.Id, figureCode, "0001", "FLUX"));
+
+        var history = await sql.ClearingFiles.ListAsync(asset.Id);
+
+        Assert.Equal(2, history.Count);
+        Assert.Equal(2, history[0].Files.Count);          // newest first
+        Assert.Single(history[1].Files);
+        Assert.Equal("BANCO EXEMPLO", history[0].ParticipantName);
+        Assert.Equal(new DateOnly(2026, 9, 2), history[0].FileDate);
+        Assert.Contains("variable-data record", history[0].Notes.Single(), StringComparison.Ordinal);
+        // A listing is a listing: it names the files without carrying their bytes.
+        Assert.All(history[0].Files, file => Assert.True(file.ByteCount > 0));
+    }
+
+    [SqlServerFact]
+    public async Task A_stored_file_is_not_readable_through_another_asset()
+    {
+        var figureCode = $"TEST{Random.Shared.Next(100000, 999999)}";
+        var mine = await NewAssetAsync(figureCode);
+        var other = await NewAssetAsync($"TEST{Random.Shared.Next(100000, 999999)}");
+        await sql.Assets.AddAsync(mine);
+        await sql.Assets.AddAsync(other);
+
+        var stored = await sql.ClearingFiles.AddAsync(ClearingSet(mine.Id, figureCode, "0001"));
+        var fileId = stored.Files.Single().Id;
+
+        Assert.NotNull(await sql.ClearingFiles.GetFileAsync(mine.Id, fileId));
+        Assert.Null(await sql.ClearingFiles.GetFileAsync(other.Id, fileId));
+    }
+
+    [SqlServerFact]
+    public async Task One_file_per_operation_within_a_generation()
+    {
+        var figureCode = $"TEST{Random.Shared.Next(100000, 999999)}";
+        var asset = await NewAssetAsync(figureCode);
+        await sql.Assets.AddAsync(asset);
+
+        // A certificate produces at most one Registro COE; two in the same set is a bug that
+        // should not reach the database.
+        var duplicated = ClearingSet(asset.Id, figureCode, "0001", "0001");
+
+        await Assert.ThrowsAsync<SqlException>(() => sql.ClearingFiles.AddAsync(duplicated));
+
+        // The set went in with it and has to be gone too, or the history would show a
+        // generation that produced nothing.
+        Assert.Empty(await sql.ClearingFiles.ListAsync(asset.Id));
     }
 }

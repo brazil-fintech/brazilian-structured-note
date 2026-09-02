@@ -121,12 +121,50 @@ public sealed record ClearingFileResponse(
 public sealed record ClearingResponse(
     IReadOnlyList<ClearingFileResponse> Files, IReadOnlyList<string> Notes);
 
+/// <summary>One kept upload file. The bytes stay in the database; this is what identifies them.</summary>
+/// <param name="Id">Download it at <c>/api/assets/{assetId}/clearing/saved/{id}</c>.</param>
+/// <param name="ContentHash">
+/// sha256 over the stored bytes. Two generations of the same certificate on the same day should
+/// produce the same file, and this says whether they did without reading both back.
+/// </param>
+public sealed record StoredClearingFileResponse(
+    Guid Id, string Layout, string Operation, string FileName, int Records, int Bytes, string ContentHash);
+
+/// <summary>
+/// One generation as it was kept: the files, and what they were written from and under. The
+/// inputs are stored rather than re-read, because an edit to the asset, a new template version
+/// or a different participant name would all produce a different file from the same certificate.
+/// </summary>
+public sealed record StoredClearingSetResponse(
+    Guid Id,
+    Guid AssetId,
+    string FigureCode,
+    int TemplateVersion,
+    string ParticipantName,
+    DateOnly FileDate,
+    IReadOnlyList<string> Notes,
+    DateTimeOffset GeneratedUtc,
+    string? GeneratedBy,
+    IReadOnlyList<StoredClearingFileResponse> Files);
+
 public static class ContractMapping
 {
     public static AssetListItem ToListItem(AssetListRow a) => new(
         a.Id, a.FigureCode, a.FigureName, a.CommercialName, a.InstrumentCode, a.IsinCode,
         a.IssueDate, a.MaturityDate, a.Modality, a.UnderlyingClass, a.Underlying,
         a.NotionalAmount, a.Status.ToString(), a.UpdatedUtc);
+
+    public static StoredClearingSetResponse ToStoredSet(ClearingFileSetRow s) => new(
+        s.Id, s.AssetId, s.FigureCode, s.TemplateVersion, s.ParticipantName, s.FileDate,
+        s.Notes, s.GeneratedUtc, s.GeneratedBy,
+        s.Files.Select(f => new StoredClearingFileResponse(
+            f.Id, f.Layout, f.Operation, f.FileName, f.RecordCount, f.ByteCount, f.ContentHash)).ToList());
+
+    public static StoredClearingSetResponse ToStoredSet(StoredClearingFileSet s) => new(
+        s.Id, s.AssetId, s.FigureCode, s.TemplateVersion, s.ParticipantName, s.FileDate,
+        s.Notes, s.GeneratedUtc, s.GeneratedBy,
+        s.Files.Select(f => new StoredClearingFileResponse(
+            f.Id, f.Layout, f.Operation, f.FileName, f.RecordCount, f.ByteCount, f.ContentHash)).ToList());
 
     public static AssetDetail ToDetail(Asset a) => new(
         a.Id, a.FigureCode, a.TemplateVersion, a.Status.ToString(),

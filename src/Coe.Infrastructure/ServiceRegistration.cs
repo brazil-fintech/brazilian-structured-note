@@ -34,6 +34,7 @@ public static class ServiceRegistration
         // Stateless over a pooled connection, so a singleton avoids per-request allocation.
         services.AddSingleton<IFigureCatalog, FigureCatalog>();
         services.AddSingleton<IAssetRepository, AssetRepository>();
+        services.AddSingleton<IClearingFileRepository, ClearingFileRepository>();
         services.AddSingleton<IReferenceDataRepository, ReferenceDataRepository>();
         services.AddSingleton<IBusinessCalendar, BusinessCalendar>();
         services.AddSingleton<ITemplateStore, TemplateStore>();

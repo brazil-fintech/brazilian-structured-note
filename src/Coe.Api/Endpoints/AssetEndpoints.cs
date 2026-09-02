@@ -128,6 +128,56 @@ public static class AssetEndpoints
         .WithName("GetAssetClearingFiles")
         .WithSummary("The CETIP upload files for a booked asset (ENVIAR ARQUIVOS 4.8.1, 4.8.9, 4.8.10 and 4.8.12).");
 
+        // Generating is a read; keeping is not. This is the write: the files as B3 receives
+        // them, stored with the participant name and date they were written under, so what was
+        // sent stays answerable after the asset is edited or the template moves on.
+        group.MapPost("/{id:guid}/clearing", async (
+            Guid id, string? participant, string? date,
+            AssetClearingService clearing, HttpContext http, CancellationToken ct) =>
+        {
+            if (!TryParseDate(date, out var fileDate))
+                return Results.BadRequest(new { message = "date must be an ISO date (yyyy-MM-dd)." });
+
+            try
+            {
+                var set = await clearing.SaveAsync(id, participant, fileDate, http.User.Identity?.Name, ct);
+                if (set is null) return Results.NotFound();
+
+                var response = ContractMapping.ToStoredSet(set);
+                return Results.Created($"/api/assets/{id}/clearing/saved/{set.Id}", response);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or ClearingFormatException)
+            {
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        })
+        .WithName("SaveAssetClearingFiles")
+        .WithSummary("Writes the CETIP upload files for a booked asset and keeps them.");
+
+        // What this certificate has produced. Without the uploads themselves: a history is read
+        // to choose one, and the bytes are a download away.
+        group.MapGet("/{id:guid}/clearing/saved", async (
+            Guid id, AssetClearingService clearing, CancellationToken ct) =>
+        {
+            var sets = await clearing.ListSavedAsync(id, ct);
+            return Results.Ok(sets.Select(set => ContractMapping.ToStoredSet(set)).ToList());
+        })
+        .WithName("ListAssetClearingFileSets")
+        .WithSummary("The generations kept for an asset, newest first.");
+
+        // A kept file, byte for byte as it was written. Nothing is regenerated here — that is
+        // the point of having stored it.
+        group.MapGet("/{id:guid}/clearing/saved/{fileId:guid}", async (
+            Guid id, Guid fileId, AssetClearingService clearing, CancellationToken ct) =>
+        {
+            var file = await clearing.GetSavedFileAsync(id, fileId, ct);
+            return file is null
+                ? Results.NotFound()
+                : Results.File(file.Content, "text/plain", file.FileName);
+        })
+        .WithName("DownloadStoredClearingFile")
+        .WithSummary("One kept CETIP upload file, exactly as it was stored.");
+
         // The same file, as bytes, in the single-byte encoding CETIP reads.
         group.MapGet("/{id:guid}/clearing/{operation}", async (
             Guid id, string operation, string? participant, string? date,
