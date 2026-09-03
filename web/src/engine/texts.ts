@@ -41,6 +41,30 @@ export const texts = {
 
 export const ui = {
   assets: (c: string) => (en(c) ? 'Assets' : 'Ativos'),
+
+  // The published screen carries no API of its own, so "no connection" is a setting to fill in
+  // rather than an outage to wait out. These word that, and the form that fixes it.
+  apiUnreachable: (c: string, baseUrl: string) =>
+    en(c)
+      ? `Could not reach the API at ${baseUrl}.`
+      : `Não foi possível falar com a API em ${baseUrl}.`,
+  apiUnconfiguredTitle: (c: string) =>
+    en(c)
+      ? 'This page has not been pointed at an API yet.'
+      : 'Esta página ainda não foi apontada para uma API.',
+  apiUnconfigured: (c: string) =>
+    en(c)
+      ? 'This page is the booking screen only — it has no API of its own, and none has been configured for it yet.'
+      : 'Esta página é apenas a tela de registro — ela não tem API própria, e nenhuma foi configurada para ela ainda.',
+  apiUnreachableHelp: (c: string) =>
+    en(c)
+      ? 'Check that the API is running and that it allows calls from this address, then try again.'
+      : 'Verifique se a API está no ar e se ela permite chamadas deste endereço, e tente novamente.',
+  apiBaseUrlLabel: (c: string) => (en(c) ? 'API address' : 'Endereço da API'),
+  apiConnect: (c: string) => (en(c) ? 'Connect' : 'Conectar'),
+  apiRetry: (c: string) => (en(c) ? 'Try again' : 'Tentar novamente'),
+  apiUseDefault: (c: string) => (en(c) ? 'Use the deployed default' : 'Usar o padrão da publicação'),
+
   referenceDate: (c: string) => (en(c) ? 'Reference date' : 'Data de referência'),
   newAsset: (c: string) => (en(c) ? 'New asset' : 'Novo ativo'),
   edit: (c: string) => (en(c) ? 'Edit' : 'Editar'),

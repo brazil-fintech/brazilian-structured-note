@@ -1,7 +1,8 @@
 # Publishes the booking screen to GitHub Pages, so the app is reachable without building it.
 # The page carries no API of its own: it reads config.js at load, and a visitor can point it
 # at their own instance with ?api=https://host/api (remembered afterwards). Set the repository
-# variable COE_API_BASE_URL to change the default the page ships with.
+# variable COE_API_BASE_URL to give the page a default API; without it the page ships pointing
+# nowhere and says so, which is the honest answer for a repository with no API deployed.
 #
 # Pages has to be turned on by hand once, under Settings → Pages → Source → "GitHub Actions".
 # The workflow cannot do it: GITHUB_TOKEN can deploy to a Pages site but not create one, and
@@ -77,14 +78,29 @@ jobs:
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path || format('/{0}', github.event.repository.name) }}/
         run: npm run build
 
+      # Only when there is an API to name. The old default here was http://localhost:5080/api,
+      # which is not this repository's API but whatever happens to run on the machine of whoever
+      # opens the page: every visitor got ERR_CONNECTION_REFUSED against their own computer.
+      # Left unset, the page falls back to /api on its own origin, finds nothing there either,
+      # and says so — offering the box that points it at a real instance.
       - name: Point the page at an API
         env:
-          API_BASE_URL: ${{ vars.COE_API_BASE_URL || 'http://localhost:5080/api' }}
+          API_BASE_URL: ${{ vars.COE_API_BASE_URL }}
         run: |
-          cat > dist/config.js <<JS
+          if [ -n "${API_BASE_URL}" ]; then
+            cat > dist/config.js <<JS
           // Written by .github/workflows/pages.yml from the COE_API_BASE_URL repository variable.
           window.__COE_CONFIG__ = { apiBaseUrl: '${API_BASE_URL}' };
           JS
+          else
+            cat > dist/config.js <<'JS'
+          // No COE_API_BASE_URL repository variable is set, so the published page ships without a
+          // default API. A visitor points it at one with ?api=https://host/api, or in the box the
+          // screen offers when the first call fails.
+          window.__COE_CONFIG__ = {};
+          JS
+            echo "::warning title=The published page has no API::Set the COE_API_BASE_URL repository variable (Settings → Secrets and variables → Actions → Variables) to give the page a default API. Until then visitors have to supply one themselves."
+          fi
           # One page and no router, but a deep link or a refresh should still land on it.
           cp dist/index.html dist/404.html
 

@@ -167,21 +167,83 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * No API answered at the base URL this copy of the page was pointed at.
+ *
+ * Two shapes, and the screen answers both the same way — by offering the base URL as something
+ * to change. `network` is `fetch` itself rejecting: a refused connection, a name that does not
+ * resolve, an origin the API declines. All three arrive as the same bare `TypeError` reading
+ * "Failed to fetch", which says nothing about where the call was going. `notAnApi` is a reply
+ * that came back but is not one the API could have sent — the HTML of a static host answering
+ * for `/api/...`, which is exactly what the published page gets when nothing pointed it
+ * anywhere and it fell back to its own origin.
+ */
+export class ApiUnreachableError extends Error {
+  readonly name = 'ApiUnreachableError';
+
+  constructor(readonly baseUrl: string, readonly reason: 'network' | 'notAnApi', cause?: unknown) {
+    super(
+      reason === 'network'
+        ? `Could not reach the API at ${baseUrl}`
+        : `Nothing at ${baseUrl} answered as the API`,
+      { cause },
+    );
+  }
+}
+
+/**
+ * What to throw when `fetch` itself rejects. An abort is the caller's own doing — a validation
+ * pass overtaken by the next keystroke — and has to stay an abort, or every fast typist would
+ * be told the API is down.
+ */
+export function asFetchFailure(baseUrl: string, cause: unknown): unknown {
+  if (cause instanceof DOMException && cause.name === 'AbortError') return cause;
+  if (typeof cause === 'object' && cause !== null && (cause as { name?: string }).name === 'AbortError') return cause;
+  return new ApiUnreachableError(baseUrl, 'network', cause);
+}
+
+/** Every call goes through here, so an unreachable API reads the same wherever it is noticed. */
+async function send(path: string, init?: RequestInit): Promise<Response> {
+  try {
+    return await fetch(`${BASE}${path}`, init);
+  } catch (cause) {
+    throw asFetchFailure(BASE, cause);
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${BASE}${path}`, {
+  const response = await send(path, {
     ...init,
     headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
   });
 
   const text = await response.text();
-  const body = text ? (JSON.parse(text) as unknown) : null;
+
+  // Parsed before the status is looked at, and tolerantly: a refusal from the API is JSON, but
+  // an HTML page from whatever is in front of it — or instead of it — is not, and a parse error
+  // quoting "<!DOCTYPE" tells a user nothing about what went wrong.
+  let body: unknown = null;
+  let parsed = true;
+  if (text) {
+    try {
+      body = JSON.parse(text) as unknown;
+    } catch {
+      parsed = false;
+    }
+  }
 
   if (!response.ok) {
     // 409 and 422 carry a normal payload: a conflict, or the messages that blocked the save.
-    if (response.status === 409 || response.status === 422) return body as T;
-    const message = (body as { message?: string } | null)?.message ?? response.statusText;
+    if (parsed && (response.status === 409 || response.status === 422)) return body as T;
+    // 404 over a page that is not the API's own is the static host answering, not a missing row.
+    if (!parsed && response.status === 404) throw new ApiUnreachableError(BASE, 'notAnApi');
+    const message = (parsed ? (body as { message?: string } | null)?.message : null) ?? response.statusText;
     throw new ApiError(response.status, message, body);
   }
+
+  // A 200 that is not JSON is not this API either: a single-page host serving index.html for
+  // every path answers every call with the app itself.
+  if (!parsed) throw new ApiUnreachableError(BASE, 'notAnApi');
 
   return body as T;
 }
@@ -267,7 +329,7 @@ export const api = {
    * turn every "ç" of a commercial name into two characters and shift the layout after it.
    */
   clearingFileBlob: async (assetId: string, operation: string, params: ClearingParams = {}) => {
-    const response = await fetch(`${BASE}${clearingPath(assetId, params, operation)}`);
+    const response = await send(clearingPath(assetId, params, operation));
     if (!response.ok) throw new ApiError(response.status, await failureMessage(response));
     return response.blob();
   },
@@ -287,7 +349,7 @@ export const api = {
   /** A kept file, byte for byte as it was stored — nothing is regenerated to serve it. */
   savedClearingFileBlob: async (assetId: string, fileId: string) => {
     const path = `/assets/${encodeURIComponent(assetId)}/clearing/saved/${encodeURIComponent(fileId)}`;
-    const response = await fetch(`${BASE}${path}`);
+    const response = await send(path);
     if (!response.ok) throw new ApiError(response.status, await failureMessage(response));
     return response.blob();
   },

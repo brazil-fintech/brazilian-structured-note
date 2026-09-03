@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { api, type AssetListItem, type FigureCatalogueEntry, type FigureCoverage, type FigureSummary } from './api/client';
+import { api, ApiUnreachableError, type AssetListItem, type FigureCatalogueEntry, type FigureCoverage, type FigureSummary } from './api/client';
+import { ApiConnection } from './components/ApiConnection';
 import { AssetForm } from './components/AssetForm';
 import { AssetList } from './components/AssetList';
 import { ClearingFiles } from './components/ClearingFiles';
@@ -24,17 +25,29 @@ export default function App() {
   const [coverage, setCoverage] = useState<FigureCoverage>({ published: 0, configured: 0, bookable: 0 });
   const [view, setView] = useState<View>({ kind: 'list' });
   const [error, setError] = useState<string | null>(null);
+  // A call that never reached an API is not a message among others: nothing on the screen can
+  // work until it is fixed, and on the published copy fixing it means naming an API.
+  const [unreachable, setUnreachable] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  // Stable: the list keeps it in an effect's dependencies, and a new identity per render would
+  // refire its query on every keystroke elsewhere on the page.
+  const noteUnreachable = useCallback(() => setUnreachable(true), []);
+
+  const noteFailure = useCallback((e: unknown) => {
+    if (e instanceof ApiUnreachableError) { setUnreachable(true); return; }
+    setError((e as Error).message);
+  }, []);
 
   useEffect(() => {
     api.listFigures()
       .then(setFigures)
-      .catch((e: Error) => setError(e.message));
+      .catch(noteFailure);
 
     api.listFigureCatalogue()
       .then((result) => { setCatalogue(result.figures); setCoverage(result.coverage); })
-      .catch((e: Error) => setError(e.message));
-  }, []);
+      .catch(noteFailure);
+  }, [noteFailure]);
 
   const openNew = useCallback(async (figure: FigureCatalogueEntry) => {
     setBusy(true);
@@ -43,11 +56,11 @@ export default function App() {
       const template = await api.getTemplate(figure.code);
       setView({ kind: 'edit', template });
     } catch (e) {
-      setError((e as Error).message);
+      noteFailure(e);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [noteFailure]);
 
   const openExisting = useCallback(async (asset: AssetListItem) => {
     setBusy(true);
@@ -65,11 +78,11 @@ export default function App() {
         rowVersion: detail.rowVersion,
       });
     } catch (e) {
-      setError((e as Error).message);
+      noteFailure(e);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [noteFailure]);
 
   // Booking a new certificate is not the end of it: the registration still has to be written and
   // sent, so a creation lands on the screen that writes it. Editing one already booked goes back
@@ -113,13 +126,15 @@ export default function App() {
       </header>
 
       <main className="app__main">
-        {error && <div className="banner banner--error">{error}</div>}
+        {unreachable && <ApiConnection culture={culture} />}
+        {!unreachable && error && <div className="banner banner--error">{error}</div>}
         {busy && <div className="banner">{ui.loading(culture)}</div>}
 
         {view.kind === 'list' && (
           <AssetList
             culture={culture}
             figures={figures}
+            onUnreachable={noteUnreachable}
             onCreate={() => setView({ kind: 'pick' })}
             onEdit={(asset) => { void openExisting(asset); }}
             onFiles={(asset) => setView({

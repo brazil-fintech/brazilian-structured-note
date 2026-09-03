@@ -94,6 +94,17 @@ body {
 }
 .banner--error { background: var(--error-soft); border-color: var(--error); color: var(--error); }
 
+/* The one failure a visitor can fix from the page: naming the API this copy should call. */
+.api-connection__title { margin: 0; font-weight: 600; }
+.api-connection__help { margin: 6px 0 12px; color: var(--ink); }
+.api-connection__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+.api-connection__form .filter { margin: 0; }
+
 /* ----- asset list ----- */
 
 .list__header, .picker .list__header {

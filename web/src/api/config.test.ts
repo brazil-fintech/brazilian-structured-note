@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pickApiBaseUrl } from './config';
+import { pickApiBaseUrl, resolveApiBaseUrl } from './config';
 
 /**
  * The hosted copies of the app — the container image and the GitHub Pages build — are the same
@@ -36,5 +36,28 @@ describe('pickApiBaseUrl', () => {
 
   it('drops a trailing slash, which would double up against the paths the client appends', () => {
     expect(pickApiBaseUrl({ runtime: 'https://coe.example/api/' })).toBe('https://coe.example/api');
+  });
+});
+
+/**
+ * Which source answered is what tells an unconfigured page apart from an API that is down: the
+ * published copy carries no API on its own origin, so falling back to `/api` there means nobody
+ * ever said where to call — and the screen offers the box that says it rather than a bare
+ * "Failed to fetch".
+ */
+describe('resolveApiBaseUrl', () => {
+  it('reports the fallback when nothing pointed the page at an API', () => {
+    expect(resolveApiBaseUrl({})).toEqual({ url: '/api', source: 'fallback' });
+  });
+
+  it('names the source that answered', () => {
+    expect(resolveApiBaseUrl({ stored: 'https://coe.example/api', runtime: '/api' }))
+      .toEqual({ url: 'https://coe.example/api', source: 'stored' });
+    expect(resolveApiBaseUrl({ runtime: '/api' })).toEqual({ url: '/api', source: 'runtime' });
+  });
+
+  it('treats a deployed config.js with no URL in it as nothing configured', () => {
+    // What the Pages build writes when no COE_API_BASE_URL variable is set.
+    expect(resolveApiBaseUrl({ runtime: undefined }).source).toBe('fallback');
   });
 });
