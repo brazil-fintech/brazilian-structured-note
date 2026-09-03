@@ -1,0 +1,82 @@
+# Publishes the booking screen to GitHub Pages, so the app is reachable without building it.
+# The page carries no API of its own: it reads config.js at load, and a visitor can point it
+# at their own instance with ?api=https://host/api (remembered afterwards). Set the repository
+# variable COE_API_BASE_URL to change the default the page ships with.
+name: pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and never cancel one half-way: the live site is the artefact.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # Turns Pages on for the repository the first time this runs, so the site does not
+          # wait on someone flipping the setting by hand.
+          enablement: true
+
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm test
+
+      # A project page is served from /<repository>/, so the asset URLs need that prefix.
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+
+      - name: Point the page at an API
+        env:
+          API_BASE_URL: ${{ vars.COE_API_BASE_URL || 'http://localhost:5080/api' }}
+        run: |
+          cat > dist/config.js <<JS
+          // Written by .github/workflows/pages.yml from the COE_API_BASE_URL repository variable.
+          window.__COE_CONFIG__ = { apiBaseUrl: '${API_BASE_URL}' };
+          JS
+          # One page and no router, but a deep link or a refresh should still land on it.
+          cp dist/index.html dist/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

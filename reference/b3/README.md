@@ -11,7 +11,7 @@ records which dated file each one came from. See [Where they come from](#where-t
 | File | CETIP export | Rows | What it is |
 |---|---|---|---|
 | `figuras.csv` | `DTpFiguras` | 88 | The payoff-figure catalogue: code, registered name, and whether B3 calculates settlement |
-| `dados-derivativo.csv` | `DTpTipoDadosDerivativo` | 850 | **The dictionary the registration file writes against**: 496 attributes with type, size, decimals, mandatory flag, and the identifier of every value a domain field takes |
+| `dados-derivativo.csv` | `DTpTipoDadosDerivativo` | 850 | **The dictionary the registration file writes against**: 500 attributes with type, size, decimals, mandatory flag, and the identifier of every value a domain field takes |
 | `figuras-dados-derivativo.csv` | `DTpFigurasDadosDerivativo` | 3,100 | **Which of those attributes each figure registers** — 1,647 pairings over all 88 figures |
 | `dominios-derivativos.csv` | `Dominios_DERIVATIVOS_COE` | 161 | Every registration domain and its values, across instrument types |
 | `dominios-coe.csv` | `DominiosCOE` | 38 | The COE-scoped view of the same domains — a strict subset, kept as shipped |
@@ -21,8 +21,12 @@ records which dated file each one came from. See [Where they come from](#where-t
 | `mnemonicos.csv` | `mnemonicos_cetip` | 132 | Participant mnemonics: the "Nome Simplificado" every upload header carries, against the institution's account and CNPJ |
 | `campos-figuras.csv` | *Manual de Operações*, annex | 1,708 | B3's own instruction for filling each attribute in — extracted from the manual, not an export |
 
-**As of 2026-08-28**, with several files carrying an internal stamp of `20260831` on their first
-line. `campos-figuras.csv` comes from the manual version dated 20/07/2026 committed under
+**Fetched 2026-08-31.** The newest file published for each export was `20260828_…` at that
+point, except `Cadastro_Curvas_Moedas_Feeder_Dominios`, which had a `20260831` copy; several of
+the files carry an internal stamp of `20260831` on their first line regardless of the date in
+their name. [`cetip-manifest.json`](cetip-manifest.json) records the remote file, its `asOf`, its
+size and its sha256 for each one. `campos-figuras.csv` is not an export at all — it comes from
+the manual version dated 20/07/2026 committed under
 [`../../docs/clearing/`](../../docs/clearing/README.md).
 
 The exports are converted from CETIP's single-byte CRLF text to UTF-8 with LF so they diff and

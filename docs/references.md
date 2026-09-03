@@ -44,24 +44,30 @@ govern; this repository is a technical summary of them.
     (update dated 21/07/2026 — the version the formulas here were checked against).
 11. **B3 — COE: conceito** (product concept note).
     <https://www.b3.com.br/lumis/portal/file/fileDownload.jsp?fileId=8AE490CA6F165E34016F250DCDCF3B40>
+12. **CETIP public directory** — the dated reference exports a registration is validated
+    against: the figure catalogue, the registration domains, the derivative-data dictionary
+    and its per-figure attribute lists, the underlying master and the participant mnemonics.
+    The *ENVIAR ARQUIVOS* layouts print these file names beside the fields whose domains live
+    in them. <ftp://ftp.cetip.com.br/Public>
+    Committed copies, with the dated file each came from: [../reference/b3/](../reference/b3/README.md).
 
 ## Self-regulation
 
-12. **ANBIMA — Certificados de Operações Estruturadas (COE), regulatory summary.**
+13. **ANBIMA — Certificados de Operações Estruturadas (COE), regulatory summary.**
     <https://www.anbima.com.br/pt_br/informar/regulacao/informe-de-legislacao/certificados-de-operacoes-estruturadas-coe.htm>
-13. **ANBIMA — Código de Distribuição de Produtos de Investimento** (distribution,
+14. **ANBIMA — Código de Distribuição de Produtos de Investimento** (distribution,
     marketing material and DIE presentation standards).
     <https://www.anbima.com.br/pt_br/autorregular/codigos/distribuicao-de-produtos-de-investimento.htm>
 
 ## Bibliography (pricing and design)
 
-14. J. C. Hull, *Options, Futures, and Other Derivatives*, 11th ed., Pearson, 2021 —
+15. J. C. Hull, *Options, Futures, and Other Derivatives*, 11th ed., Pearson, 2021 —
     ch. 12 (spreads), ch. 26 (exotic options: binaries, barriers, asians).
-15. M. Bouzoubaa, A. Osseiran, *Exotic Options and Hybrids: A Guide to Structuring,
+16. M. Bouzoubaa, A. Osseiran, *Exotic Options and Hybrids: A Guide to Structuring,
     Pricing and Trading*, Wiley, 2010 — autocallables, reverse convertibles, twin win.
-16. M. Broadie, P. Glasserman, S. G. Kou, "A Continuity Correction for Discrete Barrier
+17. M. Broadie, P. Glasserman, S. G. Kou, "A Continuity Correction for Discrete Barrier
     Options", *Mathematical Finance* 7(4), 1997 — discrete barrier monitoring adjustment.
-17. E. Reiner, M. Rubinstein, "Breaking Down the Barriers", *Risk* 4(8), 1991 — closed
+18. E. Reiner, M. Rubinstein, "Breaking Down the Barriers", *Risk* 4(8), 1991 — closed
     forms for continuously monitored barrier options.
 
 ## Note on links

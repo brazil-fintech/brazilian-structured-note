@@ -94,6 +94,7 @@ formula, parameters, worked example, scenario table and drawing:
 README.md                     ← you are here: product design overview
 docs/
   README.md                   ← documentation index
+  hosting.md                  ← running the published images, the Pages app and Codespaces
   overview.md                 ← full product design: legal framework, lifecycle, risks, tax
   parameters.md               ← every parameter: registration fields + payoff parameters
   calculations.md             ← calculation conventions: CDI/pre/IPCA accrual, DU/252,
@@ -128,7 +129,10 @@ tools/Coe.DomainGen/          ← turns that annex into a domain file per catalo
 tests/Coe.Tests/              ← expression, compiler, validation and database suites
 tests/Coe.Benchmarks/         ← BenchmarkDotNet harness for the validation path
 db/                           ← re-runnable schema and reference-data scripts
-deploy/                       ← OpenTelemetry collector config for local work
+deploy/                       ← the container images (API, worker, web), the compose file that
+                                runs them from GitHub's registry, and the OTel collector config
+.devcontainer/                ← the Codespaces machine: .NET SDK, Node, Docker, forwarded ports
+.github/workflows/            ← build and test; publish the images; publish the screen to Pages
 ```
 
 ## The platform
@@ -209,15 +213,87 @@ parsing a template costs 336 µs — which is why template versions are cached f
 process and the browser fetches each one once behind an ETag. Numbers and the reasoning are in
 [docs/platform.md](docs/platform.md#performance).
 
+## Getting started
+
+Two ways in. Running the published images needs nothing but Docker; developing builds from this
+checkout, against the dependencies below.
+
+### Run the published images
+
+The API, the worker and the booking screen are published as container images on GitHub's own
+registry, each carrying `db/`, `domain/` and `reference/b3/`. A fresh container therefore needs
+nothing but a SQL Server: the API creates the schema, the worker compiles all 88 figures of B3's
+catalogue, and the screen is ready to book against them.
+
 ```bash
-docker compose up -d mssql                # SQL Server
+curl -O https://raw.githubusercontent.com/brazil-fintech/brazilian-structured-note/main/deploy/docker-compose.hosted.yml
+
+# The one setting with no default: the sa password of the SQL Server this brings up.
+echo "COE_SQL_PASSWORD=$(openssl rand -base64 24)aA1!" > .env
+
+docker compose -f docker-compose.hosted.yml up -d
+```
+
+The screen is then on <http://localhost:8080> and the API on <http://localhost:5080>; the first
+pass takes about a minute, while the worker compiles the catalogue. The screen is also published
+on its own to
+[brazil-fintech.github.io/brazilian-structured-note](https://brazil-fintech.github.io/brazilian-structured-note/)
+— add `?api=https://your-host/api` to point it at your own instance — and *Code → Codespaces*
+gives a machine with everything below already installed. All of it, including where the SQL
+password comes from, is in [docs/hosting.md](docs/hosting.md).
+
+### Dependencies
+
+| Dependency | Version | Why | Install |
+|---|---|---|---|
+| .NET SDK | 10.0 | the API, the worker, the ingestion tooling and the test suites | [dotnet.microsoft.com/download](https://dotnet.microsoft.com/download) |
+| Node.js | 22 LTS | the React app and its test suite (npm ships with it) | [nodejs.org](https://nodejs.org/) |
+| Docker | any current | SQL Server, and building the images in `deploy/` | [docs.docker.com/get-docker](https://docs.docker.com/get-docker/) |
+| Python | 3.10+ | *optional* — redrawing the payoff figures, re-extracting B3's field annex | [python.org](https://www.python.org/downloads/) |
+
+SQL Server itself is not installed: `docker compose up -d mssql` brings up the 2022 developer
+image the platform is developed against. Any SQL Server 2019+ works — point
+`ConnectionStrings__Coe` at it instead.
+
+There is no separate restore step to remember; the commands below do it. Visual Studio 2022
+(17.12+, for the .NET 10 SDK) opens `Coe.sln` directly, and the web app runs beside it from the
+`web/` folder.
+
+### The development environment
+
+```bash
+git clone https://github.com/brazil-fintech/brazilian-structured-note.git
+cd brazilian-structured-note
+
+docker compose up -d mssql                # SQL Server on localhost:1433
 dotnet run --project src/Coe.Worker       # sync CETIP, compile domain/ into templates, keep watching
-dotnet run --project src/Coe.Api          # http://localhost:5080
-cd web && npm install && npm run dev      # http://localhost:5173
+dotnet run --project src/Coe.Api          # http://localhost:5080 — applies db/*.sql on startup
+cd web && npm install && npm run dev      # http://localhost:5173, /api proxied to the API
+```
+
+Each of the last three runs in the foreground, so give them a terminal each. The worker's first
+pass compiles all 88 figures and takes a few seconds; after that the screen on
+<http://localhost:5173> has the whole catalogue in its picker. The connection string lives in
+`appsettings.json` and is overridable with `ConnectionStrings__Coe` in the environment.
+
+### The tests
+
+```bash
+dotnet test          # expressions, the compiler, the validation engine, the clearing layouts
+cd web && npm test   # the TypeScript mirror of the same cases
+```
+
+`dotnet test` compiles every checked-in domain file, so a bad figure edit fails here rather than
+quarantining a figure in production. The database suites need a server and skip without one:
+
+```bash
+COE_TEST_SQL="Server=localhost,1433;User Id=sa;Password=Your_password123;TrustServerCertificate=True;Encrypt=True" \
+  dotnet test
 ```
 
 Full architecture in [docs/platform.md](docs/platform.md); how to add or change a figure in
-[domain/README.md](domain/README.md).
+[domain/README.md](domain/README.md); how the hosted copies are built and configured in
+[docs/hosting.md](docs/hosting.md).
 
 ## References
 

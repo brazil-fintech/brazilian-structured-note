@@ -1,0 +1,42 @@
+{
+  // Opening the repository in GitHub Codespaces gives a machine that already has the .NET SDK,
+  // Node and Docker, so the platform runs from the browser without installing anything:
+  //
+  //     docker compose up -d mssql
+  //     dotnet run --project src/Coe.Worker
+  //     dotnet run --project src/Coe.Api
+  //     cd web && npm run dev
+  //
+  // Codespaces forwards the ports below and offers the web app's URL when it starts.
+  "name": "COE platform",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+
+  "features": {
+    // The solution targets net10.0 (see Directory.Build.props).
+    "ghcr.io/devcontainers/features/dotnet:2": { "version": "10.0" },
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" },
+    // For `docker compose up -d mssql`, and for building the images in deploy/.
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  "forwardPorts": [1433, 5080, 5173, 8080],
+  "portsAttributes": {
+    "1433": { "label": "SQL Server" },
+    "5080": { "label": "API" },
+    "5173": { "label": "Web (dev server)" },
+    "8080": { "label": "Web (container)" }
+  },
+
+  // Restores both halves once, so the first run is a run and not a download.
+  "postCreateCommand": "dotnet restore && npm --prefix web ci",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-mssql.mssql",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

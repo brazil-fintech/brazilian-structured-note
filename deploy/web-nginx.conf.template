@@ -1,0 +1,46 @@
+# Rendered by the nginx image's own envsubst step (20-envsubst-on-templates.sh), which
+# substitutes only names that exist in the environment — so nginx's $uri and $host survive.
+server {
+    listen       ${NGINX_PORT};
+    server_name  _;
+    root         /usr/share/nginx/html;
+    index        index.html;
+
+    gzip             on;
+    gzip_types       text/css application/javascript application/json image/svg+xml;
+    gzip_min_length  1024;
+
+    # Vite fingerprints everything under /assets, so it can be cached forever. The shell and
+    # the runtime configuration decide where the app points, and must never be held.
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location = /config.js {
+        add_header Cache-Control "no-store";
+    }
+
+    location = /index.html {
+        add_header Cache-Control "no-store";
+    }
+
+    # The API on the same origin, so the browser never issues a preflight before a validation
+    # call. COE_API_PROXY_PASS carries no trailing slash, which keeps the /api prefix on the
+    # request the API receives.
+    location /api/ {
+        proxy_pass         ${COE_API_PROXY_PASS};
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # Writing the upload files for a certificate with a long fixing calendar is not instant.
+        proxy_read_timeout 120s;
+    }
+
+    # One page, no router: anything else is the shell.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

@@ -8,8 +8,11 @@ Common on USDBRL and on the IBOVESPA.
 - **Modality:** VNP
 - **Investor view:** range-bound / low volatility
 - **Also known as:** *fairway, corredor, acumulador de cupom*
-- **B3 registered figure:** COE001015 Range Accrual (nested-range variant: COE001041
-  Wedding Cake; one-sided accrual: COE001043 Edge Accrual)
+- **B3 registered figure:** COE001015 *Range Accrual* — `Barreira cenário de alta (%)` and
+  `Barreira cenário de baixa (%)` bound the range, `Cupom remunerador adicional (%)` and
+  `Remunerador flutuante adicional (%)` carry the coupon, and the verification window is a
+  registered start and end date with its own quotation type (nested-range variant: COE001041
+  *Wedding Cake*, up to three layers; one-sided accrual: COE001043 *Edge Accrual*)
 
 ## Parameters
 
@@ -50,8 +53,11 @@ VN = R$ 1,000, C_max = 12%, N = 252 daily fixings:
 | Half the time | 126/252 | **R$ 1,060.00** | +6.0% |
 | Breaks out immediately | 0/252 | **R$ 1,000.00** | 0% (protection) |
 
-Variants: coupons paid periodically instead of at maturity; "wedding-cake" (two nested
-ranges with two coupon levels); one-sided ranges (accrues while above/below a level).
+Variants: coupons paid periodically instead of at maturity; "wedding-cake" — COE001041,
+which registers `Quantidade de Camadas` with a `Cupom remunerador` and a
+`Remunerador flutuante` per layer for **up to three** nested ranges, bounded by `Strike 1`
+through `Strike 6`; one-sided ranges — COE001043 *Edge Accrual*, a single `Barreira (%)` with a
+`Direção barreira`, accruing while the underlying stays above or below it.
 
 ## Building blocks
 

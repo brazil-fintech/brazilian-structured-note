@@ -14,6 +14,8 @@ dist/
 
 # local settings
 appsettings.Local.json
+# the SQL password deploy/docker-compose.hosted.yml reads; on GitHub it is an Actions secret
+deploy/.env
 
 # benchmark output
 BenchmarkDotNet.Artifacts/

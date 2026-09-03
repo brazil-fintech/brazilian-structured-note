@@ -93,25 +93,32 @@ documented in [payoffs/](payoffs/README.md) that map to them:
 
 | Code | Registered figure | Commercial structure here |
 |---|---|---|
-| COE001001 / COE001064 | Call / Call com Participação | [call with participation](payoffs/call-participation.md) |
+| COE001001 | Call | [call with participation](payoffs/call-participation.md) |
+| COE001064 | Call com Participação — a *schedule*: `Data de Observação 1`–`10` against `Participação Indexador 1`–`10` | [autocall Athena](payoffs/autocall-athena.md) |
 | COE001005 | Call Spread | [call spread](payoffs/call-spread.md) |
 | COE001006 | Put Spread | [put spread](payoffs/put-spread.md) |
 | COE001011 / COE001012 / COE001013 | Digital Call / Digital Put / Double Digital | [digital](payoffs/digital-duplo-indexador.md) |
-| COE001045 | Troca de Indexadores | [duplo indexador](payoffs/digital-duplo-indexador.md) (indexer-switch variant) |
-| COE001003 | Call KO (with `Rebate no Cenário de Alta`) | [shark fin](payoffs/shark-fin.md) |
-| COE001015 / COE001041 | Range Accrual / Wedding Cake | [range accrual](payoffs/range-accrual.md) |
+| COE001045 | Troca de indexadores | [duplo indexador](payoffs/digital-duplo-indexador.md) (indexer-switch variant) |
+| COE001003 | Call KO (with `Rebate no Cenário de Alta(%)`) | [shark fin](payoffs/shark-fin.md) |
+| COE001015 / COE001041 / COE001043 | Range Accrual / Wedding Cake (up to three layers, six strikes) / Edge Accrual (one-sided) | [range accrual](payoffs/range-accrual.md) |
 | COE001022 | Put KI | [reverse convertible](payoffs/reverse-convertible.md) (short down-and-in put) |
 | COE001009 | Straddle Put KO | [twin win](payoffs/twin-win.md) |
-| COE001073 | Call_Alavancagens_com_Limitador | [booster](payoffs/booster.md) (levered capped upside leg) |
+| COE001073 | Call Alavancagens com Limitador | [booster](payoffs/booster.md) (levered capped upside leg) |
 | COE001031–34 | Forward / Participation Forward variants | — |
-| COE001078–86 | COE de Crédito (CDS / TRS variants) | credit-linked COEs (out of scope here) |
+| COE001053 / 57 / 72 / 76 | Retorno Condicional family | no option leg: redemption is principal plus interest against the guaranteed capital |
+| COE001078–80, COE001083–86 | COE de Crédito (CDS / TRS variants) | credit-linked COEs (out of scope here) |
 | COE001088 | Cesta de Opções | option baskets |
 
-[Autocalls](payoffs/autocall-athena.md) (Athena, [Phoenix](payoffs/autocall-phoenix.md))
-are not a single figure: they are registered as a figure plus **Fluxo de Caixa** (the
-coupon schedule) and the early-redemption trigger, exercised through the *Indicação de
-Disparo de Trigger* function; barrier figures with `Período de Pagamento = Ato` also
-settle at the moment the trigger fires (vs `Vencimento`, marked but paid at maturity).
+**Autocalls are a figure plus events, not a figure alone.** The figure carries the
+observation or barrier attributes — [Athena](payoffs/autocall-athena.md) on COE001064, whose
+Dados Específicos are ten observation dates against ten participations;
+[Phoenix](payoffs/autocall-phoenix.md) on COE001022 *Put KI*, the short knock-in put it is
+really selling — while the coupon schedule is registered beside it as **Fluxo de Caixa** and the
+early redemption is commanded through the *Indicação de Disparo de Trigger* function. A figure
+registered with `Período de Pagamento = Ato` settles at the moment the trigger fires, against
+`Vencimento`, marked but paid at maturity. Neither figure registers a protection barrier of its
+own: on COE001064 it is not among the published attributes at all, and on COE001022 the barrier
+is the knock-in level of the put.
 
 ## 5. Early exit and settlement fields
 

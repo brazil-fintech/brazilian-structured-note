@@ -248,7 +248,7 @@ row's column.
 | collections | `count(list)` `len(x)` `sum(list, @.f)` `any(list, pred)` `all(list, pred)` `isDistinct(list, @.f)` |
 | dates | `year` `month` `day` `daysBetween(a, b)` `addDays(d, n)` `today()` |
 | text | `contains(s, sub)` `upper` `lower` `str` |
-| ranges | `between(x, low, high)` |
+| ranges | `between(x, low, high)` — written as a call, parsed into an operator |
 
 Literals: numbers, `'single-quoted strings'`, `true`, `false`, `null`, and `[…]` list literals
 of constants. `$name` reads a host variable (`$today`).
