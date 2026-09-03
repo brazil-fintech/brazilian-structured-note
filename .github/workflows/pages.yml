@@ -36,9 +36,9 @@ jobs:
     outputs:
       pages_enabled: ${{ steps.enabled.outputs.pages }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -62,7 +62,7 @@ jobs:
       - name: Configure Pages
         id: pages
         if: steps.enabled.outputs.pages == 'true'
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - run: npm ci
 
@@ -88,7 +88,7 @@ jobs:
           # One page and no router, but a deep link or a refresh should still land on it.
           cp dist/index.html dist/404.html
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         if: steps.enabled.outputs.pages == 'true'
         with:
           path: web/dist
@@ -102,4 +102,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
