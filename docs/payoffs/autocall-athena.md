@@ -10,10 +10,15 @@ it never triggers, the maturity payoff depends on the **protection barrier**.
   VNR maturity payoff; the VNP variant replaces the downside leg with 100%.
 - **Investor view:** mildly bullish / flat; happy to be called early
 - **Also known as:** *autocallable, snowball*
-- **B3 registration:** not a single figure — a barrier/digital figure combined with the
-  early-redemption trigger; the trigger event is commanded via the *Indicação de Disparo
-  de Trigger* function, and figures with `Período de Pagamento = Ato` settle on the
-  trigger date
+- **B3 registered figure:** COE001064 *Call com Participação* — the figure whose Dados
+  Específicos are a schedule: `Strike 1(%)` plus `Data de Observação 1`–`10` against
+  `Participação Indexador 1`–`10`, one participation per observation date. It is what
+  [`domain/figures/coe001064-call-participacao-autocall.json`](../../domain/README.md) books.
+  The early redemption itself is an event, not an attribute: it is commanded through the
+  *Indicação de Disparo de Trigger* function, and a figure registered with
+  `Período de Pagamento = Ato` settles on the trigger date rather than at maturity. B3
+  registers **no protection barrier** among this figure's attributes — the VNR barrier drawn
+  below is a term of the certificate, not one of its Dados Específicos
 
 ## Parameters
 

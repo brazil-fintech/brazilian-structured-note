@@ -9,9 +9,11 @@ name.
 - **Investor view:** bullish but not *too* bullish — expects a rise that stays below the
   barrier
 - **Also known as:** *call up-and-out com rebate, barreira de alta*
-- **B3 registered figure:** COE001003 Call KO — barrier via `Barreira no Cenário de Alta`,
-  rebate via `Rebate no Cenário de Alta` (% of the VFE), observation via
-  `Período de Verificação de Barreiras` (Europeia/Americana)
+- **B3 registered figure:** COE001003 *Call KO* — barrier via `Barreira cenário de alta (%)`,
+  rebate via `Rebate no Cenário de Alta(%)` (% of the VFE), participation via
+  `Participação cenário de alta (%)`, observation via `Periodo de verificação de barreiras`
+  (Europeia/Americana) with its own `Tipo de cotação para verificação de barreira cenario de
+  alta`
 
 ## Parameters
 

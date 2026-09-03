@@ -7,7 +7,11 @@ IBOVESPA, S&P 500 or offshore thematic indices.
 - **Modality:** VNP (Valor Nominal Protegido)
 - **Investor view:** bullish; wants upside without risking nominal
 - **Also known as:** *capital protegido com participação na alta*
-- **B3 registered figure:** COE001001 Call (also COE001064 *Call com Participação*)
+- **B3 registered figure:** COE001001 *Call* — nine attributes: `Strike 1(%)`,
+  `Participação cenário de alta (%)`, `Quantidade 1`, the fixing period and its dates, and the
+  quotation type. (COE001064 *Call com Participação* is a different figure despite the name: it
+  registers `Data de Observação 1`–`10` against `Participação Indexador 1`–`10`, which is a
+  schedule, and is what an [autocall Athena](autocall-athena.md) is booked as.)
 
 ## Parameters
 

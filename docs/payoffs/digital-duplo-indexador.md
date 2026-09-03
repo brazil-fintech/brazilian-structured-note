@@ -9,9 +9,13 @@ percentage) depending on the scenario.
 - **Modality:** VNP
 - **Investor view:** directional with a target level; wants a known, high coupon
 - **Also known as:** *digital, binária, duplo indexador*
-- **B3 registered figure:** COE001011 Digital Call / COE001012 Digital Put /
-  COE001013 Double Digital; the pure indexer-switch version (e.g. pre vs % of DI, no
-  equity underlying) is COE001045 *Troca de Indexadores*
+- **B3 registered figure:** COE001011 *Digital Call* / COE001012 *Digital Put* /
+  COE001013 *Double Digital*. The indexer-switch version is COE001045
+  *Troca de indexadores*, which registers two periods rather than a digital condition:
+  `Ativo Subjacente Período 1` and `Ativo Subjacente Período 2`, a `Cupom Período 1 (%)` and
+  `Cupom Período 2 (%)` with a `Base Período 1` and `Base Período 2`, the
+  `Participação Indexador 1 (%)` and `2 (%)`, and the `Data da troca do ativo subjacente`
+  they switch on
 
 ## Parameters
 
