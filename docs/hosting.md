@@ -114,7 +114,8 @@ preflight sits in front of every validation call.
 
 *Code → Codespaces → Create codespace* gives a machine with the .NET SDK, Node and Docker already
 installed ([`.devcontainer/devcontainer.json`](../.devcontainer/devcontainer.json)), and the ports
-forwarded. From there the platform runs exactly as it does locally:
+forwarded — the dependency list in the [repository README](../README.md#dependencies),
+installed for you. From there the platform runs exactly as it does locally:
 
 ```bash
 docker compose up -d mssql

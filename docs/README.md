@@ -1,7 +1,9 @@
 # Documentation index
 
 Documentation of the COE (*Certificado de Operações Estruturadas*) — the Brazilian
-structured note. Start with the [repository README](../README.md) for the short version.
+structured note. Start with the [repository README](../README.md) for the short version; its
+[Getting started](../README.md#getting-started) section has the dependencies and the commands
+that bring the platform up, whether from this checkout or from the published images.
 
 ## Product
 

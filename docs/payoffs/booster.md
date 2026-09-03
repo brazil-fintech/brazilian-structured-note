@@ -9,7 +9,7 @@ VNP structures, a fall hits the principal directly.
 - **Investor view:** decidedly bullish; accepts equity-like downside for levered upside
 - **Also known as:** *alavancado, turbo, acelerador*
 - **B3 registered figure:** the levered capped upside leg is COE001073
-  *Call_Alavancagens_com_Limitador* (two upside participations, vertex and limiter);
+  *Call Alavancagens com Limitador* (two upside participations, vertex and limiter);
   the delta-one downside is carried by the package's sold-put leg (combined figures in
   the annex, e.g. COE001049 Call KO + Put)
 

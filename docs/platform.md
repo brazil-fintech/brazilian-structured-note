@@ -50,7 +50,10 @@ web/                       ← React: asset list, figure picker, dynamic form, B
 | `src/Coe.Api` | Minimal-API endpoints and DI wiring. |
 | `src/Coe.Worker` | The hosted service that runs ingestion on a file watch and an interval. |
 | `web/` | React + TypeScript. Contains a mirror of the expression evaluator and validation engine. |
+| `tests/Coe.Tests` | The suites: expressions, the compiler, the validation engine, the clearing layouts, the CETIP sync, the annex, and the database tests against a real server. |
 | `tests/Coe.Benchmarks` | BenchmarkDotNet harness for the validation path. |
+| `tools/Coe.DomainGen` · `tools/b3-annex` | Writing the generated figures, and extracting the manual's field annex they are written from. |
+| `deploy/` | The three container images — API, worker, web behind nginx — and the compose file that runs them from GitHub's registry. See [hosting.md](hosting.md). |
 
 **There is no ORM.** Queries are hand-written SQL against `Microsoft.Data.SqlClient`, for two
 reasons that matter here: the shapes the platform needs are unusual for an ORM (a page and its
@@ -261,6 +264,7 @@ in `Pending` for a desk to release it.
 |---|---|
 | `GET /api/figures` | figures available for booking (`?includeDisabled=true` for the rest) |
 | `GET /api/figures/catalogue` | B3's whole catalogue with each figure's availability here, plus coverage counts — what the picker renders |
+| `GET /api/figures/{code}` | one figure's catalogue entry: availability here, and what B3 publishes for it |
 | `GET /api/figures/{code}/template` | the compiled template; `?version=` for a specific one |
 | `GET /api/assets?referenceDate=…` | assets live on the date: `issueDate <= referenceDate <= maturityDate` |
 | `GET /api/assets/{id}` | the full instance document, plus the rowversion for concurrency |
@@ -275,6 +279,7 @@ in `Pending` for a desk to release it.
 | `POST /api/admin/ingest` | re-read the domain files now, without waiting for the worker |
 | `POST /api/admin/cetip/sync` | pull CETIP's public directory now and reload what changed |
 | `GET /api/admin/cetip` | provenance: which dated export each reference file came from, and when |
+| `GET /health/live` · `GET /health/ready` | the process is up; the database is reachable |
 
 ## Performance
 
@@ -388,23 +393,17 @@ shipped, add the next number.
 
 ## Running it
 
+The dependencies and the four commands are in the [repository README](../README.md#getting-started):
+the .NET 10 SDK, Node 22 and Docker, then SQL Server, the worker, the API and the React dev
+server. Without a checkout at all, [hosting.md](hosting.md) runs the same three processes from
+the images GitHub publishes.
+
 ```bash
-# 1. SQL Server
-docker compose up -d mssql
-
-# 2. Compile the domain files and keep watching them
-dotnet run --project src/Coe.Worker
-
-# 3. The API (also applies db/*.sql on startup)
-dotnet run --project src/Coe.Api          # http://localhost:5080
-
-# 4. The React app; /api is proxied to the API in dev
-cd web && npm install && npm run dev      # http://localhost:5173
+docker compose up -d mssql                # SQL Server on localhost:1433
+dotnet run --project src/Coe.Worker       # compiles domain/ and keeps watching it
+dotnet run --project src/Coe.Api          # http://localhost:5080 — applies db/*.sql on startup
+cd web && npm install && npm run dev      # http://localhost:5173, /api proxied to the API
 ```
-
-Or from the images GitHub publishes, without a checkout at all — the API, the worker and the
-screen are on `ghcr.io` and the screen is also on GitHub Pages. `docs/hosting.md` has the compose
-file, the settings a container takes and where the SQL password comes from.
 
 Connection string: `ConnectionStrings:Coe`, overridable with `ConnectionStrings__Coe` in the
 environment. In Development the host creates the database if it is missing
@@ -412,15 +411,18 @@ environment. In Development the host creates the database if it is missing
 database on a mistyped connection string hides the mistake.
 
 **`InvariantGlobalization` must stay off.** `Microsoft.Data.SqlClient` throws *"Globalization
-Invariant Mode is not supported"* on its first connection, so any container image running the API
-or worker needs ICU.
+Invariant Mode is not supported"* on its first connection, so an image running the API or the
+worker needs ICU — which is why `deploy/api.Dockerfile` and `deploy/worker.Dockerfile` sit on the
+Debian runtime images rather than an Alpine or chiselled one.
+
+### The tests
 
 ```bash
-dotnet test          # expression, compiler and validation-engine suites
+dotnet test          # expressions, the compiler, the validation engine, the clearing layouts
 cd web && npm test   # the TypeScript mirror of the same cases
 
 # The database tests need a server; without one they skip rather than fail.
-COE_TEST_SQL="Server=localhost,1433;User Id=sa;Password=Your_password123;TrustServerCertificate=True" \
+COE_TEST_SQL="Server=localhost,1433;User Id=sa;Password=Your_password123;TrustServerCertificate=True;Encrypt=True" \
   dotnet test
 ```
 
@@ -431,6 +433,11 @@ approximation of it.
 `dotnet test` compiles every checked-in domain file, so a bad edit fails the build rather than
 quarantining a figure in production. Set `COE_DOMAIN_DIR` to point the suite at a catalog
 outside the repository.
+
+The same two suites run on every push and pull request (`.github/workflows/build.yml`), against a
+SQL Server service container whose password comes from the `COE_SQL_PASSWORD` Actions secret. The
+password above is the local development one, for a server that lives on `localhost`; nothing
+deployed uses it.
 
 ## What is deliberately not here
 

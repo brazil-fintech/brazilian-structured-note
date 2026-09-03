@@ -102,9 +102,10 @@ documented in [payoffs/](payoffs/README.md) that map to them:
 | COE001015 / COE001041 | Range Accrual / Wedding Cake | [range accrual](payoffs/range-accrual.md) |
 | COE001022 | Put KI | [reverse convertible](payoffs/reverse-convertible.md) (short down-and-in put) |
 | COE001009 | Straddle Put KO | [twin win](payoffs/twin-win.md) |
-| COE001073 | Call_Alavancagens_com_Limitador | [booster](payoffs/booster.md) (levered capped upside leg) |
+| COE001073 | Call Alavancagens com Limitador | [booster](payoffs/booster.md) (levered capped upside leg) |
 | COE001031–34 | Forward / Participation Forward variants | — |
-| COE001078–86 | COE de Crédito (CDS / TRS variants) | credit-linked COEs (out of scope here) |
+| COE001053 / 57 / 72 / 76 | Retorno Condicional family | no option leg: redemption is principal plus interest against the guaranteed capital |
+| COE001078–80, COE001083–86 | COE de Crédito (CDS / TRS variants) | credit-linked COEs (out of scope here) |
 | COE001088 | Cesta de Opções | option baskets |
 
 [Autocalls](payoffs/autocall-athena.md) (Athena, [Phoenix](payoffs/autocall-phoenix.md))

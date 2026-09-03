@@ -20,7 +20,9 @@ calculation of the COE. They are the authoritative source for everything summari
 >   **Manual de Operações — COE**, version dated 20/07/2026 (431 pages; the payoff-figure
 >   field annex starts at p. 120). The registration fields in
 >   [../parameters.md](../parameters.md) and the figure codes cited across
->   [../payoffs/](../payoffs/README.md) were checked against this version.
+>   [../payoffs/](../payoffs/README.md) were checked against this version, and
+>   [`tools/b3-annex/extract.py`](../../tools/b3-annex/README.md) reads this file to produce
+>   [`reference/b3/campos-figuras.csv`](../../reference/b3/README.md#the-figure-attribute-annex).
 > - [`caderno-de-formulas-coe-202607.pdf`](caderno-de-formulas-coe-202607.pdf) —
 >   **Caderno de Fórmulas — COE**, update dated 21/07/2026 (101 pages) — the redemption
 >   formula of every registered figure and the precision criteria. The formulas and
@@ -31,10 +33,11 @@ calculation of the COE. They are the authoritative source for everything summari
 >   the file layouts used for batch registration (not COE-specific, kept for the COE
 >   layouts).
 >
-> Still missing: the *Manual de Normas — COE* and the
-> *COE — Conceito* note. This environment's network policy blocks `b3.com.br`; download
-> them from the links above (they are public) and commit them with the naming convention
-> in the table, suffixing the version date stamped on the document's cover.
+> Not committed yet: the *Manual de Normas — COE* and the *COE — Conceito* note. Both are
+> public; download them from the links above and commit them under the naming convention in
+> the table, suffixing the version date stamped on the document's cover. Nothing in this
+> repository depends on them — they are the rulebook and the concept note, not a layout or a
+> formula the platform reads.
 
 ## Versioning rules
 
