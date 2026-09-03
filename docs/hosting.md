@@ -132,8 +132,10 @@ Three one-time settings, none of which the workflows can do for themselves:
 2. **Package visibility** — images push privately on the first run. *Packages → `<name>` →
    Package settings → Change visibility → Public* is what makes `docker pull` work for someone
    who has not signed in to `ghcr.io`.
-3. **Pages** — the workflow turns Pages on itself (`enablement: true`); if the repository's
-   policy forbids that, *Settings → Pages → Source: GitHub Actions* does the same by hand.
+3. **Pages** — *Settings → Pages → Source: GitHub Actions*. A workflow cannot do this for
+   itself: `GITHUB_TOKEN` may deploy to a Pages site but not create one. Until the setting is
+   flipped, the `pages` workflow builds and tests the screen, says so with a warning, and stops
+   short of publishing.
 
 ## What hosting this does not give you
 

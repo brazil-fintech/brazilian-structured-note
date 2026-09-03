@@ -45,15 +45,15 @@ jobs:
             title: COE booking web app
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       # Anonymous pulls need the package made public once, under
       # Packages → coe/<name> → Package settings → Change visibility.
       - name: Sign in to ghcr.io
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Work out the tags
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository }}/${{ matrix.name }}
           tags: |
@@ -76,7 +76,7 @@ jobs:
             org.opencontainers.image.licenses=MIT
 
       - name: Build${{ github.event_name != 'pull_request' && ' and push' || '' }}
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ${{ matrix.dockerfile }}
@@ -95,9 +95,9 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
