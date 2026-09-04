@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, type AssetListItem, type FigureSummary } from '../api/client';
+import { api, ApiUnreachableError, type AssetListItem, type FigureSummary } from '../api/client';
 import { ui } from '../engine/texts';
 
 interface Props {
@@ -9,13 +9,19 @@ interface Props {
   onEdit: (asset: AssetListItem) => void;
   /** Opens the CETIP upload files this asset produces. */
   onFiles: (asset: AssetListItem) => void;
+  /**
+   * The list reached no API at all. Said upwards rather than shown here: the page answers that
+   * one with the form that names an API, and two banners repeating "failed to fetch" only make
+   * the screen look broken twice.
+   */
+  onUnreachable?: () => void;
 }
 
 /**
  * The landing screen. The reference-date filter is the primary one: an asset is listed when
  * it is live on that date, i.e. issued on or before it and not yet matured.
  */
-export function AssetList({ culture, figures, onCreate, onEdit, onFiles }: Props) {
+export function AssetList({ culture, figures, onCreate, onEdit, onFiles, onUnreachable }: Props) {
   const [referenceDate, setReferenceDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [figureCode, setFigureCode] = useState('');
   const [search, setSearch] = useState('');
@@ -37,12 +43,16 @@ export function AssetList({ culture, figures, onCreate, onEdit, onFiles }: Props
           setItems(response.items);
           setTotal(response.total);
         })
-        .catch((e: Error) => { if (!cancelled) setError(e.message); })
+        .catch((e: Error) => {
+          if (cancelled) return;
+          if (e instanceof ApiUnreachableError) { onUnreachable?.(); return; }
+          setError(e.message);
+        })
         .finally(() => { if (!cancelled) setLoading(false); });
     }, 250);
 
     return () => { cancelled = true; clearTimeout(timer); };
-  }, [referenceDate, figureCode, search]);
+  }, [referenceDate, figureCode, search, onUnreachable]);
 
   return (
     <div className="list">

@@ -106,9 +106,20 @@ it has no API of its own — so it has to be told where to send its calls. In or
 5. `/api` on the page's own origin — what the dev server proxies, and what the web image's nginx
    proxies to the API container.
 
+The fifth is a fallback, not a default anyone chose. GitHub Pages serves static files and nothing
+else, so with no `COE_API_BASE_URL` variable set there is no API behind `/api` there: the screen
+loads, its first calls come back as the host's 404 page, and it says so — *"esta página ainda não
+foi apontada para uma API"* — with a box that takes one, which is the same thing as arriving with
+`?api=`. That is the published page's resting state until a variable, or a visitor, names an API.
+It is deliberately no longer `http://localhost:5080/api`: that address is not this repository's
+API but whatever happens to be running on the machine of whoever opens the page, so every visitor
+got `ERR_CONNECTION_REFUSED` against their own computer and a bare "Failed to fetch".
+
 An API called from another origin has to allow it: `Cors__Origins__0=https://<owner>.github.io`
 on the API, or run the app from the web image instead, where nginx puts both on one origin and no
-preflight sits in front of every validation call.
+preflight sits in front of every validation call. An origin the API does not list is refused
+before the request is sent, which reaches the screen as the same "could not reach the API" —
+the browser tells a page nothing more than that about a blocked call.
 
 ## Codespaces
 
@@ -136,6 +147,10 @@ Three one-time settings, none of which the workflows can do for themselves:
    itself: `GITHUB_TOKEN` may deploy to a Pages site but not create one. Until the setting is
    flipped, the `pages` workflow builds and tests the screen, says so with a warning, and stops
    short of publishing.
+4. **The API the published page calls** — the `COE_API_BASE_URL` repository variable
+   (*Settings → Secrets and variables → Actions → Variables*), pointing at a reachable instance,
+   e.g. `https://coe-api.example.com/api`. Optional: without it the page publishes with no
+   default API and asks each visitor for one. The `pages` workflow says as much in a warning.
 
 ## What hosting this does not give you
 

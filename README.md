@@ -237,9 +237,10 @@ docker compose -f docker-compose.hosted.yml up -d
 The screen is then on <http://localhost:8080> and the API on <http://localhost:5080>; the first
 pass takes about a minute, while the worker compiles the catalogue. The screen is also published
 on its own to
-[brazil-fintech.github.io/brazilian-structured-note](https://brazil-fintech.github.io/brazilian-structured-note/)
-— add `?api=https://your-host/api` to point it at your own instance — and *Code → Codespaces*
-gives a machine with everything below already installed. All of it, including where the SQL
+[brazil-fintech.github.io/brazilian-structured-note](https://brazil-fintech.github.io/brazilian-structured-note/).
+That copy is the screen and nothing else — it carries no API — so it asks for one on arrival:
+add `?api=https://your-host/api` to the address, or fill the box it shows, to point it at your
+own instance. *Code → Codespaces* gives a machine with everything below already installed. All of it, including where the SQL
 password comes from, is in [docs/hosting.md](docs/hosting.md).
 
 ### Dependencies
